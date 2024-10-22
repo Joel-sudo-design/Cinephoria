@@ -7,3 +7,17 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
+
+//Active jQuery
+const $ = require('jquery');
+window.$ = window.jQuery = $;
+
+//Active Bootstrap
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+//Autoload images
+const imagesContext = require.context('../assets/images', true, /\.(png|jpg|jpeg|gif|ico|svg|webp)$/);
+imagesContext.keys().forEach(imagesContext);
+
+
