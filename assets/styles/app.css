@@ -1,5 +1,11 @@
 /* Navbar */
 
+.offcanvas-header .btn-close {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 .nav-link {
   color: #FFFFFF;
   font-size: 20px;
@@ -63,3 +69,14 @@
 }
 
 /* Footer */
+
+#offcanvas-bodyBottom .navbar-nav .nav-item .nav-link {
+  font-size: 1rem;
+}
+
+#offcanvas-bodyBottom .navbar-nav .nav-item .nav-link:hover {
+  border: none;
+  background: none;
+  color: inherit !important;
+}
+

@@ -21,23 +21,30 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 const imagesContext = require.context('../assets/images', true, /\.(png|jpg|jpeg|gif|ico|svg|webp)$/);
 imagesContext.keys().forEach(imagesContext);
 
-// Navbar
+// Navbar & Footer
 // Lorsque le menu offcanvas est ouvert
 $(document).ready(function() {
-    $('#navbar-toggler').click(function() {
-        $('.offcanvas').css("background", "linear-gradient(90deg, rgba(106, 115, 171, 0.85) 50%, rgba(43, 46, 69, 0.85) 100%)");
+    $('#navbar-togglerTop').click(function() {
+        $('#offcanvasNavbarTop').css("background", "linear-gradient(90deg, rgba(106, 115, 171, 0.85) 50%, rgba(43, 46, 69, 0.85) 100%)");
         $('#logo').hide();
-        $('#offcanvas-body').removeClass('row')
+        $('#offcanvas-bodyTop').removeClass('row')
         $('#navbarLeft').removeClass('col-5').addClass('col-12');
         $('#navbarRight').removeClass('col-5').addClass('col-12');
+    });
+    $('#navbar-togglerBottom').click(function() {
+        $('#offcanvasNavbarBottom').css("background", "linear-gradient(90deg, rgba(106, 115, 171, 0.85) 50%, rgba(43, 46, 69, 0.85) 100%)");
     });
 });
 
 // Lorsque le menu offcanvas est fermé
-$('#offcanvasNavbar').on('hidden.bs.offcanvas', function () {
-    $(this).css("background", "");
+$('#offcanvasNavbarTop').on('hidden.bs.offcanvas', function () {
+    $('#offcanvasNavbarTop').css("background", "");
     $('#logo').show();
-    $('#offcanvas-body').addClass('row')
+    $('#offcanvas-bodyTop').addClass('row')
     $('#navbarLeft').removeClass('col-12').addClass('col-5');
     $('#navbarRight').removeClass('col-12').addClass('col-5');
+});
+
+$('#offcanvasNavbarBottom').on('hidden.bs.offcanvas', function () {
+    $('#offcanvasNavbarBottom').css("background", "");
 });

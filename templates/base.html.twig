@@ -9,68 +9,121 @@
         {% endblock %}
     </head>
     <body>
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-        <div class="container-fluid">
-            <button id="navbar-toggler" class="navbar-toggler text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-                <div class="offcanvas-header">
-                    <img src="{{ asset('build/images/logo.svg')}}" class="img-fluid" style="width: 6rem; height: auto" alt="logo" />
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div id="offcanvas-body" class="row offcanvas-body align-items-center justify-content-center">
-                    <ul id="navbarLeft" class="col-5 navbar-nav align-items-center justify-content-center">
-                        <li class="nav-item mx-4 my-4 text-white">
-                            <a class="nav-link d-flex align-items-center justify-content-center active" aria-current="page" href="#">
-                                <i class="bi bi-house fs-3 mx-1"></i><span class="mx-1">Accueil</span>
-                            </a>
-                        </li>
-                        <li class="nav-item mx-4 my-4 text-white">
-                            <a class="nav-link d-flex align-items-center justify-content-center" href="#">
-                                <i class="bi bi-camera-video fs-3 mx-1"></i><span class="mx-1">Films</span>
-                            </a>
-                        </li>
-                        <li class="nav-item mx-4 my-4 text-white">
-                            <a class="nav-link d-flex align-items-center justify-content-center" href="#">
-                                <i class="bi bi-ticket-perforated fs-3 mx-1"></i><span class="mx-1">Réservation</span>
-                            </a>
-                        </li>
-                    </ul>
-                    <img id="logo" src="{{ asset('build/images/logo.svg')}}" class="col-2 img-fluid" style="width: 8rem; height: auto" alt="logo" />
-                    <ul id="navbarRight" class="col-5 navbar-nav align-items-center justify-content-center">
-                        <li class="nav-item mx-4 my-4 text-white">
-                            <a class="nav-link d-flex align-items-center justify-content-center" href="#">
-                                <i class="bi bi-envelope fs-3 mx-1"></i><span class="mx-1">Contact</span>
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown mx-3 my-3 text-white">
-                            <a class="nav-link dropdown-toggle d-flex align-items-center justify-content-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-person-circle fs-3 mx-1"></i><span class="mx-1">Mon espace</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item d-flex align-items-center justify-content-center" href="#">
-                                        <i class="bi bi-box-arrow-in-right fs-4 mx-1"></i><span class="mx-1">Connexion/Inscription</span>
-                                    </a>
-                                </li>
-                                <li><a class="dropdown-item d-flex align-items-center justify-content-start" href="#">
-                                        <i class="bi bi-bag-check fs-4 mx-1 mb-1"></i><span class="mx-1">Commandes</span>
-                                    </a>
-                                </li>
-                                <li><a class="dropdown-item d-flex align-items-center justify-content-start" href="#">
-                                        <i class="bi bi-box-arrow-left fs-4 mx-1"></i><span class="mx-1">Déconnexion</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+            <div class="container-fluid">
+                <button id="navbar-togglerTop" class="navbar-toggler text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarTop" aria-controls="offcanvasNavbarTop" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbarTop" aria-labelledby="offcanvasNavbarLabelTop">
+                    <div class="offcanvas-header">
+                        <img src="{{ asset('build/images/logo.svg')}}" class="img-fluid" style="width: 6rem; height: auto" alt="logo" />
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div id="offcanvas-bodyTop" class="row offcanvas-body align-items-center justify-content-center">
+                        <ul id="navbarLeft" class="col-5 navbar-nav align-items-center justify-content-center">
+                            <li class="nav-item mx-4 my-4 text-white">
+                                <a class="nav-link d-flex align-items-center justify-content-center active" aria-current="page" href="">
+                                    <i class="bi bi-house fs-3 ms-2"></i><span class="mx-2">Accueil</span>
+                                </a>
+                            </li>
+                            <li class="nav-item mx-4 my-4 text-white">
+                                <a class="nav-link d-flex align-items-center justify-content-center" href="">
+                                    <i class="bi bi-camera-video fs-3 ms-2"></i><span class="mx-2">Films</span>
+                                </a>
+                            </li>
+                            <li class="nav-item mx-4 my-4 text-white">
+                                <a class="nav-link d-flex align-items-center justify-content-center" href="">
+                                    <i class="bi bi-ticket-perforated fs-3 ms-2"></i><span class="mx-2">Réservation</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <img id="logo" src="{{ asset('build/images/logo.svg')}}" class="col-2 img-fluid" style="width: 8rem; height: auto" alt="logo" />
+                        <ul id="navbarRight" class="col-5 navbar-nav align-items-center justify-content-center">
+                            <li class="nav-item mx-4 my-4 text-white">
+                                <a class="nav-link d-flex align-items-center justify-content-center" href="">
+                                    <i class="bi bi-envelope fs-3 ms-2"></i><span class="mx-2">Contact</span>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown mx-3 my-3 text-white">
+                                <a class="nav-link dropdown-toggle d-flex align-items-center justify-content-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-person-circle fs-3 ms-2"></i><span class="mx-2">Mon espace</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item d-flex align-items-center justify-content-center" href="">
+                                            <i class="bi bi-box-arrow-in-right fs-4 ms-2"></i><span class="mx-2">Connexion/Inscription</span>
+                                        </a>
+                                    </li>
+                                    <li><a class="dropdown-item d-flex align-items-center justify-content-start" href="">
+                                            <i class="bi bi-bag-check fs-4 ms-2 mb-1"></i><span class="mx-2">Commandes</span>
+                                        </a>
+                                    </li>
+                                    <li><a class="dropdown-item d-flex align-items-center justify-content-start" href="">
+                                            <i class="bi bi-box-arrow-left fs-4 ms-2"></i><span class="mx-2">Déconnexion</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
-        {% block body %}{% endblock %}
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
+        </nav>
+            {% block body %}{% endblock %}
+            {% block javascripts %}
+                {{ encore_entry_script_tags('app') }}
+            {% endblock %}
     </body>
+    <footer>
+        <nav class="navbar navbar-expand-lg navbar-light fixed-bottom">
+            <div class="container-fluid">
+                <button id="navbar-togglerBottom" class="navbar-toggler text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarBottom" aria-controls="offcanvasNavbarBottom" aria-label="Toggle navigation">
+                    <i class="bi bi-pin-map me-2"></i><span class="ms-2">Nous localiser</span>
+                </button>
+                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasNavbarBottom" aria-labelledby="offcanvasNavbarLabelBottom">
+                    <div class="offcanvas-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div id="offcanvas-bodyBottom" class="row offcanvas-body">
+                        <ul class="col-6 navbar-nav d-block text-center align-content-center">
+                            <li class="nav-item text-white">
+                                <div class="nav-link">
+                                    <i class="bi bi-facebook fs-4 mx-4"></i>
+                                    <i class="bi bi-twitter-x fs-4 mx-4"></i>
+                                    <i class="bi bi-pinterest fs-4 mx-4"></i>
+                                    <i class="bi bi-linkedin fs-4 mx-4"></i>
+                                    <i class="bi bi-youtube fs-4 mx-4"></i>
+                                </div>
+                            </li>
+                            <li class="nav-item text-white">
+                                <div class="nav-link">372 Place de Paris - Toulouse, VT / 56826</div>
+                            </li>
+                            <li class="nav-item text-white">
+                                <div class="nav-link">
+                                    <i class="bi bi-telephone fs-5 me-2"></i>
+                                    02 98 51 38 10
+                                </div>
+                            </li>
+                        </ul>
+                        <ul id="navbar-navBottom" class="col-6 navbar-nav d-block text-center align-content-center">
+                            <li class="nav-item text-white">
+                                <div class="nav-link">Horaires du lundi au dimanche:</div>
+                            </li>
+                            <li class="nav-item text-white">
+                                <div class="nav-link p-0">10h00 - 12h00</div>
+                            </li>
+                            <li class="nav-item text-white">
+                                <div class="nav-link p-0">12h30 - 14h30</div>
+                            </li>
+                            <li class="nav-item text-white">
+                                <div class="nav-link p-0">15h00 - 17h00</div>
+                            </li>
+                            <li class="nav-item text-white">
+                                <div class="nav-link p-0">17h30 - 23h30</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </footer>
 </html>
