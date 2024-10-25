@@ -3,13 +3,14 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
         <title>{% block title %}Accueil Cinéphoria{% endblock %}</title>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <nav id="navbarTop" class="navbar navbar-expand-lg navbar-light fixed-top" style="height: 6rem; z-index: 1100">
             <div class="container-fluid">
                 <button id="navbar-togglerTop" class="navbar-toggler text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarTop" aria-controls="offcanvasNavbarTop" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,7 +21,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div id="offcanvas-bodyTop" class="row offcanvas-body align-items-center justify-content-center">
-                        <ul id="navbarLeft" class="col-5 navbar-nav align-items-center justify-content-center">
+                        <ul id="navbarLeft" class="col-5 navbar-nav align-items-center justify-content-center p-0">
                             <li class="nav-item mx-4 my-4 text-white">
                                 <a class="nav-link d-flex align-items-center justify-content-center active" aria-current="page" href="">
                                     <i class="bi bi-house fs-3 ms-2"></i><span class="mx-2">Accueil</span>
@@ -37,8 +38,8 @@
                                 </a>
                             </li>
                         </ul>
-                        <img id="logo" src="{{ asset('build/images/logo.svg')}}" class="col-2 img-fluid" style="width: 8rem; height: auto" alt="logo" />
-                        <ul id="navbarRight" class="col-5 navbar-nav align-items-center justify-content-center">
+                        <img id="logo" src="{{ asset('build/images/logo.svg')}}" class="col-2 img-fluid" style="width: 7.5rem; height: auto" alt="logo" />
+                        <ul id="navbarRight" class="col-5 navbar-nav align-items-center justify-content-center p-0">
                             <li class="nav-item mx-4 my-4 text-white">
                                 <a class="nav-link d-flex align-items-center justify-content-center" href="">
                                     <i class="bi bi-envelope fs-3 ms-2"></i><span class="mx-2">Contact</span>
@@ -74,7 +75,7 @@
             {% endblock %}
     </body>
     <footer>
-        <nav class="navbar navbar-expand-lg navbar-light fixed-bottom">
+        <nav id="navbarBottom" class="navbar navbar-expand-lg navbar-light fixed-bottom" style="height: 10rem">
             <div class="container-fluid">
                 <button id="navbar-togglerBottom" class="navbar-toggler text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarBottom" aria-controls="offcanvasNavbarBottom" aria-label="Toggle navigation">
                     <i class="bi bi-pin-map me-2"></i><span class="ms-2">Nous localiser</span>
@@ -83,8 +84,8 @@
                     <div class="offcanvas-header">
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
-                    <div id="offcanvas-bodyBottom" class="row offcanvas-body">
-                        <ul class="col-6 navbar-nav d-block text-center align-content-center">
+                    <div id="offcanvas-bodyBottom" class="row offcanvas-body align-items-center justify-content-center">
+                        <ul class="col-5 navbar-nav d-block text-center align-content-center p-0">
                             <li class="nav-item text-white">
                                 <div class="nav-link">
                                     <i class="bi bi-facebook fs-4 mx-4"></i>
@@ -99,28 +100,33 @@
                             </li>
                             <li class="nav-item text-white">
                                 <div class="nav-link">
-                                    <i class="bi bi-telephone fs-5 me-2"></i>
+                                    <i class="bi bi-telephone fs-6 me-2"></i>
                                     02 98 51 38 10
                                 </div>
                             </li>
                         </ul>
-                        <ul id="navbar-navBottom" class="col-6 navbar-nav d-block text-center align-content-center">
-                            <li class="nav-item text-white">
-                                <div class="nav-link">Horaires du lundi au dimanche:</div>
-                            </li>
-                            <li class="nav-item text-white">
-                                <div class="nav-link p-0">10h00 - 12h00</div>
-                            </li>
-                            <li class="nav-item text-white">
-                                <div class="nav-link p-0">12h30 - 14h30</div>
-                            </li>
-                            <li class="nav-item text-white">
-                                <div class="nav-link p-0">15h00 - 17h00</div>
-                            </li>
-                            <li class="nav-item text-white">
-                                <div class="nav-link p-0">17h30 - 23h30</div>
-                            </li>
-                        </ul>
+                        <div class="col-2" style="width: 7.5rem"></div>
+                        <div class="col-5 text-center align-content-center p-0">
+                            <div id="horaires" class="text-center text-white mb-3" style="font-size: 1.1rem">Horaires du lundi au dimanche:</div>
+                            <div class="d-flex justify-content-center">
+                                <ul id="navbar-navBottom" class="navbar-nav d-block text-center align-content-center mx-2">
+                                    <li class="nav-item text-white">
+                                        <div class="nav-link p-0">8h00 - 12h00</div>
+                                    </li>
+                                    <li class="nav-item text-white">
+                                        <div class="nav-link p-0">12h30 - 14h30</div>
+                                    </li>
+                                </ul>
+                                <ul id="navbar-navBottom" class="navbar-nav d-block text-center align-content-center mx-2">
+                                    <li class="nav-item text-white">
+                                        <div class="nav-link p-0">15h00 - 17h00</div>
+                                    </li>
+                                    <li class="nav-item text-white">
+                                        <div class="nav-link p-0">17h30 - 23h30</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

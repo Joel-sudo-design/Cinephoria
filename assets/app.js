@@ -21,9 +21,9 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 const imagesContext = require.context('../assets/images', true, /\.(png|jpg|jpeg|gif|ico|svg|webp)$/);
 imagesContext.keys().forEach(imagesContext);
 
-// Navbar & Footer
-// Lorsque le menu offcanvas est ouvert
+// Navbar Top & Bottom
 $(document).ready(function() {
+    // A l'ouverture des navbar, on change la couleur de fond, on cache le logo et on modifie la taille des colonnes
     $('#navbar-togglerTop').click(function() {
         $('#offcanvasNavbarTop').css("background", "linear-gradient(90deg, rgba(106, 115, 171, 0.85) 50%, rgba(43, 46, 69, 0.85) 100%)");
         $('#logo').hide();
@@ -34,17 +34,16 @@ $(document).ready(function() {
     $('#navbar-togglerBottom').click(function() {
         $('#offcanvasNavbarBottom').css("background", "linear-gradient(90deg, rgba(106, 115, 171, 0.85) 50%, rgba(43, 46, 69, 0.85) 100%)");
     });
+    // A la fermeture des navbar, on remet la couleur de fond par défaut, on affiche le logo et on remet la taille des colonnes
+    $('#offcanvasNavbarTop').on('hidden.bs.offcanvas', function () {
+        $('#offcanvasNavbarTop').css("background", "");
+        $('#logo').show();
+        $('#offcanvas-bodyTop').addClass('row')
+        $('#navbarLeft').removeClass('col-12').addClass('col-5');
+        $('#navbarRight').removeClass('col-12').addClass('col-5');
+    });
+    $('#offcanvasNavbarBottom').on('hidden.bs.offcanvas', function () {
+        $('#offcanvasNavbarBottom').css("background", "");
+    });
 });
 
-// Lorsque le menu offcanvas est fermé
-$('#offcanvasNavbarTop').on('hidden.bs.offcanvas', function () {
-    $('#offcanvasNavbarTop').css("background", "");
-    $('#logo').show();
-    $('#offcanvas-bodyTop').addClass('row')
-    $('#navbarLeft').removeClass('col-12').addClass('col-5');
-    $('#navbarRight').removeClass('col-12').addClass('col-5');
-});
-
-$('#offcanvasNavbarBottom').on('hidden.bs.offcanvas', function () {
-    $('#offcanvasNavbarBottom').css("background", "");
-});
