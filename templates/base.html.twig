@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
-        <title>{% block title %}Accueil Cinéphoria{% endblock %}</title>
+        <title>{% block title %}{% endblock %}</title>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -40,6 +40,7 @@
                         </ul>
                         <img id="logo" src="{{ asset('build/images/logo.svg')}}" class="col-2 img-fluid" style="width: 7.5rem; height: auto" alt="logo" />
                         <ul id="navbarRight" class="col-5 navbar-nav align-items-center justify-content-center p-0">
+                            {% block extra_content %}{% endblock %}
                             <li class="nav-item mx-4 my-4 text-white">
                                 <a class="nav-link d-flex align-items-center justify-content-center" href="">
                                     <i class="bi bi-envelope fs-3 ms-2"></i><span class="mx-2">Contact</span>
