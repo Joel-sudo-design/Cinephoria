@@ -6,19 +6,29 @@
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
-    <div style="position: relative; top: 20rem; left:50rem">
-        <h1>Register</h1>
-
-        {{ form_errors(registrationForm) }}
-
-        {{ form_start(registrationForm) }}
-            {{ form_row(registrationForm.email) }}
-            {{ form_row(registrationForm.plainPassword, {
-                label: 'Password'
-            }) }}
-            {{ form_row(registrationForm.agreeTerms) }}
-
-            <button type="submit" class="btn">Register</button>
-        {{ form_end(registrationForm) }}
+    <div id="container-accueil" class="container-fluid align-content-center">
+        <div class="row justify-content-center">
+            <div class="col-3 justify-content-center border border-dark border-end-0 p-0">
+                <h1 class="text-center">Nouveau compte</h1>
+                {{ form_errors(registrationForm) }}
+                {{ form_start(registrationForm) }}
+                    <div class="form-floating">
+                                {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre adresse email'}}) }}
+                                {{ form_label(registrationForm.email) }}
+                                {{ form_errors(registrationForm.email) }}
+                            </div>
+                    <div class="form-floating mt-3">
+                                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre mot de passe'}}) }}
+                                {{ form_label(registrationForm.plainPassword) }}
+                                {{ form_errors(registrationForm.plainPassword) }}
+                            </div>
+                    {{ form_row(registrationForm.agreeTerms) }}
+                    <button type="submit" class="btn">Register</button>
+                {{ form_end(registrationForm) }}
+            </div>
+            <div class="col-3 border border-dark p-0">
+                <img class="img-fluid" src="{{ asset('build/images/Cinema.jpg')}}" alt="cinéma">
+            </div>
+        </div>
     </div>
 {% endblock %}
