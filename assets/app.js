@@ -33,6 +33,7 @@ $(document).ready(function() {
     });
     $('#navbar-togglerBottom').click(function() {
         $('#offcanvasNavbarBottom').css("background", "linear-gradient(90deg, rgba(106, 115, 171, 0.85) 50%, rgba(43, 46, 69, 0.85) 100%)");
+        $('#col-2-bottom').remove()
     });
     // A la fermeture des navbar, on remet la couleur de fond par défaut, on affiche le logo et on remet la taille des colonnes
     $('#offcanvasNavbarTop').on('hidden.bs.offcanvas', function () {
@@ -44,6 +45,7 @@ $(document).ready(function() {
     });
     $('#offcanvasNavbarBottom').on('hidden.bs.offcanvas', function () {
         $('#offcanvasNavbarBottom').css("background", "");
+        $('#col-5-bottom').after('<div id="col-2-bottom" class="col-2" style="width: 7.5rem"></div>');
     });
 });
 

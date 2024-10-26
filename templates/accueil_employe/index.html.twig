@@ -1,8 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil employé Cinéphoria{% endblock %}
+{% block title %}Accueil Employé Cinéphoria{% endblock %}
 
-{% block extra_content %}
+{% block extra_content_bouton_accueil %}
+    <li class="nav-item mx-4 my-4 text-white">
+        <a class="nav-link d-flex align-items-center justify-content-center" aria-current="page" href="{{ path('app_accueil_employe') }}">
+            <i class="bi bi-house fs-3 ms-2"></i><span class="mx-2">Accueil</span>
+        </a>
+    </li>
+{% endblock %}
+
+{% block extra_content_mon_espace %}
+    <li><a class="dropdown-item d-flex align-items-center justify-content-start" href="">
+            <i id="btn-connexion-inscription" class="bi bi-box-arrow-in-right fs-4 ms-2"></i><span class="ms-2 me-3">Connexion</span>
+        </a>
+    </li>
+    <li><a class="dropdown-item d-flex align-items-center justify-content-start" href="">
+            <i class="bi bi-bag-check fs-4 ms-2 mb-1"></i><span class="mx-2">Commandes</span>
+        </a>
+    </li>
+    <li><a class="dropdown-item d-flex align-items-center justify-content-start" href="">
+            <i class="bi bi-box-arrow-left fs-4 ms-2"></i><span class="mx-2">Déconnexion</span>
+        </a>
+    </li>
+{% endblock %}
+
+{% block extra_content_bouton_admin_employe %}
     <li class="nav-item mx-4 my-4 text-white">
         <a class="nav-link d-flex align-items-center justify-content-center" href="">
             <i class="bi bi-person-lines-fill fs-3 ms-2"></i><span class="mx-2">Intranet</span>
