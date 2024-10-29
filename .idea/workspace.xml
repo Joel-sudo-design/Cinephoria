@@ -4,23 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modification formulaire et modal conditions">
-      <change afterPath="$PROJECT_DIR$/src/Controller/SecurityController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Security/UserAuthenticator.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/security/login.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/default_user.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/default_user.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/joeld.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/joeld.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/accueil/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/accueil_admin/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil_admin/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/accueil_employe/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil_employe/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/accueil_user/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil_user/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/baseMonEspace.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseMonEspace.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/registration/confirmation_creation_account.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/confirmation_creation_account.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifications pas de connexion + erreurs" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -226,6 +210,7 @@
       <workItem from="1730184890376" duration="13244000" />
       <workItem from="1730212807712" duration="744000" />
       <workItem from="1730213570326" duration="7861000" />
+      <workItem from="1730221534199" duration="37000" />
     </task>
     <task id="LOCAL-00003" summary="Début page d'accueil emplyé + navbar">
       <option name="closed" value="true" />
@@ -275,7 +260,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730190080238</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Modifications pas de connexion + erreurs">
+      <option name="closed" value="true" />
+      <created>1730221563823</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1730221563823</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -301,6 +294,7 @@
     <MESSAGE value="Création Classe Entité User + repository, Installation des bundles pour création de formulaire d'enregistrement et vérification email, création du controller et des templates pour le formulaire d'enregistrement de nouveau compte." />
     <MESSAGE value="Début création formulaire d'enregistrement" />
     <MESSAGE value="Modification formulaire et modal conditions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modification formulaire et modal conditions" />
+    <MESSAGE value="Modifications pas de connexion + erreurs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modifications pas de connexion + erreurs" />
   </component>
 </project>
