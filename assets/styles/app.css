@@ -157,7 +157,7 @@ html, body {
   border-radius: 4px;
 }
 
-/* Page Nouveau compte*/
+/* Page Inscription/Nouveau compte */
 
 .form-group {
   position: relative;
@@ -183,7 +183,7 @@ html, body {
 
 .custom-label {
   position: absolute;
-  bottom: 14px;
+  bottom: 15px;
   left:14px;
   color: #6A73AB;
   font-size: 16px;
@@ -199,7 +199,7 @@ html, body {
 
 #togglePassword, #toggleConfirmPassword{
   position: absolute;
-  top:17px;
+  top:16px;
   left: 90%;
   z-index: 10;
   color: #6A73AB;
