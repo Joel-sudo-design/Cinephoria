@@ -4,21 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Début création formulaire d'enregistrement">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/joeld.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/joeld.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/RegistrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegistrationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/RegistrationFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RegistrationFormType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/accueil/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/baseMonEspace.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseMonEspace.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/registration/register.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/register.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modification formulaire et modal conditions" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -221,7 +207,7 @@
       <workItem from="1730098007822" duration="16966000" />
       <workItem from="1730119975772" duration="14654000" />
       <workItem from="1730134954387" duration="103000" />
-      <workItem from="1730184890376" duration="3517000" />
+      <workItem from="1730184890376" duration="3846000" />
     </task>
     <task id="LOCAL-00003" summary="Début page d'accueil emplyé + navbar">
       <option name="closed" value="true" />
@@ -255,7 +241,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729956033758</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Modification formulaire et modal conditions">
+      <option name="closed" value="true" />
+      <created>1730189471979</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1730189471979</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -280,6 +274,7 @@
     <MESSAGE value="Fin page d'accueil employé + navbar" />
     <MESSAGE value="Création Classe Entité User + repository, Installation des bundles pour création de formulaire d'enregistrement et vérification email, création du controller et des templates pour le formulaire d'enregistrement de nouveau compte." />
     <MESSAGE value="Début création formulaire d'enregistrement" />
-    <option name="LAST_COMMIT_MESSAGE" value="Début création formulaire d'enregistrement" />
+    <MESSAGE value="Modification formulaire et modal conditions" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modification formulaire et modal conditions" />
   </component>
 </project>
