@@ -21,8 +21,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 const imagesContext = require.context('../assets/images', true, /\.(png|jpg|jpeg|gif|ico|svg|webp)$/);
 imagesContext.keys().forEach(imagesContext);
 
-// Navbar Top & Bottom
 $(document).ready(function() {
+    // Navbar Top & Footer Bottom
     // A l'ouverture des navbar, on change la couleur de fond, on cache le logo et on modifie la taille des colonnes
     $('#navbar-togglerTop').click(function() {
         $('#offcanvasNavbarTop').css("background", "linear-gradient(90deg, rgba(106, 115, 171, 0.85) 50%, rgba(43, 46, 69, 0.85) 100%)");
@@ -46,6 +46,32 @@ $(document).ready(function() {
     $('#offcanvasNavbarBottom').on('hidden.bs.offcanvas', function () {
         $('#offcanvasNavbarBottom').css("background", "");
         $('#col-5-bottom').after('<div id="col-2-bottom" class="col-2" style="width: 7.5rem"></div>');
+    });
+    // Masquer le mot de passe de la page de connexion et d'inscription
+    $('#togglePassword').on('click', function () {
+        const passwordField = $('#password');
+        const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+        passwordField.attr('type', type);
+        $(this).toggleClass('bi-eye bi-eye-slash');
+    });
+    $('#toggleConfirmPassword').on('click', function () {
+        const passwordField = $('#confirmPassword');
+        const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+        passwordField.attr('type', type);
+        $(this).toggleClass('bi-eye bi-eye-slash');
+    });
+
+    // Vérification de la case à cocher des conditions générales d'utilisation
+    $('.btn-register').click(function(event) {
+        const checkbox = $("input[name='registration_form[agreeTerms]']");
+        const message = $(".checkbox-error");
+
+        if (!checkbox.is(":checked")) {
+            event.preventDefault();
+            message.show();
+        } else {
+            message.hide();
+        }
     });
 });
 

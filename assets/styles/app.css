@@ -93,6 +93,7 @@ html, body {
 
 #welcome {
   font-family: Courgette, cursive;
+  color: #6A73AB;
   font-size: 2.7rem;
   opacity: 0.8;
 }
@@ -154,6 +155,147 @@ html, body {
   padding: 5px;
   transform: rotate(-45deg);
   border-radius: 4px;
+}
+
+/* Page Nouveau compte*/
+
+.form-group {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.form-control {
+  border: 2px solid #6A73AB;
+  transition: all 0.2s ease;
+  padding-top: 20px;
+  font-size: 16px;
+}
+
+.form-control:hover {
+  background-color: #f2f2f2;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 4px rgba(106, 115, 171, 0.40);
+  border: 2px solid #6A73AB;
+  background-color: #f2f2f2;
+}
+
+.custom-label {
+  position: absolute;
+  bottom: 14px;
+  left:14px;
+  color: #6A73AB;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
+
+.form-control:focus + .custom-label,
+.form-control:not(:placeholder-shown) + .custom-label {
+  bottom: 34px;
+  font-size: 12px;
+}
+
+#togglePassword, #toggleConfirmPassword{
+  position: absolute;
+  top:17px;
+  left: 90%;
+  z-index: 10;
+  color: #6A73AB;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  opacity: 0;
+  position: absolute;
+  left: -9999px;
+}
+
+.custom-checkbox .checkbox-label {
+  position: relative;
+  padding-left: 20px;
+  font-size: 0.9rem;
+}
+
+.custom-checkbox .checkbox-label:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: calc(50% - 8px);
+  width: 16px;
+  height: 16px;
+  border: 2px solid #6A73AB;
+  background-color: white;
+  border-radius: 4px;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checkbox-label:before {
+  background-color: #6A73AB;
+  border: 2px solid #6A73AB;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checkbox-label:after {
+  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='16' height='16' fill='white'%3E%3Cpath d='M18 6L6 18M6 6l12 12' stroke='white' stroke-width='2'/%3E%3C/svg%3E");
+  position: absolute;
+  left: 0;
+  top: calc(50% - 8px);
+}
+
+.checkbox-label .btn {
+  transition: none;
+}
+
+.checkbox-label .btn:hover {
+  color: #fd7e14 !important;
+  text-decoration: underline;
+}
+
+.btn-register ,.btn-modal {
+  background-color: #6A73AB;
+  color: white;
+  border: 2px solid #6A73AB;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-register:hover, .btn-modal:hover {
+  background-color: white;
+  color: #6A73AB;
+  border: 2px solid #6A73AB;
+}
+
+.modal-content {
+  border: 2px solid #6A73AB;
+  border-radius: 6px;
+}
+
+.modal-title {
+  color: #6A73AB;
+}
+
+.border-register {
+  border-top: 2px solid #6A73AB;
+  border-bottom: 2px solid #6A73AB;
+  border-left: 2px solid #6A73AB;
+  border-right: 2px solid #6A73AB;
+}
+
+.border-register-img {
+  border-top: 2px solid #6A73AB;
+  border-bottom: 2px solid #6A73AB;
+  border-right: 2px solid #6A73AB;
+}
+
+.title-nouveau-compte {
+  font-family: Courgette, cursive;
+  color: #6A73AB;
+  font-size: 2rem;
+  opacity: 0.8;
 }
 
 /* Media queries */
