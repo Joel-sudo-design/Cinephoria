@@ -298,19 +298,86 @@ html, body {
   opacity: 0.8;
 }
 
+/* Compte créé */
+
+.btn-account-created {
+  transition: none;
+}
+
+.btn-account-created:hover {
+  color: #fd7e14 !important;
+  text-decoration: underline;
+}
+
 /* Media queries */
 
 @media (min-width: 1921px) {
+
+  .bi.bi-eye, .bi.bi-eye-slash {
+    font-size: 1.2rem;
+  }
+
+  .form-control {
+    padding-top: 22px;
+    font-size: 1.1rem;
+  }
+
+  .custom-label {
+    font-size: 1.2rem !important;
+  }
+
+  .form-control:focus + .custom-label,
+  .form-control:not(:placeholder-shown) + .custom-label {
+    bottom: 34px;
+    font-size: 0.9rem !important;
+  }
+
+  .custom-checkbox .checkbox-label:before {
+    top: calc(50% - 10px);
+    width: 20px;
+    height: 20px;
+  }
+
+  .custom-checkbox input[type="checkbox"]:checked + .checkbox-label:after {
+    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20' fill='white'%3E%3Cpath d='M18 6L6 18M6 6l12 12' stroke='white' stroke-width='2'/%3E%3C/svg%3E");
+    top: calc(50% - 10px);
+  }
+
+  .conditions {
+    margin-left: 0.4rem;
+  }
+
+  .title-nouveau-compte {
+    font-size: 2.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .btn-register {
+    font-size: 1.5rem !important;
+  }
+
+  .checkbox-label {
+    font-size: 1rem !important;
+  }
+
+  .custom-checkbox .btn {
+    font-size: 1rem !important;
+  }
+
+  #togglePassword, #toggleConfirmPassword{
+    top:14px;
+    left: 93%;
+  }
 
   .custom-next, .custom-prev {
     width: 60px !important;
     height: 60px !important;
   }
 
-    .custom-icon-prev, .custom-icon-next {
+  .custom-icon-prev, .custom-icon-next {
         width: 40px !important;
         height: 40px !important;
-    }
+  }
 
   #horaires {
     font-size: 2.1rem !important;
@@ -329,7 +396,7 @@ html, body {
     padding-bottom: 0.6rem !important;
   }
 
-  .bi {
+  .navbar .bi {
     font-size: 3rem !important;
   }
 
@@ -406,6 +473,10 @@ html, body {
 
 @media (max-width: 992px) {
 
+  .border-register-img {
+    display: none;
+  }
+
   #welcome {
     font-size: 3rem;
   }
@@ -432,6 +503,10 @@ html, body {
 }
 
 @media (max-width: 992px) and (orientation: landscape) {
+
+  .border-register-img {
+    display: none;
+  }
 
   #welcome {
     font-size: 2rem;
@@ -460,6 +535,10 @@ html, body {
 
 @media (max-width: 768px) {
 
+  .border-register-img {
+    display: none;
+  }
+
   #welcome {
     font-size: 2.5rem;
   }
@@ -487,6 +566,10 @@ html, body {
 
 @media (max-width: 768px) and (orientation: landscape) {
 
+  .border-register-img {
+    display: none;
+  }
+
   #welcome {
     font-size: 2rem;
   }
@@ -513,6 +596,15 @@ html, body {
 }
 
 @media (max-width: 576px) {
+
+  .custom-checkbox .checkbox-label {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .border-register-img {
+    display: none;
+  }
 
   #welcome {
     font-size: 2rem !important;

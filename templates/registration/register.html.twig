@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col-3 align-content-center border-register">
+            <div class="col-11 col-sm-8 col-md-7 col-lg-5 col-xl-5 col-xxl-3 align-content-center border-register">
                 <div class="text-center mb-2 title-nouveau-compte">Nouveau compte</div>
                 <div class="row text-center justify-content-center">
                     <div class="col-9 text-danger mb-2">
@@ -84,7 +84,7 @@
                         <div class="col-9 p-0">
                             <div class="custom-checkbox">
                                 {{ form_widget(registrationForm.agreeTerms) }}
-                                <label class="checkbox-label d-flex align-items-center" for="{{ registrationForm.agreeTerms.vars.id }}">J'accepte les conditions d'utilisation,
+                                <label class="checkbox-label d-flex align-items-center justify-content-center" for="{{ registrationForm.agreeTerms.vars.id }}"><span class="conditions">J'accepte les conditions d'utilisation,</span>
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn p-0" style="font-size: 0.9rem; color: #6A73AB" data-bs-toggle="modal" data-bs-target="#exampleModal">ici</button>
                                 </label>
@@ -113,13 +113,13 @@
                 </div>
                 {{ form_end(registrationForm) }}
             </div>
-            <div class="col-3 border-register-img p-0">
+            <div class="col-11 col-sm-8 col-md-7 col-lg-5 col-xl-5 col-xxl-3 border-register-img p-0">
                 <img class="img-fluid" src="{{ asset('build/images/Cinema.jpg')}}" alt="cinéma">
             </div>
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 1200">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
