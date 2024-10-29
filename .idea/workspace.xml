@@ -5,13 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modification formulaire et modal conditions">
-      <change afterPath="$PROJECT_DIR$/templates/registration/confirmation_creation_account.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/SecurityController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Security/UserAuthenticator.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/security/login.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/default_user.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/default_user.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dictionaries/joeld.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/joeld.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/RegistrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegistrationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/accueil/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/accueil_admin/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil_admin/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/accueil_employe/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil_employe/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/accueil_user/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil_user/index.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/baseMonEspace.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseMonEspace.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/registration/register.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/register.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration/confirmation_creation_account.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/confirmation_creation_account.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,7 +161,7 @@
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;JavaScript Debug.test.html.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Page__nouveau__compte&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Page__connexion&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/Cinephoria/templates&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -216,6 +224,8 @@
       <workItem from="1730119975772" duration="14654000" />
       <workItem from="1730134954387" duration="103000" />
       <workItem from="1730184890376" duration="13244000" />
+      <workItem from="1730212807712" duration="744000" />
+      <workItem from="1730213570326" duration="7861000" />
     </task>
     <task id="LOCAL-00003" summary="Début page d'accueil emplyé + navbar">
       <option name="closed" value="true" />

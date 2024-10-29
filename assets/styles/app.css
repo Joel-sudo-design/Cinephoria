@@ -255,7 +255,7 @@ html, body {
   text-decoration: underline;
 }
 
-.btn-register ,.btn-modal {
+.btn-register ,.btn-modal, .btn-connexion {
   background-color: #6A73AB;
   color: white;
   border: 2px solid #6A73AB;
@@ -263,7 +263,7 @@ html, body {
   transition: all 0.2s ease;
 }
 
-.btn-register:hover, .btn-modal:hover {
+.btn-register:hover, .btn-modal:hover, .btn-connexion:hover {
   background-color: white;
   color: #6A73AB;
   border: 2px solid #6A73AB;
@@ -307,6 +307,22 @@ html, body {
 .btn-account-created:hover {
   color: #fd7e14 !important;
   text-decoration: underline;
+}
+
+/* Page connexion */
+
+.title-connexion {
+  font-family: Courgette, cursive;
+  color: #6A73AB;
+  font-size: 2rem;
+  opacity: 0.8;
+}
+
+.title-happy {
+  font-family: Courgette, cursive;
+  color: #6A73AB;
+  font-size: 1.2rem;
+  opacity: 0.8;
 }
 
 /* Media queries */

@@ -65,7 +65,6 @@ $(document).ready(function() {
     $('.btn-register').click(function(event) {
         const checkbox = $("input[name='registration_form[agreeTerms]']");
         const message = $(".checkbox-error");
-
         if (!checkbox.is(":checked")) {
             event.preventDefault();
             message.show();
