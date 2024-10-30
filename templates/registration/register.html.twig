@@ -3,26 +3,28 @@
 {% block title %}Création compte{% endblock %}
 
 {% block body %}
-    <div id="container-accueil" class="container-fluid align-content-center">
-        <div class="row text-center mb-2">
-            <div class="col-12">
-                {% for flash_error in app.flashes('verify_email_error') %}
-                    <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-                {% endfor %}
-            </div>
-        </div>
+    <div id="container-accueil" class="container-fluid align-content-center justify-content-center">
         <div class="row justify-content-center">
-            <div class="col-11 col-sm-8 col-md-7 col-lg-5 col-xl-5 col-xxl-3 align-content-center border-register">
-                <div class="text-center mb-2 title-nouveau-compte">Nouveau compte</div>
-                <div class="row text-center justify-content-center">
-                    <div class="col-9 text-danger mb-2">
+            <div class="col-11 col-sm-8 col-md-7 col-lg-5 col-xl-5 col-xxl-3 border-register align-content-center">
+                <div class="row justify-content-center my-3">
+                    <div class="col-9 title-nouveau-compte text-center p-0">Nouveau compte</div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-9 p-0">
+                        {% for flash_error in app.flashes('verify_email_error') %}
+                            <div class="text-danger text-center" role="alert">{{ flash_error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-9 p-0">
                         {% for error in registrationForm.vars.errors %}
-                            {{ error.message }}
+                            <div class="text-danger text-center" role="alert">{{ error.message }}</div>
                         {% endfor %}
                     </div>
                 </div>
                 {{ form_start(registrationForm) }}
-                    <div class="row justify-content-center align-items-center">
+                    <div class="row justify-content-center">
                         <div class="col-3 form-group p-0">
                             {{ form_widget(registrationForm.firstname, {'attr': {'class': 'form-control', 'placeholder': ''}}) }}
                             <label class="custom-label">Prénom</label>
@@ -33,84 +35,87 @@
                         </div>
                         <div class="col-3 form-group p-0">
                             {{ form_widget(registrationForm.username, {'attr': {'class': 'form-control', 'placeholder': ''}}) }}
-                            <label class="custom-label">
-                                Pseudo
-                            </label>
+                            <label class="custom-label">Pseudo</label>
                         </div>
                     </div>
-                    <div class="row justify-content-center align-items-center-center">
-                        <div class="col-9 text-danger">
+                    <div class="row justify-content-center">
+                        <div class="col-9 p-0">
                             {% for error in registrationForm.username.vars.errors %}
-                                {{ error.message }}
+                                <div class="text-danger text-center" role="alert">{{ error.message }}</div>
                             {% endfor %}
                         </div>
                     </div>
-                    <div class="row justify-content-center align-items-center-center">
+                    <div class="row justify-content-center">
                         <div class="col-9 form-group p-0">
                             {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': '', 'autocomplete': '', 'id': 'email'}}) }}
                             <label class="custom-label" for="email">Email</label>
                         </div>
-                        <div class="col-9 text-danger">
+                        <div class="col-9 p-0">
                             {% for error in registrationForm.email.vars.errors %}
-                                {{ error.message }}
+                                <div class="text-danger text-center" role="alert">{{ error.message }}</div>
                             {% endfor %}
                         </div>
                     </div>
-                    <div class="row justify-content-center align-items-center">
+                    <div class="row justify-content-center">
                         <div class="col-9 form-group p-0">
                             <i class="bi bi-eye" id="togglePassword" style="cursor: pointer"></i>
                             <input type="password" name="{{ field_name(registrationForm.plainPassword.first) }}" class="form-control" id="password" placeholder="" autocomplete="password" required />
                             <label class="custom-label" for="password">Mot de passe</label>
                         </div>
-                        <div class="col-9 text-danger">
+                        <div class="col-9 p-0">
                             {% for error in registrationForm.plainPassword.first.vars.errors %}
-                                {{ error.message }}
+                                <div class="text-danger text-center" role="alert">{{ error.message }}</div>
                             {% endfor %}
                         </div>
                     </div>
-                    <div class="row justify-content-center align-items-center">
-                    <div class="col-9 form-group p-0">
-                        <i class="bi bi-eye" id="toggleConfirmPassword" style="cursor: pointer"></i>
-                        <input type="password" name="{{ field_name(registrationForm.plainPassword.second) }}" class="form-control" id="confirmPassword" placeholder="" autocomplete="confirm-password" required />
-                        <label class="custom-label" for="confirmPassword">Confirmez le mot de passe</label>
+                    <div class="row justify-content-center">
+                        <div class="col-9 form-group p-0">
+                            <i class="bi bi-eye" id="toggleConfirmPassword" style="cursor: pointer"></i>
+                            <input type="password" name="{{ field_name(registrationForm.plainPassword.second) }}" class="form-control" id="confirmPassword" placeholder="" autocomplete="confirm-password" required />
+                            <label class="custom-label" for="confirmPassword">Confirmez le mot de passe</label>
+                        </div>
                     </div>
-                    <div class="col-9 text-danger">
-                        {% for error in registrationForm.plainPassword.second.vars.errors %}
-                            {{ error.message }}
-                        {% endfor %}
+                    <div class="row justify-content-center">
+                        <div class="col-9 p-0">
+                            {% for error in registrationForm.plainPassword.second.vars.errors %}
+                                <div class="text-danger text-center" role="alert">{{ error.message }}</div>
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
-                    <div class="row justify-content-center align-items-center">
+                    <div class="row justify-content-center">
                         <div class="col-9 p-0">
                             <div class="custom-checkbox">
                                 {{ form_widget(registrationForm.agreeTerms) }}
-                                <label class="checkbox-label d-flex align-items-center justify-content-center" for="{{ registrationForm.agreeTerms.vars.id }}"><span class="conditions">J'accepte les conditions d'utilisation,</span>
+                                <label class="checkbox-label d-flex align-items-center justify-content-center" for="{{ registrationForm.agreeTerms.vars.id }}">
+                                    <span class="conditions">J'accepte les conditions d'utilisation,</span>
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn p-0" style="font-size: 0.9rem; color: #6A73AB" data-bs-toggle="modal" data-bs-target="#exampleModal">ici</button>
                                 </label>
                             </div>
-                            <div class="col-9 text-danger">
-                                {% for error in registrationForm.agreeTerms.vars.errors %}
-                                    {{ error.message }}
-                                {% endfor %}
-                            </div>
-                            <div class="col-9 text-danger checkbox-error" style="display: none">
-                                Veuillez cocher cette case pour continuer
-                            </div>
                         </div>
                     </div>
-                    <div class="row justify-content-center align-items-center">
-                        <div class="col-9 form-floating px-0 py-3 text-center">
+                    <div class="row justify-content-center">
+                        <div class="col-9 p-0">
+                            {% for error in registrationForm.agreeTerms.vars.errors %}
+                                <div class="text-danger text-center" role="alert">{{ error.message }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-9 text-danger checkbox-error p-0" style="display: none">Veuillez cocher cette case pour continuer</div>
+                    </div>
+                    <div class="row justify-content-center my-3">
+                        <div class="col-9 form-floating text-center p-0">
                             <button type="submit" class="btn w-100 btn-register fs-5">CREATION</button>
                         </div>
                     </div>
-                <div class="row justify-content-center">
-                    <div class="col-9 text-center" style="color: #6A73AB">
-                        {% for message in app.flashes('success') %}
-                            <p>{{ message }}</p>
-                        {% endfor %}
+                    <div class="row justify-content-center">
+                        <div class="col-9 text-center p-0" style="color: #6A73AB">
+                            {% for message in app.flashes('success') %}
+                                <p>{{ message }}</p>
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
                 {{ form_end(registrationForm) }}
             </div>
             <div class="col-11 col-sm-8 col-md-7 col-lg-5 col-xl-5 col-xxl-3 border-register-img p-0">

@@ -260,6 +260,7 @@ html, body {
   color: white;
   border: 2px solid #6A73AB;
   border-radius: 6px;
+  padding: 0.6rem;
   transition: all 0.2s ease;
 }
 
@@ -320,9 +321,28 @@ html, body {
 
 .title-happy {
   font-family: Courgette, cursive;
-  color: #6A73AB;
   font-size: 1.2rem;
   opacity: 0.8;
+}
+
+.link-register {
+  text-decoration: none;
+  color: #6A73AB;
+}
+
+.link-register:hover {
+  text-decoration: underline;
+  color: #fd7e14;
+}
+
+.link-reset-password {
+  text-decoration: none;
+  color: #6A73AB;
+}
+
+.link-reset-password:hover {
+  text-decoration: underline;
+  color: #fd7e14;
 }
 
 /* Media queries */

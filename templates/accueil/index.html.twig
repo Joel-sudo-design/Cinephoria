@@ -11,16 +11,14 @@
 {% endblock %}
 
 {% block extra_content_mon_espace %}
-    <ul class="dropdown-menu dropdown-menu-end">
-        <li><a class="dropdown-item d-flex align-items-center justify-content-start" href="{{ path('app_login') }}">
-                <i id="btn-connexion-inscription" class="bi bi-box-arrow-in-right fs-4 ms-2"></i><span class="ms-2 me-3">Connexion</span>
-            </a>
-        </li>
-        <li><a class="dropdown-item d-flex align-items-center justify-content-start" href="{{ path('app_register') }}">
-                <i id="btn-connexion-inscription" class="bi bi-person-add fs-4 ms-2"></i><span class="ms-2 me-3">Inscription</span>
-            </a>
-        </li>
-    </ul>
+    <li><a class="dropdown-item d-flex align-items-center justify-content-start" href="{{ path('app_login') }}">
+            <i id="btn-connexion-inscription" class="bi bi-box-arrow-in-right fs-4 ms-2"></i><span class="ms-2 me-3">Connexion</span>
+        </a>
+    </li>
+    <li><a class="dropdown-item d-flex align-items-center justify-content-start" href="{{ path('app_register') }}">
+            <i id="btn-connexion-inscription" class="bi bi-person-add fs-4 ms-2"></i><span class="ms-2 me-3">Inscription</span>
+        </a>
+    </li>
 {% endblock %}
 
 {% block body %}
