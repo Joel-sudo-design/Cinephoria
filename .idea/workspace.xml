@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifications pas de connexion + erreurs">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/joeld.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/joeld.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/accueil/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/accueil_admin/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil_admin/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/accueil_employe/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil_employe/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/registration/register.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/register.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/security/login.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/login.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifications diverses" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -223,7 +213,7 @@
       <workItem from="1730221534199" duration="37000" />
       <workItem from="1730221591525" duration="86000" />
       <workItem from="1730273036652" duration="100000" />
-      <workItem from="1730273161262" duration="7797000" />
+      <workItem from="1730273161262" duration="7910000" />
     </task>
     <task id="LOCAL-00003" summary="Début page d'accueil emplyé + navbar">
       <option name="closed" value="true" />
@@ -281,7 +271,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730221563823</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Modifications diverses">
+      <option name="closed" value="true" />
+      <created>1730281156560</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1730281156560</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -308,6 +306,7 @@
     <MESSAGE value="Début création formulaire d'enregistrement" />
     <MESSAGE value="Modification formulaire et modal conditions" />
     <MESSAGE value="Modifications pas de connexion + erreurs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modifications pas de connexion + erreurs" />
+    <MESSAGE value="Modifications diverses" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modifications diverses" />
   </component>
 </project>
