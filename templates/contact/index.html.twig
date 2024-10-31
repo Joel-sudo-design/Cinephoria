@@ -1,0 +1,67 @@
+{% extends 'baseContact.html.twig' %}
+
+{% block extra_content_bouton_contact %}
+    <li class="nav-item mx-4 my-4 text-white">
+        <a class="nav-link d-flex align-items-center justify-content-center active" href="{{ path('app_contact') }}">
+            <i class="bi bi-envelope fs-3 ms-2"></i><span class="mx-2">Contact</span>
+        </a>
+    </li>
+{% endblock %}
+
+{% block extra_content_mon_espace %}
+    <li><a class="dropdown-item d-flex align-items-center justify-content-start" href="{{ path('app_login') }}">
+            <i id="btn-connexion-inscription" class="bi bi-box-arrow-in-right fs-4 ms-2"></i><span class="ms-2 me-3">Connexion</span>
+        </a>
+    </li>
+    <li><a class="dropdown-item d-flex align-items-center justify-content-start" href="{{ path('app_register') }}">
+            <i id="btn-connexion-inscription" class="bi bi-person-add fs-4 ms-2"></i><span class="ms-2 me-3">Inscription</span>
+        </a>
+    </li>
+{% endblock %}
+
+{% block body %}
+    <div id="container-accueil" class="container-fluid align-content-center">
+        <div class="row justify-content-center my-3">
+            <div class="col-11 col-sm-8 col-md-7 col-lg-5 col-xl-5 col-xxl-3 align-content-center border-register">
+                <div class="row text-center justify-content-center my-3 mb-3">
+                    <div class="col-9 text-center title-connexion">Contactez-nous</div>
+                </div>
+                {{ form_start(contactForm) }}
+                    <div class="row justify-content-center">
+                        <div class="col-9 form-group" style="padding:0 12rem 0 0">
+                            {{ form_widget(contactForm.username, {'attr': {'class': 'form-control', 'placeholder': '', 'autocomplete': '', 'id': 'username'}}) }}
+                            <label class="custom-label" for="username">Pseudo</label>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-9 form-group" style="padding:0 6rem 0 0">
+                            {{ form_widget(contactForm.object, {'attr': {'class': 'form-control', 'placeholder': '', 'autocomplete': '', 'id': 'Object'}}) }}
+                            <label class="custom-label" for="Object">Objet de la demande</label>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-9 form-group p-0">
+                            <textarea name="{{ field_name(contactForm.description) }}" class="form-control" id="description" placeholder="" rows="5" required></textarea>
+                            <label for="description" class="custom-label-contact">Décrivez votre demande</label>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center my-3">
+                        <div class="col-9 form-floating text-center p-0">
+                            <button class="btn btn-connexion w-100 fs-5" type="submit">ENVOYER</button>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-9 text-center p-0" style="color: #6A73AB">
+                            {% for message in app.flashes('success') %}
+                                <p>{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {{ form_end(contactForm) }}
+            </div>
+            <div class="col-11 col-sm-8 col-md-7 col-lg-5 col-xl-5 col-xxl-3 border-register-img p-0">
+                <img class="img-fluid" src="{{ asset('build/images/Cinema.jpg')}}" alt="cinéma">
+            </div>
+        </div>
+    </div>
+{% endblock %}
