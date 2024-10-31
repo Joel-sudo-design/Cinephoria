@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Fin page de reset password">
-      <change beforePath="$PROJECT_DIR$/templates/reset_password/request.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/reset_password/request.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/security/login.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/login.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Fin page de reset password" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -152,7 +149,7 @@
     "DefaultHtmlFileTemplate": "HTML File",
     "JavaScript Debug.test.html.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "dev",
+    "git-widget-placeholder": "Page__contact",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/xampp/htdocs/Cinephoria/templates/reset_password",
     "node.js.detected.package.eslint": "true",
