@@ -197,7 +197,7 @@ html, body {
   font-size: 12px;
 }
 
-#togglePassword, #toggleConfirmPassword{
+#togglePassword, #toggleConfirmPassword, #toggleProvisionalPassword {
   position: absolute;
   top:16px;
   left: 90%;
@@ -345,6 +345,15 @@ html, body {
   color: #fd7e14;
 }
 
+/* Page réinitialisation du mot de passe */
+
+.title-reset {
+  font-family: Courgette, cursive;
+  color: #6A73AB;
+  font-size: 1.6rem;
+  opacity: 0.8;
+}
+
 /* Media queries */
 
 @media (min-width: 1921px) {
@@ -400,7 +409,7 @@ html, body {
     font-size: 1rem !important;
   }
 
-  #togglePassword, #toggleConfirmPassword{
+  #togglePassword, #toggleConfirmPassword, #toggleProvisionalPassword{
     top:14px;
     left: 93%;
   }

@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -32,8 +33,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
+
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\Column]
+    private bool $passwordMustChange = false;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $username = null;
@@ -166,6 +171,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getPasswordMustChange(): bool
+    {
+        return $this->passwordMustChange;
+    }
+
+    public function setPasswordMustChange(bool $passwordMustChange): static
+    {
+        $this->passwordMustChange = $passwordMustChange;
 
         return $this;
     }

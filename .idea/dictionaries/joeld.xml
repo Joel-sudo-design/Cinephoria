@@ -4,10 +4,12 @@
       <w>accepter</w>
       <w>administrateur</w>
       <w>adresse</w>
+      <w>autre</w>
       <w>caractère</w>
       <w>caractères</w>
       <w>cette</w>
       <w>chiffre</w>
+      <w>choisir</w>
       <w>classe</w>
       <w>cocher</w>
       <w>compte</w>
@@ -40,6 +42,7 @@
       <w>mployé</w>
       <w>oublié</w>
       <w>peut</w>
+      <w>provisoire</w>
       <w>prénom</w>
       <w>succès</w>
       <w>utilisateur</w>

@@ -4,37 +4,25 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
 use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class RegistrationFormType extends AbstractType
+class ChangePasswordFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('firstname')
-            ->add('name')
-            ->add('username')
-            ->add('email', EmailType::class, [
-                'constraints' => [
-                    new Email(['message' => 'Veuillez entrer une adresse email valide']),
-                ],
-            ])
-            ->add('agreeTerms', CheckboxType::class, [
+            ->add('provisionalPassword', PasswordType::class, [
                 'mapped' => false,
                 'constraints' => [
-                    new IsTrue([
-                        'message' => 'Vous devez accepter les conditions générales d\'utilisation',
+                    new NotBlank([
+                        'message' => 'Merci d\'entrer votre mot de passe provisoire',
                     ]),
                 ],
             ])
@@ -55,8 +43,12 @@ class RegistrationFormType extends AbstractType
                         'pattern' => '/(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/',
                         'message' => 'Votre mot de passe doit contenir au moins une majuscule, un chiffre et un caractère spécial',
                     ]),
+                    new NotCompromisedPassword([
+                        'message' => 'Ce mot de passe est trop commun. Veuillez en choisir un autre.',
+                    ]),
                 ],
-            ]);
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -60,6 +60,13 @@ $(document).ready(function() {
         passwordField.attr('type', type);
         $(this).toggleClass('bi-eye bi-eye-slash');
     });
+    $('#toggleProvisionalPassword').on('click', function () {
+        const passwordField = $('#provisional-password');
+        const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+        passwordField.attr('type', type);
+        $(this).toggleClass('bi-eye bi-eye-slash');
+    });
+
 
     // Vérification de la case à cocher des conditions générales d'utilisation
     $('.btn-register').click(function(event) {

@@ -39,6 +39,10 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         $user = $this->userProvider->loadUserByIdentifier($email);
 
         $password = $request->getPayload()->getString('password');
+
+        if ($user->getPasswordMustChange()) {
+            throw new AuthenticationException('Mot de passe provisoire généré');
+        }
         if (!password_verify($password, $user->getPassword())) {
             throw new AuthenticationException('Mot de passe incorrect');
         }
@@ -47,7 +51,8 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
             new UserBadge($email),
             new PasswordCredentials($request->getPayload()->getString('password')),
             [
-                new CsrfTokenBadge('authenticate', $request->getPayload()->getString('_csrf_token')),            ]
+                new CsrfTokenBadge('authenticate', $request->getPayload()->getString('_csrf_token')),
+            ]
         );
     }
 
@@ -68,7 +73,10 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
-        if ($exception->getMessage() === 'Mot de passe incorrect') {
+        if ($exception->getMessage() === 'Mot de passe provisoire généré') {
+            $request->getSession()->set('authentication_error', 'Le mot de passe doit être changé, consultez votre boîte mail. Si vous n\'avez pas reçu de mail, contactez-nous');
+        }
+        else if ($exception->getMessage() === 'Mot de passe incorrect') {
             $request->getSession()->set('authentication_error', 'Mot de passe incorrect');
         } else {
             $request->getSession()->set('authentication_error', 'Email incorrect');
