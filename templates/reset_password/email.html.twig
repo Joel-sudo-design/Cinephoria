@@ -2,7 +2,7 @@
 
 <p>Votre mot de passe temporaire est : {{ temporaryPassword }}</p>
 
-<p>Suivez ce lien pour réinitialiser votre mot de passe</p>
+<p>Suivez ce lien pour réinitialiser votre mot de passe:</p>
 
 <a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
 
