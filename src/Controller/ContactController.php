@@ -16,7 +16,7 @@ class ContactController extends AbstractController
     public function __construct(private EmailContact $emailTicket)
     {
     }
-    #[Route('/contact', name: 'app_contact')]
+    #[Route('/accueil/contact', name: 'app_contact')]
     public function index(Request $request): Response
     {
         $form = $this->createForm(ContactType::class);

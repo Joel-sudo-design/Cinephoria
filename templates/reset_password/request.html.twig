@@ -19,7 +19,7 @@
                 {{ form_start(requestForm) }}
                     <div class="row justify-content-center">
                         <div class="col-9 form-group p-0 mt-3">
-                            {{ form_widget(requestForm.email, {'attr': {'class': 'form-control', 'placeholder': '', 'autocomplete': '', 'id': 'request_email'}}) }}
+                            {{ form_widget(requestForm.email, {'attr': {'class': 'form-control', 'placeholder': '', 'autocomplete': 'email', 'id': 'request_email'}}) }}
                             <label class="custom-label" for="request_email">Email</label>
                         </div>
                         <div class="col-9 p-0">
