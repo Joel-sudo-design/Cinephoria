@@ -43,9 +43,6 @@ class RegistrationFormType extends AbstractType
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les deux mots de passe ne correspondent pas',
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Merci d\'entrer un mot de passe',
-                    ]),
                     new Length([
                         'min' => 8,
                         'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',

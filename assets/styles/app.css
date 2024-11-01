@@ -193,7 +193,7 @@ html, body {
 
 .form-control:focus + .custom-label,
 .form-control:not(:placeholder-shown) + .custom-label {
-  bottom: 34px;
+  bottom: 35px;
   font-size: 12px;
 }
 
@@ -352,6 +352,24 @@ html, body {
   color: #6A73AB;
   font-size: 1.6rem;
   opacity: 0.8;
+}
+
+/* Page Contact */
+
+.custom-label-contact {
+  position: absolute;
+  Top: 16px;
+  left:14px;
+  color: #6A73AB;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
+
+.form-control:focus + .custom-label-contact,
+.form-control:not(:placeholder-shown) + .custom-label-contact {
+  Top: 0;
+  font-size: 12px;
 }
 
 /* Media queries */

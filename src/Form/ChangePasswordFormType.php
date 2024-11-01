@@ -20,20 +20,12 @@ class ChangePasswordFormType extends AbstractType
         $builder
             ->add('provisionalPassword', PasswordType::class, [
                 'mapped' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Merci d\'entrer votre mot de passe provisoire',
-                    ]),
-                ],
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'mapped' => false,
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les deux mots de passe ne correspondent pas',
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Merci d\'entrer un mot de passe',
-                    ]),
                     new Length([
                         'min' => 8,
                         'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
@@ -44,7 +36,7 @@ class ChangePasswordFormType extends AbstractType
                         'message' => 'Votre mot de passe doit contenir au moins une majuscule, un chiffre et un caractère spécial',
                     ]),
                     new NotCompromisedPassword([
-                        'message' => 'Ce mot de passe est trop commun. Veuillez en choisir un autre.',
+                        'message' => 'Ce mot de passe est trop commun. Veuillez en choisir un autre',
                     ]),
                 ],
             ])
