@@ -10,55 +10,98 @@
     {% endblock %}
 </head>
 <body>
-<nav id="navbarTop" class="navbar navbar-expand-lg navbar-light fixed-top" style="height: 6rem; z-index: 1100">
-    <div class="container-fluid">
-        <button id="navbar-togglerTop" class="navbar-toggler text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarTop" aria-controls="offcanvasNavbarTop" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbarTop" aria-labelledby="offcanvasNavbarLabelTop">
-            <div class="offcanvas-header">
-                <img src="{{ asset('build/images/logo.svg')}}" class="img-fluid" style="width: 6rem; height: auto" alt="logo" />
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <nav id="navbarTop" class="navbar navbar-expand-lg navbar-light fixed-top" style="height: 6rem; z-index: 1100">
+        <div class="container-fluid">
+            <button id="navbar-togglerTop" class="navbar-toggler text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarTop" aria-controls="offcanvasNavbarTop" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbarTop" aria-labelledby="offcanvasNavbarLabelTop">
+                <div class="offcanvas-header">
+                    <img src="{{ asset('build/images/logo.svg')}}" class="img-fluid" style="width: 6rem; height: auto" alt="logo" />
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div id="offcanvas-bodyTop" class="row offcanvas-body align-items-center justify-content-center">
+                    <ul id="navbarLeft" class="col-5 navbar-nav align-items-center justify-content-center p-0">
+                        <li class="nav-item mx-4 my-4 text-white">
+                            <a class="nav-link d-flex align-items-center justify-content-center" aria-current="page" href="{{ path('app_accueil') }}">
+                                <i class="bi bi-house fs-3 ms-2"></i><span class="mx-2">Accueil</span>
+                            </a>
+                        </li>
+                        <li class="nav-item mx-4 my-4 text-white">
+                            <a id="btn-films" class="nav-link d-flex align-items-center justify-content-center" href="">
+                                <i class="bi bi-camera-video fs-3 ms-2"></i><span class="mx-2">Films</span>
+                            </a>
+                        </li>
+                        <li class="nav-item mx-4 my-4 text-white">
+                            <a class="nav-link d-flex align-items-center justify-content-center" href="">
+                                <i class="bi bi-ticket-perforated fs-3 ms-2"></i><span class="mx-2">Réservation</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <img id="logo" src="{{ asset('build/images/logo.svg')}}" class="col-2 img-fluid" style="width: 7.5rem; height: auto" alt="logo" />
+                    <ul id="navbarRight" class="col-5 navbar-nav align-items-center justify-content-center p-0">
+                        {% block extra_content_bouton_admin_employe %}{% endblock %}
+                        {% block extra_content_bouton_contact %}{% endblock %}
+                        <li class="nav-item dropdown mx-3 my-3 text-white">
+                            <a id="btn-mon-espace" class="nav-link dropdown-toggle d-flex align-items-center justify-content-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-circle fs-3 ms-2"></i><span class="mx-2">Mon espace</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                {% block extra_content_mon_espace %}{% endblock %}
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div id="offcanvas-bodyTop" class="row offcanvas-body align-items-center justify-content-center">
-                <ul id="navbarLeft" class="col-5 navbar-nav align-items-center justify-content-center p-0">
-                    <li class="nav-item mx-4 my-4 text-white">
-                        <a class="nav-link d-flex align-items-center justify-content-center" aria-current="page" href="{{ path('app_accueil') }}">
-                            <i class="bi bi-house fs-3 ms-2"></i><span class="mx-2">Accueil</span>
-                        </a>
-                    </li>
-                    <li class="nav-item mx-4 my-4 text-white">
-                        <a id="btn-films" class="nav-link d-flex align-items-center justify-content-center" href="">
-                            <i class="bi bi-camera-video fs-3 ms-2"></i><span class="mx-2">Films</span>
-                        </a>
-                    </li>
-                    <li class="nav-item mx-4 my-4 text-white">
-                        <a class="nav-link d-flex align-items-center justify-content-center" href="">
-                            <i class="bi bi-ticket-perforated fs-3 ms-2"></i><span class="mx-2">Réservation</span>
-                        </a>
-                    </li>
-                </ul>
-                <img id="logo" src="{{ asset('build/images/logo.svg')}}" class="col-2 img-fluid" style="width: 7.5rem; height: auto" alt="logo" />
-                <ul id="navbarRight" class="col-5 navbar-nav align-items-center justify-content-center p-0">
-                    {% block extra_content_bouton_admin_employe %}{% endblock %}
-                    {% block extra_content_bouton_contact %}{% endblock %}
-                    <li class="nav-item dropdown mx-3 my-3 text-white">
-                        <a id="btn-mon-espace" class="nav-link dropdown-toggle d-flex align-items-center justify-content-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-circle fs-3 ms-2"></i><span class="mx-2">Mon espace</span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            {% block extra_content_mon_espace %}{% endblock %}
-                        </ul>
-                    </li>
-                </ul>
+        </div>
+    </nav>
+    <div id="container-accueil" class="container-fluid align-content-center">
+        <div class="row justify-content-center my-3">
+            <div class="col-11 col-sm-8 col-md-7 col-lg-5 col-xl-5 col-xxl-3 align-content-center border-register">
+                <div class="row text-center justify-content-center my-4">
+                    <div class="col-9 text-center title-connexion">Contactez-nous</div>
+                </div>
+                {{ form_start(contactForm) }}
+                <div class="row justify-content-center">
+                    <div class="col-9 form-group" style="padding:0 12rem 0 0">
+                        {{ form_widget(contactForm.username, {'attr': {'class': 'form-control', 'placeholder': '', 'autocomplete': '', 'id': 'username'}}) }}
+                        <label class="custom-label" for="username">Pseudo</label>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-9 form-group" style="padding:0 6rem 0 0">
+                        {{ form_widget(contactForm.object, {'attr': {'class': 'form-control', 'placeholder': '', 'autocomplete': '', 'id': 'Object'}}) }}
+                        <label class="custom-label" for="Object">Objet de la demande</label>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-9 form-group p-0">
+                        <textarea name="{{ field_name(contactForm.description) }}" class="form-control" id="description" placeholder="" rows="5" required></textarea>
+                        <label for="description" class="custom-label-contact">Décrivez votre demande</label>
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-1 mb-4">
+                    <div class="col-9 form-floating text-center p-0">
+                        <button class="btn btn-connexion w-100 fs-5" type="submit">ENVOYER</button>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-9 text-center p-0" style="color: #6A73AB">
+                        {% for message in app.flashes('success') %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                {{ form_end(contactForm) }}
+            </div>
+            <div class="col-11 col-sm-8 col-md-7 col-lg-5 col-xl-5 col-xxl-3 border-register-img p-0">
+                <img class="img-fluid" src="{{ asset('build/images/Cinema.jpg')}}" alt="cinéma">
             </div>
         </div>
     </div>
-</nav>
-{% block body %}{% endblock %}
-{% block javascripts %}
-    {{ encore_entry_script_tags('app') }}
-{% endblock %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
 </body>
 <footer>
     <nav id="navbarBottom" class="navbar navbar-expand-lg navbar-light fixed-bottom" style="height: 10rem">

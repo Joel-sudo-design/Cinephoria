@@ -1,10 +1,18 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseFilms.html.twig' %}
 
-{% block title %}Accueil Utilisateur Cinéphoria{% endblock %}
+{% block title %}Films Employé Cinéphoria{% endblock %}
 
 {% block extra_content_bouton_accueil %}
     <li class="nav-item mx-4 my-4 text-white">
-        <a class="nav-link d-flex align-items-center justify-content-center active" aria-current="page" href="{{ path('app_accueil') }}">
+        <a class="nav-link d-flex align-items-center justify-content-center" aria-current="page" href="{{ path('app_accueil_employe') }}">
+            <i class="bi bi-house fs-3 ms-2"></i><span class="mx-2">Accueil</span>
+        </a>
+    </li>
+{% endblock %}
+
+{% block extra_content_bouton_films %}
+    <li class="nav-item mx-4 my-4 text-white">
+        <a class="nav-link d-flex align-items-center justify-content-center active" aria-current="page" href="{{ path('app_films_employe') }}">
             <i class="bi bi-house fs-3 ms-2"></i><span class="mx-2">Accueil</span>
         </a>
     </li>
@@ -12,7 +20,7 @@
 
 {% block extra_content_bouton_contact %}
     <li class="nav-item mx-4 my-4 text-white">
-        <a class="nav-link d-flex align-items-center justify-content-center" href="{{ path('app_contact_user') }}">
+        <a class="nav-link d-flex align-items-center justify-content-center" href="{{ path('app_contact_employe') }}">
             <i class="bi bi-envelope fs-3 ms-2"></i><span class="mx-2">Contact</span>
         </a>
     </li>

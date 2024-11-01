@@ -25,10 +25,10 @@ security:
             entry_point: form_login
 
     access_control:
-        - { path: '^/accueil', roles: PUBLIC_ACCESS }
-        - { path: ^/accueil/user, roles: ROLE_USER }
-        - { path: ^/accueil/admin, roles: ROLE_ADMIN }
-        - { path: ^/accueil/employe, roles: ROLE_EMPLOYE }
+        - { path: '^/', roles: PUBLIC_ACCESS }
+        - { path: ^/utilisateur, roles: ROLE_USER }
+        - { path: ^/administrateur, roles: ROLE_ADMIN }
+        - { path: ^/employe, roles: ROLE_EMPLOYE }
 
 when@test:
     security:

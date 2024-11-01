@@ -63,12 +63,15 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         $user = $token->getRoleNames();
-        if ($user == ['ROLE_ADMIN', 'ROLE_USER']) {
-            return new RedirectResponse($this->urlGenerator->generate('app_accueil_admin'));
-        } else if ($user == ['ROLE_EMPLOYE','ROLE_USER']) {
-            return new RedirectResponse($this->urlGenerator->generate('app_accueil_employe'));
-        } else
+        if ($user == ['ROLE_USER']) {
             return new RedirectResponse($this->urlGenerator->generate('app_accueil_user'));
+        } else if ($user == ['ROLE_EMPLOYE']) {
+            return new RedirectResponse($this->urlGenerator->generate('app_accueil_employe'));
+        } else if ($user == ['ROLE_ADMIN']) {
+            return new RedirectResponse($this->urlGenerator->generate('app_accueil_admin'));
+        } else {
+            return new RedirectResponse($this->urlGenerator->generate('app_accueil'));
+        }
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
