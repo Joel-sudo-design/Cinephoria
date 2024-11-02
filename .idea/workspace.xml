@@ -4,33 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Fin page de reset password">
-      <change afterPath="$PROJECT_DIR$/src/Controller/FilmsController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/baseFilms.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/contact/admin.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/contact/employe.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/contact/user.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/films/admin.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/films/employe.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/films/index.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/films/user.html.twig" afterDir="false" />
+    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifications page films">
+      <change afterPath="$PROJECT_DIR$/templates/admin.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AccueilController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AccueilController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ContactController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ContactController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/RegistrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegistrationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ResetPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ResetPasswordController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SecurityController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Security/UserAuthenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/UserAuthenticator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/accueil/admin.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil/admin.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/accueil/employe.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil/employe.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/accueil/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/accueil/user.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil/user.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/baseContact.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseContact.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/contact/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/contact/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/FilmsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FilmsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/baseFilms.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseFilms.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/films/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/films/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration/register.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/register.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/reset_password/request.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/reset_password/request.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/reset_password/reset.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/reset_password/reset.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security/login.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/login.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,7 +164,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "Page__films",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/xampp/htdocs/Cinephoria/templates/films",
+    "last_opened_file_path": "C:/xampp/htdocs/Cinephoria/templates",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -190,9 +176,9 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\Cinephoria\templates" />
       <recent name="C:\xampp\htdocs\Cinephoria\templates\films" />
       <recent name="C:\xampp\htdocs\Cinephoria\templates\contact" />
-      <recent name="C:\xampp\htdocs\Cinephoria\templates" />
       <recent name="C:\xampp\htdocs\Cinephoria\templates\reset_password" />
     </key>
   </component>
@@ -257,6 +243,8 @@
       <workItem from="1730300907914" duration="77000" />
       <workItem from="1730301005630" duration="978000" />
       <workItem from="1730359063938" duration="15491000" />
+      <workItem from="1730469568829" duration="15044000" />
+      <workItem from="1730537816990" duration="7173000" />
     </task>
     <task id="LOCAL-00003" summary="Début page d'accueil emplyé + navbar">
       <option name="closed" value="true" />
@@ -330,7 +318,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730375028957</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Modifications page films">
+      <option name="closed" value="true" />
+      <created>1730462376224</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1730462376224</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -359,6 +355,7 @@
     <MESSAGE value="Modifications pas de connexion + erreurs" />
     <MESSAGE value="Modifications diverses" />
     <MESSAGE value="Fin page de reset password" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fin page de reset password" />
+    <MESSAGE value="Modifications page films" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modifications page films" />
   </component>
 </project>

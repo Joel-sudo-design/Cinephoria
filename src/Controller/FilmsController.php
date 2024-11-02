@@ -20,21 +20,21 @@ class FilmsController extends AbstractController
     public function indexUser(): Response
     {
         return $this->render('films/user.html.twig', [
-            'controller_name' => 'FilmsController',
+            'controller_name' => 'FilmsUserController',
         ]);
     }
     #[Route('/utilisateur/films', name: 'app_films_employe')]
     public function indexEmploye(): Response
     {
         return $this->render('films/employe.html.twig', [
-            'controller_name' => 'FilmsController',
+            'controller_name' => 'FilmsEmployeController',
         ]);
     }
     #[Route('/administrateur/films', name: 'app_films_admin')]
     public function indexAdmin(): Response
     {
         return $this->render('films/admin.html.twig', [
-            'controller_name' => 'FilmsController',
+            'controller_name' => 'FilmsAdminController',
         ]);
     }
 }

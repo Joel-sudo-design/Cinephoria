@@ -1,11 +1,3 @@
-/*
- * Welcome to your app's main JavaScript file!
- *
- * We recommend including the built version of this JavaScript file
- * (and its CSS file) in your base layout (base.html.twig).
- */
-
-// any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
 
 //Active jQuery
@@ -22,6 +14,7 @@ const imagesContext = require.context('../assets/images', true, /\.(png|jpg|jpeg
 imagesContext.keys().forEach(imagesContext);
 
 $(document).ready(function() {
+
     // Navbar Top & Footer Bottom
     // A l'ouverture des navbar, on change la couleur de fond, on cache le logo et on modifie la taille des colonnes
     $('#navbar-togglerTop').click(function() {
@@ -67,7 +60,6 @@ $(document).ready(function() {
         $(this).toggleClass('bi-eye bi-eye-slash');
     });
 
-
     // Vérification de la case à cocher des conditions générales d'utilisation
     $('.btn-register').click(function(event) {
         const checkbox = $("input[name='registration_form[agreeTerms]']");
@@ -79,5 +71,24 @@ $(document).ready(function() {
             message.hide();
         }
     });
+
+    // Accordion description films
+    const $accordionButton = $('.btn-description');
+    const $accordionCollapse = $('#collapseOne');
+
+    // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
+    $(document).click(function(event) {
+        // Vérifie si le clic est à l'intérieur de l'accordéon
+        if (!$accordionButton.is(event.target) && $accordionButton.has(event.target).length === 0 &&
+            !$accordionCollapse.is(event.target) && $accordionCollapse.has(event.target).length === 0) {
+            // Ferme l'accordéon si ouvert
+            if ($accordionCollapse.hasClass('show')) {
+                $accordionCollapse.collapse('hide'); // Utilise la méthode Bootstrap pour cacher
+            }
+        }
+    });
 });
+
+
+
 

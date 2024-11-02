@@ -321,7 +321,7 @@ html, body {
 
 .title-happy {
   font-family: Courgette, cursive;
-    color: #6A73AB;
+  color: #6A73AB;
   font-size: 1.2rem;
   opacity: 0.8;
 }
@@ -371,6 +371,80 @@ html, body {
 .form-control:not(:placeholder-shown) + .custom-label-contact {
   Top: 0;
   font-size: 12px;
+}
+
+/* Page Films */
+
+.btn-films {
+  background-color: white;
+  color: #6A73AB;
+  border: 2px solid #6A73AB;
+  border-radius: 6px;
+  padding: 0.6rem;
+  transition: all 0.2s ease;
+}
+
+.btn-films:hover {
+  background-color: #6A73AB;
+  color: white;
+  border: 2px solid #6A73AB;
+}
+
+#btn-plus {
+  background-color: white;
+  color: #6A73AB;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+#btn-plus:hover {
+  color: white;
+  background-color: #6A73AB;
+  scale: 130%;
+}
+
+.btn-description {
+  transition: none;
+  background-color: transparent !important;
+  border: none;
+  box-shadow: none;
+  color: #6A73AB;
+}
+
+.btn-description:hover {
+  color: #fd7e14 !important;
+  text-decoration: underline;
+}
+
+.container-films {
+  position: relative;
+  top: 11rem;
+  bottom: 10rem;
+  height: calc(100% - 21rem);
+  overflow: auto;
+}
+
+#card-film, #card-film .card-img-top {
+  border: none;
+  border-radius: unset;
+}
+
+.btn-description:focus, .btn-description:not(.collapsed) {
+  border: none;
+  outline: none;
+  background-color: transparent !important;
+  box-shadow: none;
+}
+
+#accordionDescription, #accordionDescription .accordion-collapse.collapse {
+  width: 300px;
+  transition: width 0.3s ease;
 }
 
 /* Media queries */
