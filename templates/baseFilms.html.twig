@@ -38,7 +38,7 @@
                             <a id="btn-mon-espace" class="nav-link dropdown-toggle d-flex align-items-center justify-content-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-person-circle fs-3 ms-2"></i><span class="mx-2">Mon espace</span>
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
+                            <ul class="dropdown-menu dropdown-menu-end p-0">
                                 {% block extra_content_mon_espace %}{% endblock %}
                             </ul>
                         </li>
@@ -48,9 +48,24 @@
         </div>
     </nav>
     <div class="d-flex container-fluid justify-content-center align-items-center position-fixed bg-white" style="top: 96px; z-index: 1000; height: 5rem">
-        <button class="btn-films mx-3 d-flex align-items-center justify-content-center" style="width: 10rem; height: 2.5rem">Cinéma</button>
-        <button class="btn-films mx-3 d-flex align-items-center justify-content-center" style="width: 10rem; height: 2.5rem">Genre</button>
-        <button class="btn-films mx-3 d-flex align-items-center justify-content-center" style="width: 10rem; height: 2.5rem">Date</button>
+        <div class="custom-dropdown mx-3">
+            <button class="btn-films custom-select-btn-cinema">Cinéma</button>
+            <div class="custom-options-cinema">
+                {% for cinema in cinemas %}
+                    <div class="custom-option-cinema" data-value="{{ cinema.id }}">{{ cinema.name }}</div>
+                {% endfor %}
+            </div>
+        </div>
+        <input type="hidden" name="Cinema" id="cinema-input">
+        <div class="custom-dropdown mx-3">
+            <button class="btn-films custom-select-btn-genre">Genre</button>
+            <div class="custom-options-genre">
+                {% for genre in genres %}
+                    <div class="custom-option-genre" data-value="{{ genre.id }}">{{ genre.name }}</div>
+                {% endfor %}
+            </div>
+        </div>
+        <input type="hidden" name="Genre" id="genre-input">
     </div>
     <div class="container-fluid container-films">
         <div class="row justify-content-center align-items-center mx-5 my-3" style="gap: 5rem">
@@ -64,7 +79,7 @@
                     <div class="accordion accordion-flush" id="accordionDescription">
                         <div class="accordion-item">
                             <div class="accordion-header">
-                                <button class="btn btn-description p-0 pb-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Description</button>
+                                <button class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Description</button>
                             </div>
                             <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionDescription">
                                 <div class="accordion-body p-0">

@@ -87,6 +87,43 @@ $(document).ready(function() {
             }
         }
     });
+
+    // Custom select page films
+    // Clic sur le bouton pour afficher/masquer les options
+    $('.custom-select-btn-cinema').on('click', function(e) {
+        e.stopPropagation();
+        $('.custom-options-cinema').toggle();
+        $('.custom-options-genre').hide();
+    });
+    $('.custom-option-cinema').on('click', function() {
+        let selectedText = $(this).text();
+        let selectedValue = $(this).data('value');
+
+        $('.custom-select-btn-cinema').text(selectedText);
+        $('#cinema-input').val(selectedValue);
+
+        $('.custom-options-cinema').hide();
+    });
+    $('.custom-select-btn-genre').on('click', function(e) {
+        e.stopPropagation();
+        $('.custom-options-genre').toggle();
+        $('.custom-options-cinema').hide();
+    });
+    $('.custom-option-genre').on('click', function() {
+        let selectedText = $(this).text();
+        let selectedValue = $(this).data('value');
+
+        $('.custom-select-btn-genre').text(selectedText);
+        $('#genre-input').val(selectedValue);
+
+        $('.custom-options-genre').hide();
+    });
+
+    // Clic en dehors du menu pour fermer les options
+    $(window).on('click', function() {
+        $('.custom-options-cinema').hide();
+        $('.custom-options-genre').hide();
+    });
 });
 
 

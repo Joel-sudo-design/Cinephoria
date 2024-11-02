@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\CinemaRepository;
+use App\Repository\GenreRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -9,10 +11,14 @@ use Symfony\Component\Routing\Attribute\Route;
 class FilmsController extends AbstractController
 {
     #[Route('/films', name: 'app_films')]
-    public function index(): Response
+    public function index(CinemaRepository $cinemaRepository, GenreRepository $genreRepository): Response
     {
+        $cinemas = $cinemaRepository->findAll();
+        $genres = $genreRepository->findAll();
         return $this->render('films/index.html.twig', [
             'controller_name' => 'FilmsController',
+            'cinemas' => $cinemas,
+            'genres' => $genres
         ]);
     }
 
