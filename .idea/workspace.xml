@@ -4,18 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modification index page film">
-      <change afterPath="$PROJECT_DIR$/migrations/Version20241102115034.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/Cinema.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/Genre.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/CinemaRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/GenreRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/FilmsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FilmsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/baseFilms.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseFilms.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modification index page film" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -243,7 +232,7 @@
       <workItem from="1730359063938" duration="15491000" />
       <workItem from="1730469568829" duration="15044000" />
       <workItem from="1730537816990" duration="9432000" />
-      <workItem from="1730555058832" duration="7598000" />
+      <workItem from="1730555058832" duration="7692000" />
     </task>
     <task id="LOCAL-00003" summary="Début page d'accueil emplyé + navbar">
       <option name="closed" value="true" />
@@ -333,7 +322,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730547144873</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Modification index page film">
+      <option name="closed" value="true" />
+      <created>1730563606202</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1730563606202</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
