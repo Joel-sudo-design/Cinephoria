@@ -55,8 +55,8 @@
                     <div class="custom-option-cinema" data-value="{{ cinema.id }}">{{ cinema.name }}</div>
                 {% endfor %}
             </div>
+            <input type="hidden" name="Cinema" id="cinema-input">
         </div>
-        <input type="hidden" name="Cinema" id="cinema-input">
         <div class="custom-dropdown mx-3">
             <button class="btn-films custom-select-btn-genre">Genre</button>
             <div class="custom-options-genre">
@@ -64,8 +64,14 @@
                     <div class="custom-option-genre" data-value="{{ genre.id }}">{{ genre.name }}</div>
                 {% endfor %}
             </div>
+            <input type="hidden" name="Genre" id="genre-input">
         </div>
-        <input type="hidden" name="Genre" id="genre-input">
+        <div class="mx-3 position-relative">
+            <input type="text" class="btn-date" id="datepicker" placeholder="Date" readonly>
+            <label for="datepicker" class="d-none"></label>
+            <span class="bi bi-calendar"></span>
+            <span class="bi bi-x-circle d-none"></span>
+        </div>
     </div>
     <div class="container-fluid container-films">
         <div class="row justify-content-center align-items-center mx-5 my-3" style="gap: 5rem">

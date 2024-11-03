@@ -382,40 +382,46 @@ html, body {
 }
 
 .btn-films {
+  appearance: none; /* Supprime le style par défaut des navigateurs */
+  -webkit-appearance: none;
   background-color: white;
   color: #6A73AB;
   border: 2px solid #6A73AB;
   border-radius: 6px;
-  transition: all 0.2s ease;
-  cursor: pointer;
-  padding: 0.5rem 0.75rem 0.5rem 0.75rem;
+  padding: 0.5rem 0.75rem;
   width: 100%;
   text-align: left;
-  position: relative;
+  font-size: 1rem;
+  cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: all 0.2s ease;
 }
 
 .btn-films:after {
   content: "";
+  display: inline-block;
   background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%236A73AB" class="bi bi-caret-down-fill" viewBox="0 0 16 16"%3E%3Cpath d="M7.247 11.14l-4.796-5.481C1.674 5.207 2.15 4 3.004 4h9.992c.855 0 1.33 1.207.553 1.659l-4.796 5.481a1 1 0 0 1-1.506 0z"/%3E%3C/svg%3E');
   background-repeat: no-repeat;
-  background-size: 1rem;
+  background-size: 0.8rem;
+  background-position: center;
   width: 1rem;
   height: 1rem;
   margin-left: 1rem;
+  vertical-align: middle;
 }
 
 .custom-options-cinema, .custom-options-genre {
   display: none;
   position: absolute;
-  top: 102%;
+  top: 100%;
   width: 100%;
   background-color: #6A73AB;
   border-radius: 6px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  border: 2px solid white;
 }
 
 .custom-option-cinema, .custom-option-genre {
@@ -430,13 +436,118 @@ html, body {
   color: #6A73AB;
 }
 
-.btn-films:hover {
+.btn-films:hover, .btn-date:hover {
+  background-color: #6A73AB;
+  color: white !important;
+  border: 2px solid white;
+}
+
+.btn-films:focus, .btn-date:focus {
   background-color: #6A73AB;
   color: white;
+  border: 2px solid white;
 }
 
 .btn-films:hover:after {
   background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-caret-down-fill" viewBox="0 0 16 16"%3E%3Cpath d="M7.247 11.14l-4.796-5.481C1.674 5.207 2.15 4 3.004 4h9.992c.855 0 1.33 1.207.553 1.659l-4.796 5.481a1 1 0 0 1-1.506 0z"/%3E%3C/svg%3E');
+}
+
+.btn-films:focus:after {
+  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-caret-down-fill" viewBox="0 0 16 16"%3E%3Cpath d="M7.247 11.14l-4.796-5.481C1.674 5.207 2.15 4 3.004 4h9.992c.855 0 1.33 1.207.553 1.659l-4.796 5.481a1 1 0 0 1-1.506 0z"/%3E%3C/svg%3E');
+}
+
+.container-films {
+  position: relative;
+  top: 11rem;
+  bottom: 10rem;
+  height: calc(100% - 21rem);
+  overflow: auto;
+}
+
+.btn-date {
+  background-color: white;
+  color: #6A73AB;
+  border: 2px solid #6A73AB;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 9rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.btn-date:focus {
+  border-color: white;
+  outline: none;
+}
+
+.btn-date:hover::placeholder, .btn-date:focus::placeholder,
+.btn-date.btn-hover::placeholder, .btn-date.btn-hover::placeholder {
+  color: white;
+}
+
+.datepicker {
+  width: auto;
+  padding: 1rem;
+}
+
+.datepicker table tr td,
+.datepicker table tr th {
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.datepicker table tr td:hover {
+  background-color: white !important;
+  color: #6A73AB !important;
+}
+
+.datepicker table tr td.active,
+.datepicker table tr td.active:hover,
+.datepicker table tr td.active.disabled:hover,
+.datepicker table tr td.active.disabled {
+  background-color: #6A73AB !important;
+  color: #6A73AB !important;
+  background-image: linear-gradient(180deg, white, white);
+}
+
+.datepicker table tr td.active.active,
+.datepicker table tr td.active:hover.active,
+.datepicker table tr td.active:hover:active {
+  background-color: #6A73AB !important;
+  color: #6A73AB !important;
+  background-image: linear-gradient(180deg, white, white);
+}
+
+.bi-calendar, .bi-x-circle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #6A73AB;
+  padding-right: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.btn-date:hover ~ .bi-calendar ,.btn-date:hover ~ .bi-x-circle,
+.btn-date:focus ~ .bi-calendar, .btn-date:focus ~ .bi-x-circle,
+.bi-x-circle.btn-hover, .bi-calendar.btn-hover{
+  color: white !important;
+}
+
+.btn-date.btn-hover {
+  background-color: #6A73AB;
+  color: white !important;
+  border: 2px solid white;
+}
+
+#card-film, #card-film .card-img-top {
+  border: none;
+  border-radius: unset;
 }
 
 .btn-description {
@@ -452,19 +563,6 @@ html, body {
   text-decoration: underline;
 }
 
-.container-films {
-  position: relative;
-  top: 11rem;
-  bottom: 10rem;
-  height: calc(100% - 21rem);
-  overflow: auto;
-}
-
-#card-film, #card-film .card-img-top {
-  border: none;
-  border-radius: unset;
-}
-
 .btn-description:focus, .btn-description:not(.collapsed) {
   border: none;
   outline: none;
@@ -476,9 +574,12 @@ html, body {
   color: #fd7e14;
 }
 
-#accordionDescription, #accordionDescription .accordion-collapse.collapse {
+#accordionDescription {
   width: 300px;
-  transition: width 0.3s ease;
+  transition: width 0.2s ease;
+}
+
+.accordion-collapse, .accordion-collapse.collapsed {
   color: #6A73AB;
 }
 
