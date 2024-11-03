@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modification index page film">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/baseFilms.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseFilms.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
-    </list>
+    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modification index page film&#10;bouton datepicker" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -242,7 +234,7 @@
       <workItem from="1730537816990" duration="9432000" />
       <workItem from="1730555058832" duration="7692000" />
       <workItem from="1730622677113" duration="14877000" />
-      <workItem from="1730642618751" duration="4204000" />
+      <workItem from="1730642618751" duration="4601000" />
     </task>
     <task id="LOCAL-00003" summary="Début page d'accueil emplyé + navbar">
       <option name="closed" value="true" />
@@ -340,7 +332,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730563606202</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Modification index page film&#10;bouton datepicker">
+      <option name="closed" value="true" />
+      <created>1730646991391</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1730646991391</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -370,7 +370,9 @@
     <MESSAGE value="Modifications diverses" />
     <MESSAGE value="Fin page de reset password" />
     <MESSAGE value="Modifications page films" />
+    <MESSAGE value="Update workspace.xml" />
     <MESSAGE value="Modification index page film" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modification index page film" />
+    <MESSAGE value="Modification index page film&#10;bouton datepicker" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modification index page film&#10;bouton datepicker" />
   </component>
 </project>
