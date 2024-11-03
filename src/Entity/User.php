@@ -30,9 +30,8 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $emailaddress = null;
 
-    #[ORM\ManyToOne(inversedBy: 'collectionUser')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Roles $role = null;
+    #[ORM\Column]
+    private array $roles = [];
 
     public function getId(): ?int
     {
@@ -99,15 +98,14 @@ class User
         return $this;
     }
 
-    public function getRole(): ?Roles
+    public function getRoles(): array
     {
-        return $this->role;
+        return $this->roles;
     }
 
-    public function setRole(?Roles $role): static
+    public function setRoles(array $roles): void
     {
-        $this->role = $role;
-
-        return $this;
+        $this->roles = $roles;
     }
+
 }
