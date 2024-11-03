@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
-    <title>{% block title %}Contact Cinéphoria{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
@@ -22,16 +22,8 @@
                 </div>
                 <div id="offcanvas-bodyTop" class="row offcanvas-body align-items-center justify-content-center">
                     <ul id="navbarLeft" class="col-5 navbar-nav align-items-center justify-content-center p-0">
-                        <li class="nav-item mx-4 my-4 text-white">
-                            <a class="nav-link d-flex align-items-center justify-content-center" aria-current="page" href="{{ path('app_accueil') }}">
-                                <i class="bi bi-house fs-3 ms-2"></i><span class="mx-2">Accueil</span>
-                            </a>
-                        </li>
-                        <li class="nav-item mx-4 my-4 text-white">
-                            <a id="btn-films" class="nav-link d-flex align-items-center justify-content-center" href="">
-                                <i class="bi bi-camera-video fs-3 ms-2"></i><span class="mx-2">Films</span>
-                            </a>
-                        </li>
+                        {% block extra_content_bouton_accueil %}{% endblock %}
+                        {% block extra_content_bouton_films %}{% endblock %}
                         <li class="nav-item mx-4 my-4 text-white">
                             <a class="nav-link d-flex align-items-center justify-content-center" href="">
                                 <i class="bi bi-ticket-perforated fs-3 ms-2"></i><span class="mx-2">Réservation</span>
@@ -46,7 +38,7 @@
                             <a id="btn-mon-espace" class="nav-link dropdown-toggle d-flex align-items-center justify-content-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-person-circle fs-3 ms-2"></i><span class="mx-2">Mon espace</span>
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
+                            <ul class="dropdown-menu dropdown-menu-end p-0">
                                 {% block extra_content_mon_espace %}{% endblock %}
                             </ul>
                         </li>
@@ -55,53 +47,60 @@
             </div>
         </div>
     </nav>
-    <div id="container-accueil" class="container-fluid align-content-center">
-        <div class="row justify-content-center my-3">
-            <div class="col-11 col-sm-8 col-md-7 col-lg-5 col-xl-5 col-xxl-3 align-content-center border-register">
-                <div class="row text-center justify-content-center my-4">
-                    <div class="col-9 text-center title-connexion">Contactez-nous</div>
-                </div>
-                {{ form_start(contactForm) }}
-                <div class="row justify-content-center">
-                    <div class="col-9 form-group" style="padding:0 12rem 0 0">
-                        {{ form_widget(contactForm.username, {'attr': {'class': 'form-control', 'placeholder': '', 'autocomplete': '', 'id': 'username'}}) }}
-                        <label class="custom-label" for="username">Pseudo</label>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-9 form-group" style="padding:0 6rem 0 0">
-                        {{ form_widget(contactForm.object, {'attr': {'class': 'form-control', 'placeholder': '', 'autocomplete': '', 'id': 'Object'}}) }}
-                        <label class="custom-label" for="Object">Objet de la demande</label>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-9 form-group p-0">
-                        <textarea name="{{ field_name(contactForm.description) }}" class="form-control" id="description" placeholder="" rows="5" required></textarea>
-                        <label for="description" class="custom-label-contact">Décrivez votre demande</label>
-                    </div>
-                </div>
-                <div class="row justify-content-center mt-1 mb-4">
-                    <div class="col-9 form-floating text-center p-0">
-                        <button class="btn btn-connexion w-100 fs-5" type="submit">ENVOYER</button>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-9 text-center p-0" style="color: #6A73AB">
-                        {% for message in app.flashes('success') %}
-                            <p>{{ message }}</p>
-                        {% endfor %}
-                    </div>
-                </div>
-                {{ form_end(contactForm) }}
+    <div class="d-flex container-fluid justify-content-center align-items-center position-fixed bg-white" style="top: 96px; z-index: 1000; height: 5rem">
+        <div class="custom-dropdown mx-3">
+            <button class="btn-films custom-select-btn-cinema">Cinéma</button>
+            <div class="custom-options-cinema">
+                {% for cinema in cinemas %}
+                    <div class="custom-option-cinema" data-value="{{ cinema.id }}">{{ cinema.name }}</div>
+                {% endfor %}
             </div>
-            <div class="col-11 col-sm-8 col-md-7 col-lg-5 col-xl-5 col-xxl-3 border-register-img p-0">
-                <img class="img-fluid" src="{{ asset('build/images/Cinema.jpg')}}" alt="cinéma">
+            <input type="hidden" name="Cinema" id="cinema-input">
+        </div>
+        <div class="custom-dropdown mx-3">
+            <button class="btn-films custom-select-btn-genre">Genre</button>
+            <div class="custom-options-genre">
+                {% for genre in genres %}
+                    <div class="custom-option-genre" data-value="{{ genre.id }}">{{ genre.name }}</div>
+                {% endfor %}
+            </div>
+            <input type="hidden" name="Genre" id="genre-input">
+        </div>
+        <div class="mx-3 position-relative">
+            <input type="text" class="btn-date" id="datepicker" placeholder="Date" readonly>
+            <label for="datepicker" class="d-none"></label>
+            <span class="bi bi-calendar"></span>
+            <span class="bi bi-x-circle d-none"></span>
+        </div>
+    </div>
+    <div class="container-fluid container-films">
+        <div class="row justify-content-center align-items-center mx-5 my-3" style="gap: 5rem">
+            <div id="card-film" class="col-auto card" style="width: 12rem">
+                <img src="{{ asset('build/images/Avatar.jpg')}}" class="card-img-top" alt="">
+                <div class="card-body p-0 py-1">
+                    <h5 class="card-title m-0 mt-1 mb-2" style="color:#6A73AB">Avatar</h5>
+                    <p class="card-text m-0 my-1 text-warning">
+                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half me-1"></i>4.5
+                    </p>
+                    <div class="accordion accordion-flush" id="accordionDescription">
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <button class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Description</button>
+                            </div>
+                            <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionDescription">
+                                <div class="accordion-body p-0">
+                                    It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
-    {% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
 </body>
 <footer>
     <nav id="navbarBottom" class="navbar navbar-expand-lg navbar-light fixed-bottom" style="height: 10rem">

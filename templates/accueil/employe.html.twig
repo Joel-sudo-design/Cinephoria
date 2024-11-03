@@ -10,6 +10,22 @@
     </li>
 {% endblock %}
 
+{% block extra_content_bouton_admin_employe %}
+    <li class="nav-item mx-4 my-4 text-white">
+        <a class="nav-link d-flex align-items-center justify-content-center" href="">
+            <i class="bi bi-person-lines-fill fs-3 ms-2"></i><span class="mx-2">Intranet</span>
+        </a>
+    </li>
+{% endblock %}
+
+{% block extra_content_bouton_contact %}
+    <li class="nav-item mx-4 my-4 text-white">
+        <a class="nav-link d-flex align-items-center justify-content-center" href="{{ path('app_contact_employe') }}">
+            <i class="bi bi-envelope fs-3 ms-2"></i><span class="mx-2">Contact</span>
+        </a>
+    </li>
+{% endblock %}
+
 {% block extra_content_mon_espace %}
     <li><a class="dropdown-item d-flex align-items-center justify-content-start" href="">
             <i class="bi bi-bag-check fs-4 ms-2 mb-1"></i><span class="mx-2">Commandes</span>
@@ -19,63 +35,5 @@
             <i class="bi bi-box-arrow-left fs-4 ms-2"></i><span class="mx-2">Déconnexion</span>
         </a>
     </li>
-{% endblock %}
-
-{% block extra_content_bouton_admin_employe %}
-    <li class="nav-item mx-4 my-4 text-white">
-        <a class="nav-link d-flex align-items-center justify-content-center" href="">
-            <i class="bi bi-person-lines-fill fs-3 ms-2"></i><span class="mx-2">Intranet</span>
-        </a>
-    </li>
-{% endblock %}
-
-{% block body %}
-    <div id="container-accueil" class="container-fluid text-center align-content-center">
-        <div class="row">
-            <div id="welcome" class="col-12 my-5">
-                <div class="mb-3">Bienvenue sur le site du célèbre cinéma</div>
-                <div>“le cinéphoria”!</div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col my-5">
-                <div id="carouselExample" class="carousel slide mx-auto" style="width: 75%">
-                    <div class="text-start fs-4 mb-3" style="color: #6A73AB; font-family: Courgette,sans-serif">Les sorties du mercredi</div>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="row justify-content-center">
-                                <div class="col-sm-5 col-md-4 col-lg-3 col-xl-3 col-xxl"><img src="{{ asset('build/images/Avatar.jpg')}}" class="d-block w-100" alt="..."></div>
-                                <div class="col-sm-5 col-md-4 col-lg-3 col-xl-3 col-xxl"><img src="{{ asset('build/images/Joker.jpg')}}" class="d-block w-100" alt="..."></div>
-                                <div class="col-sm-5 col-md-4 col-lg-3 col-xl-3 col-xxl"><img src="{{ asset('build/images/Ant-Man.jpg')}}" class="d-block w-100" alt="..."></div>
-                                <div class="col-sm-5 col-md-4 col-lg-3 col-xl-3 col-xxl"><img src="{{ asset('build/images/Mariage.jpg')}}" class="d-block w-100" alt="..."></div>
-                                <div class="col-sm-5 col-md-4 col-lg-3 col-xl-3 col-xxl"><img src="{{ asset('build/images/Chat.jpg')}}" class="d-block w-100" alt="..."></div>
-                                <div class="col-sm-5 col-md-4 col-lg-3 col-xl-3 col-xxl"><img src="{{ asset('build/images/M3gan.jpg')}}" class="d-block w-100" alt="..."></div>
-                                <div class="col-sm-5 col-md-4 col-lg-3 col-xl-3 col-xxl"><img src="{{ asset('build/images/Black.jpg')}}" class="d-block w-100" alt="..."></div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="row justify-content-center">
-                                <div class="col-sm-5 col-md-4 col-lg-3 col-xl-3 col-xxl"><img src="{{ asset('build/images/Panda.jpg')}}" class="d-block w-100" alt="..."></div>
-                                <div class="col-sm-5 col-md-4 col-lg-3 col-xl-3 col-xxl"><img src="{{ asset('build/images/Dead.jpg')}}" class="d-block w-100" alt="..."></div>
-                                <div class="col-sm-5 col-md-4 col-lg-3 col-xl-3 col-xxl"><img src="{{ asset('build/images/Guetteurs.jpg')}}" class="d-block w-100" alt="..."></div>
-                                <div class="col-sm-5 col-md-4 col-lg-3 col-xl-3 col-xxl"><img src="{{ asset('build/images/Ghosted.jpg')}}" class="d-block w-100" alt="..."></div>
-                                <div class="col-sm-5 col-md-4 col-lg-3 col-xl-3 col-xxl"><img src="{{ asset('build/images/Killer.jpg')}}" class="d-block w-100" alt="..."></div>
-                                <div class="col-sm-5 col-md-4 col-lg-3 col-xl-3 col-xxl"><img src="{{ asset('build/images/Comte.jpg')}}" class="d-block w-100" alt="..."></div>
-                                <div class="col-sm-5 col-md-4 col-lg-3 col-xl-3 col-xxl"><img src="{{ asset('build/images/God.jpg')}}" class="d-block w-100" alt="..."></div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev custom-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                        <span class="custom-icon-prev" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next custom-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                        <span class="custom-icon-next" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
 {% endblock %}
 

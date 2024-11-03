@@ -1,11 +1,3 @@
-/*
- * Welcome to your app's main JavaScript file!
- *
- * We recommend including the built version of this JavaScript file
- * (and its CSS file) in your base layout (base.html.twig).
- */
-
-// any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
 
 //Active jQuery
@@ -16,12 +8,16 @@ window.$ = window.jQuery = $;
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'bootstrap-datepicker';
+import 'bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css';
+import 'bootstrap-datepicker/dist/locales/bootstrap-datepicker.fr.min.js';
 
 //Autoload images
 const imagesContext = require.context('../assets/images', true, /\.(png|jpg|jpeg|gif|ico|svg|webp)$/);
 imagesContext.keys().forEach(imagesContext);
 
 $(document).ready(function() {
+
     // Navbar Top & Footer Bottom
     // A l'ouverture des navbar, on change la couleur de fond, on cache le logo et on modifie la taille des colonnes
     $('#navbar-togglerTop').click(function() {
@@ -67,7 +63,6 @@ $(document).ready(function() {
         $(this).toggleClass('bi-eye bi-eye-slash');
     });
 
-
     // Vérification de la case à cocher des conditions générales d'utilisation
     $('.btn-register').click(function(event) {
         const checkbox = $("input[name='registration_form[agreeTerms]']");
@@ -79,5 +74,107 @@ $(document).ready(function() {
             message.hide();
         }
     });
-});
 
+    // Accordion description films
+    const $accordionButton = $('.btn-description');
+    const $accordionCollapse = $('#collapseOne');
+
+    // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
+    $(document).click(function(event) {
+        // Vérifie si le clic est à l'intérieur de l'accordéon
+        if (!$accordionButton.is(event.target) && $accordionButton.has(event.target).length === 0 &&
+            !$accordionCollapse.is(event.target) && $accordionCollapse.has(event.target).length === 0) {
+            // Ferme l'accordéon si ouvert
+            if ($accordionCollapse.hasClass('show')) {
+                $accordionCollapse.collapse('hide'); // Utilise la méthode Bootstrap pour cacher
+            }
+        }
+    });
+
+    // Custom select page films
+    // Clic sur le bouton pour afficher/masquer les options
+    $('.custom-select-btn-cinema').on('click', function(e) {
+        e.stopPropagation();
+        $('.custom-options-cinema').toggle();
+        $('.custom-options-genre').hide();
+    });
+    $('.custom-option-cinema').on('click', function() {
+        let selectedText = $(this).text();
+        let selectedValue = $(this).data('value');
+
+        $('.custom-select-btn-cinema').text(selectedText);
+        $('#cinema-input').val(selectedValue);
+
+        $('.custom-options-cinema').hide();
+    });
+    $('.custom-select-btn-genre').on('click', function(e) {
+        e.stopPropagation();
+        $('.custom-options-genre').toggle();
+        $('.custom-options-cinema').hide();
+    });
+    $('.custom-option-genre').on('click', function() {
+        let selectedText = $(this).text();
+        let selectedValue = $(this).data('value');
+
+        $('.custom-select-btn-genre').text(selectedText);
+        $('#genre-input').val(selectedValue);
+
+        $('.custom-options-genre').hide();
+    });
+
+    // Clic en dehors du menu pour fermer les options
+    $(window).on('click', function() {
+        $('.custom-options-cinema').hide();
+        $('.custom-options-genre').hide();
+    });
+
+    // Datepicker séance page films
+    const $datepicker = $('#datepicker');
+    const $calendarIcon = $('.bi-calendar');
+    const $clearIcon = $('.bi-x-circle');
+    $datepicker.datepicker({
+        format: "dd/mm/yyyy",
+        language: "fr",
+        autoclose: true
+    }).on('changeDate', function () {
+        // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
+        $calendarIcon.addClass('d-none');
+        $clearIcon.removeClass('d-none');
+    });
+
+    // Au clic sur l'icône de croix, on réinitialise la date
+    $clearIcon.on('click', function () {
+        $datepicker.datepicker('clearDates'); // Supprime la date
+        $calendarIcon.removeClass('d-none'); // Réaffiche l'icône calendrier
+        $clearIcon.addClass('d-none'); // Cache l'icône de croix
+    });
+
+    // Appliquer le style de hover/focus à btn-date lors du hover/focus de clear-icon
+    $clearIcon.on('mouseenter focus', function () {
+        $datepicker.addClass('btn-hover');
+        $clearIcon.addClass('btn-hover');
+    });
+
+    // Appliquer le style de hover/focus à btn-date lors du hover/focus de calendarIcon
+    $calendarIcon.on('mouseenter focus', function () {
+        $datepicker.addClass('btn-hover');
+        $calendarIcon.addClass('btn-hover');
+    });
+
+    // Retirer le style quand on quitte le survol/focus de clear-icon
+    $clearIcon.on('mouseleave blur', function () {
+        $datepicker.removeClass('btn-hover');
+        $clearIcon.removeClass('btn-hover');
+    });
+
+    // Retirer le style quand on quitte le survol/focus de calendarIcon
+    $calendarIcon.on('mouseleave blur', function () {
+        $datepicker.removeClass('btn-hover');
+        $calendarIcon.removeClass('btn-hover');
+    });
+
+    // Ouvrir le calendrier lorsque l'on clique sur l'icône calendrier
+    $calendarIcon.on('click', function () {
+        $datepicker.focus(); // Met le focus sur le champ de date, ce qui ouvre le calendrier
+    });
+});
