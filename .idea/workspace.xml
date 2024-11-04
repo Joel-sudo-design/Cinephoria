@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Création tables film, salle et seance" />
+    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifs">
+      <change afterPath="$PROJECT_DIR$/migrations/Version20241104075930.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -309,7 +311,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730705501756</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Modifs">
+      <option name="closed" value="true" />
+      <created>1730705559321</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1730705559321</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -341,6 +351,7 @@
     <MESSAGE value="Fin page de reset password" />
     <MESSAGE value="Modif" />
     <MESSAGE value="Création tables film, salle et seance" />
-    <option name="LAST_COMMIT_MESSAGE" value="Création tables film, salle et seance" />
+    <MESSAGE value="Modifs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modifs" />
   </component>
 </project>
