@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Fin page de reset password" />
+    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modif" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -329,7 +329,9 @@
     <MESSAGE value="Modification formulaire et modal conditions" />
     <MESSAGE value="Modifications pas de connexion + erreurs" />
     <MESSAGE value="Modifications diverses" />
+    <MESSAGE value="Création table salle" />
     <MESSAGE value="Fin page de reset password" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fin page de reset password" />
+    <MESSAGE value="Modif" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modif" />
   </component>
 </project>
