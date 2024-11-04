@@ -76,11 +76,11 @@
         <button class="btn-admin mx-3 justify-content-center">Données réservations</button>
     </div>
     <div class="container-fluid container-films">
-        <div class="row justify-content-center mx-5 my-3" style="gap: 3rem">
+        <div id="card-container" class="row justify-content-center px-5 py-3 d-none" style="gap: 0 3rem">
             <div id="card-film" class="col-auto card" style="width: 12rem">
-                <div class="d-flex justify-content-between position-relative text-white" style="top:22px">
+                <div class="d-flex position-absolute text-white">
                     <button class="btn bi bi-pencil-square text-success p-0 fs-5 bg-admin" style="border-radius: 0 0 2px 0"></button>
-                    <button class="btn bi bi-x-square text-danger p-0 fs-5 bg-admin" style="border-radius: 0 0 0 2px"></button>
+                    <button class="btn bi bi-x-square text-danger p-0 fs-5 bg-admin position-relative" style="left: 124px; border-radius: 0 0 0 2px"></button>
                 </div>
                 <img src="{{ asset('build/images/Avatar.jpg')}}" class="card-img-top" alt="" style="height: 228px">
                 <div class="card-body p-0 py-1">
@@ -102,29 +102,17 @@
                     </div>
                 </div>
             </div>
-            <div id="card-film" class="col-auto card" style="width: 12rem">
-                <div class="d-flex justify-content-between position-relative text-white" style="top:22px">
-                    <button class="btn bi bi-pencil-square text-success p-0 fs-5 bg-admin" style="border-radius: 0 0 2px 0"></button>
-                    <button class="btn bi bi-x-square text-danger p-0 fs-5 bg-admin" style="border-radius: 0 0 0 2px"></button>
-                </div>
-                <img src="" class="card-img-top" alt="" style="width: auto; height: 228px; background-color: #6A73AB">
-                <div class="card-body p-0 py-1">
-                    <h5 class="card-title m-0 mt-1 mb-2" style="color:#6A73AB"></h5>
-                    <p class="card-text m-0 my-1 text-warning">
-                        <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
-                    </p>
-                    <div class="accordion accordion-flush" id="">
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <button class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#" aria-expanded="false" aria-controls="collapseOne">Description</button>
-                            </div>
-                            <div id="" class="accordion-collapse collapse" data-bs-parent="#">
-                                <div class="accordion-body p-0"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        </div>
+        <div class="row justify-content-center py-5">
+            <div class="col-2 p-4 text-white" style="background-color: #6A73AB">
+                <img src="{{ asset('build/images/Avatar.jpg')}}" class="img-fluid" alt="">
+                <div class="my-3">Durée: 1h30</div>
+                <div class="my-3">Genre: <div class="form-floating">
+                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                        <label for="floatingTextarea"></label>
+                    </div></div>
             </div>
+            <div class="col-4" style="background-color: #6A73AB"></div>
         </div>
     </div>
     {% block javascripts %}

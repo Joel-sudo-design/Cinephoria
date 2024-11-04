@@ -56,6 +56,7 @@
                 {% endfor %}
             </div>
             <input type="hidden" name="Cinema" id="cinema-input">
+            <span class="bi bi-x-circle d-none close-icon-cinema"></span>
         </div>
         <div class="custom-dropdown mx-3">
             <button class="btn-films custom-select-btn-genre">Genre</button>
@@ -65,12 +66,13 @@
                 {% endfor %}
             </div>
             <input type="hidden" name="Genre" id="genre-input">
+            <span class="bi bi-x-circle close-icon-genre d-none"></span>
         </div>
         <div class="mx-3 position-relative">
             <input type="text" class="btn-date" id="datepicker" placeholder="Date" readonly>
             <label for="datepicker" class="d-none"></label>
             <span class="bi bi-calendar"></span>
-            <span class="bi bi-x-circle d-none"></span>
+            <span class="bi bi-x-circle close-icon-date d-none"></span>
         </div>
     </div>
     <div class="container-fluid container-films">

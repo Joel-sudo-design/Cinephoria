@@ -5,7 +5,6 @@ html, body {
 }
 
 /* Navbar Top */
-
 .offcanvas-header .btn-close {
   border: none !important;
   outline: none !important;
@@ -75,7 +74,6 @@ html, body {
 }
 
 /* Navbar Bottom Footer */
-
 .border-white {
   border: 1px solid #FFFFFF;
 }
@@ -91,7 +89,6 @@ html, body {
 }
 
 /* Page d'accueil */
-
 #welcome {
   font-family: Courgette, cursive;
   color: #6A73AB;
@@ -108,7 +105,6 @@ html, body {
 }
 
 /* Boutons avec flèches arrondies */
-
 .custom-prev, .custom-next {
   position: absolute;
   top: 50%;
@@ -159,7 +155,6 @@ html, body {
 }
 
 /* Page Inscription/Nouveau compte */
-
 .form-group {
   position: relative;
   margin-bottom: 12px;
@@ -301,7 +296,6 @@ html, body {
 }
 
 /* Compte créé */
-
 .btn-account-created {
   transition: none;
 }
@@ -312,7 +306,6 @@ html, body {
 }
 
 /* Page connexion */
-
 .title-connexion {
   font-family: Courgette, cursive;
   color: #6A73AB;
@@ -348,7 +341,6 @@ html, body {
 }
 
 /* Page réinitialisation du mot de passe */
-
 .title-reset {
   font-family: Courgette, cursive;
   color: #6A73AB;
@@ -357,7 +349,6 @@ html, body {
 }
 
 /* Page Contact */
-
 .custom-label-contact {
   position: absolute;
   Top: 16px;
@@ -375,14 +366,13 @@ html, body {
 }
 
 /* Page Films */
-
 .custom-dropdown {
   position: relative;
   width: auto;
 }
 
 .btn-films {
-  appearance: none; /* Supprime le style par défaut des navigateurs */
+  appearance: none;
   -webkit-appearance: none;
   background-color: white;
   color: #6A73AB;
@@ -436,7 +426,9 @@ html, body {
   color: #6A73AB;
 }
 
-.btn-films:hover, .btn-date:hover {
+.btn-films:hover, .btn-date:hover,
+.custom-select-btn-cinema.btn-hover,
+.custom-select-btn-genre.btn-hover {
   background-color: #6A73AB;
   color: white !important;
 }
@@ -444,7 +436,7 @@ html, body {
 .btn-films:focus, .btn-date:focus {
   background-color: #6A73AB;
   color: white;
-  border: 2px solid white;
+  outline: none;
 }
 
 .btn-films:hover:after {
@@ -453,6 +445,11 @@ html, body {
 
 .btn-films:focus:after {
   background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-caret-down-fill" viewBox="0 0 16 16"%3E%3Cpath d="M7.247 11.14l-4.796-5.481C1.674 5.207 2.15 4 3.004 4h9.992c.855 0 1.33 1.207.553 1.659l-4.796 5.481a1 1 0 0 1-1.506 0z"/%3E%3C/svg%3E');
+}
+
+.custom-select-btn-cinema.no-arrow::after,
+.custom-select-btn-genre.no-arrow::after {
+  background-image: none;
 }
 
 .container-films {
@@ -478,14 +475,15 @@ html, body {
   transition: all 0.2s ease;
 }
 
-.btn-date:focus {
-  border-color: white;
-  outline: none;
-}
-
 .btn-date:hover::placeholder, .btn-date:focus::placeholder,
-.btn-date.btn-hover::placeholder, .btn-date.btn-hover::placeholder {
-  color: white;
+.btn-date.btn-hover::placeholder, .btn-date.btn-hover::placeholder,
+.close-icon-cinema.btn-hover, .close-icon-genre.btn-hover,
+.btn-date:hover ~ .bi-calendar ,.btn-date:hover ~ .bi-x-circle,
+.btn-date:focus ~ .bi-calendar, .btn-date:focus ~ .bi-x-circle,
+.bi-x-circle.btn-hover, .bi-calendar.btn-hover,
+.custom-select-btn-cinema:hover ~ .bi-x-circle, .custom-select-btn-genre:hover ~ .bi-x-circle,
+.custom-select-btn-cinema:focus ~ .bi-x-circle, .custom-select-btn-genre:focus ~ .bi-x-circle {
+  color: white !important;
 }
 
 .datepicker {
@@ -507,12 +505,7 @@ html, body {
 .datepicker table tr td.active,
 .datepicker table tr td.active:hover,
 .datepicker table tr td.active.disabled:hover,
-.datepicker table tr td.active.disabled {
-  background-color: #6A73AB !important;
-  color: #6A73AB !important;
-  background-image: linear-gradient(180deg, white, white);
-}
-
+.datepicker table tr td.active.disabled,
 .datepicker table tr td.active.active,
 .datepicker table tr td.active:hover.active,
 .datepicker table tr td.active:hover:active {
@@ -530,12 +523,6 @@ html, body {
   color: #6A73AB;
   padding-right: 0.5rem;
   transition: all 0.2s ease;
-}
-
-.btn-date:hover ~ .bi-calendar ,.btn-date:hover ~ .bi-x-circle,
-.btn-date:focus ~ .bi-calendar, .btn-date:focus ~ .bi-x-circle,
-.bi-x-circle.btn-hover, .bi-calendar.btn-hover{
-  color: white !important;
 }
 
 .btn-date.btn-hover {
@@ -583,7 +570,6 @@ html, body {
 }
 
 /* Page Administration */
-
 #btn-plus {
   background-color: white;
   color: #6A73AB;
@@ -629,7 +615,6 @@ html, body {
 }
 
 /* Media queries */
-
 @media (min-width: 1921px) {
 
   .bi.bi-eye, .bi.bi-eye-slash {

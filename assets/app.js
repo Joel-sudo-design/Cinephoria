@@ -18,8 +18,8 @@ imagesContext.keys().forEach(imagesContext);
 
 $(document).ready(function() {
 
-    // Navbar Top & Footer Bottom
-    // A l'ouverture des navbar, on change la couleur de fond, on cache le logo et on modifie la taille des colonnes
+    // Navbar Top & Navbar Footer Bottom
+    // A l'ouverture des navbar pour mobile, on change la couleur de fond, on cache le logo et on modifie la taille des colonnes
     $('#navbar-togglerTop').click(function() {
         $('#offcanvasNavbarTop').css("background", "linear-gradient(90deg, rgba(106, 115, 171, 0.85) 50%, rgba(43, 46, 69, 0.85) 100%)");
         $('#logo').hide();
@@ -31,7 +31,7 @@ $(document).ready(function() {
         $('#offcanvasNavbarBottom').css("background", "linear-gradient(90deg, rgba(106, 115, 171, 0.85) 50%, rgba(43, 46, 69, 0.85) 100%)");
         $('#col-2-bottom').remove()
     });
-    // A la fermeture des navbar, on remet la couleur de fond par défaut, on affiche le logo et on remet la taille des colonnes
+    // A la fermeture des navbar pour mobile, on remet la couleur de fond par défaut, on affiche le logo et on remet la taille des colonnes
     $('#offcanvasNavbarTop').on('hidden.bs.offcanvas', function () {
         $('#offcanvasNavbarTop').css("background", "");
         $('#logo').show();
@@ -43,6 +43,8 @@ $(document).ready(function() {
         $('#offcanvasNavbarBottom').css("background", "");
         $('#col-5-bottom').after('<div id="col-2-bottom" class="col-2" style="width: 7.5rem"></div>');
     });
+
+    // Page de connexion et d'inscription dans mon espace
     // Masquer le mot de passe de la page de connexion et d'inscription
     $('#togglePassword').on('click', function () {
         const passwordField = $('#password');
@@ -62,7 +64,6 @@ $(document).ready(function() {
         passwordField.attr('type', type);
         $(this).toggleClass('bi-eye bi-eye-slash');
     });
-
     // Vérification de la case à cocher des conditions générales d'utilisation
     $('.btn-register').click(function(event) {
         const checkbox = $("input[name='registration_form[agreeTerms]']");
@@ -75,10 +76,132 @@ $(document).ready(function() {
         }
     });
 
+    //Page films
+    const $clearIconGenre = $('.close-icon-genre');
+    const $clearIconCinema = $('.close-icon-cinema');
+    // Au clic sur le bouton cinéma pour afficher/masquer les options
+    $('.custom-select-btn-cinema').on('click', function(e) {
+        e.stopPropagation();
+        $('.custom-options-cinema').toggle();
+        $('.custom-options-genre').hide();
+    });
+    // Sélection d'une option de cinéma
+    $('.custom-option-cinema').on('click', function() {
+        let selectedText = $(this).text();
+        let selectedValue = $(this).data('value');
+        let customSelect = $('.custom-select-btn-cinema');
+        customSelect.text(selectedText);
+        $('#cinema-input').val(selectedValue);
+        $('.custom-options-cinema').hide();
+        customSelect.addClass('no-arrow');
+        $('.close-icon-cinema').removeClass('d-none');
+    });
+    // Au clic sur l'icône "X" pour réinitialiser la sélection
+    $clearIconCinema.on('click', function() {
+        let customSelect = $('.custom-select-btn-cinema');
+        $(this).addClass('d-none');
+        $('#cinema-input').val('');
+        customSelect.text('Cinéma');
+        $('.custom-options-cinema').hide();
+        customSelect.removeClass('no-arrow');
+    });
+    // Au clic sur le bouton genre pour afficher/masquer les options
+    $('.custom-select-btn-genre').on('click', function(e) {
+        e.stopPropagation();
+        $('.custom-options-genre').toggle();
+        $('.custom-options-cinema').hide();
+    });
+    $('.custom-option-genre').on('click', function() {
+        let selectedText = $(this).text();
+        let selectedValue = $(this).data('value');
+        let customSelect = $('.custom-select-btn-genre');
+        customSelect.text(selectedText);
+        $('#genre-input').val(selectedValue);
+        $('.custom-options-genre').hide();
+        customSelect.addClass('no-arrow');
+        $('.close-icon-genre').removeClass('d-none');
+    });
+    $clearIconGenre.on('click', function() {
+        let customSelect = $('.custom-select-btn-genre');
+        $(this).addClass('d-none');
+        $('#genre-input').val('');
+        customSelect.text('Genre');
+        $('.custom-options-genre').hide();
+        customSelect.removeClass('no-arrow');
+    });
+    // Clic en dehors du menu pour fermer les options
+    $(window).on('click', function() {
+        $('.custom-options-cinema').hide();
+        $('.custom-options-genre').hide();
+    });
+    // Appliquer le style de hover/focus à custom-select-btn-cinema & close-icone-cinema lors du hover/focus de clear-icon-cinema
+    $clearIconCinema.on('mouseenter focus', function() {
+        $('.custom-select-btn-cinema').addClass('btn-hover');
+        $('.close-icon-cinema').addClass('btn-hover');
+    });
+    // Appliquer le style de hover/focus à custom-select-btn-genre & close-icone-genre lors du hover/focus de clear-icon-genre
+    $clearIconGenre.on('mouseenter focus', function() {
+        $('.custom-select-btn-genre').addClass('btn-hover');
+        $('.close-icon-genre').addClass('btn-hover');
+    });
+    // Retirer le style quand on quitte le survol/focus de clear-icon-cinema
+    $clearIconCinema.on('mouseleave blur', function() {
+        $('.custom-select-btn-cinema').removeClass('btn-hover');
+        $('.close-icon-cinema').removeClass('btn-hover');
+    });
+    // Retirer le style quand on quitte le survol/focus de clear-icon-genre
+    $clearIconGenre.on('mouseleave blur', function() {
+        $('.custom-select-btn-genre').removeClass('btn-hover');
+        $('.close-icon-genre').removeClass('btn-hover');
+    });
+
+    // Datepicker séance page films
+    const $datepicker = $('#datepicker');
+    const $calendarIcon = $('.bi-calendar');
+    const $clearIcon = $('.close-icon-date');
+    $datepicker.datepicker({
+        format: "dd/mm/yyyy",
+        language: "fr",
+        autoclose: true
+    })
+        .on('changeDate', function () {
+        // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
+        $calendarIcon.addClass('d-none');
+        $clearIcon.removeClass('d-none');
+    });
+    // Au clic sur l'icône de croix, on réinitialise la date
+    $clearIcon.on('click', function () {
+        $datepicker.datepicker('clearDates');
+        $calendarIcon.removeClass('d-none');
+        $clearIcon.addClass('d-none');
+    });
+    // Appliquer le style de hover/focus à btn-date & calendar-icon lors du hover/focus de clear-icon
+    $clearIcon.on('mouseenter focus', function () {
+        $datepicker.addClass('btn-hover');
+        $clearIcon.addClass('btn-hover');
+    });
+    // Appliquer le style de hover/focus à btn-date & calendar-icon lors du hover/focus de calendarIcon
+    $calendarIcon.on('mouseenter focus', function () {
+        $datepicker.addClass('btn-hover');
+        $calendarIcon.addClass('btn-hover');
+    });
+    // Retirer le style quand on quitte le survol/focus de clear-icon
+    $clearIcon.on('mouseleave blur', function () {
+        $datepicker.removeClass('btn-hover');
+        $clearIcon.removeClass('btn-hover');
+    });
+    // Retirer le style quand on quitte le survol/focus de calendarIcon
+    $calendarIcon.on('mouseleave blur', function () {
+        $datepicker.removeClass('btn-hover');
+        $calendarIcon.removeClass('btn-hover');
+    });
+    // Ouvrir le calendrier lorsque l'on clique sur l'icône calendrier
+    $calendarIcon.on('click', function () {
+        $datepicker.focus();
+    });
     // Accordion description films
     const $accordionButton = $('.btn-description');
     const $accordionCollapse = $('#collapseOne');
-
     // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
     $(document).click(function(event) {
         // Vérifie si le clic est à l'intérieur de l'accordéon
@@ -91,90 +214,34 @@ $(document).ready(function() {
         }
     });
 
-    // Custom select page films
-    // Clic sur le bouton pour afficher/masquer les options
-    $('.custom-select-btn-cinema').on('click', function(e) {
-        e.stopPropagation();
-        $('.custom-options-cinema').toggle();
-        $('.custom-options-genre').hide();
-    });
-    $('.custom-option-cinema').on('click', function() {
-        let selectedText = $(this).text();
-        let selectedValue = $(this).data('value');
-
-        $('.custom-select-btn-cinema').text(selectedText);
-        $('#cinema-input').val(selectedValue);
-
-        $('.custom-options-cinema').hide();
-    });
-    $('.custom-select-btn-genre').on('click', function(e) {
-        e.stopPropagation();
-        $('.custom-options-genre').toggle();
-        $('.custom-options-cinema').hide();
-    });
-    $('.custom-option-genre').on('click', function() {
-        let selectedText = $(this).text();
-        let selectedValue = $(this).data('value');
-
-        $('.custom-select-btn-genre').text(selectedText);
-        $('#genre-input').val(selectedValue);
-
-        $('.custom-options-genre').hide();
-    });
-
-    // Clic en dehors du menu pour fermer les options
-    $(window).on('click', function() {
-        $('.custom-options-cinema').hide();
-        $('.custom-options-genre').hide();
-    });
-
-    // Datepicker séance page films
-    const $datepicker = $('#datepicker');
-    const $calendarIcon = $('.bi-calendar');
-    const $clearIcon = $('.bi-x-circle');
-    $datepicker.datepicker({
-        format: "dd/mm/yyyy",
-        language: "fr",
-        autoclose: true
-    }).on('changeDate', function () {
-        // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
-        $calendarIcon.addClass('d-none');
-        $clearIcon.removeClass('d-none');
-    });
-
-    // Au clic sur l'icône de croix, on réinitialise la date
-    $clearIcon.on('click', function () {
-        $datepicker.datepicker('clearDates'); // Supprime la date
-        $calendarIcon.removeClass('d-none'); // Réaffiche l'icône calendrier
-        $clearIcon.addClass('d-none'); // Cache l'icône de croix
-    });
-
-    // Appliquer le style de hover/focus à btn-date lors du hover/focus de clear-icon
-    $clearIcon.on('mouseenter focus', function () {
-        $datepicker.addClass('btn-hover');
-        $clearIcon.addClass('btn-hover');
-    });
-
-    // Appliquer le style de hover/focus à btn-date lors du hover/focus de calendarIcon
-    $calendarIcon.on('mouseenter focus', function () {
-        $datepicker.addClass('btn-hover');
-        $calendarIcon.addClass('btn-hover');
-    });
-
-    // Retirer le style quand on quitte le survol/focus de clear-icon
-    $clearIcon.on('mouseleave blur', function () {
-        $datepicker.removeClass('btn-hover');
-        $clearIcon.removeClass('btn-hover');
-    });
-
-    // Retirer le style quand on quitte le survol/focus de calendarIcon
-    $calendarIcon.on('mouseleave blur', function () {
-        $datepicker.removeClass('btn-hover');
-        $calendarIcon.removeClass('btn-hover');
-    });
-
-    // Ouvrir le calendrier lorsque l'on clique sur l'icône calendrier
-    $calendarIcon.on('click', function () {
-        $datepicker.focus(); // Met le focus sur le champ de date, ce qui ouvre le calendrier
+    //Page administration
+    //Création template card films au clic bouton plus
+    $('#btn-plus').click(function () {
+        const newCard = `
+            <div id="card-film" class="col-auto card" style="width: 12rem">
+                <div class="d-flex position-absolute text-white">
+                    <button class="btn bi bi-pencil-square text-success p-0 fs-5 bg-admin" style="border-radius: 0 0 2px 0"></button>
+                    <button class="btn bi bi-x-square text-danger p-0 fs-5 bg-admin position-relative" style="left: 124px; border-radius: 0 0 0 2px"></button>
+                </div>
+                <img src="" class="card-img-top" alt="" style="width: auto; height: 228px; background-color: #6A73AB">
+                <div class="card-body p-0 py-1">
+                    <h5 class="card-title m-0 mt-1 mb-2" style="color:#6A73AB"></h5>
+                    <p class="card-text m-0 my-1 text-warning">
+                        <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
+                    </p>
+                    <div class="accordion accordion-flush">
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <button class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Description</button>
+                            </div>
+                            <div id="collapseExample" class="accordion-collapse collapse">
+                                <div class="accordion-body p-0"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        $('#card-container').append(newCard);
     });
 });
