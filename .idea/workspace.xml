@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifs bdd" />
+    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Création page administration">
+      <change afterPath="$PROJECT_DIR$/src/Controller/AdministrationController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/administration/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/accueil/admin.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil/admin.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/baseContact.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseContact.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/baseFilms.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseFilms.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/baseMonEspace.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseMonEspace.html.twig" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -143,29 +154,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "DefaultHtmlFileTemplate": "HTML File",
-    "JavaScript Debug.test.html.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Page__administration",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/xampp/htdocs/Cinephoria/templates/reset_password",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;JavaScript Debug.test.html.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Page__administration&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/Cinephoria/templates/reset_password&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\Cinephoria\templates\reset_password" />
       <recent name="C:\xampp\htdocs\Cinephoria\templates" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\Cinephoria\templates\administration" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -229,6 +243,7 @@
       <workItem from="1730300907914" duration="77000" />
       <workItem from="1730301005630" duration="978000" />
       <workItem from="1730359063938" duration="15491000" />
+      <workItem from="1730711458315" duration="7539000" />
     </task>
     <task id="LOCAL-00003" summary="Début page d'accueil emplyé + navbar">
       <option name="closed" value="true" />
@@ -342,7 +357,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730711372330</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Création page administration">
+      <option name="closed" value="true" />
+      <created>1730711515732</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1730711515732</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -377,6 +400,7 @@
     <MESSAGE value="Modifs" />
     <MESSAGE value="Modifs tavle seance" />
     <MESSAGE value="Modifs bdd" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modifs bdd" />
+    <MESSAGE value="Création page administration" />
+    <option name="LAST_COMMIT_MESSAGE" value="Création page administration" />
   </component>
 </project>

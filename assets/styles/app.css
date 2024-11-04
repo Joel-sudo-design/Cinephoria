@@ -439,7 +439,6 @@ html, body {
 .btn-films:hover, .btn-date:hover {
   background-color: #6A73AB;
   color: white !important;
-  border: 2px solid white;
 }
 
 .btn-films:focus, .btn-date:focus {
@@ -602,6 +601,31 @@ html, body {
   color: white;
   background-color: #6A73AB;
   scale: 130%;
+}
+
+.btn-admin {
+  background-color: white;
+  color: #6A73AB;
+  border: 2px solid #6A73AB;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-admin:hover {
+  background-color: #6A73AB;
+  color: white;
+}
+
+.bg-admin {
+  background-color: white;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Media queries */
