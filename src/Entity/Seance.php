@@ -26,6 +26,12 @@ class Seance
     #[ORM\Column]
     private ?int $price = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $is_reserved_by = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $is_seen_by = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +81,30 @@ class Seance
     public function setPrice(int $price): static
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getIsReservedBy(): ?string
+    {
+        return $this->is_reserved_by;
+    }
+
+    public function setIsReservedBy(?string $is_reserved_by): static
+    {
+        $this->is_reserved_by = $is_reserved_by;
+
+        return $this;
+    }
+
+    public function getIsSeenBy(): ?string
+    {
+        return $this->is_seen_by;
+    }
+
+    public function setIsSeenBy(?string $is_seen_by): static
+    {
+        $this->is_seen_by = $is_seen_by;
 
         return $this;
     }

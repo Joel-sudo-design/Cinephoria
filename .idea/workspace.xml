@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifs">
-      <change afterPath="$PROJECT_DIR$/migrations/Version20241104075930.php" afterDir="false" />
+    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifs tavle seance">
+      <change afterPath="$PROJECT_DIR$/migrations/Version20241104080618.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Salle.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Salle.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Seance.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Seance.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +27,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -319,7 +322,23 @@
       <option name="project" value="LOCAL" />
       <updated>1730705559321</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Modifs tavle seance">
+      <option name="closed" value="true" />
+      <created>1730707447698</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1730707447698</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Modifs tavle seance">
+      <option name="closed" value="true" />
+      <created>1730707499155</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1730707499155</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -352,6 +371,7 @@
     <MESSAGE value="Modif" />
     <MESSAGE value="Création tables film, salle et seance" />
     <MESSAGE value="Modifs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modifs" />
+    <MESSAGE value="Modifs tavle seance" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modifs tavle seance" />
   </component>
 </project>
