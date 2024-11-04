@@ -14,9 +14,6 @@ class Seance
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $qualite = null;
-
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $heure_debut = null;
 
@@ -35,18 +32,6 @@ class Seance
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getQualite(): ?string
-    {
-        return $this->qualite;
-    }
-
-    public function setQualite(string $qualite): static
-    {
-        $this->qualite = $qualite;
-
-        return $this;
     }
 
     public function getHeureDebut(): ?\DateTimeInterface

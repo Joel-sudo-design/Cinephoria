@@ -16,6 +16,9 @@ class Salle
     #[ORM\Column]
     private ?int $number = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $qualite = null;
+
     #[ORM\Column]
     private ?int $places = null;
 
@@ -47,4 +50,15 @@ class Salle
 
         return $this;
     }
+
+    public function getQualite(): ?string
+    {
+        return $this->qualite;
+    }
+
+    public function setQualite(?string $qualite): void
+    {
+        $this->qualite = $qualite;
+    }
+
 }

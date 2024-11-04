@@ -26,6 +26,15 @@ class Film
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_fin = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $label = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $age_minimum = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $notation = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +84,42 @@ class Film
     public function setDateFin(\DateTimeInterface $date_fin): static
     {
         $this->date_fin = $date_fin;
+
+        return $this;
+    }
+
+    public function isLabel(): ?bool
+    {
+        return $this->label;
+    }
+
+    public function setLabel(?bool $label): static
+    {
+        $this->label = $label;
+
+        return $this;
+    }
+
+    public function getAgeMinimum(): ?string
+    {
+        return $this->age_minimum;
+    }
+
+    public function setAgeMinimum(?string $age_minimum): static
+    {
+        $this->age_minimum = $age_minimum;
+
+        return $this;
+    }
+
+    public function getNotation(): ?int
+    {
+        return $this->notation;
+    }
+
+    public function setNotation(?int $notation): static
+    {
+        $this->notation = $notation;
 
         return $this;
     }
