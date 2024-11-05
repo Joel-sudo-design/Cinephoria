@@ -4,13 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Création du template card film, boutons compte employé &amp; données réservation &amp; bouton plus ajout template card">
+    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifs diverses">
       <change beforePath="$PROJECT_DIR$/.idea/dictionaries/joeld.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/joeld.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/administration/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/administration/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/baseFilms.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseFilms.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/films/admin.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/films/admin.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -239,7 +239,8 @@
       <workItem from="1730300907914" duration="77000" />
       <workItem from="1730301005630" duration="978000" />
       <workItem from="1730359063938" duration="15491000" />
-      <workItem from="1730711458315" duration="18435000" />
+      <workItem from="1730711458315" duration="20699000" />
+      <workItem from="1730790273324" duration="16978000" />
     </task>
     <task id="LOCAL-00003" summary="Début page d'accueil emplyé + navbar">
       <option name="closed" value="true" />
@@ -369,7 +370,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730721216857</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Modifs diverses">
+      <option name="closed" value="true" />
+      <created>1730733200057</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1730733200057</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -406,6 +415,7 @@
     <MESSAGE value="Modifs bdd" />
     <MESSAGE value="Création page administration" />
     <MESSAGE value="Création du template card film, boutons compte employé &amp; données réservation &amp; bouton plus ajout template card" />
-    <option name="LAST_COMMIT_MESSAGE" value="Création du template card film, boutons compte employé &amp; données réservation &amp; bouton plus ajout template card" />
+    <MESSAGE value="Modifs diverses" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modifs diverses" />
   </component>
 </project>

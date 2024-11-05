@@ -23,12 +23,12 @@
             <div id="offcanvas-bodyTop" class="row offcanvas-body align-items-center justify-content-center">
                 <ul id="navbarLeft" class="col-5 navbar-nav align-items-center justify-content-center p-0">
                     <li class="nav-item mx-4 my-4 text-white">
-                        <a class="nav-link d-flex align-items-center justify-content-center" aria-current="page" href="{{ path('app_accueil') }}">
+                        <a class="nav-link d-flex align-items-center justify-content-center" aria-current="page" href="{{ path('app_accueil_admin') }}">
                             <i class="bi bi-house fs-3 ms-2"></i><span class="mx-2">Accueil</span>
                         </a>
                     </li>
                     <li class="nav-item mx-4 my-4 text-white">
-                        <a id="btn-films" class="nav-link d-flex align-items-center justify-content-center" href="">
+                        <a id="btn-films" class="nav-link d-flex align-items-center justify-content-center" href="{{ path('app_films_admin') }}">
                             <i class="bi bi-camera-video fs-3 ms-2"></i><span class="mx-2">Films</span>
                         </a>
                     </li>
@@ -104,22 +104,56 @@
             </div>
         </div>
         <div class="row justify-content-center py-5">
-            <div class="col-2 p-4 text-white" style="background-color: #6A73AB">
-                <img src="{{ asset('build/images/Avatar.jpg')}}" class="img-fluid" alt="">
-                <div class="my-3">Durée: 1h30</div>
-                <div class="my-3">Genre: <div class="form-floating">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                        <label for="floatingTextarea"></label>
-                    </div></div>
+            <div class="col-2 p-4 text-white position-relative" style="background-color: #6A73AB">
+                <div class="position-relative">
+                    <button class="btn bi bi-pencil-square text-success p-0 fs-5 bg-admin position-absolute" style="top: 0; right: 0; border-radius: 0 0 0 2px"></button>
+                    <img src="{{ asset('build/images/Avatar.jpg')}}" class="img-fluid" alt="">
+                </div>
+                <div class="my-3 fs-5">Durée: 1h30</div>
+                <div class="my-3">
+                    <div class="mb-1 fs-5">Genre:</div>
+                    <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea"></textarea>
+                    <label for="floatingTextarea"></label>
+                </div>
             </div>
-            <div class="col-4" style="background-color: #6A73AB"></div>
+            <div class="col-4 p-4" style="background-color: #6A73AB">
+                <div class="row">
+                    <div class="col-8 d-flex align-items-center">
+                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea1"></textarea>
+                        <label for="floatingTextarea1"></label>
+                        <button class="btn bi bi-check-lg p-2 fs-4 d-flex justify-content-center align-items-center mx-5"></button>
+                    </div>
+                </div>
+                <div class="row my-4">
+                    <div class="col-4 d-flex ">
+                        <div class="position-relative">
+                            <input type="text" class="btn-date-admin" id="datepicker-admin-debut" placeholder="Date début" readonly>
+                            <label for="datepicker-admin-debut" class="d-none"></label>
+                            <span class="bi bi-calendar" id="icon-calendar-debut-admin"></span>
+                            <span class="bi bi-x-circle close-icon-date-debut-admin d-none"></span>
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex">
+                        <div class="position-relative">
+                            <input type="text" class="btn-date-admin" id="datepicker-admin-fin" placeholder="Date fin" readonly>
+                            <label for="datepicker-admin-fin" class="d-none"></label>
+                            <span class="bi bi-calendar" id="icon-calendar-fin-admin"></span>
+                            <span class="bi bi-x-circle close-icon-date-fin-admin d-none"></span>
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex">
+                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea2"></textarea>
+                        <label for="floatingTextarea2"></label>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
     <footer>
-        <nav id="navbarBottom" class="navbar navbar-expand-lg navbar-light fixed-bottom" style="height: 10rem">
+        <nav id="navbarBottom" class="navbar navbar-expand-lg navbar-light fixed-bottom" style="height: 8rem">
             <div class="container-fluid">
                 <button id="navbar-togglerBottom" class="navbar-toggler text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarBottom" aria-controls="offcanvasNavbarBottom" aria-label="Toggle navigation">
                     <i class="bi bi-pin-map me-2"></i><span class="ms-2">Nous localiser</span>
