@@ -633,7 +633,7 @@ footer #navbarBottom .nav-link {
   padding: 0.5rem 0.75rem;
   font-size: 1.1rem;
   cursor: pointer;
-  width: 10rem;
+  width: 12rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -671,6 +671,19 @@ footer #navbarBottom .nav-link {
 
 .bi-check-lg:hover {
   background-color: green;
+  color: white;
+  border: 2px solid white !important;
+}
+
+.bi-x-lg {
+  border: 2px solid red !important;
+  background-color: white;
+  color: red;
+  transition: all 0.2s ease;
+}
+
+.bi-x-lg:hover {
+  background-color: red;
   color: white;
   border: 2px solid white !important;
 }

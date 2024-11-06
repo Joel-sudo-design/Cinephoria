@@ -310,9 +310,8 @@ $(document).ready(function() {
     $calendarIconFin.on('click', function () {
         $datepickerFin.focus();
     });
-
     //Création template card films au sur clic bouton plus et affichage des films
-    function CreateFilm() {$('#card-container').empty();
+    function LoadFilm() {$('#card-container').empty();
         axios.get('/administration/film')
             .then(response => {
                 const Film = response.data;
@@ -322,7 +321,7 @@ $(document).ready(function() {
                         `<div id="card-film" class="col-auto card" style="width: 12rem">
                         <div class="d-flex position-absolute text-white">
                                 <button class="btn bi bi-pencil-square text-success p-0 fs-5 bg-admin" style="border-radius: 0 0 2px 0" data-bs-toggle="modal" data-bs-target="#modal-${film.id}"></button>
-                                <button class="btn bi bi-x-square text-danger p-0 fs-5 bg-admin position-relative" style="left: 124px; border-radius: 0 0 0 2px"></button>
+                                <button id="x-square-${film.id}" class="btn bi bi-x-square text-danger p-0 fs-5 bg-admin position-relative" style="left: 124px; border-radius: 0 0 0 2px"></button>
                             </div>
                         <img src="" class="card-img-top" alt="" style="width: auto; height: 228px; background-color: #6A73AB">
                         <div class="card-body p-0 py-1">
@@ -359,15 +358,18 @@ $(document).ready(function() {
                                             </div>
                                             <div class="col-8 p-4">
                                                 <div class="row px-2">
-                                                    <div class="col-7 d-flex align-items-center p-0">
-                                                        <div class="text-white fs-5 me-1">Nom:</div>
-                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea1"></textarea>
-                                                        <label class="d-none" for="floatingTextarea1"></label>
-                                                        <button class="btn bi bi-check-lg p-2 fs-4 d-flex justify-content-center align-items-center mx-5"></button>
-                                                    </div>
+                                                  <div class="col-5 d-flex align-items-center p-0">
+                                                     <div class="text-white fs-5 me-1">Nom:</div>
+                                                     <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea1"></textarea>
+                                                     <label class="d-none" for="floatingTextarea1"></label>
+                                                  </div>
+                                                  <div class="col-7 d-flex align-items-center justify-content-center p-0">
+                                                     <button class="btn bi bi-check-lg p-2 fs-4 d-flex justify-content-center align-items-center mx-3"></button>
+                                                     <button class="btn bi bi-x-lg p-2 fs-4 d-flex justify-content-center align-items-center mx-3" data-bs-dismiss="modal"></button>
+                                                  </div>      
                                                 </div>
                                                 <div class="row my-3">
-                                                    <div class="col-4 d-flex">
+                                                    <div class="col-4 d-flex justify-content-start">
                                                         <div class="position-relative">
                                                             <input type="text" class="btn-date-admin text-black" id="datepicker-admin-debut" placeholder="Date début" readonly>
                                                             <label for="datepicker-admin-debut" class="d-none"></label>
@@ -383,7 +385,7 @@ $(document).ready(function() {
                                                             <span class="bi bi-x-circle close-icon-date-fin-admin d-none"></span>
                                                         </div>
                                                     </div>
-                                                    <div class="col-4 d-flex align-items-center">
+                                                    <div class="col-4 d-flex align-items-center justify-content-end">
                                                         <div class="text-white fs-5 me-1">Cinéma:</div>
                                                         <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea2"></textarea>
                                                         <label class="d-none" for="floatingTextarea2"></label>
@@ -505,20 +507,25 @@ $(document).ready(function() {
                                     </div>
                             </div>
                         </div>`);
+                    const btnX = $('#x-square-'+film.id);
+                    btnX.click(function () {
+                        axios.post('/administration/film/delete', JSON.stringify({id: film.id}))
+                            .then(response => {$('#card-container').empty();console.log(response.data);})
+                            .catch(error => {console.error(error);})
+                            .finally(() => {LoadFilm();});
+                    });
                 });
             })
-            .catch(error => {
-                console.error(error);
-            });}
+            .catch(error => {console.error(error);});}
     $('#btn-plus').click(function () {
-        axios.post('/administration/film/created')
-            .then(response => {CreateFilm();})
+        axios.post('/administration/film/create')
+            .then(response => {LoadFilm();console.log(response.data);})
             .catch(error => {
                 console.error(error);
             });
     });
     //Affichage des films sur clic bouton administration
     $('#btn-navbar-admin').click(function() {
-        CreateFilm();
+        LoadFilm();
     });
 });
