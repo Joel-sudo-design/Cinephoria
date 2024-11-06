@@ -134,22 +134,22 @@ $(document).ready(function() {
         $('.custom-options-cinema').hide();
         $('.custom-options-genre').hide();
     });
-    // Appliquer le style de hover/focus à custom-select-btn-cinema & close-icone-cinema lors du hover/focus de clear-icon-cinema
+    // Appliquer le style de hover/focus
     $clearIconCinema.on('mouseenter focus', function() {
         $('.custom-select-btn-cinema').addClass('btn-hover');
         $('.close-icon-cinema').addClass('btn-hover');
     });
-    // Appliquer le style de hover/focus à custom-select-btn-genre & close-icone-genre lors du hover/focus de clear-icon-genre
+    // Appliquer le style de hover/focus
     $clearIconGenre.on('mouseenter focus', function() {
         $('.custom-select-btn-genre').addClass('btn-hover');
         $('.close-icon-genre').addClass('btn-hover');
     });
-    // Retirer le style quand on quitte le survol/focus de clear-icon-cinema
+    // Retirer le style quand on quitte le survol/focus
     $clearIconCinema.on('mouseleave blur', function() {
         $('.custom-select-btn-cinema').removeClass('btn-hover');
         $('.close-icon-cinema').removeClass('btn-hover');
     });
-    // Retirer le style quand on quitte le survol/focus de clear-icon-genre
+    // Retirer le style quand on quitte le survol/focus
     $clearIconGenre.on('mouseleave blur', function() {
         $('.custom-select-btn-genre').removeClass('btn-hover');
         $('.close-icon-genre').removeClass('btn-hover');
@@ -157,7 +157,7 @@ $(document).ready(function() {
 
     // Datepicker
     const $datepicker = $('#datepicker');
-    const $calendarIcon = $('.bi-calendar');
+    const $calendarIcon = $('#icon-calendar');
     const $clearIcon = $('.close-icon-date');
     $datepicker.datepicker({
         format: "dd/mm/yyyy",
@@ -176,7 +176,7 @@ $(document).ready(function() {
         $calendarIcon.removeClass('d-none');
         $clearIcon.addClass('d-none');
     });
-    // Appliquer le style de hover/focus lors du clic sur l'icône croix
+    // Appliquer le style de hover/focus
     $clearIcon.on('mouseenter focus', function () {
         $datepicker.addClass('btn-hover');
         $clearIcon.addClass('btn-hover');
@@ -186,17 +186,17 @@ $(document).ready(function() {
         $datepicker.addClass('btn-hover');
         $calendarIcon.addClass('btn-hover');
     });
-    // Retirer le style quand on quitte le survol/focus de l'icône croix
+    // Retirer le style quand on quitte le survol/focus
     $clearIcon.on('mouseleave blur', function () {
         $datepicker.removeClass('btn-hover');
         $clearIcon.removeClass('btn-hover');
     });
-    // Retirer le style quand on quitte le survol/focus de l'icône calendrier
+    // Retirer le style quand on quitte le survol/focus
     $calendarIcon.on('mouseleave blur', function () {
         $datepicker.removeClass('btn-hover');
         $calendarIcon.removeClass('btn-hover');
     });
-    // Ouvrir le calendrier lorsque l'on clique sur l'icône calendrier
+    // Ouvrir le calendrier
     $calendarIcon.on('click', function () {
         $datepicker.focus();
     });
@@ -275,17 +275,17 @@ $(document).ready(function() {
         $datepickerDebut.addClass('btn-hover');
         $clearIconDebut.addClass('btn-hover');
     });
-    // Appliquer le style de hover/focus lors du clic sur l'icône calendrier
+    // Appliquer le style de hover/focus
     $calendarIconDebut.on('mouseenter focus', function () {
         $datepickerDebut.addClass('btn-hover');
         $calendarIconDebut.addClass('btn-hover');
     });
-    // Retirer le style quand on quitte le survol/focus de l'icône croix
+    // Retirer le style quand on quitte le survol/focus
     $clearIconDebut.on('mouseleave blur', function () {
         $datepickerDebut.removeClass('btn-hover');
         $clearIconDebut.removeClass('btn-hover');
     });
-    // Retirer le style quand on quitte le survol/focus sur l'icône calendrier
+    // Retirer le style quand on quitte le survol/focus
     $calendarIconDebut.on('mouseleave blur', function () {
         $datepickerDebut.removeClass('btn-hover');
         $calendarIconDebut.removeClass('btn-hover');
@@ -312,22 +312,22 @@ $(document).ready(function() {
         $calendarIconFin.removeClass('d-none');
         $clearIconFin.addClass('d-none');
     });
-    // Appliquer le style de hover/focus lors du clic sur l'icône croix
+    // Appliquer le style de hover/focus
     $clearIconFin.on('mouseenter focus', function () {
         $datepickerFin.addClass('btn-hover');
         $clearIconFin.addClass('btn-hover');
     });
-    // Appliquer le style de hover/focus lors du clic sur l'icône calendrier
+    // Appliquer le style de hover/focus
     $calendarIconFin.on('mouseenter focus', function () {
         $datepickerFin.addClass('btn-hover');
         $calendarIconFin.addClass('btn-hover');
     });
-    // Retirer le style quand on quitte le survol/focus de l'icône croix
+    // Retirer le style quand on quitte le survol/focus
     $clearIconFin.on('mouseleave blur', function () {
         $datepickerFin.removeClass('btn-hover');
         $clearIconFin.removeClass('btn-hover');
     });
-    // Retirer le style quand on quitte le survol/focus de l'icône calendrier
+    // Retirer le style quand on quitte le survol/focus
     $calendarIconFin.on('mouseleave blur', function () {
         $datepickerFin.removeClass('btn-hover');
         $calendarIconFin.removeClass('btn-hover');
@@ -336,5 +336,4 @@ $(document).ready(function() {
     $calendarIconFin.on('click', function () {
         $datepickerFin.focus();
     });
-
 });

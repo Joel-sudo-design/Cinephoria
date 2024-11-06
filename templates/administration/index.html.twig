@@ -110,22 +110,22 @@
                     <img src="{{ asset('build/images/Avatar.jpg')}}" class="img-fluid" alt="">
                 </div>
                 <div class="my-3 fs-5">Durée: 1h30</div>
-                <div class="my-3">
+                <div class="my-3" style="margin-right: 7rem">
                     <div class="mb-1 fs-5">Genre:</div>
                     <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea"></textarea>
                     <label for="floatingTextarea"></label>
                 </div>
             </div>
             <div class="col-4 p-4" style="background-color: #6A73AB">
-                <div class="row">
-                    <div class="col-8 d-flex align-items-center">
+                <div class="row px-2">
+                    <div class="col-7 d-flex align-items-center p-0">
                         <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea1"></textarea>
-                        <label for="floatingTextarea1"></label>
+                        <label class="d-none" for="floatingTextarea1"></label>
                         <button class="btn bi bi-check-lg p-2 fs-4 d-flex justify-content-center align-items-center mx-5"></button>
                     </div>
                 </div>
-                <div class="row my-4">
-                    <div class="col-4 d-flex ">
+                <div class="row my-3">
+                    <div class="col-4 d-flex">
                         <div class="position-relative">
                             <input type="text" class="btn-date-admin" id="datepicker-admin-debut" placeholder="Date début" readonly>
                             <label for="datepicker-admin-debut" class="d-none"></label>
@@ -133,7 +133,7 @@
                             <span class="bi bi-x-circle close-icon-date-debut-admin d-none"></span>
                         </div>
                     </div>
-                    <div class="col-4 d-flex">
+                    <div class="col-4 d-flex justify-content-end">
                         <div class="position-relative">
                             <input type="text" class="btn-date-admin" id="datepicker-admin-fin" placeholder="Date fin" readonly>
                             <label for="datepicker-admin-fin" class="d-none"></label>
@@ -141,9 +141,116 @@
                             <span class="bi bi-x-circle close-icon-date-fin-admin d-none"></span>
                         </div>
                     </div>
-                    <div class="col-4 d-flex">
+                    <div class="col-4">
                         <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea2"></textarea>
-                        <label for="floatingTextarea2"></label>
+                        <label class="d-none" for="floatingTextarea2"></label>
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="col-2 d-flex text-white align-items-center justify-content-start">
+                        <div class="fs-5">4DX:</div>
+                    </div>
+                    <div class="col-3 d-flex text-white">
+                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea3"></textarea>
+                        <label class="d-none" for="floatingTextarea3"></label>
+                    </div>
+                    <div class="col-3">
+                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea4"></textarea>
+                        <label class="d-none" for="floatingTextarea4"></label>
+                    </div>
+                    <div class="col-2 d-flex text-white align-items-center justify-content-end">
+                        <div class="fs-5">Prix:</div>
+                    </div>
+                    <div class="col-2">
+                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea5"></textarea>
+                        <label class="d-none" for="floatingTextarea5"></label>
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="col-2 d-flex text-white align-items-center justify-content-start">
+                        <div class="fs-5">3DX:</div>
+                    </div>
+                    <div class="col-3 d-flex text-white">
+                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea3"></textarea>
+                        <label class="d-none" for="floatingTextarea3"></label>
+                    </div>
+                    <div class="col-3">
+                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea4"></textarea>
+                        <label class="d-none" for="floatingTextarea4"></label>
+                    </div>
+                    <div class="col-2 d-flex text-white align-items-center justify-content-end">
+                        <div class="fs-5">Prix:</div>
+                    </div>
+                    <div class="col-2">
+                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea5"></textarea>
+                        <label class="d-none" for="floatingTextarea5"></label>
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="col-2 d-flex text-white align-items-center justify-content-start">
+                        <div class="fs-5">IMAX:</div>
+                    </div>
+                    <div class="col-3 d-flex text-white">
+                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea3"></textarea>
+                        <label class="d-none" for="floatingTextarea3"></label>
+                    </div>
+                    <div class="col-3">
+                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea4"></textarea>
+                        <label class="d-none" for="floatingTextarea4"></label>
+                    </div>
+                    <div class="col-2 d-flex text-white align-items-center justify-content-end">
+                        <div class="fs-5">Prix:</div>
+                    </div>
+                    <div class="col-2">
+                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea5"></textarea>
+                        <label class="d-none" for="floatingTextarea5"></label>
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="col-2 d-flex text-white align-items-center justify-content-start">
+                        <div class="fs-5">Dolby:</div>
+                    </div>
+                    <div class="col-3 d-flex text-white">
+                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea3"></textarea>
+                        <label class="d-none" for="floatingTextarea3"></label>
+                    </div>
+                    <div class="col-3">
+                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea4"></textarea>
+                        <label class="d-none" for="floatingTextarea4"></label>
+                    </div>
+                    <div class="col-2 d-flex text-white align-items-center justify-content-end">
+                        <div class="fs-5">Prix:</div>
+                    </div>
+                    <div class="col-2">
+                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea5"></textarea>
+                        <label class="d-none" for="floatingTextarea5"></label>
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="col-3 d-flex text-white align-items-center justify-content-start">
+                        <div class="fs-5">Nombre de places:</div>
+                    </div>
+                    <div class="col-2 d-flex text-white align-items-center">
+                        <textarea class="form-control p-2 textarea-uniforme" placeholder="" id="floatingTextarea3"></textarea>
+                        <label class="d-none" for="floatingTextarea3"></label>
+                    </div>
+                    <div class="col-1 d-flex text-white align-items-center">
+                        <div class="fs-5">Prix:</div>
+                    </div>
+                    <div class="col-2 d-flex text-white align-items-center">
+                        <textarea class="form-control p-2 textarea-uniforme" placeholder="" id="floatingTextarea5"></textarea>
+                        <label class="d-none" for="floatingTextarea5"></label>
+                    </div>
+                </div>
+                <div class="row mt-3 mb-1">
+                    <div class="col-3 text-white align-items-center justify-content-start">
+                        <div class="fs-5">Description:</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 d-flex text-white align-items-center">
+                        <textarea class="form-control p-2 textarea-uniforme" placeholder="" id="floatingTextarea3" style="height:10rem"></textarea>
+                        <label class="d-none" for="floatingTextarea3"></label>
                     </div>
                 </div>
             </div>

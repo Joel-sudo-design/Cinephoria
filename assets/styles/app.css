@@ -89,7 +89,7 @@ html, body {
 }
 
 footer #navbarBottom .nav-link {
-  padding: 0.3rem !important;
+  padding: 0.2rem !important;
 }
 
 /* Page d'accueil */
@@ -633,7 +633,7 @@ footer #navbarBottom .nav-link {
   padding: 0.5rem 0.75rem;
   font-size: 1rem;
   cursor: pointer;
-  width: 9rem;
+  width: 10rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
