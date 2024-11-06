@@ -76,29 +76,7 @@
         </div>
     </div>
     <div class="container-fluid container-films">
-        <div class="row justify-content-center align-items-center mx-5 my-3" style="gap: 5rem">
-            <div id="card-film" class="col-auto card" style="width: 12rem">
-                <img src="{{ asset('build/images/Avatar.jpg')}}" class="card-img-top" alt="">
-                <div class="card-body p-0 py-1">
-                    <h5 class="card-title m-0 mt-1 mb-2" style="color:#6A73AB">Avatar</h5>
-                    <p class="card-text m-0 my-1 text-warning">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half me-1"></i>4.5
-                    </p>
-                    <div class="accordion accordion-flush" id="accordionDescription">
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <button class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Description</button>
-                            </div>
-                            <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionDescription">
-                                <div class="accordion-body p-0">
-                                    It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="row justify-content-center align-items-center mx-5 my-3" style="gap: 5rem"></div>
     </div>
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}

@@ -631,7 +631,7 @@ footer #navbarBottom .nav-link {
   border: 2px solid #6A73AB;
   border-radius: 6px;
   padding: 0.5rem 0.75rem;
-  font-size: 1rem;
+  font-size: 1.1rem;
   cursor: pointer;
   width: 10rem;
   display: flex;
@@ -679,20 +679,27 @@ footer #navbarBottom .nav-link {
   height: 43.2px;
   resize: none;
   overflow: hidden;
-  font-size: 1rem !important;
+  font-size: 1.1rem !important;
   background-color: white !important;
   border: 2px solid #6A73AB !important;
   transition: all 0.2s ease;
-  color: white !important;
+  color: black !important;
+  text-align: center;
 }
 
 .textarea-uniforme:hover {
-  background-color: #f2f2f2 !important;
+  background-color: #e0e0e0 !important;
 }
 
 .textarea-uniforme:focus {
   border: 2px solid white !important;
   background-color: #6A73AB !important;
+  color: white !important;
+}
+
+.modal-admin {
+  border: 1px solid white !important;
+  border-radius: 6px !important;
 }
 
 /* Media queries */

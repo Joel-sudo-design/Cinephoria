@@ -245,7 +245,7 @@ $(document).ready(function() {
         `;
         $('#card-container').append(newCard);
     });
-    // Datepicker
+    // Datepicker modal
     const $datepickerDebut = $('#datepicker-admin-debut');
     const $calendarIconDebut = $('#icon-calendar-debut-admin');
     const $clearIconDebut = $('.close-icon-date-debut-admin');
