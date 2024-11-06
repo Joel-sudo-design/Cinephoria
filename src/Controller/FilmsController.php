@@ -33,7 +33,7 @@ class FilmsController extends AbstractController
             'genres' => $genres
         ]);
     }
-    #[Route('/utilisateur/films', name: 'app_films_employe')]
+    #[Route('/employe/films', name: 'app_films_employe')]
     public function indexEmploye(CinemaRepository $cinemaRepository, GenreRepository $genreRepository): Response
     {
         $cinemas = $cinemaRepository->findAll();

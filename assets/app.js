@@ -16,6 +16,9 @@ import 'bootstrap-datepicker/dist/locales/bootstrap-datepicker.fr.min.js';
 const imagesContext = require.context('../assets/images', true, /\.(png|jpg|jpeg|gif|ico|svg|webp)$/);
 imagesContext.keys().forEach(imagesContext);
 
+//Axios
+const axios = require('axios');
+
 $(document).ready(function() {
 
     // Navbar Top & Navbar Footer Bottom
@@ -216,35 +219,6 @@ $(document).ready(function() {
     });
 
     //Page administration
-    //Création template card films au clic bouton plus
-    $('#btn-plus').click(function () {
-        const newCard = `
-            <div id="card-film" class="col-auto card" style="width: 12rem">
-                <div class="d-flex position-absolute text-white">
-                    <button class="btn bi bi-pencil-square text-success p-0 fs-5 bg-admin" style="border-radius: 0 0 2px 0"></button>
-                    <button class="btn bi bi-x-square text-danger p-0 fs-5 bg-admin position-relative" style="left: 124px; border-radius: 0 0 0 2px"></button>
-                </div>
-                <img src="" class="card-img-top" alt="" style="width: auto; height: 228px; background-color: #6A73AB">
-                <div class="card-body p-0 py-1">
-                    <h5 class="card-title m-0 mt-1 mb-2" style="color:#6A73AB"></h5>
-                    <p class="card-text m-0 my-1 text-warning">
-                        <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
-                    </p>
-                    <div class="accordion accordion-flush">
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <button class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Description</button>
-                            </div>
-                            <div id="collapseExample" class="accordion-collapse collapse">
-                                <div class="accordion-body p-0"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-        $('#card-container').append(newCard);
-    });
     // Datepicker modal
     const $datepickerDebut = $('#datepicker-admin-debut');
     const $calendarIconDebut = $('#icon-calendar-debut-admin');
@@ -335,5 +309,216 @@ $(document).ready(function() {
     // Ouvrir le calendrier lorsque l'on clique sur l'icône calendrier
     $calendarIconFin.on('click', function () {
         $datepickerFin.focus();
+    });
+
+    //Création template card films au sur clic bouton plus et affichage des films
+    function CreateFilm() {$('#card-container').empty();
+        axios.get('/administration/film')
+            .then(response => {
+                const Film = response.data;
+                console.log(Film);
+                $.each(Film, function(index, film) {
+                    $('#card-container').append(
+                        `<div id="card-film" class="col-auto card" style="width: 12rem">
+                        <div class="d-flex position-absolute text-white">
+                                <button class="btn bi bi-pencil-square text-success p-0 fs-5 bg-admin" style="border-radius: 0 0 2px 0" data-bs-toggle="modal" data-bs-target="#modal-${film.id}"></button>
+                                <button class="btn bi bi-x-square text-danger p-0 fs-5 bg-admin position-relative" style="left: 124px; border-radius: 0 0 0 2px"></button>
+                            </div>
+                        <img src="" class="card-img-top" alt="" style="width: auto; height: 228px; background-color: #6A73AB">
+                        <div class="card-body p-0 py-1">
+                                <h5 class="card-title m-0 mt-1 mb-2" style="color:#6A73AB"></h5>
+                                <p class="card-text m-0 my-1 text-warning">
+                                    <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
+                                </p>
+                                <div class="accordion accordion-flush">
+                                    <div class="accordion-item">
+                                        <div class="accordion-header">
+                                            <button class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Description</button>
+                                        </div>
+                                        <div id="collapseExample" class="accordion-collapse collapse">
+                                            <div class="accordion-body p-0"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="modal fade" id="modal-${film.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                                        <div class="modal-content" style="background-color: #6A73AB">
+                                        <div class="modal-body modal-admin row justify-content-center m-0 p-0">
+                                            <div class="col-4 p-4 text-white position-relative">
+                                                <div class="position-relative">
+                                                    <button class="btn bi bi-pencil-square text-success p-0 fs-5 bg-admin position-absolute" style="top: 0; right: 0; border-radius: 0 0 0 2px"></button>
+                                                    <img src="" class="img-fluid" alt="" style="width: 100%; height: 450px; background-color: white">
+                                                </div>
+                                                <div class="my-3 fs-5">Durée: 1h30</div>
+                                                <div class="my-3 d-flex align-items-center" style="margin-right: 5rem">
+                                                    <div class="mb-1 fs-5 me-1">Genre:</div>
+                                                    <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea"></textarea>
+                                                    <label for="floatingTextarea"></label>
+                                                </div>
+                                            </div>
+                                            <div class="col-8 p-4">
+                                                <div class="row px-2">
+                                                    <div class="col-7 d-flex align-items-center p-0">
+                                                        <div class="text-white fs-5 me-1">Nom:</div>
+                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea1"></textarea>
+                                                        <label class="d-none" for="floatingTextarea1"></label>
+                                                        <button class="btn bi bi-check-lg p-2 fs-4 d-flex justify-content-center align-items-center mx-5"></button>
+                                                    </div>
+                                                </div>
+                                                <div class="row my-3">
+                                                    <div class="col-4 d-flex">
+                                                        <div class="position-relative">
+                                                            <input type="text" class="btn-date-admin text-black" id="datepicker-admin-debut" placeholder="Date début" readonly>
+                                                            <label for="datepicker-admin-debut" class="d-none"></label>
+                                                            <span class="bi bi-calendar" id="icon-calendar-debut-admin"></span>
+                                                            <span class="bi bi-x-circle close-icon-date-debut-admin d-none"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4 d-flex justify-content-end">
+                                                        <div class="position-relative">
+                                                            <input type="text" class="btn-date-admin text-black" id="datepicker-admin-fin" placeholder="Date fin" readonly>
+                                                            <label for="datepicker-admin-fin" class="d-none"></label>
+                                                            <span class="bi bi-calendar" id="icon-calendar-fin-admin"></span>
+                                                            <span class="bi bi-x-circle close-icon-date-fin-admin d-none"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4 d-flex align-items-center">
+                                                        <div class="text-white fs-5 me-1">Cinéma:</div>
+                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea2"></textarea>
+                                                        <label class="d-none" for="floatingTextarea2"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="row my-3">
+                                                    <div class="col-2 d-flex text-white align-items-center justify-content-start">
+                                                        <div class="fs-5">4DX:</div>
+                                                    </div>
+                                                    <div class="col-3 d-flex text-white">
+                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea3"></textarea>
+                                                        <label class="d-none" for="floatingTextarea3"></label>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea4"></textarea>
+                                                        <label class="d-none" for="floatingTextarea4"></label>
+                                                    </div>
+                                                    <div class="col-2 d-flex text-white align-items-center justify-content-end">
+                                                        <div class="fs-5">Prix:</div>
+                                                    </div>
+                                                    <div class="col-2 d-flex align-items-center">
+                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea5"></textarea>
+                                                        <label class="d-none" for="floatingTextarea5"></label>
+                                                        <div class="mx-1 fs-5 text-white">€</div>
+                                                    </div>
+                                                </div>
+                                                <div class="row my-3">
+                                                    <div class="col-2 d-flex text-white align-items-center justify-content-start">
+                                                        <div class="fs-5">3DX:</div>
+                                                    </div>
+                                                    <div class="col-3 d-flex text-white">
+                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea3"></textarea>
+                                                        <label class="d-none" for="floatingTextarea3"></label>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea4"></textarea>
+                                                        <label class="d-none" for="floatingTextarea4"></label>
+                                                    </div>
+                                                    <div class="col-2 d-flex text-white align-items-center justify-content-end">
+                                                        <div class="fs-5">Prix:</div>
+                                                    </div>
+                                                    <div class="col-2 d-flex align-items-center">
+                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea5"></textarea>
+                                                        <label class="d-none" for="floatingTextarea5"></label>
+                                                        <div class="mx-1 fs-5 text-white">€</div>
+                                                    </div>
+                                                </div>
+                                                <div class="row my-3">
+                                                    <div class="col-2 d-flex text-white align-items-center justify-content-start">
+                                                        <div class="fs-5">IMAX:</div>
+                                                    </div>
+                                                    <div class="col-3 d-flex text-white">
+                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea3"></textarea>
+                                                        <label class="d-none" for="floatingTextarea3"></label>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea4"></textarea>
+                                                        <label class="d-none" for="floatingTextarea4"></label>
+                                                    </div>
+                                                    <div class="col-2 d-flex text-white align-items-center justify-content-end">
+                                                        <div class="fs-5">Prix:</div>
+                                                    </div>
+                                                    <div class="col-2 d-flex align-items-center">
+                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea5"></textarea>
+                                                        <label class="d-none" for="floatingTextarea5"></label>
+                                                        <div class="mx-1 fs-5 text-white">€</div>
+                                                    </div>
+                                                </div>
+                                                <div class="row my-3">
+                                                    <div class="col-2 d-flex text-white align-items-center justify-content-start">
+                                                        <div class="fs-5">Dolby:</div>
+                                                    </div>
+                                                    <div class="col-3 d-flex text-white">
+                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea3"></textarea>
+                                                        <label class="d-none" for="floatingTextarea3"></label>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea4"></textarea>
+                                                        <label class="d-none" for="floatingTextarea4"></label>
+                                                    </div>
+                                                    <div class="col-2 d-flex text-white align-items-center justify-content-end">
+                                                        <div class="fs-5">Prix:</div>
+                                                    </div>
+                                                    <div class="col-2 d-flex align-items-center">
+                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea5"></textarea>
+                                                        <label class="d-none" for="floatingTextarea5"></label>
+                                                        <div class="mx-1 fs-5 text-white">€</div>
+                                                    </div>
+                                                </div>
+                                                <div class="row my-3">
+                                                    <div class="col-3 d-flex text-white align-items-center justify-content-start">
+                                                        <div class="fs-5">Nombre de places:</div>
+                                                    </div>
+                                                    <div class="col-2 d-flex text-white align-items-center">
+                                                        <textarea class="form-control p-2 textarea-uniforme" placeholder="" id="floatingTextarea3"></textarea>
+                                                        <label class="d-none" for="floatingTextarea3"></label>
+                                                    </div>
+                                                    <div class="col-1 d-flex text-white align-items-center">
+                                                        <div class="fs-5">Salle:</div>
+                                                    </div>
+                                                    <div class="col-2 d-flex text-white align-items-center">
+                                                        <textarea class="form-control p-2 textarea-uniforme" placeholder="" id="floatingTextarea5"></textarea>
+                                                        <label class="d-none" for="floatingTextarea5"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-3 mb-1">
+                                                    <div class="col-3 text-white align-items-center justify-content-start">
+                                                        <div class="fs-5">Description:</div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12 d-flex text-white align-items-center">
+                                                        <textarea class="form-control p-2 textarea-uniforme" placeholder="" id="floatingTextarea3" style="height:10rem"></textarea>
+                                                        <label class="d-none" for="floatingTextarea3"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div></div>
+                                    </div>
+                            </div>
+                        </div>`);
+                });
+            })
+            .catch(error => {
+                console.error(error);
+            });}
+    $('#btn-plus').click(function () {
+        axios.post('/administration/film/created')
+            .then(response => {CreateFilm();})
+            .catch(error => {
+                console.error(error);
+            });
+    });
+    //Affichage des films sur clic bouton administration
+    $('#btn-navbar-admin').click(function() {
+        CreateFilm();
     });
 });
