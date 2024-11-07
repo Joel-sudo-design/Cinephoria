@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Film;
+use App\Repository\CinemaRepository;
+use App\Repository\GenreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,10 +16,14 @@ use Symfony\Component\Routing\Attribute\Route;
 class AdministrationController extends AbstractController
 {
     #[Route('', name: 'app_administration')]
-    public function index(): Response
+    public function index(CinemaRepository $cinemaRepository, GenreRepository $genreRepository): Response
     {
+        $cinemas = $cinemaRepository->findAll();
+        $genres = $genreRepository->findAll();
         return $this->render('administration/index.html.twig', [
             'controller_name' => 'AdministrationController',
+            'cinemas' => $cinemas,
+            'genres' => $genres
         ]);
     }
 

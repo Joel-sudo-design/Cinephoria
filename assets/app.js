@@ -311,6 +311,7 @@ $(document).ready(function() {
         $datepickerFin.focus();
     });
     //Création template card films au sur clic bouton plus et affichage des films
+
     function LoadFilm() {$('#card-container').empty();
         axios.get('/administration/film')
             .then(response => {
@@ -332,15 +333,15 @@ $(document).ready(function() {
                                 <div class="accordion accordion-flush">
                                     <div class="accordion-item">
                                         <div class="accordion-header">
-                                            <button class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Description</button>
+                                            <button class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription-${film.id}" aria-expanded="false" aria-controls="collapseDescription">Description</button>
                                         </div>
-                                        <div id="collapseExample" class="accordion-collapse collapse">
+                                        <div id="collapseDescription-${film.id}" class="accordion-collapse collapse">
                                             <div class="accordion-body p-0"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        <div class="modal fade" id="modal-${film.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="modal-${film.id}" tabindex="-1" aria-labelledby="Modal-film" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered modal-xl">
                                         <div class="modal-content" style="background-color: #6A73AB">
                                         <div class="modal-body modal-admin row justify-content-center m-0 p-0">
@@ -349,23 +350,37 @@ $(document).ready(function() {
                                                     <button class="btn bi bi-pencil-square text-success p-0 fs-5 bg-admin position-absolute" style="top: 0; right: 0; border-radius: 0 0 0 2px"></button>
                                                     <img src="" class="img-fluid" alt="" style="width: 100%; height: 450px; background-color: white">
                                                 </div>
-                                                <div class="my-3 fs-5">Durée: 1h30</div>
-                                                <div class="my-3 d-flex align-items-center" style="margin-right: 5rem">
-                                                    <div class="mb-1 fs-5 me-1">Genre:</div>
-                                                    <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea"></textarea>
-                                                    <label for="floatingTextarea"></label>
-                                                </div>
+                                                <div class="row my-3">
+                                                  <div class="col-6 d-flex justify-content-center">
+                                                    <div class="dropdown">
+                                                      <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuButton-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                         Genre
+                                                      </button>
+                                                      <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton">
+                                                        <li><a class="dropdown-item" href="#">Action</a></li>
+                                                        <li><a class="dropdown-item" href="#">Comédie</a></li>
+                                                        <li><a class="dropdown-item" href="#">Horreur</a></li>
+                                                        <li><a class="dropdown-item" href="#">Science-fiction</a></li>
+                                                        <li><a class="dropdown-item" href="#">Romance</a></li>
+                                                        <li><a class="dropdown-item" href="#">Thriller</a></li>
+                                                        <li><a class="dropdown-item" href="#">Drame</a></li>
+                                                        <li><a class="dropdown-item" href="#">Animation</a></li>
+                                                      </ul>
+                                                    </div> 
+                                                  </div>
+                                                  <div class="col-6 fs-5 text-center align-content-center">Durée: 1h30</div>
+                                                </div> 
                                             </div>
                                             <div class="col-8 p-4">
                                                 <div class="row px-2">
                                                   <div class="col-5 d-flex align-items-center p-0">
                                                      <div class="text-white fs-5 me-1">Nom:</div>
-                                                     <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea1"></textarea>
-                                                     <label class="d-none" for="floatingTextarea1"></label>
+                                                     <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="TextareaNom-${film.id}"></textarea>
+                                                     <label class="d-none" for="TextareaNom-${film.id}"></label>
                                                   </div>
-                                                  <div class="col-7 d-flex align-items-center justify-content-center p-0">
-                                                     <button class="btn bi bi-check-lg p-2 fs-4 d-flex justify-content-center align-items-center mx-3"></button>
-                                                     <button class="btn bi bi-x-lg p-2 fs-4 d-flex justify-content-center align-items-center mx-3" data-bs-dismiss="modal"></button>
+                                                  <div class="col-7 d-flex align-items-center justify-content-end p-0">
+                                                     <button class="btn bi bi-check-lg p-2 fs-4 d-flex justify-content-center align-items-center mx-2"></button>
+                                                     <button class="btn bi bi-x-lg p-2 fs-4 d-flex justify-content-center align-items-center mx-1" data-bs-dismiss="modal"></button>
                                                   </div>      
                                                 </div>
                                                 <div class="row my-3">
@@ -507,6 +522,12 @@ $(document).ready(function() {
                                     </div>
                             </div>
                         </div>`);
+                    const dropdownMenuButton = $('#dropdownMenuButton-'+film.id);
+                    $('.dropdown-item').click(function(e) {
+                        e.preventDefault();
+                        const selectedText = $(this).text();
+                        dropdownMenuButton.text(selectedText);
+                    });
                     const btnX = $('#x-square-'+film.id);
                     btnX.click(function () {
                         axios.post('/administration/film/delete', JSON.stringify({id: film.id}))
@@ -516,7 +537,9 @@ $(document).ready(function() {
                     });
                 });
             })
-            .catch(error => {console.error(error);});}
+            .catch(error => {console.error(error)});
+    }
+
     $('#btn-plus').click(function () {
         axios.post('/administration/film/create')
             .then(response => {LoadFilm();console.log(response.data);})
@@ -528,4 +551,9 @@ $(document).ready(function() {
     $('#btn-navbar-admin').click(function() {
         LoadFilm();
     });
+
+    //Lancement des requètes AJAX au chargement des pages
+    if (window.location.pathname === '/administration') {
+            LoadFilm();
+        }
 });

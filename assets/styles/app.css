@@ -38,7 +38,7 @@ html, body {
   background-color: #6A73AB;
 }
 
-.dropdown-menu > :nth-child(2) {
+.navbar .dropdown-menu > :nth-child(2) {
   border-top: 2px solid #FFFFFF;
 }
 
@@ -713,6 +713,14 @@ footer #navbarBottom .nav-link {
 .modal-admin {
   border: 1px solid white !important;
   border-radius: 6px !important;
+}
+
+.modal-admin .nav-link {
+  border: 2px solid white !important;
+}
+
+.modal-admin .dropdown-item{
+  border: 1px solid white !important;
 }
 
 /* Media queries */
