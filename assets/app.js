@@ -296,24 +296,24 @@ import './styles/app.css';
                                                         <div class="row my-3">
                                                             <div class="col-4 d-flex justify-content-start">
                                                                 <div class="position-relative">
-                                                                    <input type="text" class="btn-date-admin text-black" id="datepicker-admin-debut" placeholder="Date début" readonly>
-                                                                    <label for="datepicker-admin-debut" class="d-none"></label>
-                                                                    <span class="bi bi-calendar" id="icon-calendar-debut-admin"></span>
-                                                                    <span class="bi bi-x-circle close-icon-date-debut-admin d-none"></span>
+                                                                    <input type="text" class="btn-date-admin text-black" id="datepicker-admin-debut-${film.id}" placeholder="Date début" readonly>
+                                                                    <label for="datepicker-admin-debut-${film.id}" class="d-none"></label>
+                                                                    <span class="bi bi-calendar" id="icon-calendar-debut-admin-${film.id}"></span>
+                                                                    <span class="bi bi-x-circle d-none" id="close-icon-date-debut-admin-${film.id}"></span>
                                                                 </div>
                                                             </div>
                                                             <div class="col-4 d-flex justify-content-end">
                                                                 <div class="position-relative">
-                                                                    <input type="text" class="btn-date-admin text-black" id="datepicker-admin-fin" placeholder="Date fin" readonly>
-                                                                    <label for="datepicker-admin-fin" class="d-none"></label>
-                                                                    <span class="bi bi-calendar" id="icon-calendar-fin-admin"></span>
-                                                                    <span class="bi bi-x-circle close-icon-date-fin-admin d-none"></span>
+                                                                    <input type="text" class="btn-date-admin text-black" id="datepicker-admin-fin-${film.id}" placeholder="Date fin" readonly>
+                                                                    <label for="datepicker-admin-fin-${film.id}" class="d-none"></label>
+                                                                    <span class="bi bi-calendar" id="icon-calendar-fin-admin-${film.id}"></span>
+                                                                    <span class="bi bi-x-circle d-none" id="close-icon-date-fin-admin-${film.id}"></span>
                                                                 </div>
                                                             </div>
                                                             <div class="col-4 d-flex align-items-center justify-content-end">
                                                                 <div class="text-white fs-5 me-1">Cinéma:</div>
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea2"></textarea>
-                                                                <label class="d-none" for="floatingTextarea2"></label>
+                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="TextareaCinema-${film.id}"></textarea>
+                                                                <label class="d-none" for="TextareaCinema-${film.id}"></label>
                                                             </div>
                                                         </div>
                                                         <div class="row my-3">
@@ -321,19 +321,19 @@ import './styles/app.css';
                                                                 <div class="fs-5">4DX:</div>
                                                             </div>
                                                             <div class="col-3 d-flex text-white">
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea3"></textarea>
-                                                                <label class="d-none" for="floatingTextarea3"></label>
+                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-4DX-heure-debut-${film.id}"></textarea>
+                                                                <label class="d-none" for="Textarea-4DX-heure-debut-${film.id}"></label>
                                                             </div>
                                                             <div class="col-3">
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea4"></textarea>
-                                                                <label class="d-none" for="floatingTextarea4"></label>
+                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-4DX-heure-fin-${film.id}"></textarea>
+                                                                <label class="d-none" for="Textarea-4DX-heure-fin-${film.id}"></label>
                                                             </div>
                                                             <div class="col-2 d-flex text-white align-items-center justify-content-end">
                                                                 <div class="fs-5">Prix:</div>
                                                             </div>
                                                             <div class="col-2 d-flex align-items-center">
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea5"></textarea>
-                                                                <label class="d-none" for="floatingTextarea5"></label>
+                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-3DX-prix-${film.id}"></textarea>
+                                                                <label class="d-none" for="Textarea-3DX-prix-${film.id}"></label>
                                                                 <div class="mx-1 fs-5 text-white">€</div>
                                                             </div>
                                                         </div>
@@ -342,19 +342,19 @@ import './styles/app.css';
                                                                 <div class="fs-5">3DX:</div>
                                                             </div>
                                                             <div class="col-3 d-flex text-white">
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea3"></textarea>
-                                                                <label class="d-none" for="floatingTextarea3"></label>
+                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-3DX-heure-debut-${film.id}"></textarea>
+                                                                <label class="d-none" for="Textarea-3DX-heure-debut-${film.id}"></label>
                                                             </div>
                                                             <div class="col-3">
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea4"></textarea>
-                                                                <label class="d-none" for="floatingTextarea4"></label>
+                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-3DX-heure-fin-${film.id}"></textarea>
+                                                                <label class="d-none" for="Textarea-3DX-heure-fin-${film.id}"></label>
                                                             </div>
                                                             <div class="col-2 d-flex text-white align-items-center justify-content-end">
                                                                 <div class="fs-5">Prix:</div>
                                                             </div>
                                                             <div class="col-2 d-flex align-items-center">
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea5"></textarea>
-                                                                <label class="d-none" for="floatingTextarea5"></label>
+                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-3DX-prix-${film.id}"></textarea>
+                                                                <label class="d-none" for="Textarea-3DX-prix-${film.id}"></label>
                                                                 <div class="mx-1 fs-5 text-white">€</div>
                                                             </div>
                                                         </div>
@@ -363,19 +363,19 @@ import './styles/app.css';
                                                                 <div class="fs-5">IMAX:</div>
                                                             </div>
                                                             <div class="col-3 d-flex text-white">
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea3"></textarea>
-                                                                <label class="d-none" for="floatingTextarea3"></label>
+                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-IMAX-heure-debut-${film.id}"></textarea>
+                                                                <label class="d-none" for="Textarea-IMAX-heure-debut-${film.id}"></label>
                                                             </div>
                                                             <div class="col-3">
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea4"></textarea>
-                                                                <label class="d-none" for="floatingTextarea4"></label>
+                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-IMAX-heure-fin-${film.id}"></textarea>
+                                                                <label class="d-none" for="Textarea-IMAX-heure-fin-${film.id}"></label>
                                                             </div>
                                                             <div class="col-2 d-flex text-white align-items-center justify-content-end">
                                                                 <div class="fs-5">Prix:</div>
                                                             </div>
                                                             <div class="col-2 d-flex align-items-center">
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea5"></textarea>
-                                                                <label class="d-none" for="floatingTextarea5"></label>
+                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-IMAX-prix-${film.id}"></textarea>
+                                                                <label class="d-none" for="Textarea-IMAX-prix-${film.id}"></label>
                                                                 <div class="mx-1 fs-5 text-white">€</div>
                                                             </div>
                                                         </div>
@@ -384,19 +384,19 @@ import './styles/app.css';
                                                                 <div class="fs-5">Dolby:</div>
                                                             </div>
                                                             <div class="col-3 d-flex text-white">
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea3"></textarea>
-                                                                <label class="d-none" for="floatingTextarea3"></label>
+                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-dolby-heure-debut-${film.id}"></textarea>
+                                                                <label class="d-none" for="Textarea-dolby-heure-debut-${film.id}"></label>
                                                             </div>
                                                             <div class="col-3">
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea4"></textarea>
-                                                                <label class="d-none" for="floatingTextarea4"></label>
+                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-dolby-heure-fin-${film.id}"></textarea>
+                                                                <label class="d-none" for="Textarea-dolby-heure-fin-${film.id}"></label>
                                                             </div>
                                                             <div class="col-2 d-flex text-white align-items-center justify-content-end">
                                                                 <div class="fs-5">Prix:</div>
                                                             </div>
                                                             <div class="col-2 d-flex align-items-center">
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="floatingTextarea5"></textarea>
-                                                                <label class="d-none" for="floatingTextarea5"></label>
+                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-dolby-prix-${film.id}"></textarea>
+                                                                <label class="d-none" for="Textarea-dolby-prix-${film.id}"></label>
                                                                 <div class="mx-1 fs-5 text-white">€</div>
                                                             </div>
                                                         </div>
@@ -405,15 +405,15 @@ import './styles/app.css';
                                                                 <div class="fs-5">Nombre de places:</div>
                                                             </div>
                                                             <div class="col-2 d-flex text-white align-items-center">
-                                                                <textarea class="form-control p-2 textarea-uniforme" placeholder="" id="floatingTextarea3"></textarea>
-                                                                <label class="d-none" for="floatingTextarea3"></label>
+                                                                <textarea class="form-control p-2 textarea-uniforme" placeholder="" id="Textarea-places-${film.id}"></textarea>
+                                                                <label class="d-none" for="Textarea-places-${film.id}"></label>
                                                             </div>
                                                             <div class="col-1 d-flex text-white align-items-center">
                                                                 <div class="fs-5">Salle:</div>
                                                             </div>
                                                             <div class="col-2 d-flex text-white align-items-center">
-                                                                <textarea class="form-control p-2 textarea-uniforme" placeholder="" id="floatingTextarea5"></textarea>
-                                                                <label class="d-none" for="floatingTextarea5"></label>
+                                                                <textarea class="form-control p-2 textarea-uniforme" placeholder="" id="Textarea-salles-${film.id}"></textarea>
+                                                                <label class="d-none" for="Textarea-salles-${film.id}"></label>
                                                             </div>
                                                         </div>
                                                         <div class="row mt-3 mb-1">
@@ -423,8 +423,8 @@ import './styles/app.css';
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-12 d-flex text-white align-items-center">
-                                                                <textarea class="form-control p-2 textarea-uniforme" placeholder="" id="floatingTextarea3" style="height:10rem"></textarea>
-                                                                <label class="d-none" for="floatingTextarea3"></label>
+                                                                <textarea class="form-control p-2 textarea-uniforme" placeholder="" id="Textarea-description-${film.id}" style="height:10rem"></textarea>
+                                                                <label class="d-none" for="Textarea-description-${film.id}"></label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -435,12 +435,12 @@ import './styles/app.css';
                                 </div>`);
                             //modal
                                 // Datepicker
-                                    const $datepickerDebut = $('#datepicker-admin-debut');
-                                    const $calendarIconDebut = $('#icon-calendar-debut-admin');
-                                    const $clearIconDebut = $('.close-icon-date-debut-admin');
-                                    const $datepickerFin = $('#datepicker-admin-fin');
-                                    const $calendarIconFin = $('#icon-calendar-fin-admin');
-                                    const $clearIconFin = $('.close-icon-date-fin-admin');
+                                        const $datepickerDebut = $('#datepicker-admin-debut-'+film.id);
+                                        const $calendarIconDebut = $('#icon-calendar-debut-admin-'+film.id);
+                                        const $clearIconDebut = $('#close-icon-date-debut-admin-'+film.id);
+                                        const $datepickerFin = $('#datepicker-admin-fin-'+film.id);
+                                        const $calendarIconFin = $('#icon-calendar-fin-admin-'+film.id);
+                                        const $clearIconFin = $('#close-icon-date-fin-admin-'+film.id);
                                     //Date début
                                         $datepickerDebut.datepicker({
                                             format: "dd/mm/yyyy",
