@@ -23,9 +23,7 @@
                 <div id="offcanvas-bodyTop" class="row offcanvas-body align-items-center justify-content-center">
                     <ul id="navbarLeft" class="col-5 navbar-nav align-items-center justify-content-center p-0">
                         <li class="nav-item mx-4 my-4 text-white">
-                            <a class="nav-link d-flex align-items-center justify-content-center" aria-current="page" href="{{ path('app_accueil') }}">
-                                <i class="bi bi-house fs-3 ms-2"></i><span class="mx-2">Accueil</span>
-                            </a>
+                            {% block extra_content_bouton_accueil %}{% endblock %}
                         </li>
                         <li class="nav-item mx-4 my-4 text-white">
                             <a id="btn-films" class="nav-link d-flex align-items-center justify-content-center" href="">

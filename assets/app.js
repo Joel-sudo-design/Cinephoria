@@ -18,6 +18,7 @@ import './styles/app.css';
 
 //Axios
     const axios = require('axios');
+    axios.defaults.withCredentials = true;
 
 //Script
     $(document).ready(function() {
@@ -223,7 +224,7 @@ import './styles/app.css';
         //Création template card films au sur clic bouton plus et affichage des films
             function LoadFilm() {
                 $('#card-container').empty();
-                axios.get('/administration/film')
+                axios.get('/administrateur/administration/film')
                     .then(response => {
                         const Film = response.data;
                         console.log(Film);
@@ -236,7 +237,7 @@ import './styles/app.css';
                                         </div>
                                     <img src="" class="card-img-top" alt="" style="width: auto; height: 228px; background-color: #6A73AB">
                                     <div class="card-body p-0 py-1">
-                                            <h5 class="card-title m-0 mt-1 mb-2" style="color:#6A73AB"></h5>
+                                            <h5 class="card-title m-0 mt-1 mb-2" style="color:#6A73AB">${film.genre}</h5>
                                             <p class="card-text m-0 my-1 text-warning">
                                                 <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
                                             </p>
@@ -289,8 +290,8 @@ import './styles/app.css';
                                                                 <label class="d-none" for="TextareaNom-${film.id}"></label>
                                                             </div>
                                                             <div class="col-7 d-flex align-items-center justify-content-end p-0">
-                                                                <button class="btn bi bi-check-lg p-2 fs-4 d-flex justify-content-center align-items-center mx-2"></button>
-                                                                <button class="btn bi bi-x-lg p-2 fs-4 d-flex justify-content-center align-items-center mx-1" data-bs-dismiss="modal"></button>
+                                                                <button id="btn-validate-film-${film.id}" class="btn bi bi-check-lg p-2 fs-4 d-flex justify-content-center align-items-center"></button>
+                                                                <button class="btn bi bi-x-lg p-2 fs-4 d-flex justify-content-center align-items-center" data-bs-dismiss="modal"></button>
                                                             </div>
                                                         </div>
                                                         <div class="row my-3">
@@ -434,6 +435,33 @@ import './styles/app.css';
                                     </div>
                                 </div>`);
                             //modal
+                                // Réinitialiser le modal lorsque celui-ci est fermé
+                                        const modal = $('#modal-' + film.id);
+                                        modal.on('hidden.bs.modal', function () {
+                                            // Réinitialiser tous les champs de texte (textarea) du modal
+                                            modal.find('textarea').val('');
+
+                                            // Réinitialiser toutes les sélections du dropdown
+                                            modal.find('.dropdown-item').removeClass('active');
+                                            $('#dropdownMenuButton-' + film.id).text('Genre'); // Remettre le texte par défaut
+
+                                            // Réinitialiser tout autre champ si nécessaire
+                                            modal.find('input').val('');
+                                            $('#datepicker-admin-debut-' + film.id).datepicker('clearDates');
+                                            $('#datepicker-admin-fin-' + film.id).datepicker('clearDates');
+
+                                        });
+                                //Valider les informations du film
+                                        $('#btn-validate-film-'+film.id).click(function () {
+                                            const data= {
+                                                id: film.id,
+                                                genre: selectedGenre
+                                            }
+                                            axios.post('/administrateur/administration/film/validate', data)
+                                                  .then(response => {console.log(response.data);$('#modal-' + film.id).modal('hide'); })
+                                                  .catch(error => {console.error(error);})
+                                                .finally(() => {LoadFilm();});
+                                        });
                                 // Datepicker
                                         const $datepickerDebut = $('#datepicker-admin-debut-'+film.id);
                                         const $calendarIconDebut = $('#icon-calendar-debut-admin-'+film.id);
@@ -526,16 +554,15 @@ import './styles/app.css';
                                             $datepickerFin.focus();
                                         });
                                     //Menu déroulant genre
-                                        const dropdownMenuButton = $('#dropdownMenuButton-'+film.id);
+                                        let selectedGenre= '';
                                         $('.dropdown-item').click(function(e) {
                                             e.preventDefault();
-                                            const selectedText = $(this).text();
-                                            dropdownMenuButton.text(selectedText);
+                                            selectedGenre = $(this).text();
+                                            $('#dropdownMenuButton-'+film.id).text(selectedGenre);
                                         });
                             //suppression film
-                                const btnX = $('#x-square-'+film.id);
-                                btnX.click(function () {
-                                    axios.post('/administration/film/delete', JSON.stringify({id: film.id}))
+                                $('#x-square-'+film.id).click(function () {
+                                    axios.post('/administrateur/administration/film/delete', JSON.stringify({id: film.id}))
                                         .then(response => {$('#card-container').empty();console.log(response.data);})
                                         .catch(error => {console.error(error);})
                                         .finally(() => {LoadFilm();});
@@ -545,7 +572,7 @@ import './styles/app.css';
                     .catch(error => {console.error(error)});
             }
             $('#btn-plus').click(function () {
-            axios.post('/administration/film/create')
+            axios.post('/administrateur/administration/film/create')
                 .then(response => {LoadFilm();console.log(response.data);})
                 .catch(error => {
                     console.error(error);
@@ -555,8 +582,14 @@ import './styles/app.css';
             $('#btn-navbar-admin').click(function() {
         LoadFilm();
     });
+        //Déconnexion
+            $('#btn-deconnexion').click(function() {
+            axios.post('/logout')
+                .then(response => {console.log(response.data);window.location.href = '/accueil';})
+                .catch(error => {console.error(error);});
+        });
 
     //Lancement des requètes AJAX au chargement des pages
-        if (window.location.pathname === '/administration') {
-            LoadFilm();
-        }});
+        if (window.location.pathname === '/administrateur/administration') {LoadFilm();}
+
+    });

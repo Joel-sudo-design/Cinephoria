@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FilmRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,6 +36,20 @@ class Film
 
     #[ORM\Column(nullable: true)]
     private ?int $notation = null;
+
+    #[ORM\ManyToOne(inversedBy: 'films')]
+    private ?Genre $genre = null;
+
+    /**
+     * @var Collection<int, cinema>
+     */
+    #[ORM\ManyToMany(targetEntity: Cinema::class, inversedBy: 'films')]
+    private Collection $cinema;
+
+    public function __construct()
+    {
+        $this->cinema = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -135,6 +151,44 @@ class Film
             'label' => $this->isLabel(),
             'age_minimum' => $this->getAgeMinimum(),
             'notation' => $this->getNotation(),
+            'genre' => $this->getGenre()->getName(),
         ];
     }
+
+    public function getGenre(): ?genre
+    {
+        return $this->genre;
+    }
+
+    public function setGenre(?genre $genre): static
+    {
+        $this->genre = $genre;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, cinema>
+     */
+    public function getCinema(): Collection
+    {
+        return $this->cinema;
+    }
+
+    public function addCinema(cinema $cinema): static
+    {
+        if (!$this->cinema->contains($cinema)) {
+            $this->cinema->add($cinema);
+        }
+
+        return $this;
+    }
+
+    public function removeCinema(cinema $cinema): static
+    {
+        $this->cinema->removeElement($cinema);
+
+        return $this;
+    }
+
 }

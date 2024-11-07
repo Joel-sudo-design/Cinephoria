@@ -5,9 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifs diverses">
+      <change afterPath="$PROJECT_DIR$/migrations/Version20241107130204.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/test.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/test.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AdministrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdministrationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Cinema.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Cinema.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Film.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Film.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Genre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Genre.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/administration/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/administration/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/baseContact.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseContact.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/contact/admin.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/contact/admin.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -242,7 +251,7 @@
       <workItem from="1730878065771" duration="5865000" />
       <workItem from="1730890307126" duration="7733000" />
       <workItem from="1730901950545" duration="9546000" />
-      <workItem from="1730963018350" duration="12054000" />
+      <workItem from="1730963018350" duration="25573000" />
     </task>
     <task id="LOCAL-00003" summary="Début page d'accueil emplyé + navbar">
       <option name="closed" value="true" />
@@ -444,7 +453,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730972535184</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Modifs diverses">
+      <option name="closed" value="true" />
+      <created>1730975275357</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1730975275357</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
