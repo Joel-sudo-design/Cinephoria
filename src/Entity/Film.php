@@ -151,7 +151,6 @@ class Film
             'label' => $this->isLabel(),
             'age_minimum' => $this->getAgeMinimum(),
             'notation' => $this->getNotation(),
-            'genre' => $this->getGenre()->getName(),
         ];
     }
 

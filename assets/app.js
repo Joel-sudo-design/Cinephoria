@@ -22,7 +22,6 @@ import './styles/app.css';
 
 //Script
     $(document).ready(function() {
-
     // Navbar Top & Navbar Footer Bottom
         // A l'ouverture des navbar pour mobile, on change la couleur de fond, on cache le logo et on modifie la taille des colonnes
             $('#navbar-togglerTop').click(function() {
@@ -169,8 +168,7 @@ import './styles/app.css';
                     orientation: "bottom",
                     language: "fr",
                     autoclose: true
-                })
-                    .on('changeDate', function () {
+                }).on('changeDate', function () {
                     // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
                     $calendarIcon.addClass('d-none');
                     $clearIcon.removeClass('d-none');
@@ -205,23 +203,27 @@ import './styles/app.css';
                 $calendarIcon.on('click', function () {
                 $datepicker.focus();
             });
-            // Accordion description films
-                const $accordionButton = $('.btn-description');
-                const $accordionCollapse = $('#collapseOne');
-            // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
-                $(document).click(function(event) {
-                // Vérifie si le clic est à l'intérieur de l'accordéon
-                if (!$accordionButton.is(event.target) && $accordionButton.has(event.target).length === 0 &&
-                    !$accordionCollapse.is(event.target) && $accordionCollapse.has(event.target).length === 0) {
-                    // Ferme l'accordéon si ouvert
-                    if ($accordionCollapse.hasClass('show')) {
-                        $accordionCollapse.collapse('hide'); // Utilise la méthode Bootstrap pour cacher
-                    }
-                }
-            });
 
     //Page administration
-        //Création template card films au sur clic bouton plus et affichage des films
+        //Création d'un film
+            $('#btn-plus').click(function () {
+            axios.post('/administrateur/administration/film/create')
+                .then(response => {LoadFilm();console.log(response.data);})
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+        //Affichage des films sur clic bouton administration
+            $('#btn-navbar-admin').click(function() {
+            LoadFilm();
+        });
+        //Déconnexion sur clic bouton déconnexion
+            $('#btn-deconnexion').click(function() {
+            axios.post('/logout')
+                .then(response => {console.log(response.data);window.location.href = '/accueil';})
+                .catch(error => {console.error(error);});
+        });
+        //Affichage des films
             function LoadFilm() {
                 $('#card-container').empty();
                 axios.get('/administrateur/administration/film')
@@ -237,17 +239,22 @@ import './styles/app.css';
                                         </div>
                                     <img src="" class="card-img-top" alt="" style="width: auto; height: 228px; background-color: #6A73AB">
                                     <div class="card-body p-0 py-1">
-                                            <h5 class="card-title m-0 mt-1 mb-2" style="color:#6A73AB">${film.genre}</h5>
+                                            <div class="card-title fs-5" style="color:#6A73AB">${film.name}
+                                                <span class="age-badge-12 mx-4 d-none">12+</span>
+                                                <span class="age-badge-16 mx-4 d-none">16+</span>
+                                                <span class="age-badge-18 mx-4 d-none">18+</span>
+                                            </div>
+                                            <div class="card-title fs-6">${film.genre}</div>
                                             <p class="card-text m-0 my-1 text-warning">
                                                 <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
                                             </p>
                                             <div class="accordion accordion-flush">
                                                 <div class="accordion-item">
                                                     <div class="accordion-header">
-                                                        <button class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription-${film.id}" aria-expanded="false" aria-controls="collapseDescription">Description</button>
+                                                        <button id="btn-description-${film.id}" class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription-${film.id}" aria-expanded="false" aria-controls="collapseDescription">Description</button>
                                                     </div>
                                                     <div id="collapseDescription-${film.id}" class="accordion-collapse collapse">
-                                                        <div class="accordion-body p-0"></div>
+                                                        <div class="accordion-body p-0">${film.description}</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -261,35 +268,64 @@ import './styles/app.css';
                                                             <button class="btn bi bi-pencil-square text-success p-0 fs-5 bg-admin position-absolute" style="top: 0; right: 0; border-radius: 0 0 0 2px"></button>
                                                             <img src="" class="img-fluid" alt="" style="width: 100%; height: 450px; background-color: white">
                                                         </div>
-                                                        <div class="row my-3">
+                                                        <div class="row fs-5 just align-content-center justify-content-center my-4">Durée: 1h30</div>
+                                                        <div class="row my-4 justify-content-center align-items-center">
                                                             <div class="col-6 d-flex justify-content-center">
-                                                                <div class="dropdown">
-                                                                    <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuButton-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                <div class="dropdown dropdown-modal-admin">
+                                                                    <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuGenre-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
                                                                         Genre
                                                                     </button>
-                                                                    <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton">
-                                                                        <li><a class="dropdown-item" href="#">Action</a></li>
-                                                                        <li><a class="dropdown-item" href="#">Comédie</a></li>
-                                                                        <li><a class="dropdown-item" href="#">Horreur</a></li>
-                                                                        <li><a class="dropdown-item" href="#">Science-fiction</a></li>
-                                                                        <li><a class="dropdown-item" href="#">Romance</a></li>
-                                                                        <li><a class="dropdown-item" href="#">Thriller</a></li>
-                                                                        <li><a class="dropdown-item" href="#">Drame</a></li>
-                                                                        <li><a class="dropdown-item" href="#">Animation</a></li>
+                                                                    <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuGenre">
+                                                                        <li><a class="dropdown-item drop-genre" href="#">Action</a></li>
+                                                                        <li><a class="dropdown-item drop-genre" href="#">Comédie</a></li>
+                                                                        <li><a class="dropdown-item drop-genre" href="#">Horreur</a></li>
+                                                                        <li><a class="dropdown-item drop-genre" href="#">Science-fiction</a></li>
+                                                                        <li><a class="dropdown-item drop-genre" href="#">Romance</a></li>
+                                                                        <li><a class="dropdown-item drop-genre" href="#">Thriller</a></li>
+                                                                        <li><a class="dropdown-item drop-genre" href="#">Drame</a></li>
+                                                                        <li><a class="dropdown-item drop-genre" href="#">Animation</a></li>
                                                                     </ul>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-6 fs-5 text-center align-content-center">Durée: 1h30</div>
+                                                            <div class="col-6 d-flex justify-content-center">
+                                                                <div class="dropdown dropdown-modal-admin">
+                                                                    <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuAge-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        Age mini
+                                                                    </button>
+                                                                    <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuAge">
+                                                                        <li><a class="dropdown-item drop-age" href="#">Tout public</a></li>
+                                                                        <li><a class="dropdown-item drop-age" href="#">12</a></li>
+                                                                        <li><a class="dropdown-item drop-age" href="#">16</a></li>
+                                                                        <li><a class="dropdown-item drop-age" href="#">18</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div> 
                                                         </div>
                                                     </div>
                                                     <div class="col-8 p-4">
-                                                        <div class="row px-2">
-                                                            <div class="col-5 d-flex align-items-center p-0">
+                                                        <div class="row">
+                                                            <div class="col-5 d-flex align-items-center">
                                                                 <div class="text-white fs-5 me-1">Nom:</div>
                                                                 <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="TextareaNom-${film.id}"></textarea>
                                                                 <label class="d-none" for="TextareaNom-${film.id}"></label>
                                                             </div>
-                                                            <div class="col-7 d-flex align-items-center justify-content-end p-0">
+                                                            <div class="col-3 d-flex align-items-center justify-content-end">
+                                                                <div class="dropdown dropdown-modal-admin">
+                                                                        <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuCinema-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                            Cinéma
+                                                                        </button>
+                                                                        <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuCinema">
+                                                                            <li><a class="dropdown-item drop-cinema" href="#">Toulouse</a></li>
+                                                                            <li><a class="dropdown-item drop-cinema" href="#">Nantes</a></li>
+                                                                            <li><a class="dropdown-item drop-cinema" href="#">Bordeaux</a></li>
+                                                                            <li><a class="dropdown-item drop-cinema" href="#">Lille</a></li>
+                                                                            <li><a class="dropdown-item drop-cinema" href="#">Charleroi</a></li>
+                                                                            <li><a class="dropdown-item drop-cinema" href="#">Liège</a></li>
+                                                                            <li><a class="dropdown-item drop-cinema" href="#">Paris</a></li>
+                                                                        </ul>
+                                                                </div>
+                                                            </div>  
+                                                            <div class="col-4 d-flex align-items-center justify-content-end">
                                                                 <button id="btn-validate-film-${film.id}" class="btn bi bi-check-lg p-2 fs-4 d-flex justify-content-center align-items-center"></button>
                                                                 <button class="btn bi bi-x-lg p-2 fs-4 d-flex justify-content-center align-items-center" data-bs-dismiss="modal"></button>
                                                             </div>
@@ -310,12 +346,7 @@ import './styles/app.css';
                                                                     <span class="bi bi-calendar" id="icon-calendar-fin-admin-${film.id}"></span>
                                                                     <span class="bi bi-x-circle d-none" id="close-icon-date-fin-admin-${film.id}"></span>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-4 d-flex align-items-center justify-content-end">
-                                                                <div class="text-white fs-5 me-1">Cinéma:</div>
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="TextareaCinema-${film.id}"></textarea>
-                                                                <label class="d-none" for="TextareaCinema-${film.id}"></label>
-                                                            </div>
+                                                            </div> 
                                                         </div>
                                                         <div class="row my-3">
                                                             <div class="col-2 d-flex text-white align-items-center justify-content-start">
@@ -434,7 +465,58 @@ import './styles/app.css';
                                         </div>
                                     </div>
                                 </div>`);
+                            //suppression film
+                                $('#x-square-'+film.id).click(function () {
+                                axios.post('/administrateur/administration/film/delete', JSON.stringify({id: film.id}))
+                                    .then(response => {$('#card-container').empty();console.log(response.data);})
+                                    .catch(error => {console.error(error);})
+                                    .finally(() => {LoadFilm();});
+                            });
+                            //Affichage badge age mini
+                                if (film.age_minimum === '12') {
+                                    $(`.age-badge-12`).removeClass('d-none');
+                                }
+                                if (film.age_minimum === '16') {
+                                    $(`.age-badge-16`).removeClass('d-none');
+                                }
+                                if (film.age_minimum === '18') {
+                                    $(`.age-badge-18`).removeClass('d-none');
+                                }
+                            // Accordion description films
+                                const accordionButton = $('#btn-description-'+film.id);
+                                const accordionCollapse = $('#collapseDescription-'+film.id);
+                                // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
+                                        $(document).click(function(event) {
+                                    // Vérifie si le clic est à l'intérieur de l'accordéon
+                                    if (!accordionButton.is(event.target) && accordionButton.has(event.target).length === 0 && !accordionCollapse.is(event.target) && accordionCollapse.has(event.target).length === 0) {
+                                        // Ferme l'accordéon si ouvert
+                                        if (accordionCollapse.hasClass('show')) {
+                                            accordionCollapse.collapse('hide'); // Utilise la méthode Bootstrap pour cacher
+                                        }
+                                    }
+                                });
                             //modal
+                                //Menu déroulant genre
+                                        let selectedGenre= '';
+                                        $('.drop-genre').click(function(e) {
+                                            e.preventDefault();
+                                            selectedGenre = $(this).text();
+                                            $('#dropdownMenuGenre-'+film.id).text(selectedGenre);
+                                        });
+                                //Menu déroulant age
+                                        let selectedAge= '';
+                                        $('.drop-age').click(function(e) {
+                                            e.preventDefault();
+                                            selectedAge= $(this).text();
+                                            $('#dropdownMenuAge-'+film.id).text(selectedAge);
+                                        });
+                                //Menu déroulant Cinéma
+                                        let selectedCinema= '';
+                                        $('.drop-cinema').click(function(e) {
+                                            e.preventDefault();
+                                            selectedCinema= $(this).text();
+                                            $('#dropdownMenuCinema-'+film.id).text(selectedCinema);
+                                        });
                                 // Réinitialiser le modal lorsque celui-ci est fermé
                                         const modal = $('#modal-' + film.id);
                                         modal.on('hidden.bs.modal', function () {
@@ -443,19 +525,27 @@ import './styles/app.css';
 
                                             // Réinitialiser toutes les sélections du dropdown
                                             modal.find('.dropdown-item').removeClass('active');
-                                            $('#dropdownMenuButton-' + film.id).text('Genre'); // Remettre le texte par défaut
+                                            $('#dropdownMenuGenre-' + film.id).text('Genre');
+                                            $('#dropdownMenuAge-' + film.id).text('Age mini');
+                                            $('#dropdownMenuCinema-' + film.id).text('Cinéma');
 
                                             // Réinitialiser tout autre champ si nécessaire
                                             modal.find('input').val('');
                                             $('#datepicker-admin-debut-' + film.id).datepicker('clearDates');
                                             $('#datepicker-admin-fin-' + film.id).datepicker('clearDates');
-
+                                            $('#close-icon-date-debut-admin-' + film.id).addClass('d-none');
+                                            $('#close-icon-date-fin-admin-' + film.id).addClass('d-none');
+                                            $('#icon-calendar-debut-admin-' + film.id).removeClass('d-none');
+                                            $('#icon-calendar-fin-admin-' + film.id).removeClass('d-none');
                                         });
                                 //Valider les informations du film
                                         $('#btn-validate-film-'+film.id).click(function () {
                                             const data= {
                                                 id: film.id,
-                                                genre: selectedGenre
+                                                genre: selectedGenre,
+                                                age: selectedAge,
+                                                nom: $('#TextareaNom-'+film.id).val(),
+                                                description: $('#Textarea-description-'+film.id).val(),
                                             }
                                             axios.post('/administrateur/administration/film/validate', data)
                                                   .then(response => {console.log(response.data);$('#modal-' + film.id).modal('hide'); })
@@ -553,43 +643,12 @@ import './styles/app.css';
                                         $calendarIconFin.on('click', function () {
                                             $datepickerFin.focus();
                                         });
-                                    //Menu déroulant genre
-                                        let selectedGenre= '';
-                                        $('.dropdown-item').click(function(e) {
-                                            e.preventDefault();
-                                            selectedGenre = $(this).text();
-                                            $('#dropdownMenuButton-'+film.id).text(selectedGenre);
-                                        });
-                            //suppression film
-                                $('#x-square-'+film.id).click(function () {
-                                    axios.post('/administrateur/administration/film/delete', JSON.stringify({id: film.id}))
-                                        .then(response => {$('#card-container').empty();console.log(response.data);})
-                                        .catch(error => {console.error(error);})
-                                        .finally(() => {LoadFilm();});
-                                });
+                                    //Timepicker
+
                         });
                     })
                     .catch(error => {console.error(error)});
             }
-            $('#btn-plus').click(function () {
-            axios.post('/administrateur/administration/film/create')
-                .then(response => {LoadFilm();console.log(response.data);})
-                .catch(error => {
-                    console.error(error);
-                });
-        });
-        //Affichage des films sur clic bouton administration
-            $('#btn-navbar-admin').click(function() {
-        LoadFilm();
-    });
-        //Déconnexion
-            $('#btn-deconnexion').click(function() {
-            axios.post('/logout')
-                .then(response => {console.log(response.data);window.location.href = '/accueil';})
-                .catch(error => {console.error(error);});
-        });
-
     //Lancement des requètes AJAX au chargement des pages
         if (window.location.pathname === '/administrateur/administration') {LoadFilm();}
-
     });

@@ -36,6 +36,7 @@ html, body {
   border-radius: 6px;
   border: 2px solid #FFFFFF;
   background-color: #6A73AB;
+  min-width: auto;
 }
 
 .navbar .dropdown-menu > :nth-child(2) {
@@ -44,6 +45,8 @@ html, body {
 
 .dropdown-item {
   color: #FFFFFF;
+  width: auto;
+  white-space: nowrap;
   font-size: 1rem;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
@@ -571,12 +574,8 @@ footer #navbarBottom .nav-link {
   color: #fd7e14;
 }
 
-#accordionDescription {
-  width: 300px;
-  transition: width 0.2s ease;
-}
-
 .accordion-collapse, .accordion-collapse.collapsed {
+  width: 300px;
   color: #6A73AB;
 }
 
@@ -721,6 +720,62 @@ footer #navbarBottom .nav-link {
 
 .modal-admin .dropdown-item{
   border: 1px solid white !important;
+}
+
+.age-badge-public {
+  display: inline-block;
+  background-color: #157347;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.age-badge-12 {
+  display: inline-block;
+  background-color: #FF5722;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.age-badge-16 {
+  display: inline-block;
+  background-color: #E64A19;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.age-badge-18 {
+  display: inline-block;
+  background-color: #D32F2F;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.dropdown-modal-admin .nav-link {
+  color: #6A73AB;
+  background-color: white;
+  font-size: 1.2rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px;
+  border-radius: 6px;
+}
+
+.dropdown-modal-admin .nav-link:hover, .dropdown-modal-admin .nav-link:focus, .dropdown-modal-admin .nav-link.show {
+  border-radius: 6px;
+  background: #6A73AB;
+  color: white !important;
 }
 
 /* Media queries */

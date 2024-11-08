@@ -35,6 +35,9 @@ class AdministrationController extends AbstractController
         $AllFilmsArray = [];
         foreach ($AllFilms as $film) {
             $AllFilmsArray[] = $film->toArray();
+            if ($film->getGenre() != null) {
+                $AllFilmsArray[count($AllFilmsArray) - 1]['genre'] = $film->getGenre()->getName();
+            }
         }
         return new JsonResponse($AllFilmsArray);
     }
@@ -64,10 +67,26 @@ class AdministrationController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
         $id = $data['id'];
-        $StringGenre = $data['genre'];
-        $genre = $entityManager->getRepository(Genre::class)->findOneBy(['name' => $StringGenre]);
         $film = $entityManager->getRepository(Film::class)->find($id);
-        $film->setGenre($genre);
+        $stringGenre = $data['genre'];
+        $description = $data['description'];
+        $name = $data['nom'];
+        $age = $data['age'];
+        if (!$stringGenre == null) {
+            $genre = $entityManager->getRepository(Genre::class)->findOneBy(['name' => $stringGenre]);
+            $film->setGenre($genre);
+        }
+        if (!$age == null) {
+            $film->setAgeMinimum($age);
+        }
+        if (!$name==null) {
+            $film = $entityManager->getRepository(Film::class)->find($id);
+            $film->setName($name);
+        }
+        if (!$description==null) {
+            $film = $entityManager->getRepository(Film::class)->find($id);
+            $film->setDescription($description);
+        }
         $entityManager->persist($film);
         $entityManager->flush();
         return new JsonResponse(['status' => 'film modified']);
