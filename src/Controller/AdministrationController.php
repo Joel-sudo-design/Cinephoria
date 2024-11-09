@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Cinema;
 use App\Entity\Film;
 use App\Entity\Genre;
 use App\Repository\CinemaRepository;
@@ -72,6 +73,7 @@ class AdministrationController extends AbstractController
         $description = $data['description'];
         $name = $data['nom'];
         $age = $data['age'];
+        $stringCinema = $data['cinema'];
         if (!$stringGenre == null) {
             $genre = $entityManager->getRepository(Genre::class)->findOneBy(['name' => $stringGenre]);
             $film->setGenre($genre);
@@ -80,12 +82,14 @@ class AdministrationController extends AbstractController
             $film->setAgeMinimum($age);
         }
         if (!$name==null) {
-            $film = $entityManager->getRepository(Film::class)->find($id);
             $film->setName($name);
         }
         if (!$description==null) {
-            $film = $entityManager->getRepository(Film::class)->find($id);
             $film->setDescription($description);
+        }
+        if (!$stringCinema==null) {
+            $cinema = $entityManager->getRepository(Cinema::class)->findOneBy(['name' => $stringCinema]);
+            $film->addCinema($cinema);
         }
         $entityManager->persist($film);
         $entityManager->flush();

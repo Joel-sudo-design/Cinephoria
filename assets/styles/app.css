@@ -639,8 +639,40 @@ footer #navbarBottom .nav-link {
   transition: all 0.2s ease;
 }
 
+.btn-time-admin {
+  background-color: white;
+  color: #6A73AB;
+  border: 2px solid #6A73AB;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  width:10rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.bi-clock {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #6A73AB;
+  padding-right: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.bi-clock:hover, .bi-clock:focus {
+  color: white;
+}
+
 .btn-date-admin:hover, .btn-date-admin.btn-hover,
-.btn-date-admin:focus, .btn-date-admin:focus {
+.btn-date-admin:focus, .btn-time-admin:focus,
+.btn-date-admin.btn-hover, .btn-time-admin.btn-hover,
+.btn-time-admin:hover, .btn-time-admin.btn-hover {
   background-color: #6A73AB;
   color: white !important;
   border: 2px solid white;
@@ -648,17 +680,47 @@ footer #navbarBottom .nav-link {
 }
 
 .btn-date-admin:hover::placeholder, .btn-date-admin:focus::placeholder,
-.btn-date-admin.btn-hover::placeholder, .btn-date-admin.btn-hover::placeholder,
-.close-icon-date-fin-admin.btn-hover, .close-icon-date-debut-admin.btn-hover,
-.btn-date-admin:hover ~ .bi-calendar ,.btn-date-admin:hover ~ .bi-x-circle,
-.btn-date-admin:focus ~ .bi-calendar, .btn-date-admin:focus ~ .bi-x-circle {
+.btn-time-admin:hover::placeholder, .btn-time-admin:focus::placeholder,
+.btn-date-admin.btn-hover::placeholder, .btn-time-admin.btn-hover::placeholder,
+.btn-date-admin:hover ~ .bi-calendar,.btn-date-admin:hover ~ .bi-x-circle,
+.btn-date-admin:focus ~ .bi-calendar, .btn-date-admin:focus ~ .bi-x-circle,
+.btn-time-admin:hover ~ .bi-clock,.btn-time-admin:hover ~ .bi-x-circle,
+.btn-time-admin:focus ~ .bi-clock, .btn-time-admin:focus ~ .bi-x-circle {
   color: white !important;
 }
 
-.btn-date-admin::placeholder, .btn-date-admin::placeholder,
+.btn-date-admin::placeholder, .btn-date-admin.btn-hover::placeholder,
+.btn-time-admin::placeholder, .btn-time-admin.btn-hover::placeholder,
 .btn-date-admin ~ .bi-calendar ,.btn-date-admin ~ .bi-x-circle,
-.btn-date-admin ~ .bi-calendar, .btn-date-admin ~ .bi-x-circle {
+.btn-date-admin ~ .bi-calendar, .btn-date-admin ~ .bi-x-circle,
+.btn-time-admin ~ .bi-clock ,.btn-time-admin ~ .bi-x-circle,
+.btn-time-admin ~ .bi-clock, .btn-time-admin ~ .bi-x-circle {
   transition: all 0.2s ease;
+}
+
+.btn-date-admin::placeholder,::placeholder {
+  color: #6A73AB;
+}
+
+.flatpickr-time {
+  background-color: #6A73AB !important;
+  color: white !important;
+  border: 1px solid white !important;
+  border-radius: 5px;
+}
+
+.flatpickr-time .flatpickr-hour,
+.flatpickr-time .flatpickr-minute {
+  background-color: #6A73AB !important;
+  color: white !important;
+  border: 1px solid transparent !important;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, border 0.3s ease;
+}
+
+.flatpickr-time-separator {
+  color: white !important;
 }
 
 .bi-check-lg {

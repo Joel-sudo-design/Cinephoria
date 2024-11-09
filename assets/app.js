@@ -12,6 +12,10 @@ import './styles/app.css';
     import 'bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css';
     import 'bootstrap-datepicker/dist/locales/bootstrap-datepicker.fr.min.js';
 
+//Active Flatpickr
+    import flatpickr from 'flatpickr';
+    import 'flatpickr/dist/flatpickr.min.css';
+
 //Autoload images
     const imagesContext = require.context('../assets/images', true, /\.(png|jpg|jpeg|gif|ico|svg|webp)$/);
     imagesContext.keys().forEach(imagesContext);
@@ -267,9 +271,8 @@ import './styles/app.css';
                                                         <div class="position-relative">
                                                             <button class="btn bi bi-pencil-square text-success p-0 fs-5 bg-admin position-absolute" style="top: 0; right: 0; border-radius: 0 0 0 2px"></button>
                                                             <img src="" class="img-fluid" alt="" style="width: 100%; height: 450px; background-color: white">
-                                                        </div>
-                                                        <div class="row fs-5 just align-content-center justify-content-center my-4">Durée: 1h30</div>
-                                                        <div class="row my-4 justify-content-center align-items-center">
+                                                        </div>                                          
+                                                        <div class="row my-5 justify-content-center align-items-center">
                                                             <div class="col-6 d-flex justify-content-center">
                                                                 <div class="dropdown dropdown-modal-admin">
                                                                     <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuGenre-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -352,13 +355,21 @@ import './styles/app.css';
                                                             <div class="col-2 d-flex text-white align-items-center justify-content-start">
                                                                 <div class="fs-5">4DX:</div>
                                                             </div>
-                                                            <div class="col-3 d-flex text-white">
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-4DX-heure-debut-${film.id}"></textarea>
-                                                                <label class="d-none" for="Textarea-4DX-heure-debut-${film.id}"></label>
+                                                            <div class="col-3 d-flex justify-content-center">
+                                                                <div class="position-relative">
+                                                                    <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-4DX-${film.id}" placeholder="Heure début" readonly>
+                                                                    <label for="timepicker-admin-debut-4DX-${film.id}" class="d-none"></label>
+                                                                    <span class="bi bi-clock" id="icon-clock-debut-admin-4DX-${film.id}"></span>
+                                                                    <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-4DX-${film.id}"></span>
+                                                                </div>
                                                             </div>
-                                                            <div class="col-3">
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-4DX-heure-fin-${film.id}"></textarea>
-                                                                <label class="d-none" for="Textarea-4DX-heure-fin-${film.id}"></label>
+                                                            <div class="col-3 d-flex justify-content-center">
+                                                                <div class="position-relative">
+                                                                    <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-4DX-${film.id}" placeholder="Heure fin" readonly>
+                                                                    <label for="timepicker-admin-fin-4DX-${film.id}" class="d-none"></label>
+                                                                    <span class="bi bi-clock" id="icon-clock-fin-admin-4DX-${film.id}"></span>
+                                                                    <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-4DX-${film.id}"></span>
+                                                                </div>
                                                             </div>
                                                             <div class="col-2 d-flex text-white align-items-center justify-content-end">
                                                                 <div class="fs-5">Prix:</div>
@@ -373,13 +384,21 @@ import './styles/app.css';
                                                             <div class="col-2 d-flex text-white align-items-center justify-content-start">
                                                                 <div class="fs-5">3DX:</div>
                                                             </div>
-                                                            <div class="col-3 d-flex text-white">
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-3DX-heure-debut-${film.id}"></textarea>
-                                                                <label class="d-none" for="Textarea-3DX-heure-debut-${film.id}"></label>
+                                                            <div class="col-3 d-flex justify-content-center">
+                                                                <div class="position-relative">
+                                                                    <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-3DX-${film.id}" placeholder="Heure début" readonly>
+                                                                    <label for="timepicker-admin-debut-3DX-${film.id}" class="d-none"></label>
+                                                                    <span class="bi bi-clock" id="icon-clock-debut-admin-3DX-${film.id}"></span>
+                                                                    <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-3DX-${film.id}"></span>
+                                                                </div>
                                                             </div>
-                                                            <div class="col-3">
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-3DX-heure-fin-${film.id}"></textarea>
-                                                                <label class="d-none" for="Textarea-3DX-heure-fin-${film.id}"></label>
+                                                            <div class="col-3 d-flex justify-content-center">
+                                                                <div class="position-relative">
+                                                                    <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-3DX-${film.id}" placeholder="Heure fin" readonly>
+                                                                    <label for="timepicker-admin-fin-3DX-${film.id}" class="d-none"></label>
+                                                                    <span class="bi bi-clock" id="icon-clock-fin-admin-3DX-${film.id}"></span>
+                                                                    <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-3DX-${film.id}"></span>
+                                                                </div>
                                                             </div>
                                                             <div class="col-2 d-flex text-white align-items-center justify-content-end">
                                                                 <div class="fs-5">Prix:</div>
@@ -394,13 +413,21 @@ import './styles/app.css';
                                                             <div class="col-2 d-flex text-white align-items-center justify-content-start">
                                                                 <div class="fs-5">IMAX:</div>
                                                             </div>
-                                                            <div class="col-3 d-flex text-white">
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-IMAX-heure-debut-${film.id}"></textarea>
-                                                                <label class="d-none" for="Textarea-IMAX-heure-debut-${film.id}"></label>
+                                                            <div class="col-3 d-flex justify-content-center">
+                                                                <div class="position-relative">
+                                                                    <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-IMAX-${film.id}" placeholder="Heure début" readonly>
+                                                                    <label for="timepicker-admin-debut-IMAX-${film.id}" class="d-none"></label>
+                                                                    <span class="bi bi-clock" id="icon-clock-debut-admin-IMAX-${film.id}"></span>
+                                                                    <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-IMAX-${film.id}"></span>
+                                                                </div>
                                                             </div>
-                                                            <div class="col-3">
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-IMAX-heure-fin-${film.id}"></textarea>
-                                                                <label class="d-none" for="Textarea-IMAX-heure-fin-${film.id}"></label>
+                                                            <div class="col-3 d-flex justify-content-center">
+                                                                <div class="position-relative">
+                                                                    <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-IMAX-${film.id}" placeholder="Heure fin" readonly>
+                                                                    <label for="timepicker-admin-fin-IMAX-${film.id}" class="d-none"></label>
+                                                                    <span class="bi bi-clock" id="icon-clock-fin-admin-IMAX-${film.id}"></span>
+                                                                    <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-IMAX-${film.id}"></span>
+                                                                </div>
                                                             </div>
                                                             <div class="col-2 d-flex text-white align-items-center justify-content-end">
                                                                 <div class="fs-5">Prix:</div>
@@ -415,13 +442,21 @@ import './styles/app.css';
                                                             <div class="col-2 d-flex text-white align-items-center justify-content-start">
                                                                 <div class="fs-5">Dolby:</div>
                                                             </div>
-                                                            <div class="col-3 d-flex text-white">
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-dolby-heure-debut-${film.id}"></textarea>
-                                                                <label class="d-none" for="Textarea-dolby-heure-debut-${film.id}"></label>
+                                                            <div class="col-3 d-flex justify-content-center">
+                                                                <div class="position-relative">
+                                                                    <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-Dolby-${film.id}" placeholder="Heure début" readonly>
+                                                                    <label for="timepicker-admin-debut-Dolby-${film.id}" class="d-none"></label>
+                                                                    <span class="bi bi-clock" id="icon-clock-debut-admin-Dolby-${film.id}"></span>
+                                                                    <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-Dolby-${film.id}"></span>
+                                                                </div>
                                                             </div>
-                                                            <div class="col-3">
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-dolby-heure-fin-${film.id}"></textarea>
-                                                                <label class="d-none" for="Textarea-dolby-heure-fin-${film.id}"></label>
+                                                            <div class="col-3 d-flex justify-content-center">
+                                                                <div class="position-relative">
+                                                                    <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-Dolby-${film.id}" placeholder="Heure fin" readonly>
+                                                                    <label for="timepicker-admin-fin-Dolby-${film.id}" class="d-none"></label>
+                                                                    <span class="bi bi-clock" id="icon-clock-fin-admin-Dolby-${film.id}"></span>
+                                                                    <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-Dolby-${film.id}"></span>
+                                                                </div>
                                                             </div>
                                                             <div class="col-2 d-flex text-white align-items-center justify-content-end">
                                                                 <div class="fs-5">Prix:</div>
@@ -533,6 +568,14 @@ import './styles/app.css';
                                             modal.find('input').val('');
                                             $('#datepicker-admin-debut-' + film.id).datepicker('clearDates');
                                             $('#datepicker-admin-fin-' + film.id).datepicker('clearDates');
+                                            $('#timepicker-admin-debut-4DX-' + film.id).val('');
+                                            $('#timepicker-admin-fin-4DX-' + film.id).val('');
+                                            $('#timepicker-admin-debut-3DX-' + film.id).val('');
+                                            $('#timepicker-admin-fin-3DX-' + film.id).val('');
+                                            $('#timepicker-admin-debut-IMAX-' + film.id).val('');
+                                            $('#timepicker-admin-fin-IMAX-' + film.id).val('');
+                                            $('#timepicker-admin-debut-Dolby-' + film.id).val('');
+                                            $('#timepicker-admin-fin-Dolby-' + film.id).val('');
                                             $('#close-icon-date-debut-admin-' + film.id).addClass('d-none');
                                             $('#close-icon-date-fin-admin-' + film.id).addClass('d-none');
                                             $('#icon-calendar-debut-admin-' + film.id).removeClass('d-none');
@@ -546,6 +589,7 @@ import './styles/app.css';
                                                 age: selectedAge,
                                                 nom: $('#TextareaNom-'+film.id).val(),
                                                 description: $('#Textarea-description-'+film.id).val(),
+                                                cinema: selectedCinema,
                                             }
                                             axios.post('/administrateur/administration/film/validate', data)
                                                   .then(response => {console.log(response.data);$('#modal-' + film.id).modal('hide'); })
@@ -565,8 +609,7 @@ import './styles/app.css';
                                             orientation: "bottom",
                                             language: "fr",
                                             autoclose: true
-                                        })
-                                            .on('changeDate', function () {
+                                        }).on('changeDate', function () {
                                                 // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
                                                 $calendarIconDebut.addClass('d-none');
                                                 $clearIconDebut.removeClass('d-none');
@@ -607,8 +650,7 @@ import './styles/app.css';
                                             orientation: "bottom",
                                             language: "fr",
                                             autoclose: true
-                                        })
-                                            .on('changeDate', function () {
+                                        }).on('changeDate', function () {
                                                 // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
                                                 $calendarIconFin.addClass('d-none');
                                                 $clearIconFin.removeClass('d-none');
@@ -643,8 +685,93 @@ import './styles/app.css';
                                         $calendarIconFin.on('click', function () {
                                             $datepickerFin.focus();
                                         });
-                                    //Timepicker
+                                //Timepicker
+                                        const timepickerId3DXDebut = '#timepicker-admin-debut-3DX-'+film.id;
+                                        const clockIconId3DXDebut = '#icon-clock-debut-admin-3DX-'+film.id;
+                                        const clearIconId3DXDebut = '#close-icon-time-debut-admin-3DX-'+film.id;
+                                        const timepickerId4DXDebut = '#timepicker-admin-debut-4DX-'+film.id;
+                                        const clockIconId4DXDebut = '#icon-clock-debut-admin-4DX-'+film.id;
+                                        const clearIconId4DXDebut = '#close-icon-time-debut-admin-4DX-'+film.id;
+                                        const timepickerIdIMAXDebut = '#timepicker-admin-debut-IMAX-'+film.id;
+                                        const clockIconIdIMAXDebut = '#icon-clock-debut-admin-IMAX-'+film.id;
+                                        const clearIconIdIMAXDebut = '#close-icon-time-debut-admin-IMAX-'+film.id;
+                                        const timepickerIdDolbyDebut = '#timepicker-admin-debut-Dolby-'+film.id;
+                                        const clockIconIdDolbyDebut = '#icon-clock-debut-admin-Dolby-'+film.id;
+                                        const clearIconIdDolbyDebut = '#close-icon-time-debut-admin-Dolby-'+film.id;
+                                        const timepickerId3DXFin = '#timepicker-admin-fin-3DX-'+film.id;
+                                        const clockIconId3DXFin = '#icon-clock-fin-admin-3DX-'+film.id;
+                                        const clearIconId3DXFin = '#close-icon-time-fin-admin-3DX-'+film.id;
+                                        const timepickerId4DXFin = '#timepicker-admin-fin-4DX-'+film.id;
+                                        const clockIconId4DXFin = '#icon-clock-fin-admin-4DX-'+film.id;
+                                        const clearIconId4DXFin = '#close-icon-time-fin-admin-4DX-'+film.id;
+                                        const timepickerIdIMAXFin = '#timepicker-admin-fin-IMAX-'+film.id;
+                                        const clockIconIdIMAXFin = '#icon-clock-fin-admin-IMAX-'+film.id;
+                                        const clearIconIdIMAXFin = '#close-icon-time-fin-admin-IMAX-'+film.id;
+                                        const timepickerIdDolbyFin = '#timepicker-admin-fin-Dolby-'+film.id;
+                                        const clockIconIdDolbyFin = '#icon-clock-fin-admin-Dolby-'+film.id;
+                                        const clearIconIdDolbyFin = '#close-icon-time-fin-admin-Dolby-'+film.id;
+                                        function initTimepicker(timepickerId, clockIconId, clearIconId) {
+                                const $timepicker = $(timepickerId);
+                                const $clockIcon = $(clockIconId);
+                                const $clearIcon = $(clearIconId);
 
+                                // Initialisation du timepicker avec flatpickr
+                                const timepickerInstance = flatpickr($timepicker, {
+                                    enableTime: true,
+                                    noCalendar: true,
+                                    dateFormat: "H:i",
+                                    time_24hr: true,
+                                    minuteIncrement: 15,
+                                    onChange: function() {
+                                        // Cache l'icône de l'horloge et montre l'icône de suppression
+                                        $clockIcon.addClass('d-none');
+                                        $clearIcon.removeClass('d-none');
+                                    }
+                                });
+
+                                // Réinitialiser l'heure au clic sur l'icône de suppression
+                                $clearIcon.on('click', function() {
+                                    timepickerInstance.clear();
+                                    $clockIcon.removeClass('d-none');
+                                    $clearIcon.addClass('d-none');
+                                });
+
+                                // Appliquer un style de hover/focus pour l'icône de suppression
+                                $clearIcon.on('mouseenter focus', function() {
+                                    $timepicker.addClass('btn-hover');
+                                    $clearIcon.addClass('btn-hover');
+                                });
+
+                                // Appliquer un style de hover/focus pour l'icône de l'horloge
+                                $clockIcon.on('mouseenter focus', function() {
+                                    $timepicker.addClass('btn-hover');
+                                    $clockIcon.addClass('btn-hover');
+                                });
+
+                                // Retirer le style de hover/focus
+                                $clearIcon.on('mouseleave blur', function() {
+                                    $timepicker.removeClass('btn-hover');
+                                    $clearIcon.removeClass('btn-hover');
+                                });
+
+                                $clockIcon.on('mouseleave blur', function() {
+                                    $timepicker.removeClass('btn-hover');
+                                    $clockIcon.removeClass('btn-hover');
+                                });
+
+                                // Ouvrir l'horloge lorsque l'on clique sur l'icône horloge
+                                $clockIcon.on('click', function() {
+                                    $timepicker.focus();
+                                });
+                            }
+                                        initTimepicker(timepickerId3DXDebut, clockIconId3DXDebut, clearIconId3DXDebut);
+                                        initTimepicker(timepickerId4DXDebut, clockIconId4DXDebut, clearIconId4DXDebut);
+                                        initTimepicker(timepickerIdIMAXDebut, clockIconIdIMAXDebut, clearIconIdIMAXDebut);
+                                        initTimepicker(timepickerIdDolbyDebut, clockIconIdDolbyDebut, clearIconIdDolbyDebut);
+                                        initTimepicker(timepickerId3DXFin, clockIconId3DXFin, clearIconId3DXFin);
+                                        initTimepicker(timepickerId4DXFin, clockIconId4DXFin, clearIconId4DXFin);
+                                        initTimepicker(timepickerIdIMAXFin, clockIconIdIMAXFin, clearIconIdIMAXFin);
+                                        initTimepicker(timepickerIdDolbyFin, clockIconIdDolbyFin, clearIconIdDolbyFin);
                         });
                     })
                     .catch(error => {console.error(error)});
