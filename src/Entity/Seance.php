@@ -29,6 +29,10 @@ class Seance
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $is_seen_by = null;
 
+    #[ORM\ManyToOne(inversedBy: 'seances')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?salle $qualite = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +94,18 @@ class Seance
     public function setIsSeenBy(?string $is_seen_by): static
     {
         $this->is_seen_by = $is_seen_by;
+
+        return $this;
+    }
+
+    public function getQualite(): ?salle
+    {
+        return $this->qualite;
+    }
+
+    public function setQualite(?salle $qualite): static
+    {
+        $this->qualite = $qualite;
 
         return $this;
     }

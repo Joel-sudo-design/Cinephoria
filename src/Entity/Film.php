@@ -28,14 +28,11 @@ class Film
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date_fin = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(type: 'boolean',nullable: true)]
     private ?bool $label = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $age_minimum = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?int $notation = null;
 
     #[ORM\ManyToOne(inversedBy: 'films')]
     private ?Genre $genre = null;
@@ -128,18 +125,6 @@ class Film
         return $this;
     }
 
-    public function getNotation(): ?int
-    {
-        return $this->notation;
-    }
-
-    public function setNotation(?int $notation): static
-    {
-        $this->notation = $notation;
-
-        return $this;
-    }
-
     public function toArray(): array
     {
         return [
@@ -149,8 +134,7 @@ class Film
             'date_debut' => $this->getDateDebut(),
             'date_fin' => $this->getDateFin(),
             'label' => $this->isLabel(),
-            'age_minimum' => $this->getAgeMinimum(),
-            'notation' => $this->getNotation(),
+            'age_minimum' => $this->getAgeMinimum()
         ];
     }
 

@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Cinema;
 use App\Entity\Film;
 use App\Entity\Genre;
+use App\Entity\Salle;
+use App\Entity\Seance;
 use App\Repository\CinemaRepository;
 use App\Repository\GenreRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -73,7 +75,17 @@ class AdministrationController extends AbstractController
         $description = $data['description'];
         $name = $data['nom'];
         $age = $data['age'];
+        $label = $data['label'];
         $stringCinema = $data['cinema'];
+        $stringDateDebut = $data['date_debut'];
+        $stringDateFin = $data['date_fin'];
+        $dateDebut = \DateTime::createFromFormat('Y-m-d', $stringDateDebut);
+        $dateFin = \DateTime::createFromFormat('Y-m-d', $stringDateFin);
+        $stringHeureDebut3DX = $data['heure_debut_3DX'];
+        $stringHeureFin3DX = $data['heure_debut_3DX'];
+        $salle3DX = $entityManager->getRepository(Salle::class)->findOneBy(['qualite' => '3DX']);
+        $heureDebut3DX = \DateTime::createFromFormat('H:i', $stringHeureDebut3DX);
+        $heureFin3DX = \DateTime::createFromFormat('H:i', $stringHeureFin3DX);
         if (!$stringGenre == null) {
             $genre = $entityManager->getRepository(Genre::class)->findOneBy(['name' => $stringGenre]);
             $film->setGenre($genre);
@@ -87,9 +99,22 @@ class AdministrationController extends AbstractController
         if (!$description==null) {
             $film->setDescription($description);
         }
+        $film->setLabel($label);
         if (!$stringCinema==null) {
             $cinema = $entityManager->getRepository(Cinema::class)->findOneBy(['name' => $stringCinema]);
             $film->addCinema($cinema);
+        }
+        if (!$dateDebut==null) {
+            $film->setDateDebut($dateDebut);
+        }
+        if (!$dateFin==null) {
+            $film->setDateFin($dateFin);
+        }
+        if (!$heureDebut3DX==null && !$heureFin3DX==null) {
+            $seance = new Seance();
+            $seance->setHeureDebut($heureDebut3DX);
+            $seance->setHeureFin($heureFin3DX);
+            $salle3DX->addSeance($seance);
         }
         $entityManager->persist($film);
         $entityManager->flush();

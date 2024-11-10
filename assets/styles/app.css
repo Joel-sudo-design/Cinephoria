@@ -780,8 +780,8 @@ footer #navbarBottom .nav-link {
   border: 2px solid white !important;
 }
 
-.modal-admin .dropdown-item{
-  border: 1px solid white !important;
+.dropdown-modal-admin .dropdown-menu > :not(:last-child) {
+  border-bottom: 2px solid white !important;
 }
 
 .age-badge-public {
