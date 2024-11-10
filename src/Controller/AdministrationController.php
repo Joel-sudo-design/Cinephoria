@@ -72,20 +72,21 @@ class AdministrationController extends AbstractController
         $id = $data['id'];
         $film = $entityManager->getRepository(Film::class)->find($id);
         $stringGenre = $data['genre'];
-        $description = $data['description'];
-        $name = $data['nom'];
         $age = $data['age'];
         $label = $data['label'];
+        $name = $data['nom'];
         $stringCinema = $data['cinema'];
         $stringDateDebut = $data['date_debut'];
         $stringDateFin = $data['date_fin'];
         $dateDebut = \DateTime::createFromFormat('Y-m-d', $stringDateDebut);
         $dateFin = \DateTime::createFromFormat('Y-m-d', $stringDateFin);
-        $stringHeureDebut3DX = $data['heure_debut_3DX'];
-        $stringHeureFin3DX = $data['heure_debut_3DX'];
         $salle3DX = $entityManager->getRepository(Salle::class)->findOneBy(['qualite' => '3DX']);
-        $heureDebut3DX = \DateTime::createFromFormat('H:i', $stringHeureDebut3DX);
-        $heureFin3DX = \DateTime::createFromFormat('H:i', $stringHeureFin3DX);
+        $stringHeureDebut3DX_1 = $data['heure_debut_3DX_1'];
+        $stringHeureFin3DX_1 = $data['heure_fin_3DX_1'];
+        $heureDebut3DX_1 = \DateTime::createFromFormat('H:i', $stringHeureDebut3DX_1);
+        $heureFin3DX_1 = \DateTime::createFromFormat('H:i', $stringHeureFin3DX_1);
+        $price3DX_1 = $data['price_3DX_1'];
+        $description = $data['description'];
         if (!$stringGenre == null) {
             $genre = $entityManager->getRepository(Genre::class)->findOneBy(['name' => $stringGenre]);
             $film->setGenre($genre);
@@ -93,13 +94,10 @@ class AdministrationController extends AbstractController
         if (!$age == null) {
             $film->setAgeMinimum($age);
         }
+        $film->setLabel($label);
         if (!$name==null) {
             $film->setName($name);
         }
-        if (!$description==null) {
-            $film->setDescription($description);
-        }
-        $film->setLabel($label);
         if (!$stringCinema==null) {
             $cinema = $entityManager->getRepository(Cinema::class)->findOneBy(['name' => $stringCinema]);
             $film->addCinema($cinema);
@@ -110,11 +108,21 @@ class AdministrationController extends AbstractController
         if (!$dateFin==null) {
             $film->setDateFin($dateFin);
         }
-        if (!$heureDebut3DX==null && !$heureFin3DX==null) {
-            $seance = new Seance();
-            $seance->setHeureDebut($heureDebut3DX);
-            $seance->setHeureFin($heureFin3DX);
-            $salle3DX->addSeance($seance);
+        if (!$heureDebut3DX_1==null && !$heureFin3DX_1==null) {
+            while ($dateDebut <= $dateFin) {
+                $seance = new Seance();
+                $seance->setHeureDebut($heureDebut3DX_1);
+                $seance->setHeureFin($heureFin3DX_1);
+                $seance->setDate($dateDebut);
+                $seance->setPrice($price3DX_1);
+                $seance->setSalle($salle3DX);
+                $entityManager->persist($seance);
+                $entityManager->flush();
+                $dateDebut->modify('+1 day');
+            }
+        }
+        if (!$description==null) {
+            $film->setDescription($description);
         }
         $entityManager->persist($film);
         $entityManager->flush();

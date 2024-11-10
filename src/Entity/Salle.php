@@ -24,7 +24,7 @@ class Salle
     /**
      * @var Collection<int, Seance>
      */
-    #[ORM\OneToMany(targetEntity: Seance::class, mappedBy: 'qualite', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Seance::class, mappedBy: 'salle', orphanRemoval: true)]
     private Collection $seances;
 
     public function __construct()
@@ -71,7 +71,7 @@ class Salle
     {
         if (!$this->seances->contains($seance)) {
             $this->seances->add($seance);
-            $seance->setQualite($this);
+            $seance->setSalle($this);
         }
 
         return $this;
@@ -81,8 +81,8 @@ class Salle
     {
         if ($this->seances->removeElement($seance)) {
             // set the owning side to null (unless already changed)
-            if ($seance->getQualite() === $this) {
-                $seance->setQualite(null);
+            if ($seance->getSalle() === $this) {
+                $seance->setSalle(null);
             }
         }
 

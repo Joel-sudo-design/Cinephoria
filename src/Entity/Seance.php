@@ -31,7 +31,10 @@ class Seance
 
     #[ORM\ManyToOne(inversedBy: 'seances')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?salle $qualite = null;
+    private ?salle $salle = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date = null;
 
     public function getId(): ?int
     {
@@ -98,15 +101,28 @@ class Seance
         return $this;
     }
 
-    public function getQualite(): ?salle
+    public function getSalle(): ?salle
     {
-        return $this->qualite;
+        return $this->salle;
     }
 
-    public function setQualite(?salle $qualite): static
+    public function setSalle(?salle $salle): static
     {
-        $this->qualite = $qualite;
+        $this->salle = $salle;
 
         return $this;
     }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): static
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
 }

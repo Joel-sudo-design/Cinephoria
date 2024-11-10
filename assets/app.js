@@ -275,15 +275,15 @@ import './styles/app.css';
                                                             <button class="btn bi bi-pencil-square text-success p-0 fs-5 bg-admin position-absolute" style="top: 0; right: 0; border-radius: 0 0 0 2px"></button>
                                                             <img src="" class="img-fluid" alt="" style="width: 100%; height: 450px; background-color: white">
                                                         </div>    
-                                                        <!--Genre-->                                                                                
-                                                        <div class="row my-3 justify-content-start">
-                                                            <div class="col-4 fs-5 align-content-center">Genre: </div>
-                                                            <div class="col-4 align-content-center">
+                                                        <!--Genre-->                                                                                                                                          
+                                                        <div class="row my-3">
+                                                            <div class="col-6 fs-5 text-end align-content-center">Genre: </div>
+                                                            <div class="col-6 d-flex justify-content-center">
                                                                 <div class="dropdown dropdown-modal-admin">
                                                                     <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuGenre-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
                                                                         Choix
                                                                     </button>
-                                                                    <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuGenre">
+                                                                    <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuGenre">
                                                                         <li><a class="dropdown-item drop-genre" href="#">Action</a></li>
                                                                         <li><a class="dropdown-item drop-genre" href="#">Comédie</a></li>
                                                                         <li><a class="dropdown-item drop-genre" href="#">Horreur</a></li>
@@ -294,17 +294,17 @@ import './styles/app.css';
                                                                         <li><a class="dropdown-item drop-genre" href="#">Animation</a></li>
                                                                     </ul>
                                                                 </div>
-                                                            </div>  
+                                                            </div> 
                                                         </div>
                                                         <!--Age minimum-->
-                                                        <div class="row my-3 justify-content-start">
-                                                            <div class="col-4 fs-5 align-content-center">Age minimum: </div>
-                                                            <div class="col-4 align-content-center">
+                                                        <div class="row my-3">
+                                                            <div class="col-6 fs-5 text-end align-content-center">Age minimum: </div>
+                                                            <div class="col-6 d-flex justify-content-center">
                                                                 <div class="dropdown dropdown-modal-admin">
                                                                     <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuAge-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
                                                                         Choix
                                                                     </button>
-                                                                    <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuAge">
+                                                                    <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuAge">
                                                                         <li><a class="dropdown-item drop-age" href="#">Tout public</a></li>
                                                                         <li><a class="dropdown-item drop-age" href="#">12</a></li>
                                                                         <li><a class="dropdown-item drop-age" href="#">16</a></li>
@@ -314,14 +314,14 @@ import './styles/app.css';
                                                             </div> 
                                                         </div>
                                                         <!--Coup de coeur-->
-                                                        <div class="row my-3 justify-content-start">
-                                                            <div class="col-4 fs-5 align-content-center">Coup de coeur: </div>
-                                                            <div class="col-4 align-content-center">
+                                                        <div class="row mt-3">
+                                                            <div class="col-6 fs-5 text-end align-content-center">Coup de coeur: </div>
+                                                            <div class="col-6 d-flex justify-content-center">
                                                                 <div class="dropdown dropdown-modal-admin">
                                                                     <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuLabel-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
                                                                         Choix
                                                                     </button>
-                                                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLabel">
+                                                                    <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuLabel">
                                                                         <li><a class="dropdown-item drop-label" href="#">Oui</a></li>
                                                                         <li><a class="dropdown-item drop-label" href="#">Non</a></li>                                                                      
                                                                     </ul>
@@ -333,13 +333,13 @@ import './styles/app.css';
                                                         <!--Nom du film & cinéma & boutons valider & sortie-->
                                                         <div class="row">
                                                             <!--Nom du film-->
-                                                            <div class="col-5 d-flex align-items-center">
-                                                                <div class="text-white fs-5 me-1">Nom:</div>
+                                                            <div class="col-1 d-flex text-white align-items-center fs-5">Nom:</div>
+                                                            <div class="col-4 d-flex align-items-center justify-content-start">
                                                                 <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="TextareaNom-${film.id}"></textarea>
                                                                 <label class="d-none" for="TextareaNom-${film.id}"></label>
                                                             </div>
                                                             <!--Nom du Cinéma-->
-                                                            <div class="col-3 d-flex align-items-center justify-content-end">
+                                                            <div class="col-3 d-flex align-content-center justify-content-end">
                                                                 <div class="dropdown dropdown-modal-admin">
                                                                         <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuCinema-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
                                                                             Cinéma
@@ -382,12 +382,12 @@ import './styles/app.css';
                                                         </div>
                                                         <!--Salle & Nombre de places-->
                                                         <div class="row my-3">
-                                                            //Salle
+                                                            <!--Salle-->
                                                             <div class="col-1 d-flex text-white align-items-center">
                                                                 <div class="fs-5">Salle:</div>
                                                             </div>
-                                                            <div class="col-2 d-flex justify-content-center">
-                                                                <div class="dropdown dropdown-modal-admin">
+                                                            <div class="col-2 d-flex justify-content-start">
+                                                                <div class="dropdown dropdown-modal-admin align-content-center">
                                                                     <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuSalle-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
                                                                         N°
                                                                     </button>
@@ -399,12 +399,12 @@ import './styles/app.css';
                                                                     </ul>
                                                                 </div>
                                                             </div>
-                                                            //Nombre de places
+                                                            <!--Nombre de places-->
                                                             <div class="col-3 d-flex text-white align-items-center text-end">
                                                                 <div class="fs-5">Nombre de places:</div>
                                                             </div>
-                                                            <div class="col-2 d-flex justify-content-center">
-                                                                <div class="dropdown dropdown-modal-admin">
+                                                            <div class="col-2 d-flex justify-content-end">
+                                                                <div class="dropdown dropdown-modal-admin align-content-center">
                                                                     <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuPlaces-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
                                                                         Nbre
                                                                     </button>
@@ -446,7 +446,7 @@ import './styles/app.css';
                                                                         <div class="mx-1 fs-5 text-white">€</div>
                                                                     </div>
                                                             </div>
-                                                            <div class="row m-0 p-0">
+                                                            <div class="row m-0 mt-3 p-0">
                                                                     <div class="col-2 d-flex text-white align-items-center justify-content-start">
                                                                         <div class="fs-5">3DX:</div>
                                                                     </div>
@@ -475,24 +475,53 @@ import './styles/app.css';
                                                                         <div class="mx-1 fs-5 text-white">€</div>
                                                                     </div>
                                                             </div>
-                                                            <div class="row m-0 p-0">
+                                                            <div class="row m-0 mt-3 p-0">
                                                                     <div class="col-2 d-flex text-white align-items-center justify-content-start">
                                                                         <div class="fs-5">3DX:</div>
                                                                     </div>
                                                                     <div class="col-3 d-flex justify-content-center">
                                                                         <div class="position-relative">
-                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-3DX-2-${film.id}" placeholder="Heure début" readonly>
-                                                                            <label for="timepicker-admin-debut-3DX-2-${film.id}" class="d-none"></label>
-                                                                            <span class="bi bi-clock" id="icon-clock-debut-admin-3DX-2-${film.id}"></span>
-                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-3DX-2-${film.id}"></span>
+                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-3DX-3-${film.id}" placeholder="Heure début" readonly>
+                                                                            <label for="timepicker-admin-debut-3DX-3-${film.id}" class="d-none"></label>
+                                                                            <span class="bi bi-clock" id="icon-clock-debut-admin-3DX-3-${film.id}"></span>
+                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-3DX-3-${film.id}"></span>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-3 d-flex justify-content-center">
                                                                         <div class="position-relative">
-                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-3DX-2-${film.id}" placeholder="Heure fin" readonly>
+                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-3DX-3-${film.id}" placeholder="Heure fin" readonly>
                                                                             <label for="timepicker-admin-fin-3DX-2-${film.id}" class="d-none"></label>
-                                                                            <span class="bi bi-clock" id="icon-clock-fin-admin-3DX-2-${film.id}"></span>
-                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-3DX-2-${film.id}"></span>
+                                                                            <span class="bi bi-clock" id="icon-clock-fin-admin-3DX-3-${film.id}"></span>
+                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-3DX-3-${film.id}"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-2 d-flex text-white align-items-center justify-content-end">
+                                                                        <div class="fs-5">Prix:</div>
+                                                                    </div>
+                                                                    <div class="col-2 d-flex align-items-center">
+                                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-3DX-3-prix-${film.id}"></textarea>
+                                                                        <label class="d-none" for="Textarea-3DX-3-prix-${film.id}"></label>
+                                                                        <div class="mx-1 fs-5 text-white">€</div>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="row m-0 mt-3 p-0">
+                                                                    <div class="col-2 d-flex text-white align-items-center justify-content-start">
+                                                                        <div class="fs-5">3DX:</div>
+                                                                    </div>
+                                                                    <div class="col-3 d-flex justify-content-center">
+                                                                        <div class="position-relative">
+                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-3DX-4-${film.id}" placeholder="Heure début" readonly>
+                                                                            <label for="timepicker-admin-debut-3DX-4-${film.id}" class="d-none"></label>
+                                                                            <span class="bi bi-clock" id="icon-clock-debut-admin-3DX-4-${film.id}"></span>
+                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-3DX-4-${film.id}"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-3 d-flex justify-content-center">
+                                                                        <div class="position-relative">
+                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-3DX-4-${film.id}" placeholder="Heure fin" readonly>
+                                                                            <label for="timepicker-admin-fin-3DX-4-${film.id}" class="d-none"></label>
+                                                                            <span class="bi bi-clock" id="icon-clock-fin-admin-3DX-4-${film.id}"></span>
+                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-3DX-4-${film.id}"></span>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-2 d-flex text-white align-items-center justify-content-end">
@@ -503,7 +532,7 @@ import './styles/app.css';
                                                                         <label class="d-none" for="Textarea-3DX-2-prix-${film.id}"></label>
                                                                         <div class="mx-1 fs-5 text-white">€</div>
                                                                     </div>
-                                                            </div>                                                         
+                                                            </div>                                                           
                                                         </div>
                                                         <!--4DX-->
                                                         <div class="row my-3 d-none">
@@ -596,7 +625,7 @@ import './styles/app.css';
                                                             </div>
                                                         </div>  
                                                         <!--Description-->
-                                                        <div class="row mt-3 mb-1">
+                                                        <div class="row mt-3">
                                                             <div class="col-3 text-white align-items-center justify-content-start">
                                                                 <div class="fs-5">Description:</div>
                                                             </div>
@@ -736,8 +765,9 @@ import './styles/app.css';
                                                 date_debut: formattedDateDebut,
                                                 date_fin: formattedDateFin,
                                                 label: label,
-                                                heure_debut_3DX: $('#timepicker-admin-debut-3DX-'+film.id).val(),
-                                                heure_fin_3DX: $('#timepicker-admin-fin-3DX-'+film.id).val(),
+                                                heure_debut_3DX_1: $('#timepicker-admin-debut-3DX-1-'+film.id).val(),
+                                                heure_fin_3DX_1: $('#timepicker-admin-fin-3DX-1-'+film.id).val(),
+                                                price_3DX_1: $('#Textarea-3DX-1-prix-'+film.id).val(),
                                             }
                                             axios.post('/administrateur/administration/film/validate', data)
                                                   .then(response => {console.log(response.data);$('#modal-' + film.id).modal('hide'); })
@@ -837,60 +867,65 @@ import './styles/app.css';
                                         const timepickerId3DX_1_Debut = '#timepicker-admin-debut-3DX-1-'+film.id;
                                         const clockIconId3DX_1_Debut = '#icon-clock-debut-admin-3DX-1-'+film.id;
                                         const clearIconId3DX_1_Debut = '#close-icon-time-debut-admin-3DX-1-'+film.id;
+                                        const timepickerId3DX_1_Fin = '#timepicker-admin-fin-3DX-1-'+film.id;
+                                        const clockIconId3DX_1_Fin = '#icon-clock-fin-admin-3DX-1-'+film.id;
+                                        const clearIconId3DX_1_Fin = '#close-icon-time-fin-admin-3DX-1-'+film.id;
                                         function initTimepicker(timepickerId, clockIconId, clearIconId) {
-                                const $timepicker = $(timepickerId);
-                                const $clockIcon = $(clockIconId);
-                                const $clearIcon = $(clearIconId);
+                                            const $timepicker = $(timepickerId);
+                                            const $clockIcon = $(clockIconId);
+                                            const $clearIcon = $(clearIconId);
 
-                                // Initialisation du timepicker avec flatpickr
-                                const timepickerInstance = flatpickr($timepicker, {
-                                    enableTime: true,
-                                    noCalendar: true,
-                                    dateFormat: "H:i",
-                                    time_24hr: true,
-                                    minuteIncrement: 15,
-                                    onChange: function() {
-                                        // Cache l'icône de l'horloge et montre l'icône de suppression
-                                        $clockIcon.addClass('d-none');
-                                        $clearIcon.removeClass('d-none');
-                                    }
-                                });
+                                            // Initialisation du timepicker avec flatpickr
+                                            const timepickerInstance = flatpickr($timepicker, {
+                                                enableTime: true,
+                                                noCalendar: true,
+                                                dateFormat: "H:i",
+                                                time_24hr: true,
+                                                minuteIncrement: 15,
+                                                onChange: function() {
+                                                    // Cache l'icône de l'horloge et montre l'icône de suppression
+                                                    $clockIcon.addClass('d-none');
+                                                    $clearIcon.removeClass('d-none');
+                                                }
+                                            });
 
-                                // Réinitialiser l'heure au clic sur l'icône de suppression
-                                $clearIcon.on('click', function() {
-                                    timepickerInstance.clear();
-                                    $clockIcon.removeClass('d-none');
-                                    $clearIcon.addClass('d-none');
-                                });
+                                            // Réinitialiser l'heure au clic sur l'icône de suppression
+                                            $clearIcon.on('click', function() {
+                                                timepickerInstance.clear();
+                                                $clockIcon.removeClass('d-none');
+                                                $clearIcon.addClass('d-none');
+                                            });
 
-                                // Appliquer un style de hover/focus pour l'icône de suppression
-                                $clearIcon.on('mouseenter focus', function() {
-                                    $timepicker.addClass('btn-hover');
-                                    $clearIcon.addClass('btn-hover');
-                                });
+                                            // Appliquer un style de hover/focus pour l'icône de suppression
+                                            $clearIcon.on('mouseenter focus', function() {
+                                                $timepicker.addClass('btn-hover');
+                                                $clearIcon.addClass('btn-hover');
+                                            });
 
-                                // Appliquer un style de hover/focus pour l'icône de l'horloge
-                                $clockIcon.on('mouseenter focus', function() {
-                                    $timepicker.addClass('btn-hover');
-                                    $clockIcon.addClass('btn-hover');
-                                });
+                                            // Appliquer un style de hover/focus pour l'icône de l'horloge
+                                            $clockIcon.on('mouseenter focus', function() {
+                                                $timepicker.addClass('btn-hover');
+                                                $clockIcon.addClass('btn-hover');
+                                            });
 
-                                // Retirer le style de hover/focus
-                                $clearIcon.on('mouseleave blur', function() {
-                                    $timepicker.removeClass('btn-hover');
-                                    $clearIcon.removeClass('btn-hover');
-                                });
+                                            // Retirer le style de hover/focus
+                                            $clearIcon.on('mouseleave blur', function() {
+                                                $timepicker.removeClass('btn-hover');
+                                                $clearIcon.removeClass('btn-hover');
+                                            });
 
-                                $clockIcon.on('mouseleave blur', function() {
-                                    $timepicker.removeClass('btn-hover');
-                                    $clockIcon.removeClass('btn-hover');
-                                });
+                                            $clockIcon.on('mouseleave blur', function() {
+                                                $timepicker.removeClass('btn-hover');
+                                                $clockIcon.removeClass('btn-hover');
+                                            });
 
-                                // Ouvrir l'horloge lorsque l'on clique sur l'icône horloge
-                                $clockIcon.on('click', function() {
-                                    $timepicker.focus();
-                                });
-                            }
+                                            // Ouvrir l'horloge lorsque l'on clique sur l'icône horloge
+                                            $clockIcon.on('click', function() {
+                                                $timepicker.focus();
+                                            });
+                                        }
+                                        initTimepicker(timepickerId3DX_1_Debut, clockIconId3DX_1_Debut, clearIconId3DX_1_Debut);
+                                        initTimepicker(timepickerId3DX_1_Fin, clockIconId3DX_1_Fin, clearIconId3DX_1_Fin);
                         });
                     })
                     .catch(error => {console.error(error)});
