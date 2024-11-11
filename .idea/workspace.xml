@@ -5,14 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifs diverses">
-      <change afterPath="$PROJECT_DIR$/migrations/Version20241110174831.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/joeld.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/joeld.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AdministrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdministrationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Film.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Film.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Seance.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Seance.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -257,7 +250,7 @@
       <workItem from="1731176747136" duration="2328000" />
       <workItem from="1731228190155" duration="9143000" />
       <workItem from="1731243412742" duration="20212000" />
-      <workItem from="1731312692191" duration="2955000" />
+      <workItem from="1731312692191" duration="6034000" />
     </task>
     <task id="LOCAL-00003" summary="Début page d'accueil emplyé + navbar">
       <option name="closed" value="true" />
@@ -523,7 +516,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731252353925</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Modifs diverses">
+      <option name="closed" value="true" />
+      <created>1731317209373</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1731317209373</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
