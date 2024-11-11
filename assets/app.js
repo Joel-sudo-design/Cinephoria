@@ -415,7 +415,7 @@ import './styles/app.css';
                                                             </div> 
                                                         </div>
                                                         <!--3DX-->
-                                                        <div class="row my-3 d-none">
+                                                        <div ID="row-3DX" class="row my-3 d-none">
                                                             <div class="row m-0 p-0">
                                                                     <div class="col-2 d-flex text-white align-items-center justify-content-start">
                                                                         <div class="fs-5">3DX:</div>
@@ -536,7 +536,7 @@ import './styles/app.css';
                                                             </div>                                                           
                                                         </div>
                                                         <!--4DX-->
-                                                        <div class="row my-3 d-none">
+                                                        <div ID="row-4DX" class="row my-3 d-none">
                                                             <div class="row m-0 p-0">
                                                                     <div class="col-2 d-flex text-white align-items-center justify-content-start">
                                                                             <div class="fs-5">4DX:</div>
@@ -655,7 +655,7 @@ import './styles/app.css';
                                                             </div>
                                                         </div>
                                                         <!--IMAX-->
-                                                        <div class="row my-3 d-none">                                                                                                        
+                                                        <div ID="row-IMAX" class="row my-3 d-none">                                                                                                        
                                                             <div class="row m-0 p-0">
                                                                 <div class="col-2 d-flex text-white align-items-center justify-content-start">
                                                                     <div class="fs-5">IMAX:</div>
@@ -774,7 +774,7 @@ import './styles/app.css';
                                                             </div>
                                                         </div>
                                                         <!--Dolby-->
-                                                        <div class="row my-3 d-none">
+                                                        <div ID="row-Dolby" class="row my-3 d-none">
                                                             <div class="row m-0 p-0">
                                                                 <div class="col-2 d-flex text-white align-items-center justify-content-start">
                                                                     <div class="fs-5">Dolby:</div>
@@ -971,12 +971,32 @@ import './styles/app.css';
                                         });
                                         $('#dropdownMenuLabel-' + film.id).text(film.label ? 'Oui' : 'Non');
                                 // Menu déroulant Salle
-                                    let selectedSalle= '';
-                                    $('.drop-salle').click(function(e) {
-                                        e.preventDefault();
-                                        selectedSalle= $(this).text();
-                                        $('#dropdownMenuSalle-'+film.id).text(selectedSalle);
-                                    });
+                                        let selectedSalle= '';
+                                        const dropSalle = $('.drop-salle');
+                                        dropSalle.click(function(e) {
+                                            e.preventDefault();
+                                            selectedSalle= $(this).text();
+                                            $('#dropdownMenuSalle-'+film.id).text(selectedSalle);
+                                        });
+                                        const dropdownMenuSalle = $('#dropdownMenuSalle-' + film.id);
+                                        // Écoute l'événement de clic sur les éléments du menu déroulant
+                                        dropSalle.on('click', function(e) {
+                                            e.preventDefault();
+                                            const value = $(this).text();
+                                            if (value === '1') {
+                                                $('#row-3DX').removeClass('d-none');
+                                                $('#row-4DX, #row-IMAX, #row-Dolby').addClass('d-none');
+                                            } else if (value === '2') {
+                                                $('#row-4DX').removeClass('d-none');
+                                                $('#row-3DX, #row-IMAX, #row-Dolby').addClass('d-none');
+                                            } else if (value === '3') {
+                                                $('#row-IMAX').removeClass('d-none');
+                                                $('#row-3DX, #row-4DX, #row-Dolby').addClass('d-none');
+                                            } else if (value === '4') {
+                                                $('#row-Dolby').removeClass('d-none');
+                                                $('#row-3DX, #row-4DX, #row-IMAX').addClass('d-none');
+                                            }
+                                        });
                                 // Menu déroulant places
                                     let selectedPlaces= '';
                                     $('.drop-places').click(function(e) {
@@ -1010,6 +1030,51 @@ import './styles/app.css';
                                                 heure_debut_3DX_1: $('#timepicker-admin-debut-3DX-1-'+film.id).val(),
                                                 heure_fin_3DX_1: $('#timepicker-admin-fin-3DX-1-'+film.id).val(),
                                                 price_3DX_1: $('#Textarea-3DX-1-prix-'+film.id).val(),
+                                                heure_debut_3DX_2: $('#timepicker-admin-debut-3DX-2-'+film.id).val(),
+                                                heure_fin_3DX_2: $('#timepicker-admin-fin-3DX-2-'+film.id).val(),
+                                                price_3DX_2: $('#Textarea-3DX-2-prix-'+film.id).val(),
+                                                heure_debut_3DX_3: $('#timepicker-admin-debut-3DX-3-'+film.id).val(),
+                                                heure_fin_3DX_3: $('#timepicker-admin-fin-3DX-3-'+film.id).val(),
+                                                price_3DX_3: $('#Textarea-3DX-3-prix-'+film.id).val(),
+                                                heure_debut_3DX_4: $('#timepicker-admin-debut-3DX-4-'+film.id).val(),
+                                                heure_fin_3DX_4: $('#timepicker-admin-fin-3DX-4-'+film.id).val(),
+                                                price_3DX_4: $('#Textarea-3DX-4-prix-'+film.id).val(),
+                                                heure_debut_4DX_1: $('#timepicker-admin-debut-4DX-1-'+film.id).val(),
+                                                heure_fin_4DX_1: $('#timepicker-admin-fin-4DX-1-'+film.id).val(),
+                                                price_4DX_1: $('#Textarea-4DX-1-prix-'+film.id).val(),
+                                                heure_debut_4DX_2: $('#timepicker-admin-debut-4DX-2-'+film.id).val(),
+                                                heure_fin_4DX_2: $('#timepicker-admin-fin-4DX-2-'+film.id).val(),
+                                                price_4DX_2: $('#Textarea-4DX-2-prix-'+film.id).val(),
+                                                heure_debut_4DX_3: $('#timepicker-admin-debut-4DX-3-'+film.id).val(),
+                                                heure_fin_4DX_3: $('#timepicker-admin-fin-4DX-3-'+film.id).val(),
+                                                price_4DX_3: $('#Textarea-4DX-3-prix-'+film.id).val(),
+                                                heure_debut_4DX_4: $('#timepicker-admin-debut-4DX-4-'+film.id).val(),
+                                                heure_fin_4DX_4: $('#timepicker-admin-fin-4DX-4-'+film.id).val(),
+                                                price_4DX_4: $('#Textarea-4DX-4-prix-'+film.id).val(),
+                                                heure_debut_IMAX_1: $('#timepicker-admin-debut-IMAX-1-'+film.id).val(),
+                                                heure_fin_IMAX_1: $('#timepicker-admin-fin-IMAX-1-'+film.id).val(),
+                                                price_IMAX_1: $('#Textarea-IMAX-1-prix-'+film.id).val(),
+                                                heure_debut_IMAX_2: $('#timepicker-admin-debut-IMAX-2-'+film.id).val(),
+                                                heure_fin_IMAX_2: $('#timepicker-admin-fin-IMAX-2-'+film.id).val(),
+                                                price_IMAX_2: $('#Textarea-IMAX-2-prix-'+film.id).val(),
+                                                heure_debut_IMAX_3: $('#timepicker-admin-debut-IMAX-3-'+film.id).val(),
+                                                heure_fin_IMAX_3: $('#timepicker-admin-fin-IMAX-3-'+film.id).val(),
+                                                price_IMAX_3: $('#Textarea-IMAX-3-prix-'+film.id).val(),
+                                                heure_debut_IMAX_4: $('#timepicker-admin-debut-IMAX-4-'+film.id).val(),
+                                                heure_fin_IMAX_4: $('#timepicker-admin-fin-IMAX-4-'+film.id).val(),
+                                                price_IMAX_4: $('#Textarea-IMAX-4-prix-'+film.id).val(),
+                                                heure_debut_Dolby_1: $('#timepicker-admin-debut-Dolby-1-'+film.id).val(),
+                                                heure_fin_Dolby_1: $('#timepicker-admin-fin-Dolby-1-'+film.id).val(),
+                                                price_Dolby_1: $('#Textarea-dolby-1-prix-'+film.id).val(),
+                                                heure_debut_Dolby_2: $('#timepicker-admin-debut-Dolby-2-'+film.id).val(),
+                                                heure_fin_Dolby_2: $('#timepicker-admin-fin-Dolby-2-'+film.id).val(),
+                                                price_Dolby_2: $('#Textarea-dolby-2-prix-'+film.id).val(),
+                                                heure_debut_Dolby_3: $('#timepicker-admin-debut-Dolby-3-'+film.id).val(),
+                                                heure_fin_Dolby_3: $('#timepicker-admin-fin-Dolby-3-'+film.id).val(),
+                                                price_Dolby_3: $('#Textarea-dolby-3-prix-'+film.id).val(),
+                                                heure_debut_Dolby_4: $('#timepicker-admin-debut-Dolby-4-'+film.id).val(),
+                                                heure_fin_Dolby_4: $('#timepicker-admin-fin-Dolby-4-'+film.id).val(),
+                                                price_Dolby_4: $('#Textarea-dolby-4-prix-'+film.id).val(),
                                                 description: $('#Textarea-description-'+film.id).val(),
                                             }
                                             axios.post('/administrateur/administration/film/validate', data)
