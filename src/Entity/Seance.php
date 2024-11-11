@@ -33,7 +33,7 @@ class Seance
     #[ORM\JoinColumn(nullable: false)]
     private ?salle $salle = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date = null;
 
     public function getId(): ?int

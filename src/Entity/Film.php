@@ -131,8 +131,6 @@ class Film
             'id' => $this->getId(),
             'name' => $this->getName(),
             'description' => $this->getDescription(),
-            'date_debut' => $this->getDateDebut(),
-            'date_fin' => $this->getDateFin(),
             'label' => $this->isLabel(),
             'age_minimum' => $this->getAgeMinimum()
         ];

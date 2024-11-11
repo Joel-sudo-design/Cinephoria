@@ -757,7 +757,7 @@ footer #navbarBottom .nav-link {
   background-color: white !important;
   border: 2px solid #6A73AB !important;
   transition: all 0.2s ease;
-  color: black !important;
+  color: #6A73AB !important;
   text-align: center;
 }
 

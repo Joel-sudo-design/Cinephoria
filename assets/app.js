@@ -233,7 +233,6 @@ import './styles/app.css';
                 axios.get('/administrateur/administration/film')
                     .then(response => {
                         const Film = response.data;
-                        console.log(Film);
                         $.each(Film, function(index, film) {
                             $('#card-container').append(
                                 `<div id="card-film" class="col-auto card" style="width: 12rem">
@@ -281,7 +280,7 @@ import './styles/app.css';
                                                             <div class="col-6 d-flex justify-content-center">
                                                                 <div class="dropdown dropdown-modal-admin">
                                                                     <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuGenre-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                        Choix
+                                                                        ${film.genre}
                                                                     </button>
                                                                     <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuGenre">
                                                                         <li><a class="dropdown-item drop-genre" href="#">Action</a></li>
@@ -302,7 +301,7 @@ import './styles/app.css';
                                                             <div class="col-6 d-flex justify-content-center">
                                                                 <div class="dropdown dropdown-modal-admin">
                                                                     <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuAge-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                        Choix
+                                                                        ${film.age_minimum}
                                                                     </button>
                                                                     <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuAge">
                                                                         <li><a class="dropdown-item drop-age" href="#">Tout public</a></li>
@@ -318,8 +317,7 @@ import './styles/app.css';
                                                             <div class="col-6 fs-5 text-end align-content-center">Coup de coeur: </div>
                                                             <div class="col-6 d-flex justify-content-center">
                                                                 <div class="dropdown dropdown-modal-admin">
-                                                                    <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuLabel-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                        Choix
+                                                                    <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuLabel-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">           
                                                                     </button>
                                                                     <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuLabel">
                                                                         <li><a class="dropdown-item drop-label" href="#">Oui</a></li>
@@ -334,15 +332,16 @@ import './styles/app.css';
                                                         <div class="row">
                                                             <!--Nom du film-->
                                                             <div class="col-1 d-flex text-white align-items-center fs-5">Nom:</div>
-                                                            <div class="col-4 d-flex align-items-center justify-content-start">
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="TextareaNom-${film.id}"></textarea>
+                                                            <div class="col-3 d-flex align-items-center justify-content-start">
+                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="TextareaNom-${film.id}">${film.name}</textarea>
                                                                 <label class="d-none" for="TextareaNom-${film.id}"></label>
                                                             </div>
                                                             <!--Nom du Cinéma-->
-                                                            <div class="col-3 d-flex align-content-center justify-content-end">
+                                                            <div class="col-2 d-flex text-white align-items-center justify-content-end fs-5">Cinéma:</div>
+                                                            <div class="col-2 d-flex align-content-center justify-content-end">
                                                                 <div class="dropdown dropdown-modal-admin">
                                                                         <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuCinema-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                            Cinéma
+                                                                            ${film.cinema}
                                                                         </button>
                                                                         <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuCinema">
                                                                             <li><a class="dropdown-item drop-cinema" href="#">Toulouse</a></li>
@@ -365,7 +364,7 @@ import './styles/app.css';
                                                         <div class="row my-3">
                                                             <div class="col-4 d-flex justify-content-start">
                                                                 <div class="position-relative">
-                                                                    <input type="text" class="btn-date-admin text-black" id="datepicker-admin-debut-${film.id}" placeholder="Date début" readonly>
+                                                                    <input type="text" class="btn-date-admin" id="datepicker-admin-debut-${film.id}" placeholder="Date début" readonly>
                                                                     <label for="datepicker-admin-debut-${film.id}" class="d-none"></label>
                                                                     <span class="bi bi-calendar" id="icon-calendar-debut-admin-${film.id}"></span>
                                                                     <span class="bi bi-x-circle d-none" id="close-icon-date-debut-admin-${film.id}"></span>
@@ -373,7 +372,7 @@ import './styles/app.css';
                                                             </div>
                                                             <div class="col-4 d-flex justify-content-end">
                                                                 <div class="position-relative">
-                                                                    <input type="text" class="btn-date-admin text-black" id="datepicker-admin-fin-${film.id}" placeholder="Date fin" readonly>
+                                                                    <input type="text" class="btn-date-admin" id="datepicker-admin-fin-${film.id}" placeholder="Date fin" readonly>
                                                                     <label for="datepicker-admin-fin-${film.id}" class="d-none"></label>
                                                                     <span class="bi bi-calendar" id="icon-calendar-fin-admin-${film.id}"></span>
                                                                     <span class="bi bi-x-circle d-none" id="close-icon-date-fin-admin-${film.id}"></span>
@@ -388,7 +387,7 @@ import './styles/app.css';
                                                             </div>
                                                             <div class="col-2 d-flex justify-content-start">
                                                                 <div class="dropdown dropdown-modal-admin align-content-center">
-                                                                    <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuSalle-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                    <button class="btn btn-secondary nav-link dropdown-toggle color-salle p-2 pe-1" type="button" id="dropdownMenuSalle-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
                                                                         N°
                                                                     </button>
                                                                     <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuSalle">
@@ -405,7 +404,7 @@ import './styles/app.css';
                                                             </div>
                                                             <div class="col-2 d-flex justify-content-end">
                                                                 <div class="dropdown dropdown-modal-admin align-content-center">
-                                                                    <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuPlaces-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                    <button class="btn btn-secondary nav-link dropdown-toggle color-places p-2 pe-1" type="button" id="dropdownMenuPlaces-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
                                                                         Nbre
                                                                     </button>
                                                                     <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuPlaces">
@@ -416,7 +415,7 @@ import './styles/app.css';
                                                             </div> 
                                                         </div>
                                                         <!--3DX-->
-                                                        <div class="row my-3">
+                                                        <div class="row my-3 d-none">
                                                             <div class="row m-0 p-0">
                                                                     <div class="col-2 d-flex text-white align-items-center justify-content-start">
                                                                         <div class="fs-5">3DX:</div>
@@ -447,6 +446,7 @@ import './styles/app.css';
                                                                     </div>
                                                             </div>
                                                             <div class="row m-0 mt-3 p-0">
+                                                                <div class="row m-0 p-0">
                                                                     <div class="col-2 d-flex text-white align-items-center justify-content-start">
                                                                         <div class="fs-5">3DX:</div>
                                                                     </div>
@@ -474,6 +474,7 @@ import './styles/app.css';
                                                                         <label class="d-none" for="Textarea-3DX-2-prix-${film.id}"></label>
                                                                         <div class="mx-1 fs-5 text-white">€</div>
                                                                     </div>
+                                                                </div>
                                                             </div>
                                                             <div class="row m-0 mt-3 p-0">
                                                                     <div class="col-2 d-flex text-white align-items-center justify-content-start">
@@ -528,70 +529,219 @@ import './styles/app.css';
                                                                         <div class="fs-5">Prix:</div>
                                                                     </div>
                                                                     <div class="col-2 d-flex align-items-center">
-                                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-3DX-2-prix-${film.id}"></textarea>
-                                                                        <label class="d-none" for="Textarea-3DX-2-prix-${film.id}"></label>
+                                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-3DX-4-prix-${film.id}"></textarea>
+                                                                        <label class="d-none" for="Textarea-3DX-4-prix-${film.id}"></label>
                                                                         <div class="mx-1 fs-5 text-white">€</div>
                                                                     </div>
                                                             </div>                                                           
                                                         </div>
                                                         <!--4DX-->
                                                         <div class="row my-3 d-none">
+                                                            <div class="row m-0 p-0">
+                                                                    <div class="col-2 d-flex text-white align-items-center justify-content-start">
+                                                                            <div class="fs-5">4DX:</div>
+                                                                        </div>
+                                                                    <div class="col-3 d-flex justify-content-center">
+                                                                            <div class="position-relative">
+                                                                                <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-4DX-1-${film.id}" placeholder="Heure début" readonly>
+                                                                                <label for="timepicker-admin-debut-4DX-1-${film.id}" class="d-none"></label>
+                                                                                <span class="bi bi-clock" id="icon-clock-debut-admin-4DX-1-${film.id}"></span>
+                                                                                <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-4DX-1-${film.id}"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    <div class="col-3 d-flex justify-content-center">
+                                                                            <div class="position-relative">
+                                                                                <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-4DX-1-${film.id}" placeholder="Heure fin" readonly>
+                                                                                <label for="timepicker-admin-fin-4DX-1-${film.id}" class="d-none"></label>
+                                                                                <span class="bi bi-clock" id="icon-clock-fin-admin-4DX-1-${film.id}"></span>
+                                                                                <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-4DX-1-${film.id}"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    <div class="col-2 d-flex text-white align-items-center justify-content-end">
+                                                                            <div class="fs-5">Prix:</div>
+                                                                        </div>
+                                                                    <div class="col-2 d-flex align-items-center">
+                                                                            <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-4DX-1-prix-${film.id}"></textarea>
+                                                                            <label class="d-none" for="Textarea-4DX-1-prix-${film.id}"></label>
+                                                                            <div class="mx-1 fs-5 text-white">€</div>
+                                                                        </div>
+                                                            </div>
+                                                            <div class="row m-0 mt-3 p-0">
+                                                                    <div class="col-2 d-flex text-white align-items-center justify-content-start">
+                                                                        <div class="fs-5">4DX:</div>
+                                                                    </div>
+                                                                    <div class="col-3 d-flex justify-content-center">
+                                                                        <div class="position-relative">
+                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-4DX-2-${film.id}" placeholder="Heure début" readonly>
+                                                                            <label for="timepicker-admin-debut-4DX-2-${film.id}" class="d-none"></label>
+                                                                            <span class="bi bi-clock" id="icon-clock-debut-admin-4DX-2-${film.id}"></span>
+                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-4DX-2-${film.id}"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-3 d-flex justify-content-center">
+                                                                        <div class="position-relative">
+                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-4DX-2-${film.id}" placeholder="Heure fin" readonly>
+                                                                            <label for="timepicker-admin-fin-4DX-2-${film.id}" class="d-none"></label>
+                                                                            <span class="bi bi-clock" id="icon-clock-fin-admin-4DX-2-${film.id}"></span>
+                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-4DX-2-${film.id}"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-2 d-flex text-white align-items-center justify-content-end">
+                                                                        <div class="fs-5">Prix:</div>
+                                                                    </div>
+                                                                    <div class="col-2 d-flex align-items-center">
+                                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-4DX-2-prix-${film.id}"></textarea>
+                                                                        <label class="d-none" for="Textarea-4DX-2-prix-${film.id}"></label>
+                                                                        <div class="mx-1 fs-5 text-white">€</div>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="row m-0 mt-3 p-0">
+                                                                    <div class="col-2 d-flex text-white align-items-center justify-content-start">
+                                                                        <div class="fs-5">4DX:</div>
+                                                                    </div>
+                                                                    <div class="col-3 d-flex justify-content-center">
+                                                                        <div class="position-relative">
+                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-4DX-3-${film.id}" placeholder="Heure début" readonly>
+                                                                            <label for="timepicker-admin-debut-4DX-3-${film.id}" class="d-none"></label>
+                                                                            <span class="bi bi-clock" id="icon-clock-debut-admin-4DX-3-${film.id}"></span>
+                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-4DX-3-${film.id}"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-3 d-flex justify-content-center">
+                                                                        <div class="position-relative">
+                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-4DX-3-${film.id}" placeholder="Heure fin" readonly>
+                                                                            <label for="timepicker-admin-fin-4DX-3-${film.id}" class="d-none"></label>
+                                                                            <span class="bi bi-clock" id="icon-clock-fin-admin-4DX-3-${film.id}"></span>
+                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-4DX-3-${film.id}"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-2 d-flex text-white align-items-center justify-content-end">
+                                                                        <div class="fs-5">Prix:</div>
+                                                                    </div>
+                                                                    <div class="col-2 d-flex align-items-center">
+                                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-4DX-3-prix-${film.id}"></textarea>
+                                                                        <label class="d-none" for="Textarea-4DX-3-prix-${film.id}"></label>
+                                                                        <div class="mx-1 fs-5 text-white">€</div>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="row m-0 mt-3 p-0">
+                                                                    <div class="col-2 d-flex text-white align-items-center justify-content-start">
+                                                                        <div class="fs-5">4DX:</div>
+                                                                    </div>
+                                                                    <div class="col-3 d-flex justify-content-center">
+                                                                        <div class="position-relative">
+                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-4DX-4-${film.id}" placeholder="Heure début" readonly>
+                                                                            <label for="timepicker-admin-debut-4DX-4-${film.id}" class="d-none"></label>
+                                                                            <span class="bi bi-clock" id="icon-clock-debut-admin-4DX-4-${film.id}"></span>
+                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-4DX-4-${film.id}"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-3 d-flex justify-content-center">
+                                                                        <div class="position-relative">
+                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-4DX-4-${film.id}" placeholder="Heure fin" readonly>
+                                                                            <label for="timepicker-admin-fin-4DX-4-${film.id}" class="d-none"></label>
+                                                                            <span class="bi bi-clock" id="icon-clock-fin-admin-4DX-4-${film.id}"></span>
+                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-4DX-4-${film.id}"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-2 d-flex text-white align-items-center justify-content-end">
+                                                                        <div class="fs-5">Prix:</div>
+                                                                    </div>
+                                                                    <div class="col-2 d-flex align-items-center">
+                                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-4DX-4-prix-${film.id}"></textarea>
+                                                                        <label class="d-none" for="Textarea-4DX-4-prix-${film.id}"></label>
+                                                                        <div class="mx-1 fs-5 text-white">€</div>
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--IMAX-->
+                                                        <div class="row my-3 d-none">
+                                                            <div class="row m-0 p-0">
                                                                 <div class="col-2 d-flex text-white align-items-center justify-content-start">
-                                                                    <div class="fs-5">4DX:</div>
+                                                                    <div class="fs-5">IMAX:</div>
                                                                 </div>
                                                                 <div class="col-3 d-flex justify-content-center">
                                                                     <div class="position-relative">
-                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-4DX-${film.id}" placeholder="Heure début" readonly>
-                                                                        <label for="timepicker-admin-debut-4DX-${film.id}" class="d-none"></label>
-                                                                        <span class="bi bi-clock" id="icon-clock-debut-admin-4DX-${film.id}"></span>
-                                                                        <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-4DX-${film.id}"></span>
+                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-IMAX-1-${film.id}" placeholder="Heure début" readonly>
+                                                                        <label for="timepicker-admin-debut-IMAX-1-${film.id}" class="d-none"></label>
+                                                                        <span class="bi bi-clock" id="icon-clock-debut-admin-IMAX-1-${film.id}"></span>
+                                                                        <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-IMAX-1-${film.id}"></span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-3 d-flex justify-content-center">
                                                                     <div class="position-relative">
-                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-4DX-${film.id}" placeholder="Heure fin" readonly>
-                                                                        <label for="timepicker-admin-fin-4DX-${film.id}" class="d-none"></label>
-                                                                        <span class="bi bi-clock" id="icon-clock-fin-admin-4DX-${film.id}"></span>
-                                                                        <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-4DX-${film.id}"></span>
+                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-IMAX-1-${film.id}" placeholder="Heure fin" readonly>
+                                                                        <label for="timepicker-admin-fin-IMAX-1-${film.id}" class="d-none"></label>
+                                                                        <span class="bi bi-clock" id="icon-clock-fin-admin-IMAX-1-${film.id}"></span>
+                                                                        <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-IMAX-1-${film.id}"></span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-2 d-flex text-white align-items-center justify-content-end">
                                                                     <div class="fs-5">Prix:</div>
                                                                 </div>
                                                                 <div class="col-2 d-flex align-items-center">
-                                                                    <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-3DX-prix-${film.id}"></textarea>
-                                                                    <label class="d-none" for="Textarea-3DX-prix-${film.id}"></label>
+                                                                    <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-IMAX-prix-1-${film.id}"></textarea>
+                                                                    <label class="d-none" for="Textarea-IMAX-prix-1-${film.id}"></label>
+                                                                    <div class="mx-1 fs-5 text-white">€</div>
+                                                                </div>     
+                                                            </div>                                                 
+                                                            <div class="row m-0 mt-3 p-0">
+                                                                <div class="col-2 d-flex text-white align-items-center justify-content-start">
+                                                                    <div class="fs-5">IMAX:</div>
+                                                                </div>
+                                                                <div class="col-3 d-flex justify-content-center">
+                                                                    <div class="position-relative">
+                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-IMAX-3-${film.id}" placeholder="Heure début" readonly>
+                                                                        <label for="timepicker-admin-debut-IMAX-3-${film.id}" class="d-none"></label>
+                                                                        <span class="bi bi-clock" id="icon-clock-debut-admin-IMAX-3-${film.id}"></span>
+                                                                        <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-IMAX-3-${film.id}"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-3 d-flex justify-content-center">
+                                                                    <div class="position-relative">
+                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-IMAX-3-${film.id}" placeholder="Heure fin" readonly>
+                                                                        <label for="timepicker-admin-fin-IMAX-3-${film.id}" class="d-none"></label>
+                                                                        <span class="bi bi-clock" id="icon-clock-fin-admin-IMAX-3-${film.id}"></span>
+                                                                        <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-IMAX-3-${film.id}"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-2 d-flex text-white align-items-center justify-content-end">
+                                                                    <div class="fs-5">Prix:</div>
+                                                                </div>
+                                                                <div class="col-2 d-flex align-items-center">
+                                                                    <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-IMAX-prix-3-${film.id}"></textarea>
+                                                                    <label class="d-none" for="Textarea-IMAX-prix-3-${film.id}"></label>
                                                                     <div class="mx-1 fs-5 text-white">€</div>
                                                                 </div>
-                                                        </div>
-                                                        <!--IMAX-->
-                                                        <div class="row my-3 d-none">
-                                                            <div class="col-2 d-flex text-white align-items-center justify-content-start">
-                                                                <div class="fs-5">IMAX:</div>
                                                             </div>
-                                                            <div class="col-3 d-flex justify-content-center">
-                                                                <div class="position-relative">
-                                                                    <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-IMAX-${film.id}" placeholder="Heure début" readonly>
-                                                                    <label for="timepicker-admin-debut-IMAX-${film.id}" class="d-none"></label>
-                                                                    <span class="bi bi-clock" id="icon-clock-debut-admin-IMAX-${film.id}"></span>
-                                                                    <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-IMAX-${film.id}"></span>
+                                                            <div class="row m-0 mt-3 p-0">
+                                                                <div class="col-2 d-flex text-white align-items-center justify-content-start">
+                                                                    <div class="fs-5">IMAX:</div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-3 d-flex justify-content-center">
-                                                                <div class="position-relative">
-                                                                    <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-IMAX-${film.id}" placeholder="Heure fin" readonly>
-                                                                    <label for="timepicker-admin-fin-IMAX-${film.id}" class="d-none"></label>
-                                                                    <span class="bi bi-clock" id="icon-clock-fin-admin-IMAX-${film.id}"></span>
-                                                                    <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-IMAX-${film.id}"></span>
+                                                                <div class="col-3 d-flex justify-content-center">
+                                                                    <div class="position-relative">
+                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-IMAX-3-${film.id}" placeholder="Heure début" readonly>
+                                                                        <label for="timepicker-admin-debut-IMAX-3-${film.id}" class="d-none"></label>
+                                                                        <span class="bi bi-clock" id="icon-clock-debut-admin-IMAX-3-${film.id}"></span>
+                                                                        <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-IMAX-3-${film.id}"></span>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-2 d-flex text-white align-items-center justify-content-end">
-                                                                <div class="fs-5">Prix:</div>
-                                                            </div>
-                                                            <div class="col-2 d-flex align-items-center">
-                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-IMAX-prix-${film.id}"></textarea>
-                                                                <label class="d-none" for="Textarea-IMAX-prix-${film.id}"></label>
-                                                                <div class="mx-1 fs-5 text-white">€</div>
+                                                                <div class="col-3 d-flex justify-content-center">
+                                                                    <div class="position-relative">
+                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-IMAX-3-${film.id}" placeholder="Heure fin" readonly>
+                                                                        <label for="timepicker-admin-fin-IMAX-3-${film.id}" class="d-none"></label>
+                                                                        <span class="bi bi-clock" id="icon-clock-fin-admin-IMAX-3-${film.id}"></span>
+                                                                        <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-IMAX-3-${film.id}"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-2 d-flex text-white align-items-center justify-content-end">
+                                                                    <div class="fs-5">Prix:</div>
+                                                                </div>
+                                                                <div class="col-2 d-flex align-items-center">
+                                                                    <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-IMAX-prix-3-${film.id}"></textarea>
+                                                                    <label class="d-none" for="Textarea-IMAX-prix-3-${film.id}"></label>
+                                                                    <div class="mx-1 fs-5 text-white">€</div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <!--Dolby-->
@@ -623,7 +773,7 @@ import './styles/app.css';
                                                                 <label class="d-none" for="Textarea-dolby-prix-${film.id}"></label>
                                                                 <div class="mx-1 fs-5 text-white">€</div>
                                                             </div>
-                                                        </div>  
+                                                        </div>
                                                         <!--Description-->
                                                         <div class="row mt-3">
                                                             <div class="col-3 text-white align-items-center justify-content-start">
@@ -701,6 +851,7 @@ import './styles/app.css';
                                             selectedCoupCoeur= $(this).text();
                                             $('#dropdownMenuLabel-'+film.id).text(selectedCoupCoeur);
                                         });
+                                        $('#dropdownMenuLabel-' + film.id).text(film.label ? 'Oui' : 'Non');
                                 // Menu déroulant Salle
                                     let selectedSalle= '';
                                     $('.drop-salle').click(function(e) {
@@ -716,37 +867,9 @@ import './styles/app.css';
                                         $('#dropdownMenuPlaces-'+film.id).text(selectedPlaces);
                                     });
                                 // Réinitialiser le modal lorsque celui-ci est fermé
-                                        const modal = $('#modal-' + film.id);
-                                        modal.on('hidden.bs.modal', function () {
-                                            // Réinitialiser tous les champs de texte (textarea) du modal
-                                            modal.find('textarea').val('');
-
-                                            // Réinitialiser toutes les sélections du dropdown
-                                            modal.find('.dropdown-item').removeClass('active');
-                                            $('#dropdownMenuGenre-' + film.id).text('Choix');
-                                            $('#dropdownMenuAge-' + film.id).text('Choix');
-                                            $('#dropdownMenuCinema-' + film.id).text('Cinéma');
-                                            $('#dropdownMenuLabel-' + film.id).text('Choix');
-                                            $('#dropdownMenuSalle-' + film.id).text('N°');
-                                            $('#dropdownMenuPlaces-' + film.id).text('Nbre');
-
-                                            // Réinitialiser tout autre champ si nécessaire
-                                            modal.find('input').val('');
-                                            $('#datepicker-admin-debut-' + film.id).datepicker('clearDates');
-                                            $('#datepicker-admin-fin-' + film.id).datepicker('clearDates');
-                                            $('#timepicker-admin-debut-4DX-' + film.id).val('');
-                                            $('#timepicker-admin-fin-4DX-' + film.id).val('');
-                                            $('#timepicker-admin-debut-3DX-' + film.id).val('');
-                                            $('#timepicker-admin-fin-3DX-' + film.id).val('');
-                                            $('#timepicker-admin-debut-IMAX-' + film.id).val('');
-                                            $('#timepicker-admin-fin-IMAX-' + film.id).val('');
-                                            $('#timepicker-admin-debut-Dolby-' + film.id).val('');
-                                            $('#timepicker-admin-fin-Dolby-' + film.id).val('');
-                                            $('#close-icon-date-debut-admin-' + film.id).addClass('d-none');
-                                            $('#close-icon-date-fin-admin-' + film.id).addClass('d-none');
-                                            $('#icon-calendar-debut-admin-' + film.id).removeClass('d-none');
-                                            $('#icon-calendar-fin-admin-' + film.id).removeClass('d-none');
-                                        });
+                                    $('#modal-' + film.id).on('hidden.bs.modal', function () {
+                                        LoadFilm();
+                                    });
                                 //Valider les informations du film
                                         $('#btn-validate-film-'+film.id).click(function () {
                                             let datePartsDebut = $('#datepicker-admin-debut-'+film.id).val().split('/')
@@ -759,15 +882,17 @@ import './styles/app.css';
                                                 id: film.id,
                                                 genre: selectedGenre,
                                                 age: selectedAge,
+                                                label: label,
                                                 nom: $('#TextareaNom-'+film.id).val(),
-                                                description: $('#Textarea-description-'+film.id).val(),
                                                 cinema: selectedCinema,
                                                 date_debut: formattedDateDebut,
                                                 date_fin: formattedDateFin,
-                                                label: label,
+                                                salle: $('#dropdownMenuSalle-'+film.id).text(),
+                                                places: $('#dropdownMenuPlaces-'+film.id).text(),
                                                 heure_debut_3DX_1: $('#timepicker-admin-debut-3DX-1-'+film.id).val(),
                                                 heure_fin_3DX_1: $('#timepicker-admin-fin-3DX-1-'+film.id).val(),
                                                 price_3DX_1: $('#Textarea-3DX-1-prix-'+film.id).val(),
+                                                description: $('#Textarea-description-'+film.id).val(),
                                             }
                                             axios.post('/administrateur/administration/film/validate', data)
                                                   .then(response => {console.log(response.data);$('#modal-' + film.id).modal('hide'); })
@@ -782,6 +907,7 @@ import './styles/app.css';
                                         const $calendarIconFin = $('#icon-calendar-fin-admin-'+film.id);
                                         const $clearIconFin = $('#close-icon-date-fin-admin-'+film.id);
                                     //Date début
+                                        $datepickerDebut.val(film.date_debut);
                                         $datepickerDebut.datepicker({
                                             format: "dd/mm/yyyy",
                                             orientation: "bottom",
@@ -823,6 +949,7 @@ import './styles/app.css';
                                             $datepickerDebut.focus();
                                         });
                                     //Date fin
+                                        $datepickerFin.val(film.date_fin);
                                         $datepickerFin.datepicker({
                                             format: "dd/mm/yyyy",
                                             orientation: "bottom",

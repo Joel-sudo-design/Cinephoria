@@ -41,6 +41,19 @@ class AdministrationController extends AbstractController
             if ($film->getGenre() != null) {
                 $AllFilmsArray[count($AllFilmsArray) - 1]['genre'] = $film->getGenre()->getName();
             }
+            if ($film->getCinema() != null) {
+                $cinemas = '';
+                foreach ($film->getCinema() as $cinema) {
+                    $cinemas = $cinema->getName();
+                }
+                $AllFilmsArray[count($AllFilmsArray) - 1]['cinema'] = $cinemas;
+            }
+            if ($film->getDateDebut() != null) {
+                $AllFilmsArray[count($AllFilmsArray) - 1]['date_debut'] = $film->getDateDebut()->format('d/m/Y');
+            }
+            if ($film->getDateFin() != null) {
+                $AllFilmsArray[count($AllFilmsArray) - 1]['date_fin'] = $film->getDateFin()->format('d/m/Y');
+            }
         }
         return new JsonResponse($AllFilmsArray);
     }
@@ -80,6 +93,9 @@ class AdministrationController extends AbstractController
         $stringDateFin = $data['date_fin'];
         $dateDebut = \DateTime::createFromFormat('Y-m-d', $stringDateDebut);
         $dateFin = \DateTime::createFromFormat('Y-m-d', $stringDateFin);
+        $stringSalle = $data['salle'];
+        $salle = $entityManager->getRepository(Salle::class)->findOneBy(['id' => $stringSalle]);
+        $places = $data['places'];
         $salle3DX = $entityManager->getRepository(Salle::class)->findOneBy(['qualite' => '3DX']);
         $stringHeureDebut3DX_1 = $data['heure_debut_3DX_1'];
         $stringHeureFin3DX_1 = $data['heure_fin_3DX_1'];
@@ -94,7 +110,9 @@ class AdministrationController extends AbstractController
         if (!$age == null) {
             $film->setAgeMinimum($age);
         }
-        $film->setLabel($label);
+        if (!$label == null) {
+            $film->setLabel($label);
+        }
         if (!$name==null) {
             $film->setName($name);
         }
@@ -108,7 +126,7 @@ class AdministrationController extends AbstractController
         if (!$dateFin==null) {
             $film->setDateFin($dateFin);
         }
-        if (!$heureDebut3DX_1==null && !$heureFin3DX_1==null) {
+        if (!$heureDebut3DX_1==null && !$heureFin3DX_1==null && !$price3DX_1==null) {
             while ($dateDebut <= $dateFin) {
                 $seance = new Seance();
                 $seance->setHeureDebut($heureDebut3DX_1);
@@ -123,6 +141,11 @@ class AdministrationController extends AbstractController
         }
         if (!$description==null) {
             $film->setDescription($description);
+        }
+        if (!$salle==null && !$places==null) {
+            $salle->setPlaces($places);
+            $entityManager->persist($salle);
+            $entityManager->flush();
         }
         $entityManager->persist($film);
         $entityManager->flush();
