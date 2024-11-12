@@ -331,61 +331,60 @@ import './styles/app.css';
                                                         <!--Nom du film & cinéma & boutons valider & sortie-->
                                                         <div class="row">
                                                             <!--Nom du film-->
-                                                            <div class="col-1 d-flex text-white align-items-center fs-5">Nom:</div>
-                                                            <div class="col-3 d-flex align-items-center justify-content-start">
+                                                            <div class="col-5 d-flex align-items-center justify-content-start">
+                                                                <div class="text-white align-content-center fs-5 me-2">Nom:</div> 
                                                                 <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="TextareaNom-${film.id}">${film.name}</textarea>
                                                                 <label class="d-none" for="TextareaNom-${film.id}"></label>
-                                                            </div>
-                                                            <!--Nom du Cinéma-->
-                                                            <div class="col-2 d-flex text-white align-items-center justify-content-end fs-5">Cinéma:</div>
-                                                            <div class="col-2 d-flex align-content-center justify-content-end">
-                                                                <div class="dropdown dropdown-modal-admin">
-                                                                        <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuCinema-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                            ${film.cinema}
-                                                                        </button>
-                                                                        <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuCinema">
-                                                                            <li><a class="dropdown-item drop-cinema" href="#">Toulouse</a></li>
-                                                                            <li><a class="dropdown-item drop-cinema" href="#">Nantes</a></li>
-                                                                            <li><a class="dropdown-item drop-cinema" href="#">Bordeaux</a></li>
-                                                                            <li><a class="dropdown-item drop-cinema" href="#">Lille</a></li>
-                                                                            <li><a class="dropdown-item drop-cinema" href="#">Charleroi</a></li>
-                                                                            <li><a class="dropdown-item drop-cinema" href="#">Liège</a></li>
-                                                                            <li><a class="dropdown-item drop-cinema" href="#">Paris</a></li>
-                                                                        </ul>
-                                                                </div>
-                                                            </div>  
+                                                            </div>                                                          
                                                             <!--Boutons valider & sortie-->
-                                                            <div class="col-4 d-flex align-items-center justify-content-end">
+                                                            <div class="col-7 d-flex align-items-center justify-content-end">
                                                                 <button id="btn-validate-film-${film.id}" class="btn bi bi-check-lg p-2 fs-4 d-flex justify-content-center align-items-center"></button>
                                                                 <button class="btn bi bi-x-lg p-2 fs-4 d-flex justify-content-center align-items-center" data-bs-dismiss="modal"></button>
                                                             </div>
-                                                        </div> 
+                                                        </div>
+                                                        <!--Nom du Cinéma-->  
+                                                        <div class="row my-3">                                                                                                  
+                                                            <div class="col-12 d-flex align-content-center justify-content-start">
+                                                                <div class="text-white align-content-center fs-5 me-2">Cinéma:</div> 
+                                                                <div class="dropdown dropdown-modal-admin">                                                             
+                                                                     <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuCinema-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                         ${film.cinema}
+                                                                     </button>
+                                                                     <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuCinema">
+                                                                         <li><a class="dropdown-item drop-cinema" href="#">Toulouse</a></li>
+                                                                         <li><a class="dropdown-item drop-cinema" href="#">Nantes</a></li>
+                                                                         <li><a class="dropdown-item drop-cinema" href="#">Bordeaux</a></li>
+                                                                         <li><a class="dropdown-item drop-cinema" href="#">Lille</a></li>
+                                                                         <li><a class="dropdown-item drop-cinema" href="#">Charleroi</a></li>
+                                                                         <li><a class="dropdown-item drop-cinema" href="#">Liège</a></li>
+                                                                         <li><a class="dropdown-item drop-cinema" href="#">Paris</a></li>
+                                                                     </ul>
+                                                                </div>
+                                                            </div>  
+                                                        </div>
                                                         <!--Date de début et de fin de diffusion-->
                                                         <div class="row my-3">
                                                             <div class="col-4 d-flex justify-content-start">
-                                                                <div class="position-relative">
-                                                                    <input type="text" class="btn-date-admin" id="datepicker-admin-debut-${film.id}" placeholder="Date début" readonly>
-                                                                    <label for="datepicker-admin-debut-${film.id}" class="d-none"></label>
-                                                                    <span class="bi bi-calendar" id="icon-calendar-debut-admin-${film.id}"></span>
-                                                                    <span class="bi bi-x-circle d-none" id="close-icon-date-debut-admin-${film.id}"></span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-4 d-flex justify-content-end">
-                                                                <div class="position-relative">
-                                                                    <input type="text" class="btn-date-admin" id="datepicker-admin-fin-${film.id}" placeholder="Date fin" readonly>
-                                                                    <label for="datepicker-admin-fin-${film.id}" class="d-none"></label>
-                                                                    <span class="bi bi-calendar" id="icon-calendar-fin-admin-${film.id}"></span>
-                                                                    <span class="bi bi-x-circle d-none" id="close-icon-date-fin-admin-${film.id}"></span>
-                                                                </div>
-                                                            </div> 
+                                                                 <div class="position-relative">
+                                                                        <input type="text" class="btn-date-admin" id="datepicker-admin-debut-${film.id}" placeholder="Date début" readonly>
+                                                                        <label for="datepicker-admin-debut-${film.id}" class="d-none"></label>
+                                                                        <span class="bi bi-calendar" id="icon-calendar-debut-admin-${film.id}"></span>
+                                                                        <span class="bi bi-x-circle d-none" id="close-icon-date-debut-admin-${film.id}"></span>
+                                                                 </div>
+                                                             </div>
+                                                            <div class="col-4 d-flex justify-content-start">                                                               
+                                                                    <div class="position-relative">
+                                                                        <input type="text" class="btn-date-admin" id="datepicker-admin-fin-${film.id}" placeholder="Date fin" readonly>
+                                                                        <label for="datepicker-admin-fin-${film.id}" class="d-none"></label>
+                                                                        <span class="bi bi-calendar" id="icon-calendar-fin-admin-${film.id}"></span>
+                                                                        <span class="bi bi-x-circle d-none" id="close-icon-date-fin-admin-${film.id}"></span>
+                                                                    </div>
+                                                            </div>                                                                                                                      
                                                         </div>
-                                                        <!--Salle & Nombre de places-->
-                                                        <div class="row my-3">
-                                                            <!--Salle-->
-                                                            <div class="col-1 d-flex text-white align-items-center">
-                                                                <div class="fs-5">Salle:</div>
-                                                            </div>
-                                                            <div class="col-2 d-flex justify-content-start">
+                                                        <div class="row my-3">                                                                                                                     
+                                                            <!--Salle-->                                                                                                                
+                                                            <div class="col-4 d-flex justify-content-start align-items-center">
+                                                                <div class="text-white align-content-center fs-5 me-2">Salle:</div>                                                               
                                                                 <div class="dropdown dropdown-modal-admin align-content-center">
                                                                     <button class="btn btn-secondary nav-link dropdown-toggle color-salle p-2 pe-1" type="button" id="dropdownMenuSalle-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
                                                                         N°
@@ -398,11 +397,9 @@ import './styles/app.css';
                                                                     </ul>
                                                                 </div>
                                                             </div>
-                                                            <!--Nombre de places-->
-                                                            <div class="col-3 d-flex text-white align-items-center text-end">
-                                                                <div class="fs-5">Nombre de places:</div>
-                                                            </div>
-                                                            <div class="col-2 d-flex justify-content-end">
+                                                            <!--Nombre de places-->                                                           
+                                                            <div class="col-4 d-flex justify-content-start align-items-center">
+                                                                <div class="text-white align-content-center fs-5 me-2">Places:</div> 
                                                                 <div class="dropdown dropdown-modal-admin align-content-center">
                                                                     <button class="btn btn-secondary nav-link dropdown-toggle color-places p-2 pe-1" type="button" id="dropdownMenuPlaces-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
                                                                         Nbre
@@ -900,7 +897,7 @@ import './styles/app.css';
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-12 d-flex text-white align-items-center">
-                                                                <textarea class="form-control p-2 textarea-uniforme text-start" placeholder="" id="Textarea-description-${film.id}" style="height:10rem"></textarea>
+                                                                <textarea class="form-control p-2 textarea-uniforme text-start" placeholder="" id="Textarea-description-${film.id}" style="height:8rem"></textarea>
                                                                 <label class="d-none" for="Textarea-description-${film.id}"></label>
                                                             </div>
                                                         </div>
@@ -1180,6 +1177,48 @@ import './styles/app.css';
                                         const timepickerId3DX_1_Fin = '#timepicker-admin-fin-3DX-1-'+film.id;
                                         const clockIconId3DX_1_Fin = '#icon-clock-fin-admin-3DX-1-'+film.id;
                                         const clearIconId3DX_1_Fin = '#close-icon-time-fin-admin-3DX-1-'+film.id;
+                                        const timepickerId3DX_2_Debut = '#timepicker-admin-debut-3DX-2-'+film.id;
+                                        const clockIconId3DX_2_Debut = '#icon-clock-debut-admin-3DX-2-'+film.id;
+                                        const clearIconId3DX_2_Debut = '#close-icon-time-debut-admin-3DX-2-'+film.id;
+                                        const timepickerId3DX_2_Fin = '#timepicker-admin-fin-3DX-2-'+film.id;
+                                        const clockIconId3DX_2_Fin = '#icon-clock-fin-admin-3DX-2-'+film.id;
+                                        const clearIconId3DX_2_Fin = '#close-icon-time-fin-admin-3DX-2-'+film.id;
+                                        const timepickerId3DX_3_Debut = '#timepicker-admin-debut-3DX-3-'+film.id;
+                                        const clockIconId3DX_3_Debut = '#icon-clock-debut-admin-3DX-3-'+film.id;
+                                        const clearIconId3DX_3_Debut = '#close-icon-time-debut-admin-3DX-3-'+film.id;
+                                        const timepickerId3DX_3_Fin = '#timepicker-admin-fin-3DX-3-'+film.id;
+                                        const clockIconId3DX_3_Fin = '#icon-clock-fin-admin-3DX-3-'+film.id;
+                                        const clearIconId3DX_3_Fin = '#close-icon-time-fin-admin-3DX-3-'+film.id;
+                                        const timepickerId3DX_4_Debut = '#timepicker-admin-debut-3DX-4-'+film.id;
+                                        const clockIconId3DX_4_Debut = '#icon-clock-debut-admin-3DX-4-'+film.id;
+                                        const clearIconId3DX_4_Debut = '#close-icon-time-debut-admin-3DX-4-'+film.id;
+                                        const timepickerId3DX_4_Fin = '#timepicker-admin-fin-3DX-4-'+film.id;
+                                        const clockIconId3DX_4_Fin = '#icon-clock-fin-admin-3DX-4-'+film.id;
+                                        const clearIconId3DX_4_Fin = '#close-icon-time-fin-admin-3DX-4-'+film.id;
+                                        const timepickerId4DX_1_Debut = '#timepicker-admin-debut-4DX-1-'+film.id;
+                                        const clockIconId4DX_1_Debut = '#icon-clock-debut-admin-4DX-1-'+film.id;
+                                        const clearIconId4DX_1_Debut = '#close-icon-time-debut-admin-4DX-1-'+film.id;
+                                        const timepickerId4DX_1_Fin = '#timepicker-admin-fin-4DX-1-'+film.id;
+                                        const clockIconId4DX_1_Fin = '#icon-clock-fin-admin-4DX-1-'+film.id;
+                                        const clearIconId4DX_1_Fin = '#close-icon-time-fin-admin-4DX-1-'+film.id;
+                                        const timepickerId4DX_2_Debut = '#timepicker-admin-debut-4DX-2-'+film.id;
+                                        const clockIconId4DX_2_Debut = '#icon-clock-debut-admin-4DX-2-'+film.id;
+                                        const clearIconId4DX_2_Debut = '#close-icon-time-debut-admin-4DX-2-'+film.id;
+                                        const timepickerId4DX_2_Fin = '#timepicker-admin-fin-4DX-2-'+film.id;
+                                        const clockIconId4DX_2_Fin = '#icon-clock-fin-admin-4DX-2-'+film.id;
+                                        const clearIconId4DX_2_Fin = '#close-icon-time-fin-admin-4DX-2-'+film.id;
+                                        const timepickerId4DX_3_Debut = '#timepicker-admin-debut-4DX-3-'+film.id;
+                                        const clockIconId4DX_3_Debut = '#icon-clock-debut-admin-4DX-3-'+film.id;
+                                        const clearIconId4DX_3_Debut = '#close-icon-time-debut-admin-4DX-3-'+film.id;
+                                        const timepickerId4DX_3_Fin = '#timepicker-admin-fin-4DX-3-'+film.id;
+                                        const clockIconId4DX_3_Fin = '#icon-clock-fin-admin-4DX-3-'+film.id;
+                                        const clearIconId4DX_3_Fin = '#close-icon-time-fin-admin-4DX-3-'+film.id;
+                                        const timepickerId4DX_4_Debut = '#timepicker-admin-debut-4DX-4-'+film.id;
+                                        const clockIconId4DX_4_Debut = '#icon-clock-debut-admin-4DX-4-'+film.id;
+                                        const clearIconId4DX_4_Debut = '#close-icon-time-debut-admin-4DX-4-'+film.id;
+                                        const timepickerId4DX_4_Fin = '#timepicker-admin-fin-4DX-4-'+film.id;
+                                        const clockIconId4DX_4_Fin = '#icon-clock-fin-admin-4DX-4-'+film.id;
+                                        const clearIconId4DX_4_Fin = '#close-icon-time-fin-admin-4DX-4-'+film.id;
                                         function initTimepicker(timepickerId, clockIconId, clearIconId) {
                                             const $timepicker = $(timepickerId);
                                             const $clockIcon = $(clockIconId);
@@ -1236,6 +1275,20 @@ import './styles/app.css';
                                         }
                                         initTimepicker(timepickerId3DX_1_Debut, clockIconId3DX_1_Debut, clearIconId3DX_1_Debut);
                                         initTimepicker(timepickerId3DX_1_Fin, clockIconId3DX_1_Fin, clearIconId3DX_1_Fin);
+                                        initTimepicker(timepickerId3DX_2_Debut, clockIconId3DX_2_Debut, clearIconId3DX_2_Debut);
+                                        initTimepicker(timepickerId3DX_2_Fin, clockIconId3DX_2_Fin, clearIconId3DX_2_Fin);
+                                        initTimepicker(timepickerId3DX_3_Debut, clockIconId3DX_3_Debut, clearIconId3DX_3_Debut);
+                                        initTimepicker(timepickerId3DX_3_Fin, clockIconId3DX_3_Fin, clearIconId3DX_3_Fin);
+                                        initTimepicker(timepickerId3DX_4_Debut, clockIconId3DX_4_Debut, clearIconId3DX_4_Debut);
+                                        initTimepicker(timepickerId3DX_4_Fin, clockIconId3DX_4_Fin, clearIconId3DX_4_Fin);
+                                        initTimepicker(timepickerId4DX_1_Debut, clockIconId4DX_1_Debut, clearIconId4DX_1_Debut);
+                                        initTimepicker(timepickerId4DX_1_Fin, clockIconId4DX_1_Fin, clearIconId4DX_1_Fin);
+                                        initTimepicker(timepickerId4DX_2_Debut, clockIconId4DX_2_Debut, clearIconId4DX_2_Debut);
+                                        initTimepicker(timepickerId4DX_2_Fin, clockIconId4DX_2_Fin, clearIconId4DX_2_Fin);
+                                        initTimepicker(timepickerId4DX_3_Debut, clockIconId4DX_3_Debut, clearIconId4DX_3_Debut);
+                                        initTimepicker(timepickerId4DX_3_Fin, clockIconId4DX_3_Fin, clearIconId4DX_3_Fin);
+                                        initTimepicker(timepickerId4DX_4_Debut, clockIconId4DX_4_Debut, clearIconId4DX_4_Debut);
+                                        initTimepicker(timepickerId4DX_4_Fin, clockIconId4DX_4_Fin, clearIconId4DX_4_Fin);
                         });
                     })
                     .catch(error => {console.error(error)});

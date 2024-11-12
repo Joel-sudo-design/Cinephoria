@@ -31,10 +31,13 @@ class Seance
 
     #[ORM\ManyToOne(inversedBy: 'seances')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?salle $salle = null;
+    private ?Salle $salle = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date = null;
+
+    #[ORM\ManyToOne(inversedBy: 'seance')]
+    private ?Film $film = null;
 
     public function getId(): ?int
     {
@@ -123,6 +126,28 @@ class Seance
         $this->date = $date;
 
         return $this;
+    }
+
+    public function getFilm(): ?Film
+    {
+        return $this->film;
+    }
+
+    public function setFilm(?Film $film): static
+    {
+        $this->film = $film;
+
+        return $this;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'salle' => $this->salle->getQualite(),
+            'heure_debut_seance' => $this->heure_debut->format('H:i'),
+            'heure_fin_seance' => $this->heure_fin->format('H:i'),
+            'price' => $this->price
+        ];
     }
 
 }

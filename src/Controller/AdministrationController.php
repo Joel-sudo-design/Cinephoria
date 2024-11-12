@@ -37,23 +37,29 @@ class AdministrationController extends AbstractController
         $AllFilms = $entityManager->getRepository(Film::class)->findAll();
         $AllFilmsArray = [];
         foreach ($AllFilms as $film) {
-            $AllFilmsArray[] = $film->toArray();
-            if ($film->getGenre() != null) {
-                $AllFilmsArray[count($AllFilmsArray) - 1]['genre'] = $film->getGenre()->getName();
+            $filmArray = $film->toArray();
+            if ($film->getGenre() !== null) {
+                $filmArray['genre'] = $film->getGenre()->getName();
             }
-            if ($film->getCinema() != null) {
-                $cinemas = '';
-                foreach ($film->getCinema() as $cinema) {
-                    $cinemas = $cinema->getName();
+            $cinemasArray = [];
+            foreach ($film->getCinema() as $cinema) {
+                $cinemasArray[] = $cinema->getName();
+            }
+            if (!empty($cinemasArray)) {
+                $filmArray['cinema'] = $cinemasArray;
+            }
+            if ($film->getDateDebut() !== null) {
+                $filmArray['date_debut'] = $film->getDateDebut()->format('d/m/Y');
+            }
+            if ($film->getDateFin() !== null) {
+                $filmArray['date_fin'] = $film->getDateFin()->format('d/m/Y');
+            }
+            foreach ($film->getSeance() as $seance) {
+                if ($seance->getSalle() !== null) {
+                    $filmArray['seances'] = $seance->toArray();
                 }
-                $AllFilmsArray[count($AllFilmsArray) - 1]['cinema'] = $cinemas;
             }
-            if ($film->getDateDebut() != null) {
-                $AllFilmsArray[count($AllFilmsArray) - 1]['date_debut'] = $film->getDateDebut()->format('d/m/Y');
-            }
-            if ($film->getDateFin() != null) {
-                $AllFilmsArray[count($AllFilmsArray) - 1]['date_fin'] = $film->getDateFin()->format('d/m/Y');
-            }
+            $AllFilmsArray[] = $filmArray;
         }
         return new JsonResponse($AllFilmsArray);
     }
@@ -73,7 +79,11 @@ class AdministrationController extends AbstractController
         $data = json_decode($request->getContent(), true);
         $Id = $data['id'];
         $film = $entityManager->getRepository(Film::class)->find($Id);
+        $seances = $film->getSeance();
         $entityManager->remove($film);
+        foreach ($seances as $seance) {
+            $entityManager->remove($seance);
+        }
         $entityManager->flush();
         return new JsonResponse(['status' => 'film deleted']);
     }
@@ -94,73 +104,74 @@ class AdministrationController extends AbstractController
         $dateDebut = \DateTime::createFromFormat('Y-m-d', $stringDateDebut);
         $dateFin = \DateTime::createFromFormat('Y-m-d', $stringDateFin);
         $stringSalle = $data['salle'];
-        $salle = $entityManager->getRepository(Salle::class)->findOneBy(['id' => $stringSalle]);
         $places = $data['places'];
         $salle3DX = $entityManager->getRepository(Salle::class)->findOneBy(['qualite' => '3DX']);
         $salle4DX = $entityManager->getRepository(Salle::class)->findOneBy(['qualite' => '4DX']);
         $salleIMAX = $entityManager->getRepository(Salle::class)->findOneBy(['qualite' => 'IMAX']);
         $salleDolby = $entityManager->getRepository(Salle::class)->findOneBy(['qualite' => 'Dolby']);
-        $stringHeureDebut3DX_1 = $data['heure_debut_3DX_1'];
-        $stringHeureDebut3DX_2 = $data['heure_debut_3DX_2'];
-        $stringHeureDebut3DX_3 = $data['heure_debut_3DX_3'];
-        $stringHeureDebut3DX_4 = $data['heure_debut_3DX_4'];
-        $stringHeureFin3DX_1 = $data['heure_fin_3DX_1'];
-        $stringHeureFin3DX_2 = $data['heure_fin_3DX_2'];
-        $stringHeureFin3DX_3 = $data['heure_fin_3DX_3'];
-        $stringHeureFin3DX_4 = $data['heure_fin_3DX_4'];
-        $heureDebut3DX_1 = \DateTime::createFromFormat('H:i', $stringHeureDebut3DX_1);
-        $heureDebut3DX_2 = \DateTime::createFromFormat('H:i', $stringHeureDebut3DX_2);
-        $heureDebut3DX_3 = \DateTime::createFromFormat('H:i', $stringHeureDebut3DX_3);
-        $heureDebut3DX_4 = \DateTime::createFromFormat('H:i', $stringHeureDebut3DX_4);
-        $heureFin3DX_1 = \DateTime::createFromFormat('H:i', $stringHeureFin3DX_1);
-        $heureFin3DX_2 = \DateTime::createFromFormat('H:i', $stringHeureFin3DX_2);
-        $heureFin3DX_3 = \DateTime::createFromFormat('H:i', $stringHeureFin3DX_3);
-        $heureFin3DX_4 = \DateTime::createFromFormat('H:i', $stringHeureFin3DX_4);
-        $price3DX_1 = $data['price_3DX_1'];
-        $price3DX_2 = $data['price_3DX_2'];
-        $price3DX_3 = $data['price_3DX_3'];
-        $price3DX_4 = $data['price_3DX_4'];
+        for ($i = 1; $i <= 1; $i++) {
+            $stringHeureDebut3DX = $data["heure_debut_3DX_$i"];
+            $stringHeureFin3DX = $data["heure_fin_3DX_$i"];
+            $heureDebut3DX = \DateTime::createFromFormat('H:i', $stringHeureDebut3DX);
+            $heureFin3DX = \DateTime::createFromFormat('H:i', $stringHeureFin3DX);
+            $price3DX = $data["price_3DX_$i"];
+            if ($heureDebut3DX && $heureFin3DX && $dateDebut && $dateFin && is_numeric($price3DX)  && is_numeric($places) && is_numeric($stringSalle)) {
+                $this->getSeance($heureDebut3DX, $heureFin3DX, $price3DX, $dateDebut, $dateFin, $salle3DX, $film, $entityManager);
+            }
+            $stringHeureDebut4DX = $data["heure_debut_4DX_$i"];
+            $stringHeureFin4DX = $data["heure_fin_4DX_$i"];
+            $heureDebut4DX = \DateTime::createFromFormat('H:i', $stringHeureDebut4DX);
+            $heureFin4DX = \DateTime::createFromFormat('H:i', $stringHeureFin4DX);
+            $price4DX = $data["price_4DX_$i"];
+            if ($heureDebut4DX && $heureFin4DX && $dateDebut && $dateFin && is_numeric($price4DX) && is_numeric($places) && is_numeric($stringSalle)) {
+                $this->getSeance($heureDebut4DX, $heureFin4DX, $price4DX, $dateDebut, $dateFin, $salle4DX, $film, $entityManager);
+            }
+            $stringHeureDebutIMAX = $data["heure_debut_IMAX_$i"];
+            $stringHeureFinIMAX = $data["heure_fin_IMAX_$i"];
+            $heureDebutIMAX = \DateTime::createFromFormat('H:i', $stringHeureDebutIMAX);
+            $heureFinIMAX = \DateTime::createFromFormat('H:i', $stringHeureFinIMAX);
+            $priceIMAX = $data["price_IMAX_$i"];
+            if ($heureDebutIMAX && $heureFinIMAX && $dateDebut && $dateFin && is_numeric($priceIMAX) && is_numeric($places) && is_numeric($stringSalle)) {
+                $this->getSeance($heureDebutIMAX, $heureFinIMAX, $priceIMAX, $dateDebut, $dateFin, $salleIMAX, $film, $entityManager);
+            }
+            $stringHeureDebutDolby = $data["heure_debut_Dolby_$i"];
+            $stringHeureFinDolby = $data["heure_fin_Dolby_$i"];
+            $heureDebutDolby = \DateTime::createFromFormat('H:i', $stringHeureDebutDolby);
+            $heureFinDolby = \DateTime::createFromFormat('H:i', $stringHeureFinDolby);
+            $priceDolby = $data["price_Dolby_$i"];
+            if ($heureDebutDolby && $heureFinDolby && $dateDebut && $dateFin && is_numeric($priceDolby) && is_numeric($places) && is_numeric($stringSalle)) {
+                $this->getSeance($heureDebutDolby, $heureFinDolby, $priceDolby, $dateDebut, $dateFin, $salleDolby, $film, $entityManager);
+            }
+        }
         $description = $data['description'];
-        if (!$stringGenre == null) {
+        if ($dateDebut != '') {
+            $film->setDateDebut($dateDebut);
+        }
+        if ($dateFin != '') {
+            $film->setDateFin($dateFin);
+        }
+        if ($stringGenre != '') {
             $genre = $entityManager->getRepository(Genre::class)->findOneBy(['name' => $stringGenre]);
             $film->setGenre($genre);
         }
-        if (!$age == null) {
+        if ($age != '') {
             $film->setAgeMinimum($age);
         }
-        if (!$label == null) {
-            $film->setLabel($label);
-        }
-        if (!$name==null) {
+        if ($label != '') {
+            $film->setLabel(false);
+        }else{$film->setLabel($label);}
+        if ($name != '') {
             $film->setName($name);
         }
-        if (!$stringCinema==null) {
+        if ($stringCinema !== '') {
             $cinema = $entityManager->getRepository(Cinema::class)->findOneBy(['name' => $stringCinema]);
             $film->addCinema($cinema);
         }
-        if (!$dateDebut==null) {
-            $film->setDateDebut($dateDebut);
-        }
-        if (!$dateFin==null) {
-            $film->setDateFin($dateFin);
-        }
-        if (!$heureDebut3DX_1==null && !$heureFin3DX_1==null && !$price3DX_1==null) {
-            while ($dateDebut <= $dateFin) {
-                $seance = new Seance();
-                $seance->setHeureDebut($heureDebut3DX_1);
-                $seance->setHeureFin($heureFin3DX_1);
-                $seance->setDate($dateDebut);
-                $seance->setPrice($price3DX_1);
-                $seance->setSalle($salle3DX);
-                $entityManager->persist($seance);
-                $entityManager->flush();
-                $dateDebut->modify('+1 day');
-            }
-        }
-        if (!$description==null) {
+        if ($description != '') {
             $film->setDescription($description);
         }
-        if (!$salle==null && !$places==null) {
+        if (is_numeric($stringSalle) && is_numeric($places)) {
+            $salle = $entityManager->getRepository(Salle::class)->findOneBy(['id' => $stringSalle]);
             $salle->setPlaces($places);
             $entityManager->persist($salle);
             $entityManager->flush();
@@ -168,5 +179,24 @@ class AdministrationController extends AbstractController
         $entityManager->persist($film);
         $entityManager->flush();
         return new JsonResponse(['status' => 'film modified']);
+    }
+    public function getSeance(\DateTime|false $heureDebut, \DateTime|false $heureFin, String $price, \DateTime|false $dateDebut, \DateTime|false $dateFin, ?Salle $salle, ?Film $film, EntityManagerInterface $entityManager): Void
+    {
+        if (!$heureDebut == null && !$heureFin == null && !$price == null) {
+            $dateSeance = clone $dateDebut;
+            while ($dateSeance <= $dateFin) {
+                $seance = new Seance();
+                $seance->setHeureDebut($heureDebut);
+                $seance->setHeureFin($heureFin);
+                $seance->setHeureFin($heureFin);
+                $seance->setDate($dateSeance);
+                $seance->setPrice($price);
+                $seance->setSalle($salle);
+                $seance->setFilm($film);
+                $entityManager->persist($seance);
+                $entityManager->flush();
+                $dateSeance->modify('+1 day');
+            }
+        }
     }
 }

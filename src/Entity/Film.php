@@ -43,9 +43,16 @@ class Film
     #[ORM\ManyToMany(targetEntity: Cinema::class, inversedBy: 'films')]
     private Collection $cinema;
 
+    /**
+     * @var Collection<int, seance>
+     */
+    #[ORM\OneToMany(targetEntity: Seance::class, mappedBy: 'film')]
+    private Collection $seance;
+
     public function __construct()
     {
         $this->cinema = new ArrayCollection();
+        $this->seance = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -168,6 +175,36 @@ class Film
     public function removeCinema(cinema $cinema): static
     {
         $this->cinema->removeElement($cinema);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, seance>
+     */
+    public function getSeance(): Collection
+    {
+        return $this->seance;
+    }
+
+    public function addSeance(seance $seance): static
+    {
+        if (!$this->seance->contains($seance)) {
+            $this->seance->add($seance);
+            $seance->setFilm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeance(seance $seance): static
+    {
+        if ($this->seance->removeElement($seance)) {
+            // set the owning side to null (unless already changed)
+            if ($seance->getFilm() === $this) {
+                $seance->setFilm(null);
+            }
+        }
 
         return $this;
     }
