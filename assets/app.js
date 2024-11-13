@@ -26,6 +26,7 @@ import './styles/app.css';
 
 //Script
     $(document).ready(function() {
+
     // Navbar Top & Navbar Footer Bottom
         // A l'ouverture des navbar pour mobile, on change la couleur de fond, on cache le logo et on modifie la taille des colonnes
             $('#navbar-togglerTop').click(function() {
@@ -39,6 +40,7 @@ import './styles/app.css';
                 $('#offcanvasNavbarBottom').css("background", "linear-gradient(90deg, rgba(106, 115, 171, 0.85) 50%, rgba(43, 46, 69, 0.85) 100%)");
                 $('#col-2-bottom').remove()
             });
+
         // A la fermeture des navbar pour mobile, on remet la couleur de fond par défaut, on affiche le logo et on remet la taille des colonnes
             $('#offcanvasNavbarTop').on('hidden.bs.offcanvas', function () {
                 $('#offcanvasNavbarTop').css("background", "");
@@ -72,6 +74,7 @@ import './styles/app.css';
                 passwordField.attr('type', type);
                 $(this).toggleClass('bi-eye bi-eye-slash');
             });
+
         // Vérification de la case à cocher des conditions générales d'utilisation
             $('.btn-register').click(function(event) {
             const checkbox = $("input[name='registration_form[agreeTerms]']");
@@ -87,12 +90,14 @@ import './styles/app.css';
     //Page films
             const $clearIconGenre = $('.close-icon-genre');
             const $clearIconCinema = $('.close-icon-cinema');
+
         // Au clic sur le bouton cinéma pour afficher/masquer les options
             $('.custom-select-btn-cinema').on('click', function(e) {
             e.stopPropagation();
             $('.custom-options-cinema').toggle();
             $('.custom-options-genre').hide();
         });
+
         // Sélection d'une option de cinéma
             $('.custom-option-cinema').on('click', function() {
             let selectedText = $(this).text();
@@ -104,6 +109,7 @@ import './styles/app.css';
             customSelect.addClass('no-arrow');
             $('.close-icon-cinema').removeClass('d-none');
         });
+
         // Au clic sur l'icône "X" pour réinitialiser la sélection
             $clearIconCinema.on('click', function() {
             let customSelect = $('.custom-select-btn-cinema');
@@ -113,6 +119,7 @@ import './styles/app.css';
             $('.custom-options-cinema').hide();
             customSelect.removeClass('no-arrow');
         });
+
         // Au clic sur le bouton genre pour afficher/masquer les options
             $('.custom-select-btn-genre').on('click', function(e) {
             e.stopPropagation();
@@ -137,31 +144,37 @@ import './styles/app.css';
             $('.custom-options-genre').hide();
             customSelect.removeClass('no-arrow');
         });
+
         // Clic en dehors du menu pour fermer les options
             $(window).on('click', function() {
             $('.custom-options-cinema').hide();
             $('.custom-options-genre').hide();
         });
+
         // Appliquer le style de hover/focus
             $clearIconCinema.on('mouseenter focus', function() {
             $('.custom-select-btn-cinema').addClass('btn-hover');
             $('.close-icon-cinema').addClass('btn-hover');
         });
+
         // Appliquer le style de hover/focus
             $clearIconGenre.on('mouseenter focus', function() {
             $('.custom-select-btn-genre').addClass('btn-hover');
             $('.close-icon-genre').addClass('btn-hover');
         });
+
         // Retirer le style quand on quitte le survol/focus
             $clearIconCinema.on('mouseleave blur', function() {
             $('.custom-select-btn-cinema').removeClass('btn-hover');
             $('.close-icon-cinema').removeClass('btn-hover');
         });
+
         // Retirer le style quand on quitte le survol/focus
             $clearIconGenre.on('mouseleave blur', function() {
             $('.custom-select-btn-genre').removeClass('btn-hover');
             $('.close-icon-genre').removeClass('btn-hover');
         });
+
 
         // Datepicker
                 const $datepicker = $('#datepicker');
@@ -177,36 +190,43 @@ import './styles/app.css';
                     $calendarIcon.addClass('d-none');
                     $clearIcon.removeClass('d-none');
                 });
+
             // Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
                 $clearIcon.on('click', function () {
                 $datepicker.datepicker('clearDates');
                 $calendarIcon.removeClass('d-none');
                 $clearIcon.addClass('d-none');
             });
+
             // Appliquer le style de hover/focus
                 $clearIcon.on('mouseenter focus', function () {
                 $datepicker.addClass('btn-hover');
                 $clearIcon.addClass('btn-hover');
             });
+
             // Au clic sur l'icône de croix, on réinitialise la date
                 $calendarIcon.on('mouseenter focus', function () {
                 $datepicker.addClass('btn-hover');
                 $calendarIcon.addClass('btn-hover');
             });
+
             // Retirer le style quand on quitte le survol/focus
                 $clearIcon.on('mouseleave blur', function () {
                 $datepicker.removeClass('btn-hover');
                 $clearIcon.removeClass('btn-hover');
             });
+
             // Retirer le style quand on quitte le survol/focus
                 $calendarIcon.on('mouseleave blur', function () {
                 $datepicker.removeClass('btn-hover');
                 $calendarIcon.removeClass('btn-hover');
             });
+
             // Ouvrir le calendrier
                 $calendarIcon.on('click', function () {
                 $datepicker.focus();
             });
+
 
     //Page administration
         //Création d'un film
@@ -217,16 +237,19 @@ import './styles/app.css';
                     console.error(error);
                 });
         });
+
         //Affichage des films sur clic bouton administration
             $('#btn-navbar-admin').click(function() {
             LoadFilm();
         });
+
         //Déconnexion sur clic bouton déconnexion
             $('#btn-deconnexion').click(function() {
             axios.post('/logout')
                 .then(response => {console.log(response.data);window.location.href = '/accueil';})
                 .catch(error => {console.error(error);});
         });
+
         //Affichage des films
             function LoadFilm() {
                 $('#card-container').empty();
@@ -276,8 +299,8 @@ import './styles/app.css';
                                                         </div>    
                                                         <!--Genre-->                                                                                                                                          
                                                         <div class="row my-3">
-                                                            <div class="col-6 fs-5 text-end align-content-center">Genre: </div>
-                                                            <div class="col-6 d-flex justify-content-center">
+                                                            <div class="col-12 d-flex justify-content-start">
+                                                                <div class="text-white align-content-center fs-5 me-2">Genre:</div> 
                                                                 <div class="dropdown dropdown-modal-admin">
                                                                     <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuGenre-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
                                                                         ${film.genre}
@@ -297,8 +320,8 @@ import './styles/app.css';
                                                         </div>
                                                         <!--Age minimum-->
                                                         <div class="row my-3">
-                                                            <div class="col-6 fs-5 text-end align-content-center">Age minimum: </div>
-                                                            <div class="col-6 d-flex justify-content-center">
+                                                            <div class="col-12 d-flex justify-content-start">
+                                                                <div class="text-white align-content-center fs-5 me-2">Age minimum:</div> 
                                                                 <div class="dropdown dropdown-modal-admin">
                                                                     <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuAge-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
                                                                         ${film.age_minimum}
@@ -314,8 +337,8 @@ import './styles/app.css';
                                                         </div>
                                                         <!--Coup de coeur-->
                                                         <div class="row mt-3">
-                                                            <div class="col-6 fs-5 text-end align-content-center">Coup de coeur: </div>
-                                                            <div class="col-6 d-flex justify-content-center">
+                                                            <div class="col-12 d-flex justify-content-start">
+                                                                <div class="text-white align-content-center fs-5 me-2">Coup de coeur:</div> 
                                                                 <div class="dropdown dropdown-modal-admin">
                                                                     <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuLabel-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">           
                                                                     </button>
@@ -372,7 +395,7 @@ import './styles/app.css';
                                                                         <span class="bi bi-x-circle d-none" id="close-icon-date-debut-admin-${film.id}"></span>
                                                                  </div>
                                                              </div>
-                                                            <div class="col-4 d-flex justify-content-start">                                                               
+                                                            <div class="col-4 d-flex justify-content-end">                                                               
                                                                     <div class="position-relative">
                                                                         <input type="text" class="btn-date-admin" id="datepicker-admin-fin-${film.id}" placeholder="Date fin" readonly>
                                                                         <label for="datepicker-admin-fin-${film.id}" class="d-none"></label>
@@ -381,9 +404,10 @@ import './styles/app.css';
                                                                     </div>
                                                             </div>                                                                                                                      
                                                         </div>
+                                                        <!--Salle & Places-->
                                                         <div class="row my-3">                                                                                                                     
                                                             <!--Salle-->                                                                                                                
-                                                            <div class="col-4 d-flex justify-content-start align-items-center">
+                                                            <div class="col-4 d-flex justify-content-endalign-items-center">
                                                                 <div class="text-white align-content-center fs-5 me-2">Salle:</div>                                                               
                                                                 <div class="dropdown dropdown-modal-admin align-content-center">
                                                                     <button class="btn btn-secondary nav-link dropdown-toggle color-salle p-2 pe-1" type="button" id="dropdownMenuSalle-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -398,7 +422,7 @@ import './styles/app.css';
                                                                 </div>
                                                             </div>
                                                             <!--Nombre de places-->                                                           
-                                                            <div class="col-4 d-flex justify-content-start align-items-center">
+                                                            <div class="col-4 d-flex justify-content-end align-items-center">
                                                                 <div class="text-white align-content-center fs-5 me-2">Places:</div> 
                                                                 <div class="dropdown dropdown-modal-admin align-content-center">
                                                                     <button class="btn btn-secondary nav-link dropdown-toggle color-places p-2 pe-1" type="button" id="dropdownMenuPlaces-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -412,128 +436,66 @@ import './styles/app.css';
                                                             </div> 
                                                         </div>
                                                         <!--3DX-->
-                                                        <div ID="row-3DX" class="row my-3 d-none">
-                                                            <div class="row m-0 p-0">
+                                                        <div id="row-3DX" class="row mt-3 d-none">
+                                                            ${film.seances.map((seance, i) => seance.qualite === "3DX" ? `
+                                                                <div class="row mb-3 p-0">
                                                                     <div class="col-2 d-flex text-white align-items-center justify-content-start">
                                                                         <div class="fs-5">3DX:</div>
                                                                     </div>
-                                                                    <div class="col-3 d-flex justify-content-center">
+                                                                    <div class="col-3 d-flex align-items-center justify-content-center">
                                                                         <div class="position-relative">
-                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-3DX-1-${film.id}" placeholder="Heure début" readonly>
-                                                                            <label for="timepicker-admin-debut-3DX-1-${film.id}" class="d-none"></label>
-                                                                            <span class="bi bi-clock" id="icon-clock-debut-admin-3DX-1-${film.id}"></span>
-                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-3DX-1-${film.id}"></span>
+                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-3DX-${i + 1}-${film.id}" placeholder="Heure début" readonly value="${seance.heure_debut_seance}">
+                                                                            <span class="bi bi-clock" id="icon-clock-debut-admin-3DX-${i + 1}-${film.id}"></span>
+                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-3DX-${i + 1}-${film.id}"></span>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-3 d-flex justify-content-center">
+                                                                    <div class="col-3 d-flex align-items-center justify-content-end pe-0">
                                                                         <div class="position-relative">
-                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-3DX-1-${film.id}" placeholder="Heure fin" readonly>
-                                                                            <label for="timepicker-admin-fin-3DX-1-${film.id}" class="d-none"></label>
-                                                                            <span class="bi bi-clock" id="icon-clock-fin-admin-3DX-1-${film.id}"></span>
-                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-3DX-1-${film.id}"></span>
+                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-3DX-${i + 1}-${film.id}" placeholder="Heure fin" readonly value="${seance.heure_fin_seance}">
+                                                                            <span class="bi bi-clock" id="icon-clock-fin-admin-3DX-${i + 1}-${film.id}"></span>
+                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-3DX-${i + 1}-${film.id}"></span>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-2 d-flex text-white align-items-center justify-content-end">
                                                                         <div class="fs-5">Prix:</div>
                                                                     </div>
                                                                     <div class="col-2 d-flex align-items-center">
-                                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-3DX-1-prix-${film.id}"></textarea>
-                                                                        <label class="d-none" for="Textarea-3DX-1-prix-${film.id}"></label>
-                                                                        <div class="mx-1 fs-5 text-white">€</div>
-                                                                    </div>
-                                                            </div>
-                                                            <div class="row m-0 mt-3 p-0">
-                                                                <div class="row m-0 p-0">
-                                                                    <div class="col-2 d-flex text-white align-items-center justify-content-start">
-                                                                        <div class="fs-5">3DX:</div>
-                                                                    </div>
-                                                                    <div class="col-3 d-flex justify-content-center">
-                                                                        <div class="position-relative">
-                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-3DX-2-${film.id}" placeholder="Heure début" readonly>
-                                                                            <label for="timepicker-admin-debut-3DX-2-${film.id}" class="d-none"></label>
-                                                                            <span class="bi bi-clock" id="icon-clock-debut-admin-3DX-2-${film.id}"></span>
-                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-3DX-2-${film.id}"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-3 d-flex justify-content-center">
-                                                                        <div class="position-relative">
-                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-3DX-2-${film.id}" placeholder="Heure fin" readonly>
-                                                                            <label for="timepicker-admin-fin-3DX-2-${film.id}" class="d-none"></label>
-                                                                            <span class="bi bi-clock" id="icon-clock-fin-admin-3DX-2-${film.id}"></span>
-                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-3DX-2-${film.id}"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-2 d-flex text-white align-items-center justify-content-end">
-                                                                        <div class="fs-5">Prix:</div>
-                                                                    </div>
-                                                                    <div class="col-2 d-flex align-items-center">
-                                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-3DX-2-prix-${film.id}"></textarea>
-                                                                        <label class="d-none" for="Textarea-3DX-2-prix-${film.id}"></label>
+                                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-3DX-${i + 1}-prix-${film.id}">${seance.price}</textarea>
                                                                         <div class="mx-1 fs-5 text-white">€</div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="row m-0 mt-3 p-0">
+                                                            ` : '').join('')}
+                                                            ${[...Array(4 - film.seances.filter(seance => seance.qualite === "3DX").length)].map((_, i) => `
+                                                                <div class="row mb-3 p-0">
                                                                     <div class="col-2 d-flex text-white align-items-center justify-content-start">
                                                                         <div class="fs-5">3DX:</div>
                                                                     </div>
-                                                                    <div class="col-3 d-flex justify-content-center">
+                                                                    <div class="col-3 d-flex align-items-center justify-content-center">
                                                                         <div class="position-relative">
-                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-3DX-3-${film.id}" placeholder="Heure début" readonly>
-                                                                            <label for="timepicker-admin-debut-3DX-3-${film.id}" class="d-none"></label>
-                                                                            <span class="bi bi-clock" id="icon-clock-debut-admin-3DX-3-${film.id}"></span>
-                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-3DX-3-${film.id}"></span>
+                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-3DX-${i + 1}-${film.id}" placeholder="Heure début" readonly>
+                                                                            <span class="bi bi-clock" id="icon-clock-debut-admin-3DX-${i + 1}-${film.id}"></span>
+                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-3DX-${i + 1}-${film.id}"></span>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-3 d-flex justify-content-center">
+                                                                    <div class="col-3 d-flex align-items-center justify-content-end pe-0">
                                                                         <div class="position-relative">
-                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-3DX-3-${film.id}" placeholder="Heure fin" readonly>
-                                                                            <label for="timepicker-admin-fin-3DX-2-${film.id}" class="d-none"></label>
-                                                                            <span class="bi bi-clock" id="icon-clock-fin-admin-3DX-3-${film.id}"></span>
-                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-3DX-3-${film.id}"></span>
+                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-3DX-${i + 1}-${film.id}" placeholder="Heure fin" readonly>
+                                                                            <span class="bi bi-clock" id="icon-clock-fin-admin-3DX-${i + 1}-${film.id}"></span>
+                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-3DX-${i + 1}-${film.id}"></span>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-2 d-flex text-white align-items-center justify-content-end">
                                                                         <div class="fs-5">Prix:</div>
                                                                     </div>
                                                                     <div class="col-2 d-flex align-items-center">
-                                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-3DX-3-prix-${film.id}"></textarea>
-                                                                        <label class="d-none" for="Textarea-3DX-3-prix-${film.id}"></label>
+                                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-3DX-${i + 1}-prix-${film.id}"></textarea>
                                                                         <div class="mx-1 fs-5 text-white">€</div>
                                                                     </div>
-                                                            </div>
-                                                            <div class="row m-0 mt-3 p-0">
-                                                                    <div class="col-2 d-flex text-white align-items-center justify-content-start">
-                                                                        <div class="fs-5">3DX:</div>
-                                                                    </div>
-                                                                    <div class="col-3 d-flex justify-content-center">
-                                                                        <div class="position-relative">
-                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-3DX-4-${film.id}" placeholder="Heure début" readonly>
-                                                                            <label for="timepicker-admin-debut-3DX-4-${film.id}" class="d-none"></label>
-                                                                            <span class="bi bi-clock" id="icon-clock-debut-admin-3DX-4-${film.id}"></span>
-                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-3DX-4-${film.id}"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-3 d-flex justify-content-center">
-                                                                        <div class="position-relative">
-                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-3DX-4-${film.id}" placeholder="Heure fin" readonly>
-                                                                            <label for="timepicker-admin-fin-3DX-4-${film.id}" class="d-none"></label>
-                                                                            <span class="bi bi-clock" id="icon-clock-fin-admin-3DX-4-${film.id}"></span>
-                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-3DX-4-${film.id}"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-2 d-flex text-white align-items-center justify-content-end">
-                                                                        <div class="fs-5">Prix:</div>
-                                                                    </div>
-                                                                    <div class="col-2 d-flex align-items-center">
-                                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-3DX-4-prix-${film.id}"></textarea>
-                                                                        <label class="d-none" for="Textarea-3DX-4-prix-${film.id}"></label>
-                                                                        <div class="mx-1 fs-5 text-white">€</div>
-                                                                    </div>
-                                                            </div>                                                           
+                                                                </div>
+                                                            `).join('')}         
                                                         </div>
                                                         <!--4DX-->
-                                                        <div ID="row-4DX" class="row my-3 d-none">
+                                                        <div id="row-4DX" class="row my-3 d-none">
                                                             <div class="row m-0 p-0">
                                                                     <div class="col-2 d-flex text-white align-items-center justify-content-start">
                                                                             <div class="fs-5">4DX:</div>
@@ -652,7 +614,7 @@ import './styles/app.css';
                                                             </div>
                                                         </div>
                                                         <!--IMAX-->
-                                                        <div ID="row-IMAX" class="row my-3 d-none">                                                                                                        
+                                                        <div id="row-IMAX" class="row my-3 d-none">                                                                                                        
                                                             <div class="row m-0 p-0">
                                                                 <div class="col-2 d-flex text-white align-items-center justify-content-start">
                                                                     <div class="fs-5">IMAX:</div>
@@ -771,7 +733,7 @@ import './styles/app.css';
                                                             </div>
                                                         </div>
                                                         <!--Dolby-->
-                                                        <div ID="row-Dolby" class="row my-3 d-none">
+                                                        <div id="row-Dolby" class="row my-3 d-none">
                                                             <div class="row m-0 p-0">
                                                                 <div class="col-2 d-flex text-white align-items-center justify-content-start">
                                                                     <div class="fs-5">Dolby:</div>
@@ -907,6 +869,7 @@ import './styles/app.css';
                                         </div>
                                     </div>
                                 </div>`);
+
                             //suppression film
                                 $('#x-square-'+film.id).click(function () {
                                 axios.post('/administrateur/administration/film/delete', JSON.stringify({id: film.id}))
@@ -914,6 +877,7 @@ import './styles/app.css';
                                     .catch(error => {console.error(error);})
                                     .finally(() => {LoadFilm();});
                             });
+
                             //Affichage badge age mini
                                 if (film.age_minimum === '12') {
                                     $(`.age-badge-12`).removeClass('d-none');
@@ -924,6 +888,7 @@ import './styles/app.css';
                                 if (film.age_minimum === '18') {
                                     $(`.age-badge-18`).removeClass('d-none');
                                 }
+
                             // Accordion description films
                                 const accordionButton = $('#btn-description-'+film.id);
                                 const accordionCollapse = $('#collapseDescription-'+film.id);
@@ -937,6 +902,7 @@ import './styles/app.css';
                                         }
                                     }
                                 });
+
                             //modal
                                 //Menu déroulant genre
                                         let selectedGenre= '';
@@ -945,6 +911,7 @@ import './styles/app.css';
                                             selectedGenre = $(this).text();
                                             $('#dropdownMenuGenre-'+film.id).text(selectedGenre);
                                         });
+
                                 //Menu déroulant age
                                         let selectedAge= '';
                                         $('.drop-age').click(function(e) {
@@ -952,6 +919,7 @@ import './styles/app.css';
                                             selectedAge= $(this).text();
                                             $('#dropdownMenuAge-'+film.id).text(selectedAge);
                                         });
+
                                 //Menu déroulant Cinéma
                                         let selectedCinema= '';
                                         $('.drop-cinema').click(function(e) {
@@ -959,6 +927,7 @@ import './styles/app.css';
                                             selectedCinema= $(this).text();
                                             $('#dropdownMenuCinema-'+film.id).text(selectedCinema);
                                         });
+
                                 //Menu déroulant Coup de coeur
                                         let selectedCoupCoeur= '';
                                         $('.drop-label').click(function(e) {
@@ -967,6 +936,7 @@ import './styles/app.css';
                                             $('#dropdownMenuLabel-'+film.id).text(selectedCoupCoeur);
                                         });
                                         $('#dropdownMenuLabel-' + film.id).text(film.label ? 'Oui' : 'Non');
+
                                 // Menu déroulant Salle
                                         let selectedSalle= '';
                                         const dropSalle = $('.drop-salle');
@@ -994,6 +964,7 @@ import './styles/app.css';
                                                 $('#row-3DX, #row-4DX, #row-IMAX').addClass('d-none');
                                             }
                                         });
+
                                 // Menu déroulant places
                                     let selectedPlaces= '';
                                     $('.drop-places').click(function(e) {
@@ -1001,10 +972,12 @@ import './styles/app.css';
                                         selectedPlaces= $(this).text();
                                         $('#dropdownMenuPlaces-'+film.id).text(selectedPlaces);
                                     });
+
                                 // Réinitialiser le modal lorsque celui-ci est fermé
                                     $('#modal-' + film.id).on('hidden.bs.modal', function () {
                                         LoadFilm();
                                     });
+
                                 //Valider les informations du film
                                         $('#btn-validate-film-'+film.id).click(function () {
                                             let datePartsDebut = $('#datepicker-admin-debut-'+film.id).val().split('/')
@@ -1079,6 +1052,7 @@ import './styles/app.css';
                                                   .catch(error => {console.error(error);})
                                                 .finally(() => {LoadFilm();});
                                         });
+
                                 // Datepicker
                                         const $datepickerDebut = $('#datepicker-admin-debut-'+film.id);
                                         const $calendarIconDebut = $('#icon-calendar-debut-admin-'+film.id);
@@ -1086,6 +1060,7 @@ import './styles/app.css';
                                         const $datepickerFin = $('#datepicker-admin-fin-'+film.id);
                                         const $calendarIconFin = $('#icon-calendar-fin-admin-'+film.id);
                                         const $clearIconFin = $('#close-icon-date-fin-admin-'+film.id);
+
                                     //Date début
                                         $datepickerDebut.val(film.date_debut);
                                         $datepickerDebut.datepicker({
@@ -1128,6 +1103,7 @@ import './styles/app.css';
                                         $calendarIconDebut.on('click', function () {
                                             $datepickerDebut.focus();
                                         });
+
                                     //Date fin
                                         $datepickerFin.val(film.date_fin);
                                         $datepickerFin.datepicker({
@@ -1170,6 +1146,7 @@ import './styles/app.css';
                                         $calendarIconFin.on('click', function () {
                                             $datepickerFin.focus();
                                         });
+
                                 //Timepicker
                                         const timepickerId3DX_1_Debut = '#timepicker-admin-debut-3DX-1-'+film.id;
                                         const clockIconId3DX_1_Debut = '#icon-clock-debut-admin-3DX-1-'+film.id;

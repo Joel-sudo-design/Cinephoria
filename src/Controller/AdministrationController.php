@@ -54,13 +54,17 @@ class AdministrationController extends AbstractController
             if ($film->getDateFin() !== null) {
                 $filmArray['date_fin'] = $film->getDateFin()->format('d/m/Y');
             }
-            foreach ($film->getSeance() as $seance) {
-                if ($seance->getSalle() !== null) {
-                    $filmArray['seances'] = $seance->toArray();
-                }
+            $date_debut = $film->getDateDebut();
+            $film_id = $film->getId();
+            $seances = $entityManager->getRepository(Seance::class)->findByFilmId($film_id, $date_debut);
+            foreach ($seances as $Seance) {
+                    $seances[] = $Seance->toArray();
+                    $filmArray['seances'] = $seances;
+                }}
+            if (empty($filmArray['seances'])) {
+                $filmArray['seances'] = [];
             }
             $AllFilmsArray[] = $filmArray;
-        }
         return new JsonResponse($AllFilmsArray);
     }
 
