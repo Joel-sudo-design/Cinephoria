@@ -941,76 +941,96 @@ import './styles/app.css';
                                         });
 
                                 //Timepicker
-                                    function generateId(baseId, type, session, index, filmId) {
-                                        return `#${baseId}-${type}-${session}-${index}-${filmId}`;
-                                    }
-                                    function initTimepickers(film) {
-                                        ['3DX', '4DX', 'IMAX', 'Dolby'].forEach(type => {
-                                            for (let session = 1; session <= 4; session++) {
-                                                ['Debut', 'Fin'].forEach(time => {
-                                                    const timepickerId = generateId('timepicker-admin', time.toLowerCase(), type, session, film.id);
-                                                    const clockIconId = generateId('icon-clock', time.toLowerCase(), type, session, film.id);
-                                                    const clearIconId = generateId('close-icon-time', time.toLowerCase(), type, session, film.id);
 
-                                                    initTimepicker(timepickerId, clockIconId, clearIconId);
+                                        // Fonction pour générer les constantes pour chaque combinaison
+                                        function generateTimepickerConstants(filmId) {
+                                            const types = ['3DX', '4DX', 'IMAX', 'Dolby'];  // Les types 3DX et 4DX
+                                            const sessions = [1, 2, 3, 4];  // Les sessions 1, 2, 3, 4
+                                            let constants = [];
+
+                                            // Boucles pour générer les constantes
+                                            types.forEach(type => {
+                                                sessions.forEach(session => {
+                                                    constants.push({
+                                                        // Début
+                                                        timepickerIdDebut: `#timepicker-admin-debut-${type}-${session}-${filmId}`,
+                                                        clockIconIdDebut: `#icon-clock-debut-admin-${type}-${session}-${filmId}`,
+                                                        clearIconIdDebut: `#close-icon-time-debut-admin-${type}-${session}-${filmId}`,
+                                                        // Fin
+                                                        timepickerIdFin: `#timepicker-admin-fin-${type}-${session}-${filmId}`,
+                                                        clockIconIdFin: `#icon-clock-fin-admin-${type}-${session}-${filmId}`,
+                                                        clearIconIdFin: `#close-icon-time-fin-admin-${type}-${session}-${filmId}`
+                                                    });
                                                 });
-                                            }
-                                        });
-                                    }
-                                    function initTimepicker(timepickerId, clockIconId, clearIconId) {
-                                        const $timepicker = $(timepickerId);
-                                        const $clockIcon = $(clockIconId);
-                                        const $clearIcon = $(clearIconId);
+                                            });
 
-                                        // Initialisation du timepicker avec flatpickr
-                                        const timepickerInstance = flatpickr($timepicker, {
-                                            enableTime: true,
-                                            noCalendar: true,
-                                            dateFormat: "H:i",
-                                            time_24hr: true,
-                                            minuteIncrement: 15,
-                                            onChange: function() {
-                                                $clockIcon.addClass('d-none');
-                                                $clearIcon.removeClass('d-none');
-                                            }
-                                        });
+                                            return constants;
+                                        }
+                                        function initTimepicker(timepickerId, clockIconId, clearIconId) {
+                                                        const $timepicker = $(timepickerId);
+                                                        const $clockIcon = $(clockIconId);
+                                                        const $clearIcon = $(clearIconId);
 
-                                        // Réinitialiser l'heure au clic sur l'icône de suppression
-                                        $clearIcon.on('click', function() {
-                                            timepickerInstance.clear();
-                                            $clockIcon.removeClass('d-none');
-                                            $clearIcon.addClass('d-none');
-                                        });
+                                                        // Initialisation du timepicker avec flatpickr
+                                                        const timepickerInstance = flatpickr($timepicker, {
+                                                            enableTime: true,
+                                                            noCalendar: true,
+                                                            dateFormat: "H:i",
+                                                            time_24hr: true,
+                                                            minuteIncrement: 15,
+                                                            onChange: function() {
+                                                                // Cache l'icône de l'horloge et montre l'icône de suppression
+                                                                $clockIcon.addClass('d-none');
+                                                                $clearIcon.removeClass('d-none');
+                                                            }
+                                                        });
 
-                                        // Appliquer un style de hover/focus pour l'icône de suppression
-                                        $clearIcon.on('mouseenter focus', function() {
-                                            $timepicker.addClass('btn-hover');
-                                            $clearIcon.addClass('btn-hover');
-                                        });
+                                                        // Réinitialiser l'heure au clic sur l'icône de suppression
+                                                        $clearIcon.on('click', function() {
+                                                            timepickerInstance.clear();
+                                                            $clockIcon.removeClass('d-none');
+                                                            $clearIcon.addClass('d-none');
+                                                        });
 
-                                        // Appliquer un style de hover/focus pour l'icône de l'horloge
-                                        $clockIcon.on('mouseenter focus', function() {
-                                            $timepicker.addClass('btn-hover');
-                                            $clockIcon.addClass('btn-hover');
-                                        });
+                                                        // Appliquer un style de hover/focus pour l'icône de suppression
+                                                        $clearIcon.on('mouseenter focus', function() {
+                                                            $timepicker.addClass('btn-hover');
+                                                            $clearIcon.addClass('btn-hover');
+                                                        });
 
-                                        // Retirer le style de hover/focus
-                                        $clearIcon.on('mouseleave blur', function() {
-                                            $timepicker.removeClass('btn-hover');
-                                            $clearIcon.removeClass('btn-hover');
-                                        });
+                                                        // Appliquer un style de hover/focus pour l'icône de l'horloge
+                                                        $clockIcon.on('mouseenter focus', function() {
+                                                            $timepicker.addClass('btn-hover');
+                                                            $clockIcon.addClass('btn-hover');
+                                                        });
 
-                                        $clockIcon.on('mouseleave blur', function() {
-                                            $timepicker.removeClass('btn-hover');
-                                            $clockIcon.removeClass('btn-hover');
-                                        });
+                                                        // Retirer le style de hover/focus
+                                                        $clearIcon.on('mouseleave blur', function() {
+                                                            $timepicker.removeClass('btn-hover');
+                                                            $clearIcon.removeClass('btn-hover');
+                                                        });
 
-                                        // Ouvrir l'horloge lorsque l'on clique sur l'icône horloge
-                                        $clockIcon.on('click', function() {
-                                            $timepicker.focus();
-                                        });
-                                    }
-                                    initTimepickers(film);
+                                                        $clockIcon.on('mouseleave blur', function() {
+                                                            $timepicker.removeClass('btn-hover');
+                                                            $clockIcon.removeClass('btn-hover');
+                                                        });
+
+                                                        // Ouvrir l'horloge lorsque l'on clique sur l'icône horloge
+                                                        $clockIcon.on('click', function() {
+                                                            $timepicker.focus();
+                                                        });
+                                                    }
+                                        function initAllTimepickers(filmId) {
+                                            // Générer les constantes pour le film
+                                            const timepickerConstants = generateTimepickerConstants(filmId);
+                                            // Initialiser chaque timepicker avec ses icônes associées
+                                            timepickerConstants.forEach(function(constant) {
+                                                initTimepicker(constant.timepickerIdDebut, constant.clockIconIdDebut, constant.clearIconIdDebut);
+                                                initTimepicker(constant.timepickerIdFin, constant.clockIconIdFin, constant.clearIconIdFin);
+                                            });
+                                        }
+                                        const filmId = film.id;
+                                        initAllTimepickers(filmId);
                         });
                     })
                     .catch(error => {console.error(error)});
