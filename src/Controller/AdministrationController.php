@@ -61,8 +61,10 @@ class AdministrationController extends AbstractController
                     $seances[] = $Seance->toArray();
                     $filmArray['seances'] = $seances;
                 }}
-            if (empty($filmArray['seances'])) {
-                $filmArray['seances'] = [];
+            if ($AllFilms) {
+                if (empty($filmArray['seances'])) {
+                    $filmArray['seances'] = [];
+                }
             }
             $AllFilmsArray[] = $filmArray;
         return new JsonResponse($AllFilmsArray);
@@ -113,38 +115,30 @@ class AdministrationController extends AbstractController
         $salle4DX = $entityManager->getRepository(Salle::class)->findOneBy(['qualite' => '4DX']);
         $salleIMAX = $entityManager->getRepository(Salle::class)->findOneBy(['qualite' => 'IMAX']);
         $salleDolby = $entityManager->getRepository(Salle::class)->findOneBy(['qualite' => 'Dolby']);
-        for ($i = 1; $i <= 1; $i++) {
-            $stringHeureDebut3DX = $data["heure_debut_3DX_$i"];
-            $stringHeureFin3DX = $data["heure_fin_3DX_$i"];
-            $heureDebut3DX = \DateTime::createFromFormat('H:i', $stringHeureDebut3DX);
-            $heureFin3DX = \DateTime::createFromFormat('H:i', $stringHeureFin3DX);
-            $price3DX = $data["price_3DX_$i"];
-            if ($heureDebut3DX && $heureFin3DX && $dateDebut && $dateFin && is_numeric($price3DX)  && is_numeric($places) && is_numeric($stringSalle)) {
-                $this->getSeance($heureDebut3DX, $heureFin3DX, $price3DX, $dateDebut, $dateFin, $salle3DX, $film, $entityManager);
-            }
-            $stringHeureDebut4DX = $data["heure_debut_4DX_$i"];
-            $stringHeureFin4DX = $data["heure_fin_4DX_$i"];
-            $heureDebut4DX = \DateTime::createFromFormat('H:i', $stringHeureDebut4DX);
-            $heureFin4DX = \DateTime::createFromFormat('H:i', $stringHeureFin4DX);
-            $price4DX = $data["price_4DX_$i"];
-            if ($heureDebut4DX && $heureFin4DX && $dateDebut && $dateFin && is_numeric($price4DX) && is_numeric($places) && is_numeric($stringSalle)) {
-                $this->getSeance($heureDebut4DX, $heureFin4DX, $price4DX, $dateDebut, $dateFin, $salle4DX, $film, $entityManager);
-            }
-            $stringHeureDebutIMAX = $data["heure_debut_IMAX_$i"];
-            $stringHeureFinIMAX = $data["heure_fin_IMAX_$i"];
-            $heureDebutIMAX = \DateTime::createFromFormat('H:i', $stringHeureDebutIMAX);
-            $heureFinIMAX = \DateTime::createFromFormat('H:i', $stringHeureFinIMAX);
-            $priceIMAX = $data["price_IMAX_$i"];
-            if ($heureDebutIMAX && $heureFinIMAX && $dateDebut && $dateFin && is_numeric($priceIMAX) && is_numeric($places) && is_numeric($stringSalle)) {
-                $this->getSeance($heureDebutIMAX, $heureFinIMAX, $priceIMAX, $dateDebut, $dateFin, $salleIMAX, $film, $entityManager);
-            }
-            $stringHeureDebutDolby = $data["heure_debut_Dolby_$i"];
-            $stringHeureFinDolby = $data["heure_fin_Dolby_$i"];
-            $heureDebutDolby = \DateTime::createFromFormat('H:i', $stringHeureDebutDolby);
-            $heureFinDolby = \DateTime::createFromFormat('H:i', $stringHeureFinDolby);
-            $priceDolby = $data["price_Dolby_$i"];
-            if ($heureDebutDolby && $heureFinDolby && $dateDebut && $dateFin && is_numeric($priceDolby) && is_numeric($places) && is_numeric($stringSalle)) {
-                $this->getSeance($heureDebutDolby, $heureFinDolby, $priceDolby, $dateDebut, $dateFin, $salleDolby, $film, $entityManager);
+        $formats = ['3DX', '4DX', 'IMAX', 'Dolby'];
+        for ($i = 1; $i <= 4; $i++) {
+            foreach ($formats as $format) {
+                // Récupérer les informations associées à chaque format
+                $heureDebutKey = "heure_debut_{$format}_{$i}";
+                $heureFinKey = "heure_fin_{$format}_{$i}";
+                $priceKey = "price_{$format}_{$i}";
+
+                // Vérifier si les données existent avant d'y accéder
+                if (isset($data[$heureDebutKey], $data[$heureFinKey], $data[$priceKey])) {
+                    $stringHeureDebut = $data[$heureDebutKey];
+                    $stringHeureFin = $data[$heureFinKey];
+                    $price = $data[$priceKey];
+
+                    // Convertir les heures en objets DateTime
+                    $heureDebut = \DateTime::createFromFormat('H:i', $stringHeureDebut);
+                    $heureFin = \DateTime::createFromFormat('H:i', $stringHeureFin);
+
+                    // Vérification des conditions avant de passer à la méthode getSeance
+                    if ($heureDebut && $heureFin && $dateDebut && $dateFin && is_numeric($price) && is_numeric($places) && is_numeric($stringSalle)) {
+                        // Appeler la méthode getSeance avec les données appropriées
+                        $this->getSeance($heureDebut, $heureFin, $price, $dateDebut, $dateFin, ${"salle{$format}"}, $film, $entityManager);
+                    }
+                }
             }
         }
         $description = $data['description'];
