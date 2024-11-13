@@ -387,17 +387,18 @@ import './styles/app.css';
                                                         </div>
                                                         <!--Date de début et de fin de diffusion-->
                                                         <div class="row my-3">
-                                                            <div class="col-4 d-flex justify-content-start">
+                                                            <div class="col-7 d-flex justify-content-start">
+                                                                 <div class="text-white align-content-center fs-5 me-2">Date de diffusion:</div>
                                                                  <div class="position-relative">
-                                                                        <input type="text" class="btn-date-admin" id="datepicker-admin-debut-${film.id}" placeholder="Date début" readonly>
+                                                                        <input type="text" class="btn-date-admin" id="datepicker-admin-debut-${film.id}" placeholder="Début" readonly>
                                                                         <label for="datepicker-admin-debut-${film.id}" class="d-none"></label>
                                                                         <span class="bi bi-calendar" id="icon-calendar-debut-admin-${film.id}"></span>
                                                                         <span class="bi bi-x-circle d-none" id="close-icon-date-debut-admin-${film.id}"></span>
                                                                  </div>
                                                              </div>
-                                                            <div class="col-4 d-flex justify-content-end">                                                               
+                                                            <div class="col-5 d-flex justify-content-start">                                                               
                                                                     <div class="position-relative">
-                                                                        <input type="text" class="btn-date-admin" id="datepicker-admin-fin-${film.id}" placeholder="Date fin" readonly>
+                                                                        <input type="text" class="btn-date-admin" id="datepicker-admin-fin-${film.id}" placeholder="Fin" readonly>
                                                                         <label for="datepicker-admin-fin-${film.id}" class="d-none"></label>
                                                                         <span class="bi bi-calendar" id="icon-calendar-fin-admin-${film.id}"></span>
                                                                         <span class="bi bi-x-circle d-none" id="close-icon-date-fin-admin-${film.id}"></span>
@@ -472,23 +473,23 @@ import './styles/app.css';
                                                                     </div>
                                                                     <div class="col-3 d-flex align-items-center justify-content-center">
                                                                         <div class="position-relative">
-                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-3DX-${i + 1}-${film.id}" placeholder="Heure début" readonly>
-                                                                            <span class="bi bi-clock" id="icon-clock-debut-admin-3DX-${i + 1}-${film.id}"></span>
-                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-3DX-${i + 1}-${film.id}"></span>
+                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-3DX-${i + 1 + film.seances.length}-${film.id}" placeholder="Heure début" readonly>
+                                                                            <span class="bi bi-clock" id="icon-clock-debut-admin-3DX-${i + 1 + film.seances.length}-${film.id}"></span>
+                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-3DX-${i + 1 + film.seances.length}-${film.id}"></span>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-3 d-flex align-items-center justify-content-end pe-0">
                                                                         <div class="position-relative">
-                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-3DX-${i + 1}-${film.id}" placeholder="Heure fin" readonly>
-                                                                            <span class="bi bi-clock" id="icon-clock-fin-admin-3DX-${i + 1}-${film.id}"></span>
-                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-3DX-${i + 1}-${film.id}"></span>
+                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-3DX-${i + 1 + film.seances.length}-${film.id}" placeholder="Heure fin" readonly>
+                                                                            <span class="bi bi-clock" id="icon-clock-fin-admin-3DX-${i + 1 + film.seances.length}-${film.id}"></span>
+                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-3DX-${i + 1 + film.seances.length}-${film.id}"></span>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-2 d-flex text-white align-items-center justify-content-end">
                                                                         <div class="fs-5">Prix:</div>
                                                                     </div>
                                                                     <div class="col-2 d-flex align-items-center">
-                                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-3DX-${i + 1}-prix-${film.id}"></textarea>
+                                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-3DX-${i + 1 + film.seances.length}-prix-${film.id}"></textarea>
                                                                         <div class="mx-1 fs-5 text-white">€</div>
                                                                     </div>
                                                                 </div>
@@ -531,23 +532,23 @@ import './styles/app.css';
                                                                     </div>
                                                                     <div class="col-3 d-flex align-items-center justify-content-center">
                                                                         <div class="position-relative">
-                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-4DX-${i + 1}-${film.id}" placeholder="Heure début" readonly>
-                                                                            <span class="bi bi-clock" id="icon-clock-debut-admin-4DX-${i + 1}-${film.id}"></span>
-                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-4DX-${i + 1}-${film.id}"></span>
+                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-4DX-${i + 1 + film.seances.length}-${film.id}" placeholder="Heure début" readonly>
+                                                                            <span class="bi bi-clock" id="icon-clock-debut-admin-4DX-${i + 1 + film.seances.length}-${film.id}"></span>
+                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-4DX-${i + 1 + film.seances.length}-${film.id}"></span>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-3 d-flex align-items-center justify-content-end pe-0">
                                                                         <div class="position-relative">
-                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-4DX-${i + 1}-${film.id}" placeholder="Heure fin" readonly>
-                                                                            <span class="bi bi-clock" id="icon-clock-fin-admin-4DX-${i + 1}-${film.id}"></span>
-                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-4DX-${i + 1}-${film.id}"></span>
+                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-4DX-${i + 1 + film.seances.length}-${film.id}" placeholder="Heure fin" readonly>
+                                                                            <span class="bi bi-clock" id="icon-clock-fin-admin-4DX-${i + 1 + film.seances.length}-${film.id}"></span>
+                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-4DX-${i + 1 + film.seances.length}-${film.id}"></span>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-2 d-flex text-white align-items-center justify-content-end">
                                                                         <div class="fs-5">Prix:</div>
                                                                     </div>
                                                                     <div class="col-2 d-flex align-items-center">
-                                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-4DX-${i + 1}-prix-${film.id}"></textarea>
+                                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-4DX-${i + 1 + film.seances.length}-prix-${film.id}"></textarea>
                                                                         <div class="mx-1 fs-5 text-white">€</div>
                                                                     </div>
                                                                 </div>
@@ -590,23 +591,23 @@ import './styles/app.css';
                                                                         </div>
                                                                         <div class="col-3 d-flex align-items-center justify-content-center">
                                                                             <div class="position-relative">
-                                                                                <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-IMAX-${i + 1}-${film.id}" placeholder="Heure début" readonly>
-                                                                                <span class="bi bi-clock" id="icon-clock-debut-admin-IMAX-${i + 1}-${film.id}"></span>
-                                                                                <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-IMAX-${i + 1}-${film.id}"></span>
+                                                                                <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-IMAX-${i + 1 + film.seances.length}-${film.id}" placeholder="Heure début" readonly>
+                                                                                <span class="bi bi-clock" id="icon-clock-debut-admin-IMAX-${i + 1 + film.seances.length}-${film.id}"></span>
+                                                                                <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-IMAX-${i + 1 + film.seances.length}-${film.id}"></span>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-3 d-flex align-items-center justify-content-end pe-0">
                                                                             <div class="position-relative">
-                                                                                <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-IMAX-${i + 1}-${film.id}" placeholder="Heure fin" readonly>
-                                                                                <span class="bi bi-clock" id="icon-clock-fin-admin-IMAX-${i + 1}-${film.id}"></span>
-                                                                                <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-IMAX-${i + 1}-${film.id}"></span>
+                                                                                <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-IMAX-${i + 1 + film.seances.length}-${film.id}" placeholder="Heure fin" readonly>
+                                                                                <span class="bi bi-clock" id="icon-clock-fin-admin-IMAX-${i + 1 + film.seances.length}-${film.id}"></span>
+                                                                                <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-IMAX-${i + 1 + film.seances.length}-${film.id}"></span>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-2 d-flex text-white align-items-center justify-content-end">
                                                                             <div class="fs-5">Prix:</div>
                                                                         </div>
                                                                         <div class="col-2 d-flex align-items-center">
-                                                                            <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-IMAX-${i + 1}-prix-${film.id}"></textarea>
+                                                                            <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-IMAX-${i + 1 + film.seances.length}-prix-${film.id}"></textarea>
                                                                             <div class="mx-1 fs-5 text-white">€</div>
                                                                         </div>
                                                                     </div>
@@ -649,23 +650,23 @@ import './styles/app.css';
                                                                     </div>
                                                                     <div class="col-3 d-flex align-items-center justify-content-center">
                                                                         <div class="position-relative">
-                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-Dolby-${i + 1}-${film.id}" placeholder="Heure début" readonly>
-                                                                            <span class="bi bi-clock" id="icon-clock-debut-admin-Dolby-${i + 1}-${film.id}"></span>
-                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-Dolby-${i + 1}-${film.id}"></span>
+                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-Dolby-${i + 1 + film.seances.length}-${film.id}" placeholder="Heure début" readonly>
+                                                                            <span class="bi bi-clock" id="icon-clock-debut-admin-Dolby-${i + 1 + film.seances.length}-${film.id}"></span>
+                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-Dolby-${i + 1 + film.seances.length}-${film.id}"></span>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-3 d-flex align-items-center justify-content-end pe-0">
                                                                         <div class="position-relative">
-                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-Dolby-${i + 1}-${film.id}" placeholder="Heure fin" readonly>
-                                                                            <span class="bi bi-clock" id="icon-clock-fin-admin-Dolby-${i + 1}-${film.id}"></span>
-                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-Dolby-${i + 1}-${film.id}"></span>
+                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-Dolby-${i + 1 + film.seances.length}-${film.id}" placeholder="Heure fin" readonly>
+                                                                            <span class="bi bi-clock" id="icon-clock-fin-admin-Dolby-${i + 1 + film.seances.length}-${film.id}"></span>
+                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-Dolby-${i + 1 + film.seances.length}-${film.id}"></span>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-2 d-flex text-white align-items-center justify-content-end">
                                                                         <div class="fs-5">Prix:</div>
                                                                     </div>
                                                                     <div class="col-2 d-flex align-items-center">
-                                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-Dolby-${i + 1}-prix-${film.id}"></textarea>
+                                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="Textarea-Dolby-${i + 1 + film.seances.length}-prix-${film.id}"></textarea>
                                                                         <div class="mx-1 fs-5 text-white">€</div>
                                                                     </div>
                                                                 </div>
@@ -1035,6 +1036,7 @@ import './styles/app.css';
                     })
                     .catch(error => {console.error(error)});
             }
+
     //Lancement des requètes AJAX au chargement des pages
         if (window.location.pathname === '/administrateur/administration') {LoadFilm();}
     });

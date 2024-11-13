@@ -34,13 +34,20 @@ class AdministrationController extends AbstractController
     #[Route('/film', name: 'app_administration_film')]
     public function Film(EntityManagerInterface $entityManager): Response
     {
+        // Récupérer tous les films
         $AllFilms = $entityManager->getRepository(Film::class)->findAll();
         $AllFilmsArray = [];
+
         foreach ($AllFilms as $film) {
+            // Convertir le film en tableau
             $filmArray = $film->toArray();
+
+            // Ajouter le genre si disponible
             if ($film->getGenre() !== null) {
                 $filmArray['genre'] = $film->getGenre()->getName();
             }
+
+            // Récupérer et ajouter les cinémas
             $cinemasArray = [];
             foreach ($film->getCinema() as $cinema) {
                 $cinemasArray[] = $cinema->getName();
@@ -48,26 +55,34 @@ class AdministrationController extends AbstractController
             if (!empty($cinemasArray)) {
                 $filmArray['cinema'] = $cinemasArray;
             }
+
+            // Ajouter les dates de début et de fin si disponibles
             if ($film->getDateDebut() !== null) {
                 $filmArray['date_debut'] = $film->getDateDebut()->format('d/m/Y');
             }
             if ($film->getDateFin() !== null) {
                 $filmArray['date_fin'] = $film->getDateFin()->format('d/m/Y');
             }
+
+            // Votre logique pour récupérer les séances
             $date_debut = $film->getDateDebut();
             $film_id = $film->getId();
             $seances = $entityManager->getRepository(Seance::class)->findByFilmId($film_id, $date_debut);
+
+            // Ajouter les séances
+            $seancesArray = [];
             foreach ($seances as $Seance) {
-                    $seances[] = $Seance->toArray();
-                    $filmArray['seances'] = $seances;
-                }}
-            if ($AllFilms) {
-                if (empty($filmArray['seances'])) {
-                    $filmArray['seances'] = [];
-                }
+                $seancesArray[] = $Seance->toArray();
             }
+            $filmArray['seances'] = $seancesArray ?: [];
+
+            // Ajouter le film au tableau final
             $AllFilmsArray[] = $filmArray;
+        }
+
+// Retourner les films au format JSON
         return new JsonResponse($AllFilmsArray);
+
     }
 
     #[Route('/film/create', name: 'app_administration_creation_film')]

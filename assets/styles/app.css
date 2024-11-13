@@ -840,6 +840,10 @@ footer #navbarBottom .nav-link {
   color: white !important;
 }
 
+.modal-admin input {
+  color: #6A73AB !important;
+}
+
 /* Media queries */
 @media (min-width: 1921px) {
 
