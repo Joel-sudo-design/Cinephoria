@@ -624,22 +624,7 @@ footer #navbarBottom .nav-link {
   justify-content: center;
 }
 
-.btn-date-admin {
-  background-color: white;
-  color: #6A73AB;
-  border: 2px solid #6A73AB;
-  border-radius: 6px;
-  padding: 0.5rem 0.75rem;
-  font-size: 1.1rem;
-  cursor: pointer;
-  width: 12rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: all 0.2s ease;
-}
-
-.btn-time-admin {
+.btn-time-admin, .btn-date-admin {
   background-color: white;
   color: #6A73AB;
   border: 2px solid #6A73AB;
