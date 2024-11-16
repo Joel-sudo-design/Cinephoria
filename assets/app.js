@@ -263,7 +263,7 @@ import './styles/app.css';
                                          <button class="btn bi bi-pencil-square text-success p-0 fs-5 bg-admin position-absolute" style="border-radius: 0 0 2px 0" data-bs-toggle="modal" data-bs-target="#modal-${film.id}"></button>
                                          <button id="x-square-${film.id}" class="btn bi bi-x-square text-danger p-0 fs-5 bg-admin position-absolute" style="top:0; right: 0; border-radius: 0 0 0 2px"></button>  
                                          <i class="bi bi-heart-fill position-absolute fs-3 text-warning d-none" style="top:1%; right: 5%"></i>
-                                         <img class="card-img-top" alt="" style="width: 100%; height: 228px; background-color: #6A73AB">
+                                         <img src="${film.image}" class="card-img-top" alt="" style="width: 100%; height: 228px; background-color: #6A73AB">
                                     </div>
                                     <div class="card-body p-0 py-1">
                                             <div class="card-title fs-5" style="color:#6A73AB">${film.name}
@@ -294,8 +294,9 @@ import './styles/app.css';
                                                     <div class="col-4 p-4 text-white position-relative">
                                                         <!--Image-->
                                                         <div class="position-relative">
-                                                            <button class="btn bi bi-pencil-square text-success p-0 fs-5 bg-admin position-absolute" style="top: 0; right: 0; border-radius: 0 0 0 2px"></button>
-                                                            <img src="" class="img-fluid" alt="" style="width: 100%; height: 450px; background-color: white">
+                                                            <input type="file" id="fileInput" style="display: none">
+                                                            <button id="uploadButton" class="btn bi bi-pencil-square text-success p-0 fs-5 bg-admin position-absolute" style="top: 0; right: 0; border-radius: 0 0 0 2px"></button>
+                                                            <img src="${film.image}" class="img-fluid" alt="" style="width: 100%; height: 450px; background-color: white">
                                                         </div>    
                                                         <!--Genre-->                                                                                                                                          
                                                         <div class="row my-3">
@@ -361,6 +362,7 @@ import './styles/app.css';
                                                             </div>                                                          
                                                             <!--Boutons valider & sortie-->
                                                             <div class="col-7 d-flex align-items-center justify-content-end">
+                                                                <button id="btn-reset-${film.id}" class="btn bi bi-arrow-counterclockwise p-2 fs-4 d-flex justify-content-center align-items-center"></button>
                                                                 <button id="btn-validate-film-${film.id}" class="btn bi bi-check-lg p-2 fs-4 d-flex justify-content-center align-items-center"></button>
                                                                 <button class="btn bi bi-x-lg p-2 fs-4 d-flex justify-content-center align-items-center" data-bs-dismiss="modal"></button>
                                                             </div>
@@ -405,7 +407,7 @@ import './styles/app.css';
                                                         </div>
                                                         <!--Salle & Places-->
                                                         <div class="row my-3">                                                                                                                     
-                                                            <!--Salle & places -->                                                                                                                
+                                                            <!--Salle & places & bouton reset -->                                                                                                                
                                                             <div class="col-12 d-flex justify-content-start align-items-center">
                                                                 <div class="text-white align-content-center fs-5 me-2">Salle:</div>                                                               
                                                                 <div class="dropdown dropdown-modal-admin align-content-center me-3">
@@ -687,7 +689,25 @@ import './styles/app.css';
                                 });
 
                             //modal
-                                //Menu déroulant genre
+                                // Upload image
+                                    let imageData = null;
+                                    $('#uploadButton').on('click', function () {
+                                    const fileInput = $('#fileInput')[0];
+                                    fileInput.click();
+
+                                    $(fileInput).off('change').on('change', function () { // Supprime les écouteurs existants avant d'en ajouter un nouveau
+                                        const selectedFile = fileInput.files[0];
+                                        if (selectedFile) {
+                                            imageData = new FormData(); // Crée un nouvel objet FormData
+                                            imageData.append('image', selectedFile); // Ajoute le fichier sélectionné
+                                            console.log('Image sélectionnée :', selectedFile.name);
+                                        } else {
+                                            console.error('Aucun fichier sélectionné');
+                                        }
+                                    });
+                                });
+
+                            //Menu déroulant genre
                                         let selectedGenre= '';
                                         $('.drop-genre').click(function(e) {
                                             e.preventDefault();
@@ -749,19 +769,21 @@ import './styles/app.css';
                                         });
 
                                 // Menu déroulant places
-                                    let selectedPlaces= '';
-                                    $('.drop-places').click(function(e) {
-                                        e.preventDefault();
-                                        selectedPlaces= $(this).text();
-                                        $('#dropdownMenuPlaces-'+film.id).text(selectedPlaces);
-                                    });
+                                        let selectedPlaces= '';
+                                        $('.drop-places').click(function(e) {
+                                            e.preventDefault();
+                                            selectedPlaces= $(this).text();
+                                            $('#dropdownMenuPlaces-'+film.id).text(selectedPlaces);
+                                        });
 
                                 // Réinitialiser le modal lorsque celui-ci est fermé
-                                    $('#modal-' + film.id).on('hidden.bs.modal', function () {
+                                        $('#modal-' + film.id).on('hidden.bs.modal', function () {
                                         LoadFilm();
                                     });
 
                                 //Valider les informations du film
+                                        const formats = ["3DX", "4DX", "IMAX", "Dolby"];
+                                        const nombreSeances = 4;
                                         $('#btn-validate-film-'+film.id).click(function () {
                                             let datePartsDebut = $('#datepicker-admin-debut-'+film.id).val().split('/')
                                             let datePartsFin = $('#datepicker-admin-fin-'+film.id).val().split('/')
@@ -781,9 +803,8 @@ import './styles/app.css';
                                                 salle: $(`#dropdownMenuSalle-${film.id}`).text(),
                                                 places: $(`#dropdownMenuPlaces-${film.id}`).text(),
                                                 description: $(`#Textarea-description-${film.id}`).val(),
+                                                film_reset: ''
                                             };
-                                            const formats = ["3DX", "4DX", "IMAX", "Dolby"];
-                                            const nombreSeances = 4;
                                             formats.forEach(format => {
                                                 for (let i = 1; i <= nombreSeances; i++) {
                                                     data[`heure_debut_${format}_${i}`] = $(`#timepicker-admin-debut-${format}-${i}-${film.id}`).val();
@@ -791,10 +812,22 @@ import './styles/app.css';
                                                     data[`price_${format}_${i}`] = $(`#Textarea-${format}-${i}-prix-${film.id}`).val();
                                                 }
                                             });
-                                            axios.post('/administrateur/administration/film/validate', data)
+                                            let formData = new FormData();
+                                            if (imageData) {
+                                                formData.append('image', imageData.get('image'));
+                                            }
+                                            for (const key in data) {
+                                                formData.append(key, data[key]);
+                                            }
+                                            axios.post('/administrateur/administration/film/validate', formData , {
+                                                headers: {
+                                                    'Content-Type': 'multipart/form-data',
+                                                }
+                                            })
                                                   .then(response => {console.log(response.data);$('#modal-' + film.id).modal('hide'); })
                                                   .catch(error => {console.error(error);})
                                                 .finally(() => {LoadFilm();});
+
                                         });
 
                                 // Datepicker
@@ -817,6 +850,13 @@ import './styles/app.css';
                                                 $calendarIconDebut.addClass('d-none');
                                                 $clearIconDebut.removeClass('d-none');
                                             });
+
+                                        // Désactiver le datepicker si une date est déjà sélectionnée
+                                        if ($datepickerDebut.val().trim() !== '') {
+                                                $datepickerDebut.prop('disabled', true);
+                                                $calendarIconDebut.addClass('d-none');
+                                                $clearIconDebut.addClass('d-none');
+                                            }
 
                                         // Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
                                         $clearIconDebut.on('click', function () {
@@ -866,6 +906,13 @@ import './styles/app.css';
                                                 $calendarIconFin.addClass('d-none');
                                                 $clearIconFin.removeClass('d-none');
                                             });
+
+                                        // Désactiver le datepicker si une date est déjà sélectionnée
+                                        if ($datepickerFin.val().trim() !== '') {
+                                            $datepickerFin.prop('disabled', true);
+                                            $calendarIconFin.addClass('d-none');
+                                            $clearIconFin.addClass('d-none');
+                                        }
 
                                         // Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
                                         $clearIconFin.on('click', function () {
@@ -948,6 +995,13 @@ import './styles/app.css';
                                                             }
                                                         });
 
+                                                        // Si l'input contient déjà une valeur, désactiver le timepicker dès l'initialisation
+                                                        if ($timepicker.val().trim() !== '') {
+                                                            $timepicker.prop('disabled', true);
+                                                            $clockIcon.addClass('d-none');
+                                                            $clearIcon.addClass('d-none');
+                                                        }
+
                                                         // Réinitialiser l'heure au clic sur l'icône de suppression
                                                         $clearIcon.on('click', function() {
                                                             timepickerInstance.clear();
@@ -994,6 +1048,27 @@ import './styles/app.css';
                                         }
                                         const filmId = film.id;
                                         initAllTimepickers(filmId);
+
+                                // Désactiver les textarea prix si une valeur est déjà présente
+                                        formats.forEach(format => {
+                                    for (let i = 1; i <= nombreSeances; i++) {
+                                        const price = $(`#Textarea-${format}-${i}-prix-${film.id}`);
+                                        if (price.val().trim() !== '') {
+                                            price.prop('disabled', true);
+                                        }
+                                    }
+                                });
+
+                                // Reset des champs vérouillés
+                                     $('#btn-reset-' + film.id).click(function () {
+                                         const data = {
+                                             film_reset: film.id
+                                         }
+                                         axios.post('/administrateur/administration/film/validate', data)
+                                             .then(response => {console.log(response.data)})
+                                             .catch(error => {console.error(error);})
+                                     });
+
                         });
                     })
                     .catch(error => {console.error(error)});

@@ -7,6 +7,7 @@ use App\Entity\Film;
 use App\Entity\Genre;
 use App\Entity\Salle;
 use App\Entity\Seance;
+use App\Form\ImageType;
 use App\Repository\CinemaRepository;
 use App\Repository\GenreRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,14 +21,16 @@ use Symfony\Component\Routing\Attribute\Route;
 class AdministrationController extends AbstractController
 {
     #[Route('', name: 'app_administration')]
-    public function index(CinemaRepository $cinemaRepository, GenreRepository $genreRepository): Response
-    {
+    public function index(CinemaRepository $cinemaRepository, GenreRepository $genreRepository, Request $request, EntityManagerInterface $entityManager): Response {
+
+        // Récupérer les cinémas et les genres
         $cinemas = $cinemaRepository->findAll();
         $genres = $genreRepository->findAll();
+
         return $this->render('administration/index.html.twig', [
             'controller_name' => 'AdministrationController',
             'cinemas' => $cinemas,
-            'genres' => $genres
+            'genres' => $genres,
         ]);
     }
 
@@ -41,6 +44,11 @@ class AdministrationController extends AbstractController
         foreach ($AllFilms as $film) {
             // Convertir le film en tableau
             $filmArray = $film->toArray();
+
+            // Ajouter l'image si disponible
+            if ($film->getImageName() !== null) {
+                $filmArray['image'] = $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName();
+            }
 
             // Ajouter le genre si disponible
             if ($film->getGenre() !== null) {
@@ -80,9 +88,7 @@ class AdministrationController extends AbstractController
             $AllFilmsArray[] = $filmArray;
         }
 
-// Retourner les films au format JSON
         return new JsonResponse($AllFilmsArray);
-
     }
 
     #[Route('/film/create', name: 'app_administration_creation_film')]
@@ -112,9 +118,10 @@ class AdministrationController extends AbstractController
     #[Route('/film/validate', name: 'app_administration_validate_film')]
     public function ValidateFilm(Request $request,EntityManagerInterface $entityManager): Response
     {
-        $data = json_decode($request->getContent(), true);
+        $data = $request->request->all();
         $id = $data['id'];
         $film = $entityManager->getRepository(Film::class)->find($id);
+        $image = $request->files->get('image');
         $stringGenre = $data['genre'];
         $age = $data['age'];
         $label = $data['label'];
@@ -131,6 +138,33 @@ class AdministrationController extends AbstractController
         $salleIMAX = $entityManager->getRepository(Salle::class)->findOneBy(['qualite' => 'IMAX']);
         $salleDolby = $entityManager->getRepository(Salle::class)->findOneBy(['qualite' => 'Dolby']);
         $formats = ['3DX', '4DX', 'IMAX', 'Dolby'];
+        $description = $data['description'];
+        if ($image) {
+            $film->setImageFile($image);
+        }
+        if ($name != '') {
+            $film->setName($name);
+        }
+        if ($stringGenre != '') {
+            $genre = $entityManager->getRepository(Genre::class)->findOneBy(['name' => $stringGenre]);
+            $film->setGenre($genre);
+        }
+        if ($age != '') {
+            $film->setAgeMinimum($age);
+        }
+        if ($label != '') {
+            $film->setLabel(false);
+        }else{$film->setLabel($label);}
+        if ($dateDebut != '') {
+            $film->setDateDebut($dateDebut);
+        }
+        if ($dateFin != '') {
+            $film->setDateFin($dateFin);
+        }
+        if ($stringCinema !== '') {
+            $cinema = $entityManager->getRepository(Cinema::class)->findOneBy(['name' => $stringCinema]);
+            $film->addCinema($cinema);
+        }
         for ($i = 1; $i <= 4; $i++) {
             foreach ($formats as $format) {
                 // Récupérer les informations associées à chaque format
@@ -155,30 +189,6 @@ class AdministrationController extends AbstractController
                     }
                 }
             }
-        }
-        $description = $data['description'];
-        if ($dateDebut != '') {
-            $film->setDateDebut($dateDebut);
-        }
-        if ($dateFin != '') {
-            $film->setDateFin($dateFin);
-        }
-        if ($stringGenre != '') {
-            $genre = $entityManager->getRepository(Genre::class)->findOneBy(['name' => $stringGenre]);
-            $film->setGenre($genre);
-        }
-        if ($age != '') {
-            $film->setAgeMinimum($age);
-        }
-        if ($label != '') {
-            $film->setLabel(false);
-        }else{$film->setLabel($label);}
-        if ($name != '') {
-            $film->setName($name);
-        }
-        if ($stringCinema !== '') {
-            $cinema = $entityManager->getRepository(Cinema::class)->findOneBy(['name' => $stringCinema]);
-            $film->addCinema($cinema);
         }
         if ($description != '') {
             $film->setDescription($description);
@@ -212,4 +222,5 @@ class AdministrationController extends AbstractController
             }
         }
     }
+
 }

@@ -734,6 +734,18 @@ footer #navbarBottom .nav-link {
   border: 2px solid white !important;
 }
 
+.bi-arrow-counterclockwise {
+  border: 2px solid orange !important;
+  background-color: white;
+  color: orange;
+  transition: all 0.2s ease;
+}
+
+.bi-arrow-counterclockwise:hover {
+  background-color: orange;
+  color: white;
+  border: 2px solid white !important;
+}
 .textarea-uniforme {
   height: 43.2px;
   resize: none;
