@@ -1087,6 +1087,7 @@ import './styles/app.css';
                                                         $clearIconFin.addClass('d-none');
                                                         $modalTimeFieldFin.val(''); // Réinitialiser l'heure de fin dans le modal
                                                         $price.attr('disabled', true); // Désactiver le champ "Prix"
+                                                        $price.val(''); // Réinitialiser le prix
                                                     }
                                                 }
                                             });
@@ -1113,6 +1114,7 @@ import './styles/app.css';
                                                             // Réinitialiser "Fin" si l'heure est inférieure ou égale à l'heure de début
                                                             timepickerFinInstance.setDate(null); // Réinitialiser avec aucune valeur
                                                             $timepickerFin.val(''); // Réinitialiser la valeur de l'input
+                                                            $price.val(''); // Réinitialiser le prix
                                                             $modalTimeFieldFin.val(''); // Réinitialiser l'heure de fin dans le modal
                                                             alert('L’heure de fin doit être supérieure à l’heure de début.');
                                                             $clockIconFin.removeClass('d-none');
@@ -1197,7 +1199,8 @@ import './styles/app.css';
                                                 timepickerFinInstance.clear();
                                                 $clockIconFin.removeClass('d-none');
                                                 $clearIconFin.addClass('d-none');
-                                                $modalTimeFieldFin.val(''); // Réinitialiser l'heure de fin dans le modal
+                                                $modalTimeFieldFin.val('');// Réinitialiser l'heure de fin dans le modal
+                                                $price.val('');
                                             });
                                         }
                                         function initAllTimepickers(filmId) {
