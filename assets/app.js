@@ -1073,6 +1073,7 @@ import './styles/app.css';
                                                             timepickerFinInstance.setDate(null); // Ne pas afficher de valeur par défaut dans le timepicker
                                                             $timepickerFin.val(''); // Réinitialiser la valeur de l'input
                                                             $modalTimeFieldFin.val(''); // Réinitialiser l'heure de fin dans le modal
+                                                            $price.text(''); // Réinitialiser le prix
                                                             alert('L’heure de fin doit être supérieure à l’heure de début.');
 
                                                             // Supprimer la valeur de "Début" si "Fin" <= "Début"
@@ -1220,16 +1221,6 @@ import './styles/app.css';
 
                                         const filmId = film.id;
                                         initAllTimepickers(filmId);
-
-                                // Désactiver les textarea prix si une valeur est déjà présente
-                                        formats.forEach(format => {
-                                    for (let i = 1; i <= nombreSeances; i++) {
-                                        const price = $(`#Textarea-${format}-${i}-prix-${film.id}`);
-                                        if (price.val().trim() !== '') {
-                                            price.prop('disabled', true);
-                                        }
-                                    }
-                                });
 
                                 // Reset des champs vérouillés
                                         $('#btn-reset-' + film.id).click(function () {
