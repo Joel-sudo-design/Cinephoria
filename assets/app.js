@@ -794,8 +794,11 @@ import './styles/app.css';
                                         const formats = ["3DX", "4DX", "IMAX", "Dolby"];
                                         const nombreSeances = 4;
                                         $('#btn-validate-film-'+film.id).click(function () {
-                                            let datePartsDebut = $('#datepicker-admin-debut-'+film.id).val().split('/')
-                                            let datePartsFin = $('#datepicker-admin-fin-'+film.id).val().split('/')
+                                            const datepickerDebut = $('#datepicker-admin-debut-'+film.id);
+                                            const datepickerFin = $('#datepicker-admin-fin-'+film.id);
+                                            const dropdownPlaces = $(`#dropdownMenuPlaces-${film.id}`);
+                                            let datePartsDebut = datepickerDebut.val().split('/');
+                                            let datePartsFin = datepickerFin.val().split('/');
                                             let formattedDateDebut = datePartsDebut[2] + '-' + datePartsDebut[1] + '-' + datePartsDebut[0];
                                             let formattedDateFin = datePartsFin[2] + '-' + datePartsFin[1] + '-' + datePartsFin[0];
                                             let label = $('#dropdownMenuLabel-'+film.id).text();
@@ -810,7 +813,7 @@ import './styles/app.css';
                                                 date_debut: formattedDateDebut,
                                                 date_fin: formattedDateFin,
                                                 salle: $(`#dropdownMenuSalle-${film.id}`).text(),
-                                                places: $(`#dropdownMenuPlaces-${film.id}`).text(),
+                                                places: dropdownPlaces.text(),
                                                 description: $(`#Textarea-description-${film.id}`).val(),
                                                 film_reset: ''
                                             };
@@ -828,13 +831,45 @@ import './styles/app.css';
                                             for (const key in data) {
                                                 formData.append(key, data[key]);
                                             }
+
+                                            // Vérification des timepickers (heure de début et heure de fin)
+                                            let timeError = false;
+                                            formats.forEach(format => {
+                                                for (let i = 1; i <= nombreSeances; i++) {
+                                                    let heureDebut = $(`#timepicker-admin-debut-${format}-${i}-${film.id}`).val().trim();
+                                                    let heureFin = $(`#timepicker-admin-fin-${format}-${i}-${film.id}`).val().trim();
+                                                    let prix = $(`#Textarea-${format}-${i}-prix-${film.id}`).val().trim();
+                                                    // Si une heure de début est renseignée mais pas l'heure de fin
+                                                    if (heureDebut !== '' && heureFin === '') {
+                                                        timeError = true;
+                                                    }
+
+                                                    // Si une heure de début et une heure de fin sont renseignées, mais pas de date
+                                                    if ((heureDebut !== '' && heureFin !== '') && (datepickerDebut.val().trim() === '' || datepickerFin.val().trim() === '')) {
+                                                        timeError = true;
+                                                    }
+                                                    // Si une heure de début et une heure de fin sont renseignées, mais pas de prix
+                                                    if ((heureDebut !== '' && heureFin !== '') && prix === '') {
+                                                        timeError = true;
+                                                    }
+                                                    if ((heureDebut !== '' && heureFin !== '') && dropdownPlaces.text().trim() === 'Nbre') {
+                                                        timeError = true;
+                                                    }
+                                                }
+                                            });
+
+                                            if (timeError) {
+                                                alert('Veuillez renseigner une heure de fin, une date de début, une date de fin, le nombre de places et le prix lorsque vous spécifiez une heure de début.');
+                                                return;
+                                            }
+
                                             axios.post('/administrateur/administration/film/validate', formData , {
                                                 headers: {
                                                     'Content-Type': 'multipart/form-data',
                                                 }
                                             })
-                                                  .then(response => {console.log(response.data);$('#modal-' + film.id).modal('hide'); })
-                                                  .catch(error => {console.error(error);})
+                                                .then(response => {console.log(response.data);$('#modal-' + film.id).modal('hide'); })
+                                                .catch(error => {console.error(error);})
                                                 .finally(() => {LoadFilm();});
                                         });
 
@@ -994,14 +1029,15 @@ import './styles/app.css';
                                                         // Fin
                                                         timepickerIdFin: `#timepicker-admin-fin-${type}-${session}-${filmId}`,
                                                         clockIconIdFin: `#icon-clock-fin-admin-${type}-${session}-${filmId}`,
-                                                        clearIconIdFin: `#close-icon-time-fin-admin-${type}-${session}-${filmId}`
+                                                        clearIconIdFin: `#close-icon-time-fin-admin-${type}-${session}-${filmId}`,
+                                                        price: `#Textarea-${type}-${session}-prix-${filmId}`
                                                     });
                                                 });
                                             });
 
                                             return constants;
                                         }
-                                        function initTimepickerWithValidation(timepickerIdDebut, clockIconIdDebut, clearIconIdDebut, timepickerIdFin, clockIconIdFin, clearIconIdFin, modalTimeFieldIdFin) {
+                                        function initTimepickerWithValidation(timepickerIdDebut, clockIconIdDebut, clearIconIdDebut, timepickerIdFin, clockIconIdFin, clearIconIdFin, price, modalTimeFieldIdFin) {
                                             const $timepickerDebut = $(timepickerIdDebut);
                                             const $clockIconDebut = $(clockIconIdDebut);
                                             const $clearIconDebut = $(clearIconIdDebut);
@@ -1009,6 +1045,8 @@ import './styles/app.css';
                                             const $timepickerFin = $(timepickerIdFin);
                                             const $clockIconFin = $(clockIconIdFin);
                                             const $clearIconFin = $(clearIconIdFin);
+
+                                            const $price = $(price);
 
                                             const $modalTimeFieldFin = $(modalTimeFieldIdFin); // Élément du modal où l'heure de fin doit être mise à jour
 
@@ -1022,6 +1060,7 @@ import './styles/app.css';
                                                 onChange: function(selectedDates, dateStr) {
                                                     if (dateStr.trim()) {
                                                         $timepickerFin.removeAttr('disabled'); // Activer le champ "Fin"
+                                                        $price.removeAttr('disabled'); // Activer le champ "Prix"
                                                         $clockIconDebut.addClass('d-none');
                                                         $clearIconDebut.removeClass('d-none');
 
@@ -1046,6 +1085,7 @@ import './styles/app.css';
                                                         $clockIconFin.removeClass('d-none');
                                                         $clearIconFin.addClass('d-none');
                                                         $modalTimeFieldFin.val(''); // Réinitialiser l'heure de fin dans le modal
+                                                        $price.attr('disabled', true); // Désactiver le champ "Prix"
                                                     }
                                                 }
                                             });
@@ -1082,6 +1122,7 @@ import './styles/app.css';
                                                             $clearIconDebut.addClass('d-none');
                                                             $clockIconDebut.removeClass('d-none');
                                                             $timepickerFin.attr('disabled', true); // Désactiver le champ "Fin"
+                                                            $price.attr('disabled', true); // Désactiver le champ "Prix"
                                                         } else {
                                                             $clockIconFin.addClass('d-none');
                                                             $clearIconFin.removeClass('d-none');
@@ -1123,9 +1164,10 @@ import './styles/app.css';
                                                 $(`#${inputId}`).removeClass("btn-hover");
                                             });
 
-                                            // Desactiver le timepicker "Fin" si "Début" est vide
+                                            // Desactiver le timepicker "Fin" et prix si "Début" est vide
                                             if ($timepickerFin.val().trim() ==='') {
                                                 $timepickerFin.attr('disabled', true);
+                                                $price.attr('disabled', true);
                                             }
 
                                             // Afficher les icônes de croix si les champs sont déjà remplis
@@ -1170,6 +1212,7 @@ import './styles/app.css';
                                                     constant.timepickerIdFin,
                                                     constant.clockIconIdFin,
                                                     constant.clearIconIdFin,
+                                                    constant.price,
                                                     constant.modalTimeFieldIdFin // Ajouter l'ID du champ du modal pour "Fin"
                                                 );
                                             });
