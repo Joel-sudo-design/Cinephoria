@@ -1200,7 +1200,6 @@ import './styles/app.css';
                                                 $clockIconFin.removeClass('d-none');
                                                 $clearIconFin.addClass('d-none');
                                                 $modalTimeFieldFin.val('');// Réinitialiser l'heure de fin dans le modal
-                                                $price.val('');
                                             });
                                         }
                                         function initAllTimepickers(filmId) {
