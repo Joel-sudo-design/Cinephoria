@@ -5,21 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifs diverses">
-      <change afterPath="$PROJECT_DIR$/config/packages/vich_uploader.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/image_film/avatar-6739b3bd33204302091080.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/image_film/default-image.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/image_film/default-image2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/joeld.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/joeld.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/AdministrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdministrationController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Film.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Film.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/administration/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/administration/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,6 +180,7 @@
       <recent name="C:\xampp\htdocs\Cinephoria\templates" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\Cinephoria\public\image_film" />
       <recent name="C:\xampp\htdocs\Cinephoria\public" />
       <recent name="C:\xampp\htdocs\Cinephoria\templates\administration" />
     </key>
@@ -281,7 +276,10 @@
       <workItem from="1731677902661" duration="3801000" />
       <workItem from="1731686481222" duration="8529000" />
       <workItem from="1731747647298" duration="2878000" />
-      <workItem from="1731762279654" duration="6131000" />
+      <workItem from="1731762279654" duration="13340000" />
+      <workItem from="1731781344111" duration="746000" />
+      <workItem from="1731834307500" duration="8976000" />
+      <workItem from="1731847537815" duration="8291000" />
     </task>
     <task id="LOCAL-00003" summary="Début page d'accueil emplyé + navbar">
       <option name="closed" value="true" />
@@ -619,7 +617,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731594178172</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="Modifs diverses">
+      <option name="closed" value="true" />
+      <created>1731768556941</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1731768556941</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -48,6 +48,10 @@ class AdministrationController extends AbstractController
             // Ajouter l'image si disponible
             if ($film->getImageName() !== null) {
                 $filmArray['image'] = $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName();
+                $filmArray['image2'] = $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName();
+            } else {
+                $filmArray['image'] = $this->getParameter('films_images_directory') . '/image_film/' .'default-image.jpg';
+                $filmArray['image2'] = $this->getParameter('films_images_directory') . '/image_film/' .'default-image2.jpg';
             }
 
             // Ajouter le genre si disponible
@@ -223,4 +227,24 @@ class AdministrationController extends AbstractController
         }
     }
 
+    #[Route('/film/reset', name: 'app_administration_reset_film')]
+    public function ResetFilm(Request $request,EntityManagerInterface $entityManager): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        $id = $data['id'];
+        $film = $entityManager->getRepository(Film::class)->find($id);
+        $seances = $film->getSeance();
+        $cinemas = $film->getCinema();
+        foreach ($seances as $seance) {
+            $entityManager->remove($seance);
+        }
+        foreach ($cinemas as $cinema) {
+            $film->removeCinema($cinema);
+        }
+        $film->setDateDebut(null);
+        $film->setDateFin(null);
+        $entityManager->persist($film);
+        $entityManager->flush();
+        return new JsonResponse(['status' => 'champs reset']);
+    }
 }

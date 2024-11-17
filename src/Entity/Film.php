@@ -137,7 +137,7 @@ class Film
         return $this->date_debut;
     }
 
-    public function setDateDebut(\DateTimeInterface $date_debut): static
+    public function setDateDebut(?\DateTimeInterface $date_debut): static
     {
         $this->date_debut = $date_debut;
 
@@ -149,7 +149,7 @@ class Film
         return $this->date_fin;
     }
 
-    public function setDateFin(\DateTimeInterface $date_fin): static
+    public function setDateFin(?\DateTimeInterface $date_fin): static
     {
         $this->date_fin = $date_fin;
 

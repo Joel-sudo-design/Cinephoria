@@ -548,6 +548,7 @@ footer #navbarBottom .nav-link {
 #card-film, #card-film .card-img-top {
   border: none;
   border-radius: unset;
+  color: #6A73AB;
 }
 
 .btn-description {
@@ -624,6 +625,22 @@ footer #navbarBottom .nav-link {
   justify-content: center;
 }
 
+.bg-admin-modal {
+  background-color: #6A73AB;
+  color: #FFFFFF !important;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.bg-admin-modal:hover {
+  background-color: white;
+  color: green !important;
+}
+
 .btn-time-admin, .btn-date-admin {
   background-color: white;
   color: #6A73AB;
@@ -685,6 +702,11 @@ footer #navbarBottom .nav-link {
 
 .btn-date-admin::placeholder,::placeholder {
   color: #6A73AB;
+}
+
+.btn-time-admin:disabled, .btn-date-admin:disabled {
+  background-color: gray;
+  cursor: none;
 }
 
 .flatpickr-time {
