@@ -611,7 +611,7 @@ footer #navbarBottom .nav-link {
   transition: all 0.2s ease;
 }
 
-.btn-admin:hover {
+.btn-admin:hover, .btn-admin.active {
   background-color: #6A73AB;
   color: white;
 }

@@ -7,7 +7,8 @@ use App\Entity\Film;
 use App\Entity\Genre;
 use App\Entity\Salle;
 use App\Entity\Seance;
-use App\Form\ImageType;
+use App\Entity\User;
+use App\Form\AccountEmployeFormType;
 use App\Repository\CinemaRepository;
 use App\Repository\GenreRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,13 +16,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/administrateur/administration')]
 class AdministrationController extends AbstractController
 {
     #[Route('', name: 'app_administration')]
-    public function index(CinemaRepository $cinemaRepository, GenreRepository $genreRepository, Request $request, EntityManagerInterface $entityManager): Response {
+    public function index(CinemaRepository $cinemaRepository, GenreRepository $genreRepository): Response {
 
         // Récupérer les cinémas et les genres
         $cinemas = $cinemaRepository->findAll();
@@ -246,5 +248,26 @@ class AdministrationController extends AbstractController
         $entityManager->persist($film);
         $entityManager->flush();
         return new JsonResponse(['status' => 'champs reset']);
+    }
+
+    #[Route('/account_employe', name: 'app_administration_account_employe')]
+    public function accountEmploye(Request $request,EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        $user = new User();
+        $form = $this->createForm(AccountEmployeFormType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $plainPassword = $form->get('password')->getData();
+            $user->setRoles(['ROLE_EMPLOYE']);
+            $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
+            $entityManager->persist($user);
+            $entityManager->flush();
+            $this->addFlash('success', 'Le compte est créé');
+            return $this->redirectToRoute('app_administration_account_employe');
+        }
+
+        return $this->render('administration/accountEmploye.html.twig', [
+            'employeForm' => $form,
+        ]);
     }
 }
