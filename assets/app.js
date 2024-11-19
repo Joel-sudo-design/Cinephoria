@@ -175,7 +175,6 @@ import './styles/app.css';
             $('.close-icon-genre').removeClass('btn-hover');
         });
 
-
         // Datepicker
             const $datepicker = $('#datepicker');
             const $calendarIcon = $('#icon-calendar');
@@ -226,7 +225,6 @@ import './styles/app.css';
                 $calendarIcon.on('click', function () {
                 $datepicker.focus();
             });
-
 
     //Page administration
         //Films
@@ -1298,6 +1296,56 @@ import './styles/app.css';
                 });
 
              //Page réservation
+                // Datepicker
+                const $datepickerReservations = $('#datepicker_reservations');
+                const $calendarIconReservations = $('#icon-calendar-reservations');
+                const $clearIconReservations = $('.close-icon-reservations');
+                $datepicker.datepicker({
+                    format: "dd/mm/yyyy",
+                    orientation: "bottom",
+                    language: "fr",
+                    autoclose: true
+                }).on('changeDate', function () {
+                    // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
+                    $calendarIcon.addClass('d-none');
+                    $clearIcon.removeClass('d-none');
+                });
+
+                // Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
+                $clearIcon.on('click', function () {
+                    $datepicker.datepicker('clearDates');
+                    $calendarIcon.removeClass('d-none');
+                    $clearIcon.addClass('d-none');
+                });
+
+                // Appliquer le style de hover/focus
+                $clearIcon.on('mouseenter focus', function () {
+                    $datepicker.addClass('btn-hover');
+                    $clearIcon.addClass('btn-hover');
+                });
+
+                // Au clic sur l'icône de croix, on réinitialise la date
+                $calendarIcon.on('mouseenter focus', function () {
+                    $datepicker.addClass('btn-hover');
+                    $calendarIcon.addClass('btn-hover');
+                });
+
+                // Retirer le style quand on quitte le survol/focus
+                $clearIcon.on('mouseleave blur', function () {
+                    $datepicker.removeClass('btn-hover');
+                    $clearIcon.removeClass('btn-hover');
+                });
+
+                // Retirer le style quand on quitte le survol/focus
+                $calendarIcon.on('mouseleave blur', function () {
+                    $datepicker.removeClass('btn-hover');
+                    $calendarIcon.removeClass('btn-hover');
+                });
+
+                // Ouvrir le calendrier
+                $calendarIcon.on('click', function () {
+                    $datepicker.focus();
+                });
     //Lancement des requètes AJAX au chargement des pages
         if (window.location.pathname === '/administrateur/administration') {LoadFilm();}
     });

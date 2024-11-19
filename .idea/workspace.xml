@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifs diverses">
-      <change afterPath="$PROJECT_DIR$/templates/administration/reservations.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AdministrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdministrationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/administration/accountEmploye.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/administration/accountEmploye.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/administration/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/administration/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/administration/reservations.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/administration/reservations.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -269,15 +265,7 @@
       <workItem from="1731940578633" duration="5258000" />
       <workItem from="1732000635464" duration="669000" />
       <workItem from="1732006557999" duration="12000000" />
-      <workItem from="1732021404428" duration="8759000" />
-    </task>
-    <task id="LOCAL-00005" summary="Création Classe Entité User + repository, Installation des bundles pour création de formulaire d'enregistrement et vérification email, création du controller et des templates pour le formulaire d'enregistrement de nouveau compte.">
-      <option name="closed" value="true" />
-      <created>1729951991774</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1729951991775</updated>
+      <workItem from="1732021404428" duration="9133000" />
     </task>
     <task id="LOCAL-00006" summary="Début création formulaire d'enregistrement">
       <option name="closed" value="true" />
@@ -663,7 +651,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732026584998</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="Modifs diverses">
+      <option name="closed" value="true" />
+      <created>1732030271024</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1732030271024</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
