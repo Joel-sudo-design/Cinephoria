@@ -172,7 +172,7 @@ class ResetPasswordController extends AbstractController
             //     ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE,
             //     $e->getReason()
             // ));
-
+            $this->addFlash('reset_password_error', 'Un problème est survenu lors de la réinitialisation de votre mot de passe. Veuillez réessayer plus tard.');
             return $this->redirectToRoute('app_check_email');
         }
 

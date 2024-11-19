@@ -44,7 +44,7 @@
                             <button type="submit" class="w-100 btn-account-employe fs-5">CREATION</button>
                         </div>
                     </div>
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center mt-3">
                         <div class="col-9 text-center p-0" style="color: #6A73AB">
                             {% for message in app.flashes('success') %}
                                 <p>{{ message }}</p>
@@ -55,25 +55,34 @@
                 <div class="row justify-content-center align-items-center mb-3 mt-4">
                     <div class="col-9 title-nouveau-compte text-center align-content-center p-0 fs-3">Réinitialiser mot de passe</div>
                 </div>
-                <div class="row justify-content-center align-items-center">
-                    <div class="col-7 p-0" style="margin-bottom: 12px">
-                        <div class="custom-dropdown">
-                            <button class="btn-films custom-select-btn-employe">Choix employé</button>
-                            <div class="custom-options-employe">
-                                {% for employe in employes %}
-                                    <div class="custom-option-employe" data-value="{{ employe.id }}">{{ employe.email }}</div>
-                                {% endfor %}
+                <form method="post">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-7 p-0" style="margin-bottom: 12px">
+                            <div class="custom-dropdown">
+                                <button class="btn-films custom-select-btn-employe">Choix employé</button>
+                                <div class="custom-options-employe">
+                                    {% for employe in employes %}
+                                        <div class="custom-option-employe" data-value="{{ employe.id }}">{{ employe.email }}</div>
+                                    {% endfor %}
+                                </div>
+                                <input type="hidden" name="employe_id" id="employe-input">
+                                <span class="bi bi-x-circle d-none close-icon-employe"></span>
                             </div>
-                            <input type="hidden" name="Employe" id="employe-input">
-                            <span class="bi bi-x-circle d-none close-icon-employe"></span>
                         </div>
                     </div>
-                </div>
-                <div class="row justify-content-center align-items-center mb-3">
-                    <div class="col-7 p-0">
-                        <button id="btn-account-employe" class="w-100 btn-account-employe">REINITIALISER</button>
+                    <div class="row justify-content-center align-items-center mb-3">
+                        <div class="col-7 p-0">
+                            <button type="submit" id="btn-account-employe" class="w-100 btn-account-employe">REINITIALISER</button>
+                        </div>
                     </div>
-                </div>
+                    <div class="row justify-content-center mb-3">
+                        <div class="col-9 text-center p-0" style="color: #6A73AB">
+                            {% for message in app.flashes('successReset') %}
+                                <p>{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="col-11 col-sm-8 col-md-7 col-lg-5 col-xl-5 col-xxl-3 border-register-img p-0">
                 <img class="img-fluid" src="{{ asset('build/images/Cinema.jpg')}}" alt="cinéma">

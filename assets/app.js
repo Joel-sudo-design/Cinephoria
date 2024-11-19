@@ -1254,6 +1254,7 @@ import './styles/app.css';
                 // Au clic sur le bouton choix employés pour afficher/masquer les options
                 $('.custom-select-btn-employe').on('click', function(e) {
                     e.stopPropagation();
+                    e.preventDefault();
                     $('.custom-options-employe').toggle();
                 });
 
