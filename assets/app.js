@@ -1240,7 +1240,7 @@ import './styles/app.css';
                         .catch(error => {console.error(error)});
                 }
         //Compte employé
-            // Création compte
+            // Page Création compte
                 $('#toggleEmployePassword').on('click', function () {
                     const passwordField = $('#employePassword');
                     const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
@@ -1248,7 +1248,7 @@ import './styles/app.css';
                     $(this).toggleClass('bi-eye bi-eye-slash');
                 });
 
-            // Réinnitialiser le mot de passe
+            // Page Réinnitialiser le mot de passe
                 const $clearIconEmploye = $('.close-icon-employe');
 
                 // Au clic sur le bouton choix employés pour afficher/masquer les options
@@ -1297,6 +1297,7 @@ import './styles/app.css';
                     $('.close-icon-employe').removeClass('btn-hover');
                 });
 
+             //Page réservation
     //Lancement des requètes AJAX au chargement des pages
         if (window.location.pathname === '/administrateur/administration') {LoadFilm();}
     });

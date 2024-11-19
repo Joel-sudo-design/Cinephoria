@@ -923,6 +923,14 @@ footer #navbarBottom .nav-link {
   color: white !important;
 }
 
+.grid-cell {
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 6px;
+  text-align: center;
+}
+
 /* Media queries */
 @media (min-width: 1921px) {
 

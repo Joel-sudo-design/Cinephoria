@@ -419,5 +419,11 @@ class AdministrationController extends AbstractController
 
         return $this->redirectToRoute('app_administration_account_employe');
     }
+
+    #[Route('/reservations', name: 'app_administration_reservations')]
+    public function reservations(): Response
+    {
+        return $this->render('administration/reservations.html.twig');
+    }
 }
 

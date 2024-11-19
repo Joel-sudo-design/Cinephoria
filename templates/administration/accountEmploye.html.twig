@@ -5,7 +5,7 @@
 {% block extra_content_bouton_creation_film %}
     <a class="btn-admin mx-3 justify-content-center text-decoration-none" href="{{ path('app_administration') }}">Création film</a>
     <a class="btn-admin mx-3 justify-content-center text-decoration-none active" href="{{ path('app_administration_account_employe') }}">Compte employé</a>
-    <a class="btn-admin mx-3 justify-content-center text-decoration-none">Données réservations</a>
+    <a class="btn-admin mx-3 justify-content-center text-decoration-none" href="{{ path('app_administration_reservations') }}">Données réservations</a>
 {% endblock %}
 
 {% block body %}
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                 {{ form_end(employeForm) }}
-                <div class="row justify-content-center align-items-center mb-3 mt-4">
+                <div class="row justify-content-center align-items-center mb-3 mt-2">
                     <div class="col-9 title-nouveau-compte text-center align-content-center p-0 fs-3">Réinitialiser mot de passe</div>
                 </div>
                 <form method="post">
