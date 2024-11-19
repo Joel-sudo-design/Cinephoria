@@ -863,6 +863,66 @@ footer #navbarBottom .nav-link {
   color: #6A73AB !important;
 }
 
+#toggleEmployePassword {
+  position: absolute;
+  top:16px;
+  left: 90%;
+  z-index: 10;
+  color: #6A73AB;
+}
+
+.btn-account-employe {
+  background-color: #6A73AB;
+  color: white;
+  border: 2px solid #6A73AB;
+  border-radius: 6px;
+  padding: 0.6rem;
+  transition: all 0.2s ease;
+}
+
+.btn-account-employe:hover {
+  background-color: white;
+  color: #6A73AB;
+  border: 2px solid #6A73AB;
+}
+
+.custom-options-employe {
+  display: none;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  background-color: #6A73AB;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  border: 2px solid white;
+}
+
+.custom-options-employe  {
+  padding: 0.5rem 0.75rem 0.5rem 0.75rem;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.custom-options-employe:hover {
+  background-color: white;
+  color: #6A73AB;
+}
+
+.custom-select-btn-employe.no-arrow::after {
+  background-image: none;
+}
+
+.custom-select-btn-employe.btn-hover {
+  background-color: #6A73AB;
+  color: white !important;
+}
+
+.close-icon-employe.btn-hover, .custom-select-btn-employe:hover ~ .bi-x-circle, .custom-select-btn-employe:focus ~ .bi-x-circle {
+  color: white !important;
+}
+
 /* Media queries */
 @media (min-width: 1921px) {
 

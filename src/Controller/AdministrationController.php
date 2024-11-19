@@ -11,6 +11,7 @@ use App\Entity\User;
 use App\Form\AccountEmployeFormType;
 use App\Repository\CinemaRepository;
 use App\Repository\GenreRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -251,8 +252,9 @@ class AdministrationController extends AbstractController
     }
 
     #[Route('/account_employe', name: 'app_administration_account_employe')]
-    public function accountEmploye(Request $request,EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
+    public function accountEmploye(Request $request,EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher, UserRepository $userRepository): Response
     {
+        $employes = $userRepository->findByRole('ROLE_EMPLOYE');
         $user = new User();
         $form = $this->createForm(AccountEmployeFormType::class, $user);
         $form->handleRequest($request);
@@ -260,6 +262,7 @@ class AdministrationController extends AbstractController
             $plainPassword = $form->get('password')->getData();
             $user->setRoles(['ROLE_EMPLOYE']);
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
+            $user->setVerified(true);
             $entityManager->persist($user);
             $entityManager->flush();
             $this->addFlash('success', 'Le compte est créé');
@@ -268,6 +271,7 @@ class AdministrationController extends AbstractController
 
         return $this->render('administration/accountEmploye.html.twig', [
             'employeForm' => $form,
+            'employes' => $employes
         ]);
     }
 }
