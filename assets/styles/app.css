@@ -706,6 +706,7 @@ footer #navbarBottom .nav-link {
 
 .btn-time-admin:disabled, .btn-date-admin:disabled, .textarea-uniforme:disabled {
   background-color: gray !important;
+  color: white !important;
   cursor: none;
 }
 

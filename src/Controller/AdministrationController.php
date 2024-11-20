@@ -93,17 +93,24 @@ class AdministrationController extends AbstractController
                 $filmArray['date_fin'] = $film->getDateFin()->format('d/m/Y');
             }
 
-            // Votre logique pour récupérer les séances
+            // Récupérer les séances sur 1 jour
             $date_debut = $film->getDateDebut();
             $film_id = $film->getId();
             $seances = $entityManager->getRepository(Seance::class)->findByFilmId($film_id, $date_debut);
 
-            // Ajouter les séances
+            // Ajouter les séances pour 1 jour
             $seancesArray = [];
             foreach ($seances as $Seance) {
                 $seancesArray[] = $Seance->toArray();
             }
             $filmArray['seances'] = $seancesArray ?: [];
+
+            // Récupérer les séances totales
+            $seancesTotal = $film->getSeance();
+            foreach ($seancesTotal as $seance) {
+                $seance->toArrayReservation();
+            }
+            $filmArray['reservations'] = $seancesTotal;
 
             // Ajouter le film au tableau final
             $AllFilmsArray[] = $filmArray;
@@ -204,7 +211,7 @@ class AdministrationController extends AbstractController
                     $heureFin = \DateTime::createFromFormat('H:i', $stringHeureFin);
 
                     // Vérification des conditions avant de passer à la méthode getSeance
-                    if ($heureDebut && $heureFin && $dateDebut && $dateFin && is_numeric($price) && is_numeric($places) && is_numeric($stringSalle)) {
+                    if ($heureDebut && $heureFin && $dateDebut && $dateFin && is_numeric($price) && is_numeric($stringSalle)) {
                         // Appeler la méthode getSeance avec les données appropriées
                         $this->getSeance($heureDebut, $heureFin, $price, $dateDebut, $dateFin, ${"salle{$format}"}, $film, $entityManager);
                     }
@@ -214,9 +221,8 @@ class AdministrationController extends AbstractController
         if ($description != '') {
             $film->setDescription($description);
         }
-        if (is_numeric($stringSalle) && is_numeric($places)) {
+        if (is_numeric($stringSalle)) {
             $salle = $entityManager->getRepository(Salle::class)->findOneBy(['id' => $stringSalle]);
-            $salle->setPlaces($places);
             $entityManager->persist($salle);
             $entityManager->flush();
         }
@@ -253,6 +259,10 @@ class AdministrationController extends AbstractController
         $seances = $film->getSeance();
         $cinemas = $film->getCinema();
         foreach ($seances as $seance) {
+            $reservation = $seance->getReservation();
+            foreach ($reservation as $res) {
+                $entityManager->remove($res);
+            }
             $entityManager->remove($seance);
         }
         foreach ($cinemas as $cinema) {
@@ -424,11 +434,6 @@ class AdministrationController extends AbstractController
     public function reservations(): Response
     {
         return $this->render('administration/reservations.html.twig');
-    }
-
-    public function numberReservations(Request $request,EntityManagerInterface $entityManager): Response
-    {
-        $films = $entityManager->getRepository(Film::class)->findAll();
     }
 }
 

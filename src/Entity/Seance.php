@@ -44,7 +44,7 @@ class Seance
     /**
      * @var Collection<int, reservation>
      */
-    #[ORM\OneToMany(targetEntity: reservation::class, mappedBy: 'seance')]
+    #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'seance')]
     private Collection $reservation;
 
     public function __construct()
@@ -134,9 +134,19 @@ class Seance
     {
         return [
             'qualite' => $this->salle->getQualite(),
+            'date_seance' => $this->date->format('Y-m-d'),
             'heure_debut_seance' => $this->heure_debut->format('H:i'),
             'heure_fin_seance' => $this->heure_fin->format('H:i'),
-            'price' => $this->price
+            'price' => $this->price,
+            'reservation' => $this->reservation->count()
+        ];
+    }
+
+    public function toArrayReservation(): array
+    {
+        return [
+            'date_seance' => $this->date->format('Y-m-d'),
+            'reservation' => $this->reservation->count()
         ];
     }
 

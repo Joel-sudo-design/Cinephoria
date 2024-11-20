@@ -422,15 +422,7 @@ import './styles/app.css';
                                                                     </div>
                                                                     <div class="d-flex justify-content-center align-items-center">
                                                                         <div class="text-white align-content-center fs-5 me-2">Places:</div> 
-                                                                        <div class="dropdown dropdown-modal-admin align-content-center">
-                                                                            <button class="btn btn-secondary nav-link dropdown-toggle color-places p-2 pe-1" type="button" id="dropdownMenuPlaces-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                                Nbre
-                                                                            </button>
-                                                                            <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuPlaces">
-                                                                                <li><a class="dropdown-item drop-places" href="#">22</a></li>
-                                                                                <li><a class="dropdown-item drop-places" href="#">44</a></li>  
-                                                                            </ul>
-                                                                        </div>
+                                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" style="width: 5rem" placeholder="" id="Textarea-${film.id}" disabled></textarea>
                                                                     </div> 
                                                                 </div>
                                                             </div>
@@ -444,12 +436,12 @@ import './styles/app.css';
                                                                         <div class="col-12 d-flex align-items-center justify-content-start">
                                                                             <div class="text-white align-content-center fs-5 me-2">Heure 3DX:</div>
                                                                             <div class="position-relative me-3">
-                                                                                <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-3DX-${i + 1}-${film.id}" placeholder="Début" readonly value="${seance.heure_debut_seance}">
+                                                                                <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-3DX-${i + 1}-${film.id}" placeholder="Début" value="${seance.heure_debut_seance} readonly>
                                                                                 <span class="bi bi-clock" id="icon-clock-debut-admin-3DX-${i + 1}-${film.id}"></span>
                                                                                 <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-3DX-${i + 1}-${film.id}"></span>
                                                                             </div>
                                                                             <div class="position-relative me-3">
-                                                                                <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-3DX-${i + 1}-${film.id}" placeholder="Fin" readonly value="${seance.heure_fin_seance}">
+                                                                                <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-3DX-${i + 1}-${film.id}" placeholder="Fin" value="${seance.heure_debut_seance} readonly>
                                                                                 <span class="bi bi-clock" id="icon-clock-fin-admin-3DX-${i + 1}-${film.id}"></span>
                                                                                 <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-3DX-${i + 1}-${film.id}"></span>
                                                                             </div>
@@ -466,12 +458,12 @@ import './styles/app.css';
                                                                                 <div class="col-12 d-flex align-items-center justify-content-start">
                                                                                     <div class="text-white align-content-center fs-5 me-2">Heure 3DX:</div>
                                                                                     <div class="position-relative me-3">
-                                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-3DX-${i + 1 + total3DX}-${film.id}" placeholder="Début" readonly>
+                                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-3DX-${i + 1 + total3DX}-${film.id}" placeholder="Début">
                                                                                         <span class="bi bi-clock" id="icon-clock-debut-admin-3DX-${i + 1 + total3DX}-${film.id}"></span>
                                                                                         <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-3DX-${i + 1 + total3DX}-${film.id}"></span>
                                                                                     </div>
                                                                                     <div class="position-relative me-3">
-                                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-3DX-${i + 1 + total3DX}-${film.id}" placeholder="Fin" readonly>
+                                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-3DX-${i + 1 + total3DX}-${film.id}" placeholder="Fin">
                                                                                         <span class="bi bi-clock" id="icon-clock-fin-admin-3DX-${i + 1 + total3DX}-${film.id}"></span>
                                                                                         <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-3DX-${i + 1 + total3DX}-${film.id}"></span>
                                                                                     </div>
@@ -517,12 +509,12 @@ import './styles/app.css';
                                                                             <div class="col-12 d-flex align-items-center justify-content-start">
                                                                                 <div class="text-white align-content-center fs-5 me-2">Heure 4DX:</div>
                                                                                 <div class="position-relative me-3">
-                                                                                    <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-4DX-${i + 1 + total4DX}-${film.id}" placeholder="Début" readonly>
+                                                                                    <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-4DX-${i + 1 + total4DX}-${film.id}" placeholder="Début">
                                                                                     <span class="bi bi-clock" id="icon-clock-debut-admin-4DX-${i + 1 + total4DX}-${film.id}"></span>
                                                                                     <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-4DX-${i + 1 + total4DX}-${film.id}"></span>
                                                                                 </div>
                                                                                 <div class="position-relative me-3">
-                                                                                    <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-4DX-${i + 1 + total4DX}-${film.id}" placeholder="Fin" readonly>
+                                                                                    <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-4DX-${i + 1 + total4DX}-${film.id}" placeholder="Fin">
                                                                                     <span class="bi bi-clock" id="icon-clock-fin-admin-4DX-${i + 1 + total4DX}-${film.id}"></span>
                                                                                     <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-4DX-${i + 1 + total4DX}-${film.id}"></span>
                                                                                 </div>
@@ -566,12 +558,12 @@ import './styles/app.css';
                                                                                 <div class="col-12 d-flex align-items-center justify-content-start">
                                                                                     <div class="text-white align-content-center fs-5 me-2">Heure IMAX:</div>
                                                                                     <div class="position-relative me-3">
-                                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-IMAX-${i + 1 + totalIMAX}-${film.id}" placeholder="Début" readonly>
+                                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-IMAX-${i + 1 + totalIMAX}-${film.id}" placeholder="Début">
                                                                                         <span class="bi bi-clock" id="icon-clock-debut-admin-IMAX-${i + 1 + totalIMAX}-${film.id}"></span>
                                                                                         <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-IMAX-${i + 1 + totalIMAX}-${film.id}"></span>
                                                                                     </div>
                                                                                     <div class="position-relative me-3">
-                                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-IMAX-${i + 1 + totalIMAX}-${film.id}" placeholder="Fin" readonly>
+                                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-IMAX-${i + 1 + totalIMAX}-${film.id}" placeholder="Fin">
                                                                                         <span class="bi bi-clock" id="icon-clock-fin-admin-IMAX-${i + 1 + totalIMAX}-${film.id}"></span>
                                                                                         <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-IMAX-${i + 1 + totalIMAX}-${film.id}"></span>
                                                                                     </div>
@@ -595,7 +587,7 @@ import './styles/app.css';
                                                                             <div class="col-12 d-flex align-items-center justify-content-start">
                                                                                 <div class="text-white align-content-center fs-5 me-2">Heure Dolby:</div>
                                                                                 <div class="position-relative me-3">
-                                                                                    <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-Dolby-${i + 1}-${film.id}" placeholder="Début" readonly value="${seance.heure_debut_seance}">
+                                                                                    <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-Dolby-${i + 1}-${film.id}" placeholder="Début" value="${seance.heure_debut_seance} readonly">
                                                                                     <span class="bi bi-clock" id="icon-clock-debut-admin-Dolby-${i + 1}-${film.id}"></span>
                                                                                     <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-Dolby-${i + 1}-${film.id}"></span>
                                                                                 </div>
@@ -616,12 +608,12 @@ import './styles/app.css';
                                                                                 <div class="col-12 d-flex align-items-center justify-content-start">
                                                                                     <div class="text-white align-content-center fs-5 me-2">Heure Dolby:</div>
                                                                                     <div class="position-relative me-3">
-                                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-Dolby-${i + 1 + totalDolby}-${film.id}" placeholder="Début" readonly>
+                                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-Dolby-${i + 1 + totalDolby}-${film.id}" placeholder="Début">
                                                                                         <span class="bi bi-clock" id="icon-clock-debut-admin-Dolby-${i + 1 + totalDolby}-${film.id}"></span>
                                                                                         <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-Dolby-${i + 1 + totalDolby}-${film.id}"></span>
                                                                                     </div>
                                                                                     <div class="position-relative me-3">
-                                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-Dolby-${i + 1 + totalDolby}-${film.id}" placeholder="Fin" readonly>
+                                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-Dolby-${i + 1 + totalDolby}-${film.id}" placeholder="Fin">
                                                                                         <span class="bi bi-clock" id="icon-clock-fin-admin-Dolby-${i + 1 + totalDolby}-${film.id}"></span>
                                                                                         <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-Dolby-${i + 1 + totalDolby}-${film.id}"></span>
                                                                                     </div>
@@ -688,6 +680,8 @@ import './styles/app.css';
                                     });
 
                                 //modal
+                                    // Affichage Nom du film
+                                        $('#TextareaNom-'+film.id).text('')
                                     // Upload image
                                             let imageData = null;
                                             $('#uploadButton-'+film.id).on('click', function () {
@@ -706,27 +700,33 @@ import './styles/app.css';
                                         });
 
                                     //Menu déroulant genre
+                                            const genre = $('#dropdownMenuGenre-'+film.id);
+                                            genre.text('Choix');
                                             let selectedGenre= '';
                                             $('.drop-genre').click(function(e) {
                                                 e.preventDefault();
                                                 selectedGenre = $(this).text();
-                                                $('#dropdownMenuGenre-'+film.id).text(selectedGenre);
+                                                genre.text(selectedGenre);
                                             });
 
                                     //Menu déroulant age
+                                            const age = $('#dropdownMenuAge-'+film.id);
+                                            age.text('Choix')
                                             let selectedAge= '';
-                                            $('.drop-age').click(function(e) {
+                                            age.click(function(e) {
                                                 e.preventDefault();
                                                 selectedAge= $(this).text();
-                                                $('#dropdownMenuAge-'+film.id).text(selectedAge);
+                                                age.text(selectedAge);
                                             });
 
                                     //Menu déroulant Cinéma
+                                            const cinema = $('#dropdownMenuCinema-'+film.id);
+                                            cinema.text('Choix');
                                             let selectedCinema= '';
-                                            $('.drop-cinema').click(function(e) {
+                                            cinema.click(function(e) {
                                                 e.preventDefault();
                                                 selectedCinema= $(this).text();
-                                                $('#dropdownMenuCinema-'+film.id).text(selectedCinema);
+                                                cinema.text(selectedCinema);
                                             });
 
                                     //Menu déroulant Coup de coeur
@@ -851,14 +851,11 @@ import './styles/app.css';
                                                         if ((heureDebut !== '' && heureFin !== '') && prix === '') {
                                                             timeError = true;
                                                         }
-                                                        if ((heureDebut !== '' && heureFin !== '') && dropdownPlaces.text().trim() === 'Nbre') {
-                                                            timeError = true;
-                                                        }
                                                     }
                                                 });
 
                                                 if (timeError) {
-                                                    alert('Veuillez renseigner une heure de fin, une date de début, une date de fin, le nombre de places et le prix lorsque vous spécifiez une heure de début.');
+                                                    alert('Veuillez renseigner une heure de fin, une date de début, une date de fin et le prix lorsque vous spécifiez une heure de début.');
                                                     return;
                                                 }
 
@@ -1167,19 +1164,17 @@ import './styles/app.css';
                                                 });
 
                                                 // Desactiver le timepicker "Fin" et prix si "Début" est vide
-                                                if ($timepickerFin.val().trim() ==='') {
+                                                if ($timepickerDebut.val().trim() !=='' && $timepickerFin.val().trim() !=='') {
+                                                    $timepickerDebut.attr('disabled', true);
                                                     $timepickerFin.attr('disabled', true);
                                                     $price.attr('disabled', true);
-                                                }
-
-                                                // Afficher les icônes de croix si les champs sont déjà remplis
-                                                if ($timepickerDebut.val().trim() !== '') {
-                                                    $clockIconDebut.addClass('d-none');
-                                                    $clearIconDebut.removeClass('d-none');
-                                                }
-                                                if ($timepickerFin.val().trim() !== '') {
-                                                    $clockIconFin.addClass('d-none');
-                                                    $clearIconFin.removeClass('d-none');
+                                                    $clearIconDebut.addClass('d-none');
+                                                    $clearIconFin.addClass('d-none');
+                                                    $clockIconDebut.removeClass('d-none');
+                                                    $clockIconFin.removeClass('d-none');
+                                                }else {
+                                                    $timepickerFin.attr('disabled', true);
+                                                    $price.attr('disabled', true);
                                                 }
 
                                                 // Icônes pour "Début"
@@ -1305,7 +1300,8 @@ import './styles/app.css';
                     orientation: "bottom",
                     language: "fr",
                     autoclose: true
-                }).on('changeDate', function () {
+                })
+                    .on('changeDate', function () {
                     // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
                     $calendarIcon.addClass('d-none');
                     $clearIcon.removeClass('d-none');
@@ -1346,6 +1342,7 @@ import './styles/app.css';
                 $calendarIcon.on('click', function () {
                     $datepicker.focus();
                 });
+
     //Lancement des requètes AJAX au chargement des pages
         if (window.location.pathname === '/administrateur/administration') {LoadFilm();}
     });
