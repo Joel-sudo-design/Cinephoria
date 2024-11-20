@@ -41,9 +41,16 @@ class Seance
     #[ORM\ManyToMany(targetEntity: user::class, inversedBy: 'seances')]
     private Collection $user;
 
+    /**
+     * @var Collection<int, reservation>
+     */
+    #[ORM\OneToMany(targetEntity: reservation::class, mappedBy: 'seance')]
+    private Collection $reservation;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
+        $this->reservation = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -153,6 +160,36 @@ class Seance
     public function removeUser(user $user): static
     {
         $this->user->removeElement($user);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, reservation>
+     */
+    public function getReservation(): Collection
+    {
+        return $this->reservation;
+    }
+
+    public function addReservation(reservation $reservation): static
+    {
+        if (!$this->reservation->contains($reservation)) {
+            $this->reservation->add($reservation);
+            $reservation->setSeance($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(reservation $reservation): static
+    {
+        if ($this->reservation->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getSeance() === $this) {
+                $reservation->setSeance(null);
+            }
+        }
 
         return $this;
     }

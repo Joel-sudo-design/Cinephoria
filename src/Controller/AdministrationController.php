@@ -425,5 +425,10 @@ class AdministrationController extends AbstractController
     {
         return $this->render('administration/reservations.html.twig');
     }
+
+    public function numberReservations(Request $request,EntityManagerInterface $entityManager): Response
+    {
+        $films = $entityManager->getRepository(Film::class)->findAll();
+    }
 }
 
