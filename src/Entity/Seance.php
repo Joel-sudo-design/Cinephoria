@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SeanceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,12 +25,6 @@ class Seance
     #[ORM\Column]
     private ?int $price = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $is_reserved_by = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $is_seen_by = null;
-
     #[ORM\ManyToOne(inversedBy: 'seances')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Salle $salle = null;
@@ -38,6 +34,17 @@ class Seance
 
     #[ORM\ManyToOne(inversedBy: 'seance')]
     private ?Film $film = null;
+
+    /**
+     * @var Collection<int, user>
+     */
+    #[ORM\ManyToMany(targetEntity: user::class, inversedBy: 'seances')]
+    private Collection $user;
+
+    public function __construct()
+    {
+        $this->user = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -76,30 +83,6 @@ class Seance
     public function setPrice(int $price): static
     {
         $this->price = $price;
-
-        return $this;
-    }
-
-    public function getIsReservedBy(): ?string
-    {
-        return $this->is_reserved_by;
-    }
-
-    public function setIsReservedBy(?string $is_reserved_by): static
-    {
-        $this->is_reserved_by = $is_reserved_by;
-
-        return $this;
-    }
-
-    public function getIsSeenBy(): ?string
-    {
-        return $this->is_seen_by;
-    }
-
-    public function setIsSeenBy(?string $is_seen_by): static
-    {
-        $this->is_seen_by = $is_seen_by;
 
         return $this;
     }
@@ -148,6 +131,30 @@ class Seance
             'heure_fin_seance' => $this->heure_fin->format('H:i'),
             'price' => $this->price
         ];
+    }
+
+    /**
+     * @return Collection<int, user>
+     */
+    public function getUser(): Collection
+    {
+        return $this->user;
+    }
+
+    public function addUser(user $user): static
+    {
+        if (!$this->user->contains($user)) {
+            $this->user->add($user);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(user $user): static
+    {
+        $this->user->removeElement($user);
+
+        return $this;
     }
 
 }
