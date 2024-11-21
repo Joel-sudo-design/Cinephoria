@@ -875,21 +875,6 @@ import './styles/app.css';
                                             const $calendarIconFin = $('#icon-calendar-fin-admin-'+film.id);
                                             const $clearIconFin = $('#close-icon-date-fin-admin-'+film.id);
 
-                                    // Désactiver les datepickers si une date de début et une date de fin sont déjà renseignées
-
-                                            if ($datepickerDebut.attr('placeholder').trim() !== '' && $datepickerFin.attr('placeholder').trim() !== '') {
-                                                $datepickerDebut.prop('disabled', true);
-                                                $datepickerFin.prop('disabled', true);
-                                            } else {
-                                                $datepickerDebut.prop('disabled', false);
-                                                // Si la date de début est renseignée, on active la date de fin
-                                                if ($datepickerDebut.val().trim() !== '') {
-                                                    $datepickerFin.prop('disabled', false);
-                                                } else {
-                                                    $datepickerFin.prop('disabled', true);
-                                                }
-                                            }
-
                                         //Date début
                                             $datepickerDebut.val(film.date_debut);
                                             $datepickerDebut.datepicker({
@@ -1017,6 +1002,18 @@ import './styles/app.css';
                                             $calendarIconFin.on('click', function () {
                                                 $datepickerFin.focus();
                                             });
+
+                                            // Désactiver les datepickers si une date de début et une date de fin sont déjà renseignées
+                                                if ($datepickerDebut.val().trim() && $datepickerFin.val().trim()) {
+                                                    $datepickerDebut.prop('disabled', true);
+                                                    $datepickerFin.prop('disabled', true);
+                                                    $clearIconDebut.addClass('d-none');
+                                                    $clearIconFin.addClass('d-none');
+                                                    $calendarIconDebut.removeClass('d-none');
+                                                    $calendarIconFin.removeClass('d-none');
+                                                } else {
+                                                    $datepickerFin.prop('disabled', true);
+                                                }
 
                                     //Timepicker
                                             // Fonction pour générer les constantes pour chaque combinaison
