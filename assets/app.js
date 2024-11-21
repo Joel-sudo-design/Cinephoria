@@ -1254,14 +1254,14 @@ import './styles/app.css';
                 const $clearIconEmploye = $('.close-icon-employe');
 
                 // Au clic sur le bouton choix employés pour afficher/masquer les options
-                $('.custom-select-btn-employe').on('click', function(e) {
+                    $('.custom-select-btn-employe').on('click', function(e) {
                     e.stopPropagation();
                     e.preventDefault();
                     $('.custom-options-employe').toggle();
                 });
 
                 // Sélection d'une option de employés
-                $('.custom-option-employe').on('click', function() {
+                    $('.custom-option-employe').on('click', function() {
                     let selectedText = $(this).text();
                     let selectedValue = $(this).data('value');
                     let customSelect = $('.custom-select-btn-employe');
@@ -1273,7 +1273,7 @@ import './styles/app.css';
                 });
 
                 // Au clic sur l'icône "X" pour réinitialiser la sélection
-                $clearIconEmploye.on('click', function() {
+                    $clearIconEmploye.on('click', function() {
                     let customSelect = $('.custom-select-btn-employe');
                     $(this).addClass('d-none');
                     $('#employe-input').val('');
@@ -1283,77 +1283,26 @@ import './styles/app.css';
                 });
 
                 // Clic en dehors du menu pour fermer les options
-                $(window).on('click', function() {
+                    $(window).on('click', function() {
                     $('.custom-options-employe').hide();
                 });
 
                 // Appliquer le style de hover/focus
-                $clearIconEmploye.on('mouseenter focus', function() {
+                    $clearIconEmploye.on('mouseenter focus', function() {
                     $('.custom-select-btn-employe').addClass('btn-hover');
                     $('.close-icon-employe').addClass('btn-hover');
                 });
 
                 // Retirer le style quand on quitte le survol/focus
-                $clearIconEmploye.on('mouseleave blur', function() {
+                    $clearIconEmploye.on('mouseleave blur', function() {
                     $('.custom-select-btn-employe').removeClass('btn-hover');
                     $('.close-icon-employe').removeClass('btn-hover');
                 });
 
              //Page réservation
-                // Datepicker
-                const $datepickerReservations = $('#datepicker_reservations');
-                const $calendarIconReservations = $('#icon-calendar-reservations');
-                const $clearIconReservations = $('.close-icon-reservations');
-                $datepickerReservations.datepicker({
-                    format: "dd/mm/yyyy",
-                    orientation: "bottom",
-                    language: "fr",
-                    autoclose: true
-                })
-                    .on('changeDate', function () {
-                    // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
-                    $calendarIconReservations.addClass('d-none');
-                    $clearIconReservations.removeClass('d-none');
-                });
-
-                // Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
-                $clearIconReservations.on('click', function () {
-                    $datepickerReservations.datepicker('clearDates');
-                    $calendarIconReservations.removeClass('d-none');
-                    $clearIconReservations.addClass('d-none');
-                });
-
-                // Appliquer le style de hover/focus
-                $clearIconReservations.on('mouseenter focus', function () {
-                    $datepickerReservations.addClass('btn-hover');
-                    $clearIconReservations.addClass('btn-hover');
-                });
-
-                // Au clic sur l'icône de croix, on réinitialise la date
-                $calendarIconReservations.on('mouseenter focus', function () {
-                    $datepickerReservations.addClass('btn-hover');
-                    $calendarIconReservations.addClass('btn-hover');
-                });
-
-                // Retirer le style quand on quitte le survol/focus
-                $clearIconReservations.on('mouseleave blur', function () {
-                    $datepickerReservations.removeClass('btn-hover');
-                    $clearIconReservations.removeClass('btn-hover');
-                });
-
-                // Retirer le style quand on quitte le survol/focus
-                $calendarIconReservations.on('mouseleave blur', function () {
-                    $datepickerReservations.removeClass('btn-hover');
-                    $calendarIconReservations.removeClass('btn-hover');
-                });
-
-                // Ouvrir le calendrier
-                $calendarIconReservations.on('click', function () {
-                    $datepickerReservations.focus();
-                });
 
                 //Fonctions générer les réservations
-                function loadReservations() {
+                    function loadReservations() {
                     $('#reservations-container').empty();
                     axios.get('/administrateur/administration/film')
                         .then(response => {
@@ -1367,16 +1316,79 @@ import './styles/app.css';
                                     datesWithReservations[date] += film.reservations[date];
                                 });
                             });
-                            console.log(datesWithReservations);
+                            $('#datepicker_reservations').datepicker({
+                                beforeShowDay: function(date) {
+                                    const dateString = $.datepicker.formatDate('dd/mm/yyyy', date);
+                                    const reservations = datesWithReservations[dateString] || 0;
+                                    const day = date.getDate();
+                                    if (reservations > 0) {
+                                        return [true, 'ui-datepicker-has-reservation', 'Réservations: ' + reservations];
+                                    } else {
+                                        return [true, '', 'Aucune réservation'];
+                                    }
+                                }
+                            });
                         })
                         .catch(error => {
                             console.error(error);
                         })
                 }
 
-                 //Affichage des réservations sur clic bouton données réservations
-                $('#btn-reservations').click(function () {
+                //Affichage des réservations sur clic bouton données réservations
+                    $('#btn-reservations').click(function () {
                     loadReservations()
+                });
+
+                // Datepicker
+                    const $datepickerReservations = $('#datepicker_reservations');
+                    const $calendarIconReservations = $('#icon-calendar-reservations');
+                    const $clearIconReservations = $('.close-icon-reservations');
+                    $datepickerReservations.datepicker({
+                        format: "dd/mm/yyyy",
+                        orientation: "bottom",
+                        language: "fr",
+                        autoclose: true
+                    })
+                        .on('changeDate', function () {
+                        // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
+                        $calendarIconReservations.addClass('d-none');
+                        $clearIconReservations.removeClass('d-none');
+                    });
+
+                // Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
+                    $clearIconReservations.on('click', function () {
+                    $datepickerReservations.datepicker('clearDates');
+                    $calendarIconReservations.removeClass('d-none');
+                    $clearIconReservations.addClass('d-none');
+                });
+
+                // Appliquer le style de hover/focus
+                    $clearIconReservations.on('mouseenter focus', function () {
+                    $datepickerReservations.addClass('btn-hover');
+                    $clearIconReservations.addClass('btn-hover');
+                });
+
+                // Au clic sur l'icône de croix, on réinitialise la date
+                    $calendarIconReservations.on('mouseenter focus', function () {
+                    $datepickerReservations.addClass('btn-hover');
+                    $calendarIconReservations.addClass('btn-hover');
+                });
+
+                // Retirer le style quand on quitte le survol/focus
+                    $clearIconReservations.on('mouseleave blur', function () {
+                    $datepickerReservations.removeClass('btn-hover');
+                    $clearIconReservations.removeClass('btn-hover');
+                });
+
+                // Retirer le style quand on quitte le survol/focus
+                    $calendarIconReservations.on('mouseleave blur', function () {
+                    $datepickerReservations.removeClass('btn-hover');
+                    $calendarIconReservations.removeClass('btn-hover');
+                });
+
+                // Ouvrir le calendrier
+                    $calendarIconReservations.on('click', function () {
+                    $datepickerReservations.focus();
                 });
 
     //Lancement des requètes AJAX au chargement des pages

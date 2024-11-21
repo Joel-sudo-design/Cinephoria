@@ -144,7 +144,7 @@ class Seance
     public function toArrayReservation(): array
     {
         return [
-            'date' => $this->date->format('Y-m-d'),
+            'date' => $this->date->format('d/m/Y'),
             'reservation' => $this->reservation->count()
         ];
     }
