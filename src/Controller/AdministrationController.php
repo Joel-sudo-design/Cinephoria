@@ -107,10 +107,26 @@ class AdministrationController extends AbstractController
 
             // Récupérer les séances totales
             $seancesTotal = $film->getSeance();
+            $reservations = [];
             foreach ($seancesTotal as $seance) {
-                $seance->toArrayReservation();
+                $reservations[] = $seance->toArrayReservation();
             }
-            $filmArray['reservations'] = $seancesTotal;
+
+            // Regrouper les réservations par date
+            $reservationsByDate = [];
+
+            foreach ($reservations as $reservation) {
+                $date = $reservation['date'];
+
+                // Initialiser le cumul pour cette date si elle n'existe pas encore
+                if (!isset($reservationsByDate[$date])) {
+                    $reservationsByDate[$date] = 0;
+                }
+
+                // Ajouter le nombre de réservations
+                $reservationsByDate[$date] += $reservation['reservation'];
+                $filmArray['reservations'] = $reservationsByDate;
+            }
 
             // Ajouter le film au tableau final
             $AllFilmsArray[] = $filmArray;
@@ -181,7 +197,7 @@ class AdministrationController extends AbstractController
             $film->setAgeMinimum($age);
         }
         if ($label != '') {
-            $film->setLabel(false);
+            $film->setLabel($label);
         }else{$film->setLabel($label);}
         if ($dateDebut != '') {
             $film->setDateDebut($dateDebut);
@@ -270,6 +286,11 @@ class AdministrationController extends AbstractController
         }
         $film->setDateDebut(null);
         $film->setDateFin(null);
+        $film->setName('');
+        $film->setGenre(null);
+        $film->setAgeMinimum(null);
+        $film->setLabel(false);
+        $film->setDescription('');
         $entityManager->persist($film);
         $entityManager->flush();
         return new JsonResponse(['status' => 'champs reset']);

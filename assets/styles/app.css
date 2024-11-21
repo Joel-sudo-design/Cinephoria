@@ -704,11 +704,28 @@ footer #navbarBottom .nav-link {
   color: #6A73AB;
 }
 
-.btn-time-admin:disabled, .btn-date-admin:disabled, .textarea-uniforme:disabled {
+.btn-time-admin:disabled::placeholder,
+.btn-date-admin:disabled::placeholder,
+.textarea-uniforme:disabled::placeholder {
+  color: white !important;
+  opacity: 1;
+}
+
+.btn-time-admin:disabled,
+.btn-date-admin:disabled,
+.textarea-uniforme:disabled,
+.btn-date-admin:disabled{
   background-color: gray !important;
   color: white !important;
-  cursor: none;
+  cursor: not-allowed;
 }
+
+.btn-time-admin:disabled ~ .bi-clock,
+.btn-date-admin:disabled ~ .bi-x-circle,
+.btn-date-admin:disabled ~ .bi-calendar{
+  color: white !important;
+}
+
 
 .flatpickr-time {
   background-color: #6A73AB !important;
