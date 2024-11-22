@@ -22,7 +22,7 @@ class Film
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $name = '';
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 1000, nullable: true)]
     private ?string $description = '';
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]

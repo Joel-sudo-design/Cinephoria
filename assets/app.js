@@ -408,9 +408,9 @@ import './styles/app.css';
                                                                     <!--3DX-->
                                                                     <div id="row-3DX-${film.id}" class="row mt-3 d-none">
                                                                         ${(() => {
-                                        const total3DX = film.seances.filter(seance => seance.qualite === "3DX").length;
-                                        const seances3DX = film.seances.filter(seance => seance.qualite === "3DX");
-                                        return seances3DX.map((seance, i) => seance.qualite === "3DX" ? `
+                                                                            const total3DX = film.seances.filter(seance => seance.qualite === "3DX").length;
+                                                                            const seances3DX = film.seances.filter(seance => seance.qualite === "3DX");
+                                                                            return seances3DX.map((seance, i) => seance.qualite === "3DX" ? `
                                                                             <div class="row mb-3">   
                                                                                 <div class="col-12 d-flex align-items-center justify-content-start">
                                                                                     <div class="text-white align-content-center fs-5 me-2">Heure 3DX:</div>
@@ -420,7 +420,7 @@ import './styles/app.css';
                                                                                         <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-3DX-${i + 1}-${film.id}"></span>
                                                                                     </div>
                                                                                     <div class="position-relative me-3">
-                                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-3DX-${i + 1}-${film.id}" placeholder="${seance.heure_debut_seance}" readonly>
+                                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-3DX-${i + 1}-${film.id}" placeholder="${seance.heure_fin_seance}" readonly>
                                                                                         <span class="bi bi-clock" id="icon-clock-fin-admin-3DX-${i + 1}-${film.id}"></span>
                                                                                         <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-3DX-${i + 1}-${film.id}"></span>
                                                                                     </div>
@@ -431,8 +431,8 @@ import './styles/app.css';
                                                                                     </div>
                                                                                 </div> 
                                                                             </div>
-                                                                        ` : '').join('') +
-                                            [...Array(4 - total3DX)].map((_, i) => `
+                                                                            ` : '').join('') +
+                                                                                [...Array(4 - total3DX)].map((_, i) => `
                                                                                     <div class="row mb-3"> 
                                                                                         <div class="col-12 d-flex align-items-center justify-content-start">
                                                                                             <div class="text-white align-content-center fs-5 me-2">Heure 3DX:</div>
@@ -454,14 +454,14 @@ import './styles/app.css';
                                                                                         </div>                                                                                                                                 
                                                                                     </div>
                                                                                 `).join('');
-                                    })()}
+                                                                        })()}
                                                                     </div>
                                                                     <!--4DX-->
                                                                     <div id="row-4DX-${film.id}" class="row mt-3 d-none">                                          
                                                                         ${(() => {
-                                        const total4DX = film.seances.filter(seance => seance.qualite === "4DX").length;
-                                        const seances4DX = film.seances.filter(seance => seance.qualite === "4DX");
-                                        return seances4DX.map((seance, i) => seance.qualite === "4DX" ? `
+                                                                            const total4DX = film.seances.filter(seance => seance.qualite === "4DX").length;
+                                                                            const seances4DX = film.seances.filter(seance => seance.qualite === "4DX");
+                                                                            return seances4DX.map((seance, i) => seance.qualite === "4DX" ? `
                                                                                 <div class="row mb-3">   
                                                                                     <div class="col-12 d-flex align-items-center justify-content-start">
                                                                                         <div class="text-white align-content-center fs-5 me-2">Heure 4DX:</div>
@@ -471,7 +471,7 @@ import './styles/app.css';
                                                                                             <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-4DX-${i + 1}-${film.id}"></span>
                                                                                         </div>
                                                                                         <div class="position-relative me-3">
-                                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-4DX-${i + 1}-${film.id}" placeholder="${seance.heure_debut_seance}" readonly>
+                                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-4DX-${i + 1}-${film.id}" placeholder="${seance.heure_fin_seance}" readonly>
                                                                                             <span class="bi bi-clock" id="icon-clock-fin-admin-4DX-${i + 1}-${film.id}"></span>
                                                                                             <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-4DX-${i + 1}-${film.id}"></span>
                                                                                         </div>
@@ -483,56 +483,58 @@ import './styles/app.css';
                                                                                     </div> 
                                                                                 </div>
                                                                             ` : '').join('') +
-                                            [...Array(4 - total4DX)].map((_, i) => `
-                                                                                <div class="row mb-3"> 
-                                                                                    <div class="col-12 d-flex align-items-center justify-content-start">
-                                                                                        <div class="text-white align-content-center fs-5 me-2">Heure 4DX:</div>
-                                                                                        <div class="position-relative me-3">
-                                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-4DX-${i + 1 + total4DX}-${film.id}" placeholder="Début">
-                                                                                            <span class="bi bi-clock" id="icon-clock-debut-admin-4DX-${i + 1 + total4DX}-${film.id}"></span>
-                                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-4DX-${i + 1 + total4DX}-${film.id}"></span>
-                                                                                        </div>
-                                                                                        <div class="position-relative me-3">
-                                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-4DX-${i + 1 + total4DX}-${film.id}" placeholder="Fin">
-                                                                                            <span class="bi bi-clock" id="icon-clock-fin-admin-4DX-${i + 1 + total4DX}-${film.id}"></span>
-                                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-4DX-${i + 1 + total4DX}-${film.id}"></span>
-                                                                                        </div>
-                                                                                        <div class="d-flex justify-content-center align-items-center">
-                                                                                            <div class="text-white align-content-center fs-5 me-2">Prix:</div>
-                                                                                            <textarea class="form-control p-2 align-content-center textarea-uniforme" style="width: 5rem" placeholder="" id="Textarea-4DX-${i + 1 + total4DX}-prix-${film.id}"></textarea>
-                                                                                            <div class="mx-1 fs-5 text-white">€</div>
-                                                                                        </div>   
-                                                                                    </div>                                                                                                                                 
-                                                                                </div>`).join('');
-                                    })()}
+                                                                                [...Array(4 - total4DX)].map((_, i) => `
+                                                                                    <div class="row mb-3"> 
+                                                                                        <div class="col-12 d-flex align-items-center justify-content-start">
+                                                                                            <div class="text-white align-content-center fs-5 me-2">Heure 4DX:</div>
+                                                                                            <div class="position-relative me-3">
+                                                                                                <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-4DX-${i + 1 + total4DX}-${film.id}" placeholder="Début">
+                                                                                                <span class="bi bi-clock" id="icon-clock-debut-admin-4DX-${i + 1 + total4DX}-${film.id}"></span>
+                                                                                                <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-4DX-${i + 1 + total4DX}-${film.id}"></span>
+                                                                                            </div>
+                                                                                            <div class="position-relative me-3">
+                                                                                                <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-4DX-${i + 1 + total4DX}-${film.id}" placeholder="Fin">
+                                                                                                <span class="bi bi-clock" id="icon-clock-fin-admin-4DX-${i + 1 + total4DX}-${film.id}"></span>
+                                                                                                <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-4DX-${i + 1 + total4DX}-${film.id}"></span>
+                                                                                            </div>
+                                                                                            <div class="d-flex justify-content-center align-items-center">
+                                                                                                <div class="text-white align-content-center fs-5 me-2">Prix:</div>
+                                                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" style="width: 5rem" placeholder="" id="Textarea-4DX-${i + 1 + total4DX}-prix-${film.id}"></textarea>
+                                                                                                <div class="mx-1 fs-5 text-white">€</div>
+                                                                                            </div>   
+                                                                                        </div>                                                                                                                                 
+                                                                                </div>
+                                                                            `).join('');
+                                                                        })()}
                                                                     </div>
                                                                     <!--IMAX-->
                                                                     <div id="row-IMAX-${film.id}" class="row mt-3 d-none">                                                                                                        
                                                                         ${(() => {
-                                        const totalIMAX = film.seances.filter(seance => seance.qualite === "IMAX").length;
-                                        const seancesIMAX = film.seances.filter(seance => seance.qualite === "IMAX");
-                                        return seancesIMAX.map((seance, i) => seance.qualite === "IMAX" ? `
-                                                                            <div class="row mb-3">   
-                                                                                <div class="col-12 d-flex align-items-center justify-content-start">
-                                                                                    <div class="text-white align-content-center fs-5 me-2">Heure IMAX:</div>
-                                                                                    <div class="position-relative me-3">
-                                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-IMAX-${i + 1}-${film.id}" placeholder="${seance.heure_debut_seance}" readonly>
-                                                                                        <span class="bi bi-clock" id="icon-clock-debut-admin-IMAX-${i + 1}-${film.id}"></span>
-                                                                                        <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-IMAX-${i + 1}-${film.id}"></span>
-                                                                                    </div>
-                                                                                    <div class="position-relative me-3">
-                                                                                        <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-IMAX-${i + 1}-${film.id}" placeholder="${seance.heure_debut_seance}" readonly>
-                                                                                        <span class="bi bi-clock" id="icon-clock-fin-admin-IMAX-${i + 1}-${film.id}"></span>
-                                                                                        <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-IMAX-${i + 1}-${film.id}"></span>
-                                                                                    </div>
-                                                                                    <div class="d-flex justify-content-center align-items-center">
-                                                                                        <div class="text-white align-content-center fs-5 me-2">Prix:</div>
-                                                                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" style="width: 5rem" placeholder="" id="Textarea-IMAX-${i + 1}-prix-${film.id}">${seance.price}</textarea>
-                                                                                        <div class="mx-1 fs-5 text-white">€</div>
-                                                                                    </div>
-                                                                                </div> 
-                                                                            </div>` : '').join('') +
-                                            [...Array(4 - totalIMAX)].map((_, i) => `
+                                                                            const totalIMAX = film.seances.filter(seance => seance.qualite === "IMAX").length;
+                                                                            const seancesIMAX = film.seances.filter(seance => seance.qualite === "IMAX");
+                                                                            return seancesIMAX.map((seance, i) => seance.qualite === "IMAX" ? `
+                                                                                <div class="row mb-3">   
+                                                                                    <div class="col-12 d-flex align-items-center justify-content-start">
+                                                                                        <div class="text-white align-content-center fs-5 me-2">Heure IMAX:</div>
+                                                                                        <div class="position-relative me-3">
+                                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-IMAX-${i + 1}-${film.id}" placeholder="${seance.heure_debut_seance}" readonly>
+                                                                                            <span class="bi bi-clock" id="icon-clock-debut-admin-IMAX-${i + 1}-${film.id}"></span>
+                                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-IMAX-${i + 1}-${film.id}"></span>
+                                                                                        </div>
+                                                                                        <div class="position-relative me-3">
+                                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-IMAX-${i + 1}-${film.id}" placeholder="${seance.heure_fin_seance}" readonly>
+                                                                                            <span class="bi bi-clock" id="icon-clock-fin-admin-IMAX-${i + 1}-${film.id}"></span>
+                                                                                            <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-IMAX-${i + 1}-${film.id}"></span>
+                                                                                        </div>
+                                                                                        <div class="d-flex justify-content-center align-items-center">
+                                                                                            <div class="text-white align-content-center fs-5 me-2">Prix:</div>
+                                                                                            <textarea class="form-control p-2 align-content-center textarea-uniforme" style="width: 5rem" placeholder="" id="Textarea-IMAX-${i + 1}-prix-${film.id}">${seance.price}</textarea>
+                                                                                            <div class="mx-1 fs-5 text-white">€</div>
+                                                                                        </div>
+                                                                                    </div> 
+                                                                            </div>
+                                                                            ` : '').join('') +
+                                                                                [...Array(4 - totalIMAX)].map((_, i) => `
                                                                                     <div class="row mb-3"> 
                                                                                         <div class="col-12 d-flex align-items-center justify-content-start">
                                                                                             <div class="text-white align-content-center fs-5 me-2">Heure IMAX:</div>
@@ -554,14 +556,14 @@ import './styles/app.css';
                                                                                         </div>                                                                                                                                 
                                                                                     </div>
                                                                                 `).join('');
-                                    })()}
+                                                                        })()}
                                                                     </div>
                                                                     <!--Dolby-->
                                                                     <div id="row-Dolby-${film.id}" class="row mt-3 d-none">
                                                                         ${(() => {
-                                        const totalDolby = film.seances.filter(seance => seance.qualite === "Dolby").length;
-                                        const seancesDolby = film.seances.filter(seance => seance.qualite === "Dolby");
-                                        return seancesDolby.map((seance, i) => seance.qualite === "Dolby" ? `
+                                                                            const totalDolby = film.seances.filter(seance => seance.qualite === "Dolby").length;
+                                                                            const seancesDolby = film.seances.filter(seance => seance.qualite === "Dolby");
+                                                                            return seancesDolby.map((seance, i) => seance.qualite === "Dolby" ? `
                                                                                 <div class="row mb-3">   
                                                                                     <div class="col-12 d-flex align-items-center justify-content-start">
                                                                                         <div class="text-white align-content-center fs-5 me-2">Heure Dolby:</div>
@@ -571,7 +573,7 @@ import './styles/app.css';
                                                                                             <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-Dolby-${i + 1}-${film.id}"></span>
                                                                                         </div>
                                                                                         <div class="position-relative me-3">
-                                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-Dolby-${i + 1}-${film.id}" placeholder="${seance.heure_debut_seance}" readonly>
+                                                                                            <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-Dolby-${i + 1}-${film.id}" placeholder="${seance.heure_fin_seance}" readonly>
                                                                                             <span class="bi bi-clock" id="icon-clock-fin-admin-Dolby-${i + 1}-${film.id}"></span>
                                                                                             <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-Dolby-${i + 1}-${film.id}"></span>
                                                                                         </div>
@@ -582,29 +584,29 @@ import './styles/app.css';
                                                                                         </div>
                                                                                     </div> 
                                                                                 </div>` : '').join('') +
-                                            [...Array(4 - totalDolby)].map((_, i) => `
-                                                                                    <div class="row mb-3"> 
-                                                                                        <div class="col-12 d-flex align-items-center justify-content-start">
-                                                                                            <div class="text-white align-content-center fs-5 me-2">Heure Dolby:</div>
-                                                                                            <div class="position-relative me-3">
-                                                                                                <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-Dolby-${i + 1 + totalDolby}-${film.id}" placeholder="Début">
-                                                                                                <span class="bi bi-clock" id="icon-clock-debut-admin-Dolby-${i + 1 + totalDolby}-${film.id}"></span>
-                                                                                                <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-Dolby-${i + 1 + totalDolby}-${film.id}"></span>
-                                                                                            </div>
-                                                                                            <div class="position-relative me-3">
-                                                                                                <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-Dolby-${i + 1 + totalDolby}-${film.id}" placeholder="Fin">
-                                                                                                <span class="bi bi-clock" id="icon-clock-fin-admin-Dolby-${i + 1 + totalDolby}-${film.id}"></span>
-                                                                                                <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-Dolby-${i + 1 + totalDolby}-${film.id}"></span>
-                                                                                            </div>
-                                                                                            <div class="d-flex justify-content-center align-items-center">
-                                                                                                <div class="text-white align-content-center fs-5 me-2">Prix:</div>
-                                                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" style="width: 5rem" placeholder="" id="Textarea-Dolby-${i + 1 + totalDolby}-prix-${film.id}"></textarea>
-                                                                                                <div class="mx-1 fs-5 text-white">€</div>
-                                                                                            </div>   
-                                                                                        </div>                                                                                                                                 
-                                                                                    </div>
+                                                                                    [...Array(4 - totalDolby)].map((_, i) => `
+                                                                                        <div class="row mb-3"> 
+                                                                                            <div class="col-12 d-flex align-items-center justify-content-start">
+                                                                                                <div class="text-white align-content-center fs-5 me-2">Heure Dolby:</div>
+                                                                                                <div class="position-relative me-3">
+                                                                                                    <input type="text" class="btn-time-admin text-black" id="timepicker-admin-debut-Dolby-${i + 1 + totalDolby}-${film.id}" placeholder="Début">
+                                                                                                    <span class="bi bi-clock" id="icon-clock-debut-admin-Dolby-${i + 1 + totalDolby}-${film.id}"></span>
+                                                                                                    <span class="bi bi-x-circle d-none" id="close-icon-time-debut-admin-Dolby-${i + 1 + totalDolby}-${film.id}"></span>
+                                                                                                </div>
+                                                                                                <div class="position-relative me-3">
+                                                                                                    <input type="text" class="btn-time-admin text-black" id="timepicker-admin-fin-Dolby-${i + 1 + totalDolby}-${film.id}" placeholder="Fin">
+                                                                                                    <span class="bi bi-clock" id="icon-clock-fin-admin-Dolby-${i + 1 + totalDolby}-${film.id}"></span>
+                                                                                                    <span class="bi bi-x-circle d-none" id="close-icon-time-fin-admin-Dolby-${i + 1 + totalDolby}-${film.id}"></span>
+                                                                                                </div>
+                                                                                                <div class="d-flex justify-content-center align-items-center">
+                                                                                                    <div class="text-white align-content-center fs-5 me-2">Prix:</div>
+                                                                                                    <textarea class="form-control p-2 align-content-center textarea-uniforme" style="width: 5rem" placeholder="" id="Textarea-Dolby-${i + 1 + totalDolby}-prix-${film.id}"></textarea>
+                                                                                                    <div class="mx-1 fs-5 text-white">€</div>
+                                                                                                </div>   
+                                                                                            </div>                                                                                                                                 
+                                                                                        </div>
                                                                                 `).join('');
-                                    })()}
+                                                                        })()}
                                                                     </div>
                                                                     <!--Description-->
                                                                     <div class="row">
@@ -614,7 +616,7 @@ import './styles/app.css';
                                                                     </div>
                                                                     <div class="row">
                                                                         <div class="col-12 d-flex text-white align-items-center">
-                                                                            <textarea class="form-control p-2 textarea-uniforme text-start" placeholder="" id="Textarea-description-${film.id}" style="height:8rem"></textarea>
+                                                                            <textarea class="form-control p-2 textarea-uniforme text-start overflow-y-scroll" placeholder="" id="Textarea-description-${film.id}" style="height:8rem">${film.description}</textarea>
                                                                             <label class="d-none" for="Textarea-description-${film.id}"></label>
                                                                         </div>
                                                                     </div>
