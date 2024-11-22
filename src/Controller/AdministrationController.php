@@ -151,10 +151,16 @@ class AdministrationController extends AbstractController
         $Id = $data['id'];
         $film = $entityManager->getRepository(Film::class)->find($Id);
         $seances = $film->getSeance();
-        $entityManager->remove($film);
-        foreach ($seances as $seance) {
-            $entityManager->remove($seance);
+        if ($seances != null) {
+            foreach ($seances as $seance) {
+                $reservation = $seance->getReservation();
+                foreach ($reservation as $res) {
+                    $entityManager->remove($res);
+                }
+                $entityManager->remove($seance);
+            }
         }
+        $entityManager->remove($film);
         $entityManager->flush();
         return new JsonResponse(['status' => 'film deleted']);
     }
