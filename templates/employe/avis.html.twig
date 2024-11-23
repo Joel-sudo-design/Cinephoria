@@ -1,11 +1,10 @@
-{% extends 'baseAdministration.html.twig' %}
+{% extends 'baseEmploye.html.twig' %}
 
-{% block title %}Administration: création et modifications de films{% endblock %}
+{% block title %}Employé: création et modifications de films{% endblock %}
 
 {% block extra_content_bouton_creation_film %}
-    <button id="btn-plus-admin" class="btn bi bi-plus-circle-dotted fs-1 mx-3"></button>
-    <a class="btn-admin mx-3 justify-content-center text-decoration-none" href="{{ path('app_administration_account_employe') }}">Compte employé</a>
-    <a class="btn-admin mx-3 justify-content-center text-decoration-none" href="{{ path('app_administration_reservations') }}">Données réservations</a>
+    <a class="btn-admin mx-3 justify-content-center text-decoration-none" href="{{ path('app_employe') }}">Création film</a>
+    <a class="btn-admin mx-3 justify-content-center text-decoration-none active" href="{{ path('app_employe_validation_avis') }}">Validation avis</a>
 {% endblock %}
 
 {% block body %}
@@ -18,4 +17,3 @@
         <div id="card-container" class="row justify-content-center px-5 py-3" style="gap: 0 3rem"></div>
     </div>
 {% endblock %}
-

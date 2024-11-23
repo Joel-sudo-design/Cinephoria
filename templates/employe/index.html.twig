@@ -1,20 +1,19 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseEmploye.html.twig' %}
 
-{% block title %}Hello EmployeController!{% endblock %}
+{% block title %}Employé: création et modifications de films{% endblock %}
+
+{% block extra_content_bouton_creation_film %}
+    <button id="btn-plus-employe" class="btn bi bi-plus-circle-dotted fs-1 mx-3"></button>
+    <a class="btn-admin mx-3 justify-content-center text-decoration-none" href="{{ path('app_employe_validation_avis') }}">Validation avis</a>
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/xampp/htdocs/Cinephoria/src/Controller/EmployeController.php</code></li>
-        <li>Your template at <code>C:/xampp/htdocs/Cinephoria/templates/employe/index.html.twig</code></li>
-    </ul>
-</div>
+    <div class="container-fluid container-films">
+        <div id="loading-bar" class="row h-100 justify-content-center align-content-center d-none">
+            <div class="col-2 progress p-0" style="height: 5px">
+                <div class="progress-bar" role="progressbar" style="width: 0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+        <div id="card-container" class="row justify-content-center px-5 py-3" style="gap: 0 3rem"></div>
+    </div>
 {% endblock %}
