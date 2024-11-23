@@ -74,6 +74,8 @@ class AdministrationController extends AbstractController
             // Ajouter le genre si disponible
             if ($film->getGenre() !== null) {
                 $filmArray['genre'] = $film->getGenre()->getName();
+            } else {
+                $filmArray['genre'] = 'Aucun';
             }
 
             // Récupérer et ajouter les cinémas
@@ -83,6 +85,8 @@ class AdministrationController extends AbstractController
             }
             if (!empty($cinemasArray)) {
                 $filmArray['cinema'] = $cinemasArray;
+            } else {
+                $filmArray['cinema'] = 'Aucun';
             }
 
             // Ajouter les dates de début et de fin si disponibles

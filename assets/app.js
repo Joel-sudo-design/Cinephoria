@@ -230,7 +230,26 @@ import './styles/app.css';
         //Films
             //Générer des films
                 function LoadFilm() {
+                    // Afficher la barre de chargement
+                    const loadingBar = $('#loading-bar');
+                    const progressBar = loadingBar.find('.progress-bar');
+
+                    loadingBar.removeClass('d-none'); // Afficher la barre de chargement
+                    progressBar.css('width', '0%').attr('aria-valuenow', '0'); // Réinitialiser la barre
+
+                    // Vider le conteneur des films
                     $('#card-container').empty();
+
+                    // Simuler la progression initiale
+                    let progress = 0;
+                    const interval = setInterval(() => {
+                        if (progress < 90) { // Monter jusqu'à 90 %
+                            progress += 10;
+                            progressBar.css('width', progress + '%').attr('aria-valuenow', progress);
+                        }
+                    }, 200);
+
+                    // Récupérer les films
                     axios.get('/administrateur/administration/film')
                         .then(response => {
                             const Film = response.data;
@@ -636,16 +655,16 @@ import './styles/app.css';
                                 });
 
                                 //Affichage badge age mini
-                                    const sanitizedFilmName = film.name.replace(/\s+/g, '-');
-                                    const  ageFilm = $('#age-' + sanitizedFilmName);
+                                    function displayAgeBadge() {
+                                            const sanitizedFilmName = film.name.replace(/\s+/g, '-');
+                                            const  ageFilm = $('#age-' + sanitizedFilmName);
 
-                                    // Ciblez chaque badge d'âge à partir du conteneur
-                                        const ageBadge12 = ageFilm.find('.age-badge-12');
-                                        const ageBadge16 = ageFilm.find('.age-badge-16');
-                                        const ageBadge18 = ageFilm.find('.age-badge-18');
+                                            // Ciblez chaque badge d'âge à partir du conteneur
+                                            const ageBadge12 = ageFilm.find('.age-badge-12');
+                                            const ageBadge16 = ageFilm.find('.age-badge-16');
+                                            const ageBadge18 = ageFilm.find('.age-badge-18');
 
-                                    // Logique de gestion des classes pour afficher/masquer les badges d'âge
-                                        function displayAgeBadge() {
+                                            // Logique de gestion des classes pour afficher/masquer les badges d'âge
                                             if (film.age_minimum === '12') {
                                                 ageBadge12.removeClass('d-none');
                                                 ageBadge16.addClass('d-none');
@@ -664,7 +683,7 @@ import './styles/app.css';
                                                 ageBadge18.addClass('d-none');
                                             }
                                         }
-                                        displayAgeBadge()
+                                    displayAgeBadge()
 
                                 // Accordion description films
                                     const accordionButton = $('#btn-description-'+film.id);
@@ -1238,8 +1257,24 @@ import './styles/app.css';
                                         initAllTimepickers(filmId);
 
                             });
+
+                            // Arrêter la progression simulée et compléter à 100 %
+                            clearInterval(interval);
+                            progressBar.css('width', '100%').attr('aria-valuenow', '100');
+
+                            // Attendre un peu avant de masquer la barre pour s'assurer qu'elle atteint visuellement 100 %
+                            setTimeout(() => loadingBar.addClass('d-none'), 600);
                         })
-                        .catch(error => {console.error(error)});
+                        .catch(error => {
+                            console.error('Erreur lors du chargement des films :', error);
+
+                            // En cas d'erreur, arrêter la progression et compléter à 100 %
+                            clearInterval(interval);
+                            progressBar.css('width', '100%').attr('aria-valuenow', '100');
+
+                            // Attendre un peu avant de masquer la barre
+                            setTimeout(() => loadingBar.addClass('d-none'), 600);
+                        });
                 }
 
             //Création d'un film
@@ -1335,34 +1370,36 @@ import './styles/app.css';
                                 const datesWithReservations = {};
                                 const datepicker = $('#datepicker_reservations');
                                 // Initialiser le datepicker avec les réservations
-                                    films.forEach(film => {
-                                        Object.keys(film.reservations).forEach(date => {
-                                            if (!datesWithReservations[date]) {
-                                                datesWithReservations[date] = 0;
-                                            }
-                                            datesWithReservations[date] += film.reservations[date];
-                                        });
-                                    });
-                                    datepicker.datepicker({
-                                        orientation: "bottom",
-                                        language: "fr",
-                                        autoclose: true,
-                                        todayHighlight: true,
-                                        format: 'dd/mm/yyyy',
-                                        beforeShowDay: function(date) {
-                                                const dateString = date.toLocaleDateString('fr-FR');
-                                                const reservations = datesWithReservations[dateString] || 0;
-                                                const day = date.getDate();
-                                                if (reservations > 0) {
-                                                    return {
-                                                        classes: 'has-reservation',
-                                                        tooltip: `Réservations: ${reservations}`
-                                                    };
-                                                } else {
-                                                    return { tooltip: 'Aucune réservation' };
+                                    if (films.reservations) {
+                                        films.forEach(film => {
+                                            Object.keys(film.reservations).forEach(date => {
+                                                if (!datesWithReservations[date]) {
+                                                    datesWithReservations[date] = 0;
                                                 }
-                                        }
-                                    });
+                                                datesWithReservations[date] += film.reservations[date];
+                                            });
+                                        });
+                                        datepicker.datepicker({
+                                            orientation: "bottom",
+                                            language: "fr",
+                                            autoclose: true,
+                                            todayHighlight: true,
+                                            format: 'dd/mm/yyyy',
+                                            beforeShowDay: function(date) {
+                                                    const dateString = date.toLocaleDateString('fr-FR');
+                                                    const reservations = datesWithReservations[dateString] || 0;
+                                                    const day = date.getDate();
+                                                    if (reservations > 0) {
+                                                        return {
+                                                            classes: 'has-reservation',
+                                                            tooltip: `Réservations: ${reservations}`
+                                                        };
+                                                    } else {
+                                                        return { tooltip: 'Aucune réservation' };
+                                                    }
+                                            }
+                                        });
+                                    }
 
                                 // Fonction pour formater les dates au format "dd/mm/yyyy"
                                     function formatDate(date) {
@@ -1386,45 +1423,49 @@ import './styles/app.css';
 
                                 // Fonction pour afficher les informations dans le tableau
                                     function updateTableWithReservations(selectedDate) {
-                                    const days = getNext7Days(selectedDate); // Récupère les 7 jours à partir de la date sélectionnée
-                                    const formattedDays = days.map(date => formatDate(date)); // Formate chaque date
-                                    const container = $('#reservations-container');
-                                    container.empty();
+                                        const container = $('#reservations-container');
+                                        if (films.reservations) {
+                                            const days = getNext7Days(selectedDate); // Récupère les 7 jours à partir de la date sélectionnée
+                                            const formattedDays = days.map(date => formatDate(date)); // Formate chaque date
+                                            container.empty();
 
-                                    // Créer la première colonne : Noms des films
-                                    const col2 = $('<div class="col-2" style="background-color: #6A73AB"></div>');
-                                    col2.append('<div class="row"><div class="col grid-cell fw-bold">Nombre de réservations</div></div>');
+                                            // Créer la première colonne : Noms des films
+                                            const col2 = $('<div class="col-2" style="background-color: #6A73AB"></div>');
+                                            col2.append('<div class="row"><div class="col grid-cell fw-bold">Nombre de réservations</div></div>');
 
-                                    films.forEach(film => {
-                                        col2.append(`<div class="row"><div class="col grid-cell fw-bold">${film.name}</div></div>`);
-                                    });
+                                            films.forEach(film => {
+                                                col2.append(`<div class="row"><div class="col grid-cell fw-bold">${film.name}</div></div>`);
+                                            });
 
-                                    // Créer la deuxième colonne : Dates et réservations
-                                    const col6 = $('<div class="col-6" style="background-color: #6A73AB"></div>');
+                                            // Créer la deuxième colonne : Dates et réservations
+                                            const col6 = $('<div class="col-6" style="background-color: #6A73AB"></div>');
 
-                                    // Ajouter les dates formatées
-                                    const datesRow = $('<div class="row"></div>');
-                                    formattedDays.forEach(day => {
-                                        const dayFormatted = day.slice(0, 5); // Afficher uniquement le format dd/mm
-                                        datesRow.append(`<div class="col grid-cell fw-bold">${dayFormatted}</div>`);
-                                    });
-                                    col6.append(datesRow);
+                                            // Ajouter les dates formatées
+                                            const datesRow = $('<div class="row"></div>');
+                                            formattedDays.forEach(day => {
+                                                const dayFormatted = day.slice(0, 5); // Afficher uniquement le format dd/mm
+                                                datesRow.append(`<div class="col grid-cell fw-bold">${dayFormatted}</div>`);
+                                            });
+                                            col6.append(datesRow);
 
-                                    // Ajouter les lignes pour les films
-                                    films.forEach(film => {
-                                        const filmRow = $('<div class="row"></div>');
-                                        formattedDays.forEach(day => {
-                                            const reservations = film.reservations[day] || 0; // Obtenir le nombre de réservations
-                                            filmRow.append(`<div class="col grid-cell">${reservations}</div>`);
-                                        });
-                                        col6.append(filmRow);
-                                    });
+                                            // Ajouter les lignes pour les films
+                                            films.forEach(film => {
+                                                const filmRow = $('<div class="row"></div>');
+                                                formattedDays.forEach(day => {
+                                                    const reservations = film.reservations[day] || 0; // Obtenir le nombre de réservations
+                                                    filmRow.append(`<div class="col grid-cell">${reservations}</div>`);
+                                                });
+                                                col6.append(filmRow);
+                                            });
 
-                                    // Ajouter les colonnes au conteneur principal
-                                    const headerRow = $('<div class="row justify-content-center text-white"></div>');
-                                    headerRow.append(col2).append(col6);
-                                    container.append(headerRow);
-                                }
+                                            // Ajouter les colonnes au conteneur principal
+                                            const headerRow = $('<div class="row justify-content-center text-white"></div>');
+                                            headerRow.append(col2).append(col6);
+                                            container.append(headerRow);
+                                        } else {
+                                            container.html('<p class="text-center" style="color: #6A73AB">Aucune réservation pour le moment.</p>');
+                                        }
+                                    }
 
                                 // Écouter le changement de date dans le datepicker
                                     datepicker.datepicker({
@@ -1435,7 +1476,6 @@ import './styles/app.css';
                                         // Appeler la fonction pour mettre à jour le tableau avec les réservations
                                         updateTableWithReservations(e.date);
                                     });
-
 
                                 // Datepicker
                                 $datepickerReservations.on('changeDate', function (e) {

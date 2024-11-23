@@ -949,6 +949,10 @@ footer #navbarBottom .nav-link {
   text-align: center;
 }
 
+#loading-bar .progress-bar {
+  background-color: #6A73AB;
+}
+
 /* Media queries */
 @media (min-width: 1921px) {
 

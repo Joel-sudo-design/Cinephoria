@@ -5,30 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifs diverses">
-      <change afterPath="$PROJECT_DIR$/public/image_film/ant-man-6740b534e7fe6194985473.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/image_film/avatar-6740bab6b4402030396447.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/image_film/black-6740b5541eb7a040725354.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/image_film/chat-6741b81087ac2107773325.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/image_film/comte-6740b5190e5d8274983950.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/image_film/dead-6740b24cd87f9229191124.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/image_film/ghosted-6740b21ba6d25674919656.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/image_film/god-6741b82c63306752418279.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/image_film/guetteurs-6740b52761945970295253.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/image_film/joker-6741b7ba44e41117736183.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/image_film/killer-6740b4a955283951816928.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/image_film/m3gan-6741b7c5b1df7172498536.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/image_film/mariage-6740b584a0c7c330970235.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/image_film/panda-6740b5b1c8e96032131257.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/EmployeController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/BaseEmploye.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/employe/index.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/image_film/avatar-67409586b3aea389804274.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/AdministrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdministrationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Film.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Film.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/BaseAdministration.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/BaseAdministration.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/administration/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/administration/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -300,15 +281,7 @@
       <workItem from="1732265883502" duration="5881000" />
       <workItem from="1732285691997" duration="1514000" />
       <workItem from="1732292370684" duration="7602000" />
-      <workItem from="1732357663760" duration="3067000" />
-    </task>
-    <task id="LOCAL-00017" summary="Création page administration">
-      <option name="closed" value="true" />
-      <created>1730711515732</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1730711515732</updated>
+      <workItem from="1732357663760" duration="6616000" />
     </task>
     <task id="LOCAL-00018" summary="Création du template card film, boutons compte employé &amp; données réservation &amp; bouton plus ajout template card">
       <option name="closed" value="true" />
@@ -694,7 +667,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732360760421</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="Modifs diverses">
+      <option name="closed" value="true" />
+      <created>1732360772093</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1732360772093</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
