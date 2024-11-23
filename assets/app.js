@@ -41,7 +41,7 @@ import './styles/app.css';
                 $('#col-2-bottom').remove()
             });
 
-        // A la fermeture des navbar pour mobile, on remet la couleur de fond par défaut, on affiche le logo et on remet la taille des colonnes
+        // À la fermeture des navbar pour mobile, on remet la couleur de fond par défaut, on affiche le logo et on remet la taille des colonnes
             $('#offcanvasNavbarTop').on('hidden.bs.offcanvas', function () {
                 $('#offcanvasNavbarTop').css("background", "");
                 $('#logo').show();
@@ -333,10 +333,10 @@ import './styles/app.css';
                                                                             </div>
                                                                         </div> 
                                                                     </div>
-                                                                    <!--Coup de coeur-->
+                                                                    <!--Coup de cœur-->
                                                                     <div class="row mt-3">
                                                                         <div class="col-12 d-flex justify-content-start">
-                                                                            <div class="text-white align-content-center fs-5 me-2">Coup de coeur:</div> 
+                                                                            <div class="text-white align-content-center fs-5 me-2">Coup de cœur:</div> 
                                                                             <div class="dropdown dropdown-modal-admin">
                                                                                 <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuLabel-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">           
                                                                                 </button>
@@ -349,7 +349,7 @@ import './styles/app.css';
                                                                     </div>    
                                                                 </div>
                                                                 <div class="col-8 p-4">
-                                                                    <!--Nom du film & cinéma & boutons valider & sortie-->
+                                                                    <!--Nom du film et cinéma et boutons validé & sortie-->
                                                                     <div class="row">
                                                                         <!--Nom du film-->
                                                                         <div class="col-6 d-flex align-items-center justify-content-start">
@@ -404,7 +404,7 @@ import './styles/app.css';
                                                                     </div>
                                                                     <!--Salle & Places-->
                                                                     <div class="row my-3">                                                                                                                     
-                                                                        <!--Salle & places & bouton reset -->                                                                                                                
+                                                                        <!--Salle et places et bouton reset -->                                                                                                                
                                                                         <div class="col-12 d-flex justify-content-start align-items-center">
                                                                             <div class="text-white align-content-center fs-5 me-2">Salle:</div>                                                               
                                                                             <div class="dropdown dropdown-modal-admin align-content-center me-3">
@@ -658,12 +658,10 @@ import './styles/app.css';
                                     function displayAgeBadge() {
                                             const sanitizedFilmName = film.name.replace(/\s+/g, '-');
                                             const  ageFilm = $('#age-' + sanitizedFilmName);
-
                                             // Ciblez chaque badge d'âge à partir du conteneur
                                             const ageBadge12 = ageFilm.find('.age-badge-12');
                                             const ageBadge16 = ageFilm.find('.age-badge-16');
                                             const ageBadge18 = ageFilm.find('.age-badge-18');
-
                                             // Logique de gestion des classes pour afficher/masquer les badges d'âge
                                             if (film.age_minimum === '12') {
                                                 ageBadge12.removeClass('d-none');
@@ -682,7 +680,7 @@ import './styles/app.css';
                                                 ageBadge16.addClass('d-none');
                                                 ageBadge18.addClass('d-none');
                                             }
-                                        }
+                                    }
                                     displayAgeBadge()
 
                                 // Accordion description films
@@ -719,53 +717,56 @@ import './styles/app.css';
                                         });
 
                                     //Menu déroulant genre
-                                        const genre = $('#dropdownMenuGenre-'+film.id);
+                                        const dropdownMenuGenre = $('#dropdownMenuGenre-'+film.id);
+                                        const dropGenre = dropdownMenuGenre.siblings('.dropdown-menu').find('.drop-genre');
                                         let selectedGenre= '';
-                                        $('.drop-genre').click(function(e) {
-                                        e.preventDefault();
-                                        selectedGenre = $(this).text();
-                                        genre.text(selectedGenre);
+                                        dropGenre.click(function(e) {
+                                            e.preventDefault();
+                                            selectedGenre = $(this).text();
+                                            dropdownMenuGenre.text(selectedGenre);
                                     });
 
                                     //Menu déroulant age
-                                        const age = $('#dropdownMenuAge-'+film.id);
+                                        const dropdownMenuAge = $('#dropdownMenuAge-'+film.id);
+                                        const dropAge = dropdownMenuAge.siblings('.dropdown-menu').find('.drop-age');
                                         let selectedAge= '';
-                                        $('.drop-age').click(function(e) {
+                                        dropAge.click(function(e) {
                                             e.preventDefault();
                                             selectedAge= $(this).text();
-                                            age.text(selectedAge);
+                                            dropdownMenuAge.text(selectedAge);
                                         });
 
                                     //Menu déroulant Cinéma
-                                        const cinema = $('#dropdownMenuCinema-' + film.id);
+                                        const dropdownMenuCinema = $('#dropdownMenuCinema-'+film.id);
+                                        const dropCinema = dropdownMenuCinema.siblings('.dropdown-menu').find('.drop-cinema');
                                         let selectedCinema = '';
 
-                                    // Gérer le clic sur le menu
-                                        $('.drop-cinema').click(function (e) {
-                                        e.preventDefault();
-                                        selectedCinema = $(this).text();
-                                        cinema.text(selectedCinema);
-                                    });
+                                        // Gérer le clic sur le menu
+                                            dropCinema.click(function (e) {
+                                            e.preventDefault();
+                                            selectedCinema = $(this).text();
+                                            dropdownMenuCinema.text(selectedCinema);
+                                        });
 
-                                    //Menu déroulant Coup de coeur
+                                    //Menu déroulant Coup de cœur
+                                        const dropdownMenuLabel = $('#dropdownMenuLabel-' + film.id);
+                                        const label = dropdownMenuLabel.siblings('.dropdown-menu').find('.drop-label');
                                         let selectedCoupCoeur= '';
-                                        const dropMenuLabel = $('#dropdownMenuLabel-' + film.id);
-                                        const label = dropMenuLabel.siblings('.dropdown-menu').find('.drop-label');
                                         label.click(function(e) {
                                             e.preventDefault();
                                             selectedCoupCoeur= $(this).text();
-                                            $('#dropdownMenuLabel-'+film.id).text(selectedCoupCoeur);
-                                            console.log(selectedCoupCoeur);
+                                            dropdownMenuLabel.text(selectedCoupCoeur);
                                         });
-                                        dropMenuLabel.text(film.label ? 'Oui' : 'Non');
+                                        dropdownMenuLabel.text(film.label ? 'Oui' : 'Non');
 
                                     // Menu déroulant Salle
+                                        const dropdownMenuSalle = $('#dropdownSalle-'+film.id);
+                                        const dropSalle = dropdownMenuSalle.find('.drop-salle');
                                         let selectedSalle= '';
-                                        const dropSalle = $('.drop-salle');
                                         dropSalle.click(function(e) {
                                             e.preventDefault();
                                             selectedSalle= $(this).text();
-                                            $('#dropdownMenuSalle-'+film.id).text(selectedSalle);
+                                            dropdownMenuSalle.text(selectedSalle);
                                         });
 
                                     // Écoute l'événement de clic sur les éléments du menu déroulant
@@ -800,11 +801,13 @@ import './styles/app.css';
                                     });
 
                                     // Menu déroulant places
+                                        const dropdownMenuPlaces = $('#dropdownMenuPlaces-'+film.id);
+                                        const dropPlaces = dropdownMenuPlaces.siblings('.dropdown-menu').find('.drop-places');
                                         let selectedPlaces= '';
-                                        $('.drop-places').click(function(e) {
+                                        dropPlaces.click(function(e) {
                                             e.preventDefault();
                                             selectedPlaces= $(this).text();
-                                            $('#dropdownMenuPlaces-'+film.id).text(selectedPlaces);
+                                            dropdownMenuPlaces.text(selectedPlaces);
                                         });
 
                                     // Réinitialiser le modal lorsque celui-ci est fermé
@@ -860,7 +863,7 @@ import './styles/app.css';
                                                 let heureDebut = $(`#timepicker-admin-debut-${format}-${i}-${film.id}`).val().trim();
                                                 let heureFin = $(`#timepicker-admin-fin-${format}-${i}-${film.id}`).val().trim();
                                                 let prix = $(`#Textarea-${format}-${i}-prix-${film.id}`).val().trim();
-                                                // Si une heure de début est renseignée mais pas l'heure de fin
+                                                // Si une heure de début est renseignée, mais pas l'heure de fin
                                                 if (heureDebut !== '' && heureFin === '') {
                                                     timeError = true;
                                                 }
@@ -1319,7 +1322,7 @@ import './styles/app.css';
                     $('.custom-options-employe').toggle();
                 });
 
-                // Sélection d'une option de employés
+                // Sélection d'une option employés
                     $('.custom-option-employe').on('click', function() {
                     let selectedText = $(this).text();
                     let selectedValue = $(this).data('value');
@@ -1406,7 +1409,7 @@ import './styles/app.css';
                                 // Fonction pour formater les dates au format "dd/mm/yyyy"
                                     function formatDate(date) {
                                         let day = date.getDate();
-                                        let month = date.getMonth() + 1; // Les mois commencent à 0
+                                        let month = date.getMonth() + 1; // Les mois commencent à
                                         let year = date.getFullYear();
                                         return `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month}/${year}`;
                                     }
