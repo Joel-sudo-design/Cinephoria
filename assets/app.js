@@ -244,11 +244,11 @@ import './styles/app.css';
                                                      <img src="${film.image}" class="card-img-top" alt="image">
                                                 </div>
                                                 <div class="card-body p-0 py-1">
-                                                        <div class="card-title m-0 fs-5">${film.name}
-                                                            <span class="age-badge-12 mx-4 d-none">12+</span>
-                                                            <span class="age-badge-16 mx-4 d-none">16+</span>
-                                                            <span class="age-badge-18 mx-4 d-none">18+</span>
-                                                        </div>
+                                                        <div id="age-${film.name.replace(/\s+/g, '-')}" class="col-12 card-title m-0 fs-5">${film.name}
+                                                            <span class="age-badge-12 d-none ms-2">12+</span>
+                                                            <span class="age-badge-16 d-none ms-2">16+</span>
+                                                            <span class="age-badge-18 d-none ms-2">18+</span>
+                                                        </div>                        
                                                         <div class="card-title m-0 fs-6">${film.genre}</div>
                                                         <p class="card-text m-0 text-warning" style="margin: 0.3rem 0 0.3rem 0">
                                                             <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
@@ -333,13 +333,13 @@ import './styles/app.css';
                                                                     <!--Nom du film & cinéma & boutons valider & sortie-->
                                                                     <div class="row">
                                                                         <!--Nom du film-->
-                                                                        <div class="col-5 d-flex align-items-center justify-content-start">
+                                                                        <div class="col-6 d-flex align-items-center justify-content-start">
                                                                             <div class="text-white align-content-center fs-5 me-2">Nom:</div> 
                                                                             <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="TextareaNom-${film.id}">${film.name}</textarea>
                                                                             <label class="d-none" for="TextareaNom-${film.id}"></label>
                                                                         </div>                                                          
                                                                         <!--Boutons valider & sortie-->
-                                                                        <div class="col-7 d-flex align-items-center justify-content-end">
+                                                                        <div class="col-6 d-flex align-items-center justify-content-end">
                                                                             <button id="btn-reset-${film.id}" class="btn bi bi-arrow-counterclockwise p-2 fs-4 d-flex justify-content-center align-items-center" data-bs-dismiss="modal"></button>
                                                                             <button id="btn-validate-film-${film.id}" class="btn bi bi-check-lg p-2 fs-4 d-flex justify-content-center align-items-center"></button>
                                                                             <button class="btn bi bi-x-lg p-2 fs-4 d-flex justify-content-center align-items-center" data-bs-dismiss="modal"></button>
@@ -628,7 +628,7 @@ import './styles/app.css';
                                             </div>`);
 
                                 //suppression film
-                                $('#x-square-'+film.id).click(function () {
+                                    $('#x-square-'+film.id).click(function () {
                                     axios.post('/administrateur/administration/film/delete', JSON.stringify({id: film.id}))
                                         .then(response => {$('#card-container').empty();console.log(response.data);})
                                         .catch(error => {console.error(error);})
@@ -636,586 +636,606 @@ import './styles/app.css';
                                 });
 
                                 //Affichage badge age mini
-                                if (film.age_minimum === '12') {
-                                    $(`.age-badge-12`).removeClass('d-none');
-                                }
-                                if (film.age_minimum === '16') {
-                                    $(`.age-badge-16`).removeClass('d-none');
-                                }
-                                if (film.age_minimum === '18') {
-                                    $(`.age-badge-18`).removeClass('d-none');
-                                }
+                                    const sanitizedFilmName = film.name.replace(/\s+/g, '-');
+                                    const  ageFilm = $('#age-' + sanitizedFilmName);
+
+                                    // Ciblez chaque badge d'âge à partir du conteneur
+                                        const ageBadge12 = ageFilm.find('.age-badge-12');
+                                        const ageBadge16 = ageFilm.find('.age-badge-16');
+                                        const ageBadge18 = ageFilm.find('.age-badge-18');
+
+                                    // Logique de gestion des classes pour afficher/masquer les badges d'âge
+                                        function displayAgeBadge() {
+                                            if (film.age_minimum === '12') {
+                                                ageBadge12.removeClass('d-none');
+                                                ageBadge16.addClass('d-none');
+                                                ageBadge18.addClass('d-none');
+                                            } else if (film.age_minimum === '16') {
+                                                ageBadge16.removeClass('d-none');
+                                                ageBadge12.addClass('d-none');
+                                                ageBadge18.addClass('d-none');
+                                            } else if (film.age_minimum === '18') {
+                                                ageBadge18.removeClass('d-none');
+                                                ageBadge12.addClass('d-none');
+                                                ageBadge16.addClass('d-none');
+                                            } else {
+                                                ageBadge12.addClass('d-none');
+                                                ageBadge16.addClass('d-none');
+                                                ageBadge18.addClass('d-none');
+                                            }
+                                        }
+                                        displayAgeBadge()
 
                                 // Accordion description films
-                                const accordionButton = $('#btn-description-'+film.id);
-                                const accordionCollapse = $('#collapseDescription-'+film.id);
-                                // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
-                                $(document).click(function(event) {
-                                    // Vérifie si le clic est à l'intérieur de l'accordéon
-                                    if (!accordionButton.is(event.target) && accordionButton.has(event.target).length === 0 && !accordionCollapse.is(event.target) && accordionCollapse.has(event.target).length === 0) {
-                                        // Ferme l'accordéon si ouvert
-                                        if (accordionCollapse.hasClass('show')) {
-                                            accordionCollapse.collapse('hide'); // Utilise la méthode Bootstrap pour cacher
-                                        }
-                                    }
-                                });
+                                    const accordionButton = $('#btn-description-'+film.id);
+                                    const accordionCollapse = $('#collapseDescription-'+film.id);
+
+                                    // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
+                                        $(document).click(function(event) {
+                                            // Vérifie si le clic est à l'intérieur de l'accordéon
+                                            if (!accordionButton.is(event.target) && accordionButton.has(event.target).length === 0 && !accordionCollapse.is(event.target) && accordionCollapse.has(event.target).length === 0) {
+                                                // Ferme l'accordéon si ouvert
+                                                if (accordionCollapse.hasClass('show')) {
+                                                    accordionCollapse.collapse('hide'); // Utilise la méthode Bootstrap pour cacher
+                                                }
+                                            }
+                                        });
 
                                 //modal
-                                // Upload image
-                                let imageData = null;
-                                $('#uploadButton-'+film.id).on('click', function () {
-                                    const fileInput = $('#fileInput-'+film.id)[0];
-                                    fileInput.click();
-                                    $(fileInput).off('change').on('change', function () { // Supprime les écouteurs existants avant d'en ajouter un nouveau
-                                        const selectedFile = fileInput.files[0];
-                                        if (selectedFile) {
-                                            imageData = new FormData(); // Crée un nouvel objet FormData
-                                            imageData.append('image', selectedFile); // Ajoute le fichier sélectionné
-                                            console.log('Image sélectionnée :', selectedFile.name);
-                                        } else {
-                                            console.error('Aucun fichier sélectionné');
-                                        }
-                                    });
-                                });
-
-                                //Menu déroulant genre
-                                const genre = $('#dropdownMenuGenre-'+film.id);
-                                let selectedGenre= '';
-                                $('.drop-genre').click(function(e) {
-                                    e.preventDefault();
-                                    selectedGenre = $(this).text();
-                                    genre.text(selectedGenre);
-                                });
-
-                                //Menu déroulant age
-                                const age = $('#dropdownMenuAge-'+film.id);
-                                let selectedAge= '';
-                                $('.drop-age').click(function(e) {
-                                    e.preventDefault();
-                                    selectedAge= $(this).text();
-                                    age.text(selectedAge);
-                                });
-
-                                //Menu déroulant Cinéma
-                                const cinema = $('#dropdownMenuCinema-' + film.id);
-                                let selectedCinema = '';
-
-                                // Gérer le clic sur le menu
-                                $('.drop-cinema').click(function (e) {
-                                    e.preventDefault();
-                                    selectedCinema = $(this).text();
-                                    cinema.text(selectedCinema);
-                                });
-
-                                //Menu déroulant Coup de coeur
-                                let selectedCoupCoeur= '';
-                                $('.drop-label').click(function(e) {
-                                    e.preventDefault();
-                                    selectedCoupCoeur= $(this).text();
-                                    $('#dropdownMenuLabel-'+film.id).text(selectedCoupCoeur);
-                                });
-                                $('#dropdownMenuLabel-' + film.id).text(film.label ? 'Oui' : 'Non');
-
-                                // Menu déroulant Salle
-                                let selectedSalle= '';
-                                const dropSalle = $('.drop-salle');
-                                dropSalle.click(function(e) {
-                                    e.preventDefault();
-                                    selectedSalle= $(this).text();
-                                    $('#dropdownMenuSalle-'+film.id).text(selectedSalle);
-                                });
-                                // Écoute l'événement de clic sur les éléments du menu déroulant
-                                dropSalle.on('click', function(e) {
-                                    e.preventDefault();
-                                    const value = $(this).text();
-                                    const row3DX = $('#row-3DX-'+film.id);
-                                    const row4DX = $('#row-4DX-'+film.id);
-                                    const rowIMAX = $('#row-IMAX-'+film.id);
-                                    const rowDolby = $('#row-Dolby-'+film.id);
-                                    if (value === '1') {
-                                        row3DX.removeClass('d-none');
-                                        row4DX.addClass('d-none');
-                                        rowIMAX.addClass('d-none');
-                                        rowDolby.addClass('d-none');
-                                    } else if (value === '2') {
-                                        row4DX.removeClass('d-none');
-                                        row3DX.addClass('d-none');
-                                        rowIMAX.addClass('d-none');
-                                        rowDolby.addClass('d-none');
-                                    } else if (value === '3') {
-                                        rowIMAX.removeClass('d-none');
-                                        row3DX.addClass('d-none');
-                                        row4DX.addClass('d-none');
-                                        rowDolby.addClass('d-none');
-                                    } else if (value === '4') {
-                                        rowDolby.removeClass('d-none');
-                                        row3DX.addClass('d-none');
-                                        row4DX.addClass('d-none');
-                                        rowIMAX.addClass('d-none');
-                                    }
-                                });
-
-                                // Menu déroulant places
-                                let selectedPlaces= '';
-                                $('.drop-places').click(function(e) {
-                                    e.preventDefault();
-                                    selectedPlaces= $(this).text();
-                                    $('#dropdownMenuPlaces-'+film.id).text(selectedPlaces);
-                                });
-
-                                // Réinitialiser le modal lorsque celui-ci est fermé
-                                $('#modal-' + film.id).on('hidden.bs.modal', function () {
-                                    LoadFilm();
-                                });
-
-                                //Valider les informations du film
-                                const formats = ["3DX", "4DX", "IMAX", "Dolby"];
-                                const nombreSeances = 4;
-                                $('#btn-validate-film-'+film.id).click(function () {
-                                    const datepickerDebut = $('#datepicker-admin-debut-'+film.id);
-                                    const datepickerFin = $('#datepicker-admin-fin-'+film.id);
-                                    const dropdownPlaces = $(`#dropdownMenuPlaces-${film.id}`);
-                                    let datePartsDebut = datepickerDebut.val().split('/');
-                                    let datePartsFin = datepickerFin.val().split('/');
-                                    let formattedDateDebut = datePartsDebut[2] + '-' + datePartsDebut[1] + '-' + datePartsDebut[0];
-                                    let formattedDateFin = datePartsFin[2] + '-' + datePartsFin[1] + '-' + datePartsFin[0];
-                                    let label = $('#dropdownMenuLabel-'+film.id).text();
-                                    label = label === 'Oui';
-                                    const data = {
-                                        id: film.id,
-                                        genre: selectedGenre,
-                                        age: selectedAge,
-                                        label: label,
-                                        nom: $(`#TextareaNom-${film.id}`).val(),
-                                        cinema: selectedCinema,
-                                        date_debut: formattedDateDebut,
-                                        date_fin: formattedDateFin,
-                                        salle: $(`#dropdownMenuSalle-${film.id}`).text(),
-                                        places: dropdownPlaces.text(),
-                                        description: $(`#Textarea-description-${film.id}`).val(),
-                                        film_reset: ''
-                                    };
-                                    formats.forEach(format => {
-                                        for (let i = 1; i <= nombreSeances; i++) {
-                                            data[`heure_debut_${format}_${i}`] = $(`#timepicker-admin-debut-${format}-${i}-${film.id}`).val();
-                                            data[`heure_fin_${format}_${i}`] = $(`#timepicker-admin-fin-${format}-${i}-${film.id}`).val();
-                                            data[`price_${format}_${i}`] = $(`#Textarea-${format}-${i}-prix-${film.id}`).val();
-                                        }
-                                    });
-                                    let formData = new FormData();
-                                    if (imageData) {
-                                        formData.append('image', imageData.get('image'));
-                                    }
-                                    for (const key in data) {
-                                        formData.append(key, data[key]);
-                                    }
-
-                                    // Vérification des timepickers (heure de début et heure de fin)
-                                    let timeError = false;
-                                    formats.forEach(format => {
-                                        for (let i = 1; i <= nombreSeances; i++) {
-                                            let heureDebut = $(`#timepicker-admin-debut-${format}-${i}-${film.id}`).val().trim();
-                                            let heureFin = $(`#timepicker-admin-fin-${format}-${i}-${film.id}`).val().trim();
-                                            let prix = $(`#Textarea-${format}-${i}-prix-${film.id}`).val().trim();
-                                            // Si une heure de début est renseignée mais pas l'heure de fin
-                                            if (heureDebut !== '' && heureFin === '') {
-                                                timeError = true;
-                                            }
-
-                                            // Si une heure de début et une heure de fin sont renseignées, mais pas de date
-                                            if ((heureDebut !== '' && heureFin !== '') && (datepickerDebut.val().trim() === '' || datepickerFin.val().trim() === '')) {
-                                                timeError = true;
-                                            }
-                                            // Si une heure de début et une heure de fin sont renseignées, mais pas de prix
-                                            if ((heureDebut !== '' && heureFin !== '') && prix === '') {
-                                                timeError = true;
-                                            }
-                                        }
-                                    });
-
-                                    if (timeError) {
-                                        alert('Veuillez renseigner une heure de fin, une date de début, une date de fin et le prix lorsque vous spécifiez une heure de début.');
-                                        return;
-                                    }
-
-                                    axios.post('/administrateur/administration/film/validate', formData , {
-                                        headers: {
-                                            'Content-Type': 'multipart/form-data',
-                                        }
-                                    })
-                                        .then(response => {console.log(response.data);$('#modal-' + film.id).modal('hide'); })
-                                        .catch(error => {console.error(error);})
-                                        .finally(() => {LoadFilm();});
-                                });
-
-                                // Datepicker
-                                const $datepickerDebut = $('#datepicker-admin-debut-'+film.id);
-                                const $calendarIconDebut = $('#icon-calendar-debut-admin-'+film.id);
-                                const $clearIconDebut = $('#close-icon-date-debut-admin-'+film.id);
-                                const $datepickerFin = $('#datepicker-admin-fin-'+film.id);
-                                const $calendarIconFin = $('#icon-calendar-fin-admin-'+film.id);
-                                const $clearIconFin = $('#close-icon-date-fin-admin-'+film.id);
-
-                                //Date début
-                                $datepickerDebut.val(film.date_debut);
-                                $datepickerDebut.datepicker({
-                                    format: "dd/mm/yyyy",
-                                    orientation: "bottom",
-                                    language: "fr",
-                                    autoclose: true
-                                })
-                                    .on('changeDate', function () {
-                                        if ($datepickerDebut.val().trim() === '') {
-                                            $datepickerFin.prop('disabled', true);
-                                        } else {
-                                            $datepickerFin.val('').prop('disabled', false);
-                                        }
-                                        // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
-                                        $calendarIconDebut.addClass('d-none');
-                                        $clearIconDebut.removeClass('d-none');
-                                    });
-
-                                // Affiche l'icône de croix et cache l'icône calendrier si une date est déjà sélectionnée
-                                if ($datepickerDebut.val().trim() !== '') {
-                                    $calendarIconDebut.addClass('d-none');
-                                    $clearIconDebut.removeClass('d-none');
-                                }
-
-                                // Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
-                                $clearIconDebut.on('click', function () {
-                                    $datepickerDebut.datepicker('clearDates');
-                                    $calendarIconDebut.removeClass('d-none');
-                                    $clearIconDebut.addClass('d-none');
-                                });
-
-                                // Appliquer le style de hover/focus lors du clic sur l'icône croix
-                                $clearIconDebut.on('mouseenter focus', function () {
-                                    $datepickerDebut.addClass('btn-hover');
-                                    $clearIconDebut.addClass('btn-hover');
-                                });
-
-                                // Appliquer le style de hover/focus
-                                $calendarIconDebut.on('mouseenter focus', function () {
-                                    $datepickerDebut.addClass('btn-hover');
-                                    $calendarIconDebut.addClass('btn-hover');
-                                });
-
-                                // Retirer le style quand on quitte le survol/focus
-                                $clearIconDebut.on('mouseleave blur', function () {
-                                    $datepickerDebut.removeClass('btn-hover');
-                                    $clearIconDebut.removeClass('btn-hover');
-                                });
-
-                                // Retirer le style quand on quitte le survol/focus
-                                $calendarIconDebut.on('mouseleave blur', function () {
-                                    $datepickerDebut.removeClass('btn-hover');
-                                    $calendarIconDebut.removeClass('btn-hover');
-                                });
-
-                                // Ouvrir le calendrier lorsque l'on clique sur l'icône calendrier
-                                $calendarIconDebut.on('click', function () {
-                                    $datepickerDebut.focus();
-                                });
-
-                                //Date fin
-                                $datepickerFin.val(film.date_fin);
-                                $datepickerFin.datepicker({
-                                    format: "dd/mm/yyyy",
-                                    orientation: "bottom",
-                                    language: "fr",
-                                    autoclose: true
-                                })
-                                    .on('changeDate', function () {
-                                        if ($datepickerFin.val().trim()) {
-                                            const dateDebut = new Date($datepickerDebut.val().trim().split('/').reverse().join('-'));
-                                            const dateFin = new Date($datepickerFin.val().trim().split('/').reverse().join('-'));
-                                            if (dateFin < dateDebut) {
-                                                $calendarIconFin.removeClass('d-none');
-                                                $clearIconFin.addClass('d-none');
-                                                $datepickerFin.val('');
-                                                alert('La date de fin doit être supérieure ou égale à la date de début.');
-                                            }else {
-                                                // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
-                                                $calendarIconFin.addClass('d-none');
-                                                $clearIconFin.removeClass('d-none');
-                                            }
-                                        }
-                                    });
-
-                                // Affiche l'icône de croix et cache l'icône calendrier si une date est déjà sélectionnée
-                                if ($datepickerFin.val().trim() !== '') {
-                                    $calendarIconFin.addClass('d-none');
-                                    $clearIconFin.removeClass('d-none');
-                                }
-
-                                // Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
-                                $clearIconFin.on('click', function () {
-                                    $datepickerFin.datepicker('clearDates');
-                                    $calendarIconFin.removeClass('d-none');
-                                    $clearIconFin.addClass('d-none');
-                                });
-
-                                // Appliquer le style de hover/focus
-                                $clearIconFin.on('mouseenter focus', function () {
-                                    $datepickerFin.addClass('btn-hover');
-                                    $clearIconFin.addClass('btn-hover');
-                                });
-
-                                // Appliquer le style de hover/focus
-                                $calendarIconFin.on('mouseenter focus', function () {
-                                    $datepickerFin.addClass('btn-hover');
-                                    $calendarIconFin.addClass('btn-hover');
-                                });
-
-                                // Retirer le style quand on quitte le survol/focus
-                                $clearIconFin.on('mouseleave blur', function () {
-                                    $datepickerFin.removeClass('btn-hover');
-                                    $clearIconFin.removeClass('btn-hover');
-                                });
-
-                                // Retirer le style quand on quitte le survol/focus
-                                $calendarIconFin.on('mouseleave blur', function () {
-                                    $datepickerFin.removeClass('btn-hover');
-                                    $calendarIconFin.removeClass('btn-hover');
-                                });
-
-                                // Ouvrir le calendrier lorsque l'on clique sur l'icône calendrier
-                                $calendarIconFin.on('click', function () {
-                                    $datepickerFin.focus();
-                                });
-
-                                // Désactiver les datepickers si une date de début et une date de fin sont déjà renseignées
-                                if ($datepickerDebut.val().trim() && $datepickerFin.val().trim()) {
-                                    $datepickerDebut.prop('disabled', true);
-                                    $datepickerFin.prop('disabled', true);
-                                    $clearIconDebut.addClass('d-none');
-                                    $clearIconFin.addClass('d-none');
-                                    $calendarIconDebut.removeClass('d-none');
-                                    $calendarIconFin.removeClass('d-none');
-                                } else {
-                                    $datepickerFin.prop('disabled', true);
-                                }
-
-                                //Timepicker
-                                // Fonction pour générer les constantes pour chaque combinaison
-                                function generateTimepickerConstants(filmId) {
-                                    const types = ['3DX', '4DX', 'IMAX', 'Dolby'];  // Les types 3DX et 4DX
-                                    const sessions = [1, 2, 3, 4];  // Les sessions 1, 2, 3, 4
-                                    let constants = [];
-
-                                    // Boucles pour générer les constantes
-                                    types.forEach(type => {
-                                        sessions.forEach(session => {
-                                            constants.push({
-                                                // Début
-                                                timepickerIdDebut: `#timepicker-admin-debut-${type}-${session}-${filmId}`,
-                                                clockIconIdDebut: `#icon-clock-debut-admin-${type}-${session}-${filmId}`,
-                                                clearIconIdDebut: `#close-icon-time-debut-admin-${type}-${session}-${filmId}`,
-                                                // Fin
-                                                timepickerIdFin: `#timepicker-admin-fin-${type}-${session}-${filmId}`,
-                                                clockIconIdFin: `#icon-clock-fin-admin-${type}-${session}-${filmId}`,
-                                                clearIconIdFin: `#close-icon-time-fin-admin-${type}-${session}-${filmId}`,
-                                                price: `#Textarea-${type}-${session}-prix-${filmId}`
+                                    // Upload image
+                                        let imageData = null;
+                                        $('#uploadButton-'+film.id).on('click', function () {
+                                            const fileInput = $('#fileInput-'+film.id)[0];
+                                            fileInput.click();
+                                            $(fileInput).off('change').on('change', function () { // Supprime les écouteurs existants avant d'en ajouter un nouveau
+                                                const selectedFile = fileInput.files[0];
+                                                if (selectedFile) {
+                                                    imageData = new FormData(); // Crée un nouvel objet FormData
+                                                    imageData.append('image', selectedFile); // Ajoute le fichier sélectionné
+                                                    console.log('Image sélectionnée :', selectedFile.name);
+                                                } else {
+                                                    console.error('Aucun fichier sélectionné');
+                                                }
                                             });
                                         });
+
+                                    //Menu déroulant genre
+                                        const genre = $('#dropdownMenuGenre-'+film.id);
+                                        let selectedGenre= '';
+                                        $('.drop-genre').click(function(e) {
+                                        e.preventDefault();
+                                        selectedGenre = $(this).text();
+                                        genre.text(selectedGenre);
                                     });
 
-                                    return constants;
-                                }
-                                function initTimepickerWithValidation(timepickerIdDebut, clockIconIdDebut, clearIconIdDebut, timepickerIdFin, clockIconIdFin, clearIconIdFin, price, modalTimeFieldIdFin) {
-                                    const $timepickerDebut = $(timepickerIdDebut);
-                                    const $clockIconDebut = $(clockIconIdDebut);
-                                    const $clearIconDebut = $(clearIconIdDebut);
+                                    //Menu déroulant age
+                                        const age = $('#dropdownMenuAge-'+film.id);
+                                        let selectedAge= '';
+                                        $('.drop-age').click(function(e) {
+                                            e.preventDefault();
+                                            selectedAge= $(this).text();
+                                            age.text(selectedAge);
+                                        });
 
-                                    const $timepickerFin = $(timepickerIdFin);
-                                    const $clockIconFin = $(clockIconIdFin);
-                                    const $clearIconFin = $(clearIconIdFin);
+                                    //Menu déroulant Cinéma
+                                        const cinema = $('#dropdownMenuCinema-' + film.id);
+                                        let selectedCinema = '';
 
-                                    const $price = $(price);
+                                    // Gérer le clic sur le menu
+                                        $('.drop-cinema').click(function (e) {
+                                        e.preventDefault();
+                                        selectedCinema = $(this).text();
+                                        cinema.text(selectedCinema);
+                                    });
 
-                                    const $modalTimeFieldFin = $(modalTimeFieldIdFin); // Élément du modal où l'heure de fin doit être mise à jour
+                                    //Menu déroulant Coup de coeur
+                                        let selectedCoupCoeur= '';
+                                        const dropMenuLabel = $('#dropdownMenuLabel-' + film.id);
+                                        const label = dropMenuLabel.siblings('.dropdown-menu').find('.drop-label');
+                                        label.click(function(e) {
+                                            e.preventDefault();
+                                            selectedCoupCoeur= $(this).text();
+                                            $('#dropdownMenuLabel-'+film.id).text(selectedCoupCoeur);
+                                            console.log(selectedCoupCoeur);
+                                        });
+                                        dropMenuLabel.text(film.label ? 'Oui' : 'Non');
 
-                                    // Initialisation du Timepicker pour "Début"
-                                    const timepickerDebutInstance = flatpickr($timepickerDebut, {
-                                        enableTime: true,
-                                        noCalendar: true,
-                                        dateFormat: "H:i",
-                                        time_24hr: true,
-                                        minuteIncrement: 15,
-                                        onChange: function(selectedDates, dateStr) {
-                                            if (dateStr.trim()) {
-                                                $timepickerFin.removeAttr('disabled'); // Activer le champ "Fin"
-                                                $price.removeAttr('disabled'); // Activer le champ "Prix"
-                                                $clockIconDebut.addClass('d-none');
-                                                $clearIconDebut.removeClass('d-none');
+                                    // Menu déroulant Salle
+                                        let selectedSalle= '';
+                                        const dropSalle = $('.drop-salle');
+                                        dropSalle.click(function(e) {
+                                            e.preventDefault();
+                                            selectedSalle= $(this).text();
+                                            $('#dropdownMenuSalle-'+film.id).text(selectedSalle);
+                                        });
 
-                                                // Validation de "Fin" par rapport à "Début"
-                                                const timeDebut = new Date(`1970-01-01T${dateStr}:00`);
-                                                const timeFin = $timepickerFin.val().trim() ? new Date(`1970-01-01T${$timepickerFin.val()}:00`) : null;
-
-                                                if (timeFin && timeFin <= timeDebut) {
-                                                    // Si l'heure de fin est inférieure ou égale à l'heure de début
-                                                    timepickerFinInstance.setDate(null); // Ne pas afficher de valeur par défaut dans le timepicker
-                                                    $timepickerFin.val(''); // Réinitialiser la valeur de l'input
-                                                    $modalTimeFieldFin.val(''); // Réinitialiser l'heure de fin dans le modal
-                                                    $price.text(''); // Réinitialiser le prix
-                                                    alert('L’heure de fin doit être supérieure à l’heure de début.');
-
-                                                    // Supprimer la valeur de "Début" si "Fin" <= "Début"
-                                                    $timepickerDebut.val('');
-                                                    $clearIconDebut.removeClass('d-none');
-                                                    $clockIconDebut.addClass('d-none');
-                                                }
-                                            } else {
-                                                $timepickerFin.val('').attr('disabled', true); // Désactiver le champ "Fin"
-                                                $clockIconFin.removeClass('d-none');
-                                                $clearIconFin.addClass('d-none');
-                                                $modalTimeFieldFin.val(''); // Réinitialiser l'heure de fin dans le modal
-                                                $price.attr('disabled', true); // Désactiver le champ "Prix"
-                                                $price.val(''); // Réinitialiser le prix
-                                            }
+                                    // Écoute l'événement de clic sur les éléments du menu déroulant
+                                        dropSalle.on('click', function(e) {
+                                        e.preventDefault();
+                                        const value = $(this).text();
+                                        const row3DX = $('#row-3DX-'+film.id);
+                                        const row4DX = $('#row-4DX-'+film.id);
+                                        const rowIMAX = $('#row-IMAX-'+film.id);
+                                        const rowDolby = $('#row-Dolby-'+film.id);
+                                        if (value === '1') {
+                                            row3DX.removeClass('d-none');
+                                            row4DX.addClass('d-none');
+                                            rowIMAX.addClass('d-none');
+                                            rowDolby.addClass('d-none');
+                                        } else if (value === '2') {
+                                            row4DX.removeClass('d-none');
+                                            row3DX.addClass('d-none');
+                                            rowIMAX.addClass('d-none');
+                                            rowDolby.addClass('d-none');
+                                        } else if (value === '3') {
+                                            rowIMAX.removeClass('d-none');
+                                            row3DX.addClass('d-none');
+                                            row4DX.addClass('d-none');
+                                            rowDolby.addClass('d-none');
+                                        } else if (value === '4') {
+                                            rowDolby.removeClass('d-none');
+                                            row3DX.addClass('d-none');
+                                            row4DX.addClass('d-none');
+                                            rowIMAX.addClass('d-none');
                                         }
                                     });
 
-                                    // Initialisation du Timepicker pour "Fin"
-                                    const timepickerFinInstance = flatpickr($timepickerFin, {
-                                        enableTime: true,
-                                        noCalendar: true,
-                                        dateFormat: "H:i",
-                                        time_24hr: true,
-                                        minuteIncrement: 15,
-                                        onOpen: function() {
-                                            // Set the menu (dropdown) to 12:15 when opening the timepicker, but do not set the input
-                                            if (!$timepickerFin.val().trim() && $timepickerDebut.val().trim()) {
-                                                timepickerFinInstance.setDate('12:15', true); // Set time for menu display only (not input)
-                                            }
-                                        },
-                                        onChange: function(selectedDates, dateStr) {
-                                            if (dateStr.trim()) {
-                                                const timeDebut = $timepickerDebut.val().trim() ? new Date(`1970-01-01T${$timepickerDebut.val()}:00`) : null;
-                                                const timeFin = new Date(`1970-01-01T${dateStr}:00`);
+                                    // Menu déroulant places
+                                        let selectedPlaces= '';
+                                        $('.drop-places').click(function(e) {
+                                            e.preventDefault();
+                                            selectedPlaces= $(this).text();
+                                            $('#dropdownMenuPlaces-'+film.id).text(selectedPlaces);
+                                        });
 
-                                                if (timeDebut && timeFin <= timeDebut) {
-                                                    // Réinitialiser "Fin" si l'heure est inférieure ou égale à l'heure de début
-                                                    timepickerFinInstance.setDate(null); // Réinitialiser avec aucune valeur
-                                                    $timepickerFin.val(''); // Réinitialiser la valeur de l'input
-                                                    $price.val(''); // Réinitialiser le prix
-                                                    $modalTimeFieldFin.val(''); // Réinitialiser l'heure de fin dans le modal
-                                                    alert('L’heure de fin doit être supérieure à l’heure de début.');
+                                    // Réinitialiser le modal lorsque celui-ci est fermé
+                                        $('#modal-' + film.id).on('hidden.bs.modal', function () {
+                                        LoadFilm();
+                                    });
+
+                                    //Valider les informations du film
+                                        const formats = ["3DX", "4DX", "IMAX", "Dolby"];
+                                        const nombreSeances = 4;
+                                        $('#btn-validate-film-'+film.id).click(function () {
+                                        const datepickerDebut = $('#datepicker-admin-debut-'+film.id);
+                                        const datepickerFin = $('#datepicker-admin-fin-'+film.id);
+                                        const dropdownPlaces = $(`#dropdownMenuPlaces-${film.id}`);
+                                        let datePartsDebut = datepickerDebut.val().split('/');
+                                        let datePartsFin = datepickerFin.val().split('/');
+                                        let formattedDateDebut = datePartsDebut[2] + '-' + datePartsDebut[1] + '-' + datePartsDebut[0];
+                                        let formattedDateFin = datePartsFin[2] + '-' + datePartsFin[1] + '-' + datePartsFin[0];
+                                        let label = $('#dropdownMenuLabel-'+film.id).text();
+                                        label = label === 'Oui' ? 1 : 0;
+                                        const data = {
+                                            id: film.id,
+                                            genre: selectedGenre,
+                                            age: selectedAge,
+                                            label: label,
+                                            nom: $(`#TextareaNom-${film.id}`).val(),
+                                            cinema: selectedCinema,
+                                            date_debut: formattedDateDebut,
+                                            date_fin: formattedDateFin,
+                                            salle: $(`#dropdownMenuSalle-${film.id}`).text(),
+                                            places: dropdownPlaces.text(),
+                                            description: $(`#Textarea-description-${film.id}`).val(),
+                                            film_reset: ''
+                                        };
+                                        formats.forEach(format => {
+                                            for (let i = 1; i <= nombreSeances; i++) {
+                                                data[`heure_debut_${format}_${i}`] = $(`#timepicker-admin-debut-${format}-${i}-${film.id}`).val();
+                                                data[`heure_fin_${format}_${i}`] = $(`#timepicker-admin-fin-${format}-${i}-${film.id}`).val();
+                                                data[`price_${format}_${i}`] = $(`#Textarea-${format}-${i}-prix-${film.id}`).val();
+                                            }
+                                        });
+                                        let formData = new FormData();
+                                        if (imageData) {
+                                            formData.append('image', imageData.get('image'));
+                                        }
+                                        for (const key in data) {
+                                            formData.append(key, data[key]);
+                                        }
+                                        // Vérification des timepickers (heure de début et heure de fin)
+                                        let timeError = false;
+                                        formats.forEach(format => {
+                                            for (let i = 1; i <= nombreSeances; i++) {
+                                                let heureDebut = $(`#timepicker-admin-debut-${format}-${i}-${film.id}`).val().trim();
+                                                let heureFin = $(`#timepicker-admin-fin-${format}-${i}-${film.id}`).val().trim();
+                                                let prix = $(`#Textarea-${format}-${i}-prix-${film.id}`).val().trim();
+                                                // Si une heure de début est renseignée mais pas l'heure de fin
+                                                if (heureDebut !== '' && heureFin === '') {
+                                                    timeError = true;
+                                                }
+
+                                                // Si une heure de début et une heure de fin sont renseignées, mais pas de date
+                                                if ((heureDebut !== '' && heureFin !== '') && (datepickerDebut.val().trim() === '' || datepickerFin.val().trim() === '')) {
+                                                    timeError = true;
+                                                }
+                                                // Si une heure de début et une heure de fin sont renseignées, mais pas de prix
+                                                if ((heureDebut !== '' && heureFin !== '') && prix === '') {
+                                                    timeError = true;
+                                                }
+                                            }
+                                        });
+                                        if (timeError) {
+                                            alert('Veuillez renseigner une heure de fin, une date de début, une date de fin et le prix lorsque vous spécifiez une heure de début.');
+                                            return;
+                                        }
+                                        axios.post('/administrateur/administration/film/validate', formData , {
+                                            headers: {
+                                                'Content-Type': 'multipart/form-data',
+                                            }
+                                        })
+                                            .then(response => {console.log(response.data);$('#modal-' + film.id).modal('hide'); })
+                                            .catch(error => {console.error(error);})
+                                            .finally(() => {LoadFilm();});
+                                    });
+
+                                    // Reset des champs
+                                        $('#btn-reset-' + film.id).click(function () {
+                                            const data = {id: film.id};
+                                            axios.post('/administrateur/administration/film/reset', data)
+                                                .then(response => {console.log(response.data)})
+                                                .catch(error => {console.error(error);})
+                                        });
+
+                                    // Datepicker
+                                        const $datepickerDebut = $('#datepicker-admin-debut-'+film.id);
+                                        const $calendarIconDebut = $('#icon-calendar-debut-admin-'+film.id);
+                                        const $clearIconDebut = $('#close-icon-date-debut-admin-'+film.id);
+                                        const $datepickerFin = $('#datepicker-admin-fin-'+film.id);
+                                        const $calendarIconFin = $('#icon-calendar-fin-admin-'+film.id);
+                                        const $clearIconFin = $('#close-icon-date-fin-admin-'+film.id);
+
+                                    //Date début
+                                        $datepickerDebut.val(film.date_debut);
+                                        $datepickerDebut.datepicker({
+                                            format: "dd/mm/yyyy",
+                                            orientation: "bottom",
+                                            language: "fr",
+                                            autoclose: true
+                                        })
+                                            .on('changeDate', function () {
+                                                if ($datepickerDebut.val().trim() === '') {
+                                                    $datepickerFin.prop('disabled', true);
+                                                } else {
+                                                    $datepickerFin.val('').prop('disabled', false);
+                                                }
+                                                // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
+                                                $calendarIconDebut.addClass('d-none');
+                                                $clearIconDebut.removeClass('d-none');
+                                            });
+
+                                    // Affiche l'icône de croix et cache l'icône calendrier si une date est déjà sélectionnée
+                                        if ($datepickerDebut.val().trim() !== '') {
+                                            $calendarIconDebut.addClass('d-none');
+                                            $clearIconDebut.removeClass('d-none');
+                                        }
+
+                                    // Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
+                                        $clearIconDebut.on('click', function () {
+                                        $datepickerDebut.datepicker('clearDates');
+                                        $calendarIconDebut.removeClass('d-none');
+                                        $clearIconDebut.addClass('d-none');
+                                    });
+
+                                    // Appliquer le style de hover/focus lors du clic sur l'icône croix
+                                        $clearIconDebut.on('mouseenter focus', function () {
+                                        $datepickerDebut.addClass('btn-hover');
+                                        $clearIconDebut.addClass('btn-hover');
+                                    });
+
+                                    // Appliquer le style de hover/focus
+                                        $calendarIconDebut.on('mouseenter focus', function () {
+                                        $datepickerDebut.addClass('btn-hover');
+                                        $calendarIconDebut.addClass('btn-hover');
+                                    });
+
+                                    // Retirer le style quand on quitte le survol/focus
+                                        $clearIconDebut.on('mouseleave blur', function () {
+                                        $datepickerDebut.removeClass('btn-hover');
+                                        $clearIconDebut.removeClass('btn-hover');
+                                    });
+
+                                    // Retirer le style quand on quitte le survol/focus
+                                        $calendarIconDebut.on('mouseleave blur', function () {
+                                        $datepickerDebut.removeClass('btn-hover');
+                                        $calendarIconDebut.removeClass('btn-hover');
+                                    });
+
+                                    // Ouvrir le calendrier lorsque l'on clique sur l'icône calendrier
+                                        $calendarIconDebut.on('click', function () {
+                                        $datepickerDebut.focus();
+                                    });
+
+                                    //Date fin
+                                        $datepickerFin.val(film.date_fin);
+                                        $datepickerFin.datepicker({
+                                            format: "dd/mm/yyyy",
+                                            orientation: "bottom",
+                                            language: "fr",
+                                            autoclose: true
+                                        })
+                                            .on('changeDate', function () {
+                                                if ($datepickerFin.val().trim()) {
+                                                    const dateDebut = new Date($datepickerDebut.val().trim().split('/').reverse().join('-'));
+                                                    const dateFin = new Date($datepickerFin.val().trim().split('/').reverse().join('-'));
+                                                    if (dateFin < dateDebut) {
+                                                        $calendarIconFin.removeClass('d-none');
+                                                        $clearIconFin.addClass('d-none');
+                                                        $datepickerFin.val('');
+                                                        alert('La date de fin doit être supérieure ou égale à la date de début.');
+                                                    }else {
+                                                        // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
+                                                        $calendarIconFin.addClass('d-none');
+                                                        $clearIconFin.removeClass('d-none');
+                                                    }
+                                                }
+                                            });
+
+                                    // Affiche l'icône de croix et cache l'icône calendrier si une date est déjà sélectionnée
+                                        if ($datepickerFin.val().trim() !== '') {
+                                        $calendarIconFin.addClass('d-none');
+                                        $clearIconFin.removeClass('d-none');
+                                    }
+
+                                    // Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
+                                        $clearIconFin.on('click', function () {
+                                        $datepickerFin.datepicker('clearDates');
+                                        $calendarIconFin.removeClass('d-none');
+                                        $clearIconFin.addClass('d-none');
+                                    });
+
+                                    // Appliquer le style de hover/focus
+                                        $clearIconFin.on('mouseenter focus', function () {
+                                        $datepickerFin.addClass('btn-hover');
+                                        $clearIconFin.addClass('btn-hover');
+                                    });
+
+                                    // Appliquer le style de hover/focus
+                                        $calendarIconFin.on('mouseenter focus', function () {
+                                        $datepickerFin.addClass('btn-hover');
+                                        $calendarIconFin.addClass('btn-hover');
+                                    });
+
+                                    // Retirer le style quand on quitte le survol/focus
+                                        $clearIconFin.on('mouseleave blur', function () {
+                                        $datepickerFin.removeClass('btn-hover');
+                                        $clearIconFin.removeClass('btn-hover');
+                                    });
+
+                                    // Retirer le style quand on quitte le survol/focus
+                                        $calendarIconFin.on('mouseleave blur', function () {
+                                        $datepickerFin.removeClass('btn-hover');
+                                        $calendarIconFin.removeClass('btn-hover');
+                                    });
+
+                                    // Ouvrir le calendrier lorsque l'on clique sur l'icône calendrier
+                                        $calendarIconFin.on('click', function () {
+                                        $datepickerFin.focus();
+                                    });
+
+                                    // Désactiver les datepickers si une date de début et une date de fin sont déjà renseignées
+                                        if ($datepickerDebut.val().trim() && $datepickerFin.val().trim()) {
+                                        $datepickerDebut.prop('disabled', true);
+                                        $datepickerFin.prop('disabled', true);
+                                        $clearIconDebut.addClass('d-none');
+                                        $clearIconFin.addClass('d-none');
+                                        $calendarIconDebut.removeClass('d-none');
+                                        $calendarIconFin.removeClass('d-none');
+                                    } else {
+                                        $datepickerFin.prop('disabled', true);
+                                    }
+
+                                    //Timepicker
+                                        // Fonction pour générer les constantes pour chaque combinaison
+                                        function generateTimepickerConstants(filmId) {
+                                            const types = ['3DX', '4DX', 'IMAX', 'Dolby'];  // Les types 3DX et 4DX
+                                            const sessions = [1, 2, 3, 4];  // Les sessions 1, 2, 3, 4
+                                            let constants = [];
+
+                                            // Boucles pour générer les constantes
+                                            types.forEach(type => {
+                                                sessions.forEach(session => {
+                                                    constants.push({
+                                                        // Début
+                                                        timepickerIdDebut: `#timepicker-admin-debut-${type}-${session}-${filmId}`,
+                                                        clockIconIdDebut: `#icon-clock-debut-admin-${type}-${session}-${filmId}`,
+                                                        clearIconIdDebut: `#close-icon-time-debut-admin-${type}-${session}-${filmId}`,
+                                                        // Fin
+                                                        timepickerIdFin: `#timepicker-admin-fin-${type}-${session}-${filmId}`,
+                                                        clockIconIdFin: `#icon-clock-fin-admin-${type}-${session}-${filmId}`,
+                                                        clearIconIdFin: `#close-icon-time-fin-admin-${type}-${session}-${filmId}`,
+                                                        price: `#Textarea-${type}-${session}-prix-${filmId}`
+                                                    });
+                                                });
+                                            });
+
+                                            return constants;
+                                        }
+                                        function initTimepickerWithValidation(timepickerIdDebut, clockIconIdDebut, clearIconIdDebut, timepickerIdFin, clockIconIdFin, clearIconIdFin, price, modalTimeFieldIdFin) {
+                                        const $timepickerDebut = $(timepickerIdDebut);
+                                        const $clockIconDebut = $(clockIconIdDebut);
+                                        const $clearIconDebut = $(clearIconIdDebut);
+
+                                        const $timepickerFin = $(timepickerIdFin);
+                                        const $clockIconFin = $(clockIconIdFin);
+                                        const $clearIconFin = $(clearIconIdFin);
+
+                                        const $price = $(price);
+
+                                        const $modalTimeFieldFin = $(modalTimeFieldIdFin); // Élément du modal où l'heure de fin doit être mise à jour
+
+                                        // Initialisation du Timepicker pour "Début"
+                                        const timepickerDebutInstance = flatpickr($timepickerDebut, {
+                                            enableTime: true,
+                                            noCalendar: true,
+                                            dateFormat: "H:i",
+                                            time_24hr: true,
+                                            minuteIncrement: 15,
+                                            onChange: function(selectedDates, dateStr) {
+                                                if (dateStr.trim()) {
+                                                    $timepickerFin.removeAttr('disabled'); // Activer le champ "Fin"
+                                                    $price.removeAttr('disabled'); // Activer le champ "Prix"
+                                                    $clockIconDebut.addClass('d-none');
+                                                    $clearIconDebut.removeClass('d-none');
+
+                                                    // Validation de "Fin" par rapport à "Début"
+                                                    const timeDebut = new Date(`1970-01-01T${dateStr}:00`);
+                                                    const timeFin = $timepickerFin.val().trim() ? new Date(`1970-01-01T${$timepickerFin.val()}:00`) : null;
+
+                                                    if (timeFin && timeFin <= timeDebut) {
+                                                        // Si l'heure de fin est inférieure ou égale à l'heure de début
+                                                        timepickerFinInstance.setDate(null); // Ne pas afficher de valeur par défaut dans le timepicker
+                                                        $timepickerFin.val(''); // Réinitialiser la valeur de l'input
+                                                        $modalTimeFieldFin.val(''); // Réinitialiser l'heure de fin dans le modal
+                                                        $price.text(''); // Réinitialiser le prix
+                                                        alert('L’heure de fin doit être supérieure à l’heure de début.');
+
+                                                        // Supprimer la valeur de "Début" si "Fin" <= "Début"
+                                                        $timepickerDebut.val('');
+                                                        $clearIconDebut.removeClass('d-none');
+                                                        $clockIconDebut.addClass('d-none');
+                                                    }
+                                                } else {
+                                                    $timepickerFin.val('').attr('disabled', true); // Désactiver le champ "Fin"
                                                     $clockIconFin.removeClass('d-none');
                                                     $clearIconFin.addClass('d-none');
-
-                                                    // Supprimer la valeur de "Début" si "Fin" <= "Début"
-                                                    $timepickerDebut.val('');
-                                                    $clearIconDebut.addClass('d-none');
-                                                    $clockIconDebut.removeClass('d-none');
-                                                    $timepickerFin.attr('disabled', true); // Désactiver le champ "Fin"
+                                                    $modalTimeFieldFin.val(''); // Réinitialiser l'heure de fin dans le modal
                                                     $price.attr('disabled', true); // Désactiver le champ "Prix"
-                                                } else {
-                                                    $clockIconFin.addClass('d-none');
-                                                    $clearIconFin.removeClass('d-none');
-                                                    $modalTimeFieldFin.val(dateStr); // Mettre à jour l'heure de fin dans le modal
+                                                    $price.val(''); // Réinitialiser le prix
                                                 }
                                             }
+                                        });
+
+                                        // Initialisation du Timepicker pour "Fin"
+                                        const timepickerFinInstance = flatpickr($timepickerFin, {
+                                            enableTime: true,
+                                            noCalendar: true,
+                                            dateFormat: "H:i",
+                                            time_24hr: true,
+                                            minuteIncrement: 15,
+                                            onOpen: function() {
+                                                // Set the menu (dropdown) to 12:15 when opening the timepicker, but do not set the input
+                                                if (!$timepickerFin.val().trim() && $timepickerDebut.val().trim()) {
+                                                    timepickerFinInstance.setDate('12:15', true); // Set time for menu display only (not input)
+                                                }
+                                            },
+                                            onChange: function(selectedDates, dateStr) {
+                                                if (dateStr.trim()) {
+                                                    const timeDebut = $timepickerDebut.val().trim() ? new Date(`1970-01-01T${$timepickerDebut.val()}:00`) : null;
+                                                    const timeFin = new Date(`1970-01-01T${dateStr}:00`);
+
+                                                    if (timeDebut && timeFin <= timeDebut) {
+                                                        // Réinitialiser "Fin" si l'heure est inférieure ou égale à l'heure de début
+                                                        timepickerFinInstance.setDate(null); // Réinitialiser avec aucune valeur
+                                                        $timepickerFin.val(''); // Réinitialiser la valeur de l'input
+                                                        $price.val(''); // Réinitialiser le prix
+                                                        $modalTimeFieldFin.val(''); // Réinitialiser l'heure de fin dans le modal
+                                                        alert('L’heure de fin doit être supérieure à l’heure de début.');
+                                                        $clockIconFin.removeClass('d-none');
+                                                        $clearIconFin.addClass('d-none');
+
+                                                        // Supprimer la valeur de "Début" si "Fin" <= "Début"
+                                                        $timepickerDebut.val('');
+                                                        $clearIconDebut.addClass('d-none');
+                                                        $clockIconDebut.removeClass('d-none');
+                                                        $timepickerFin.attr('disabled', true); // Désactiver le champ "Fin"
+                                                        $price.attr('disabled', true); // Désactiver le champ "Prix"
+                                                    } else {
+                                                        $clockIconFin.addClass('d-none');
+                                                        $clearIconFin.removeClass('d-none');
+                                                        $modalTimeFieldFin.val(dateStr); // Mettre à jour l'heure de fin dans le modal
+                                                    }
+                                                }
+                                            }
+                                        });
+
+                                        // Quand l'icône de l'horloge est cliquée
+                                        $clockIconFin.on("click", function() {
+                                            const $input = $(this).siblings("input"); // Trouve l'input associé
+                                            $input.trigger("focus"); // Déclenche le focus sur l'input
+                                            $input.click(); // Déclenche l'événement de clic s'il y en a un
+                                        });
+                                        $clockIconDebut.on("click", function() {
+                                            const $input = $(this).siblings("input"); // Trouve l'input associé
+                                            $input.trigger("focus"); // Déclenche le focus sur l'input
+                                            $input.click(); // Déclenche l'événement de clic s'il y en a un
+                                        });
+
+                                        // Quand la souris entre dans l'icône de l'horloge
+                                        $clockIconDebut.on("mouseenter", function() {
+                                            const inputId = $(this).siblings("input").attr("id"); // Trouve l'input associé
+                                            $(`#${inputId}`).addClass("btn-hover");
+                                        });
+                                        $clockIconFin.on("mouseenter", function() {
+                                            const inputId = $(this).siblings("input").attr("id"); // Trouve l'input associé
+                                            $(`#${inputId}`).addClass("btn-hover");
+                                        });
+
+                                        // Quand la souris quitte l'icône de l'horloge
+                                        $clockIconDebut.on("mouseleave", function() {
+                                            const inputId = $(this).siblings("input").attr("id");
+                                            $(`#${inputId}`).removeClass("btn-hover");
+                                        });
+                                        $clockIconFin.on("mouseleave", function() {
+                                            const inputId = $(this).siblings("input").attr("id");
+                                            $(`#${inputId}`).removeClass("btn-hover");
+                                        });
+
+                                        // Desactiver le timepicker "Fin" et prix si "Début" est vide
+                                        if ($timepickerDebut.attr('placeholder').trim() !== 'Début' && $timepickerFin.attr('placeholder').trim() !== 'Fin') {
+                                            $timepickerDebut.attr('disabled', true);
+                                            $timepickerFin.attr('disabled', true);
+                                            $price.attr('disabled', true);
+                                            $clearIconDebut.addClass('d-none');
+                                            $clearIconFin.addClass('d-none');
+                                            $clockIconDebut.removeClass('d-none');
+                                            $clockIconFin.removeClass('d-none');
+                                        } else {
+                                            $timepickerFin.attr('disabled', true);
+                                            $price.attr('disabled', true);
                                         }
-                                    });
 
-                                    // Quand l'icône de l'horloge est cliquée
-                                    $clockIconFin.on("click", function() {
-                                        const $input = $(this).siblings("input"); // Trouve l'input associé
-                                        $input.trigger("focus"); // Déclenche le focus sur l'input
-                                        $input.click(); // Déclenche l'événement de clic s'il y en a un
-                                    });
-                                    $clockIconDebut.on("click", function() {
-                                        const $input = $(this).siblings("input"); // Trouve l'input associé
-                                        $input.trigger("focus"); // Déclenche le focus sur l'input
-                                        $input.click(); // Déclenche l'événement de clic s'il y en a un
-                                    });
+                                        // Icônes pour "Début"
+                                        $clearIconDebut.on('click', function() {
+                                            timepickerDebutInstance.clear();
+                                            $clockIconDebut.removeClass('d-none');
+                                            $clearIconDebut.addClass('d-none');
+                                            $timepickerFin.val('').attr('disabled', true);
+                                            $modalTimeFieldFin.val(''); // Réinitialiser l'heure de fin dans le modal
+                                            $clockIconFin.removeClass('d-none');
+                                            $clearIconFin.addClass('d-none');
+                                        });
 
-                                    // Quand la souris entre dans l'icône de l'horloge
-                                    $clockIconDebut.on("mouseenter", function() {
-                                        const inputId = $(this).siblings("input").attr("id"); // Trouve l'input associé
-                                        $(`#${inputId}`).addClass("btn-hover");
-                                    });
-                                    $clockIconFin.on("mouseenter", function() {
-                                        const inputId = $(this).siblings("input").attr("id"); // Trouve l'input associé
-                                        $(`#${inputId}`).addClass("btn-hover");
-                                    });
+                                        // Icônes pour "Fin"
+                                        $clearIconFin.on('click', function() {
+                                            timepickerFinInstance.clear();
+                                            $clockIconFin.removeClass('d-none');
+                                            $clearIconFin.addClass('d-none');
+                                            $modalTimeFieldFin.val('');// Réinitialiser l'heure de fin dans le modal
+                                        });
+                                    }
+                                        function initAllTimepickers(filmId) {
+                                        // Générer les constantes pour le film
+                                        const timepickerConstants = generateTimepickerConstants(filmId);
 
-                                    // Quand la souris quitte l'icône de l'horloge
-                                    $clockIconDebut.on("mouseleave", function() {
-                                        const inputId = $(this).siblings("input").attr("id");
-                                        $(`#${inputId}`).removeClass("btn-hover");
-                                    });
-                                    $clockIconFin.on("mouseleave", function() {
-                                        const inputId = $(this).siblings("input").attr("id");
-                                        $(`#${inputId}`).removeClass("btn-hover");
-                                    });
-
-                                    // Desactiver le timepicker "Fin" et prix si "Début" est vide
-                                    if ($timepickerDebut.attr('placeholder').trim() !== 'Début' && $timepickerFin.attr('placeholder').trim() !== 'Fin') {
-                                        $timepickerDebut.attr('disabled', true);
-                                        $timepickerFin.attr('disabled', true);
-                                        $price.attr('disabled', true);
-                                        $clearIconDebut.addClass('d-none');
-                                        $clearIconFin.addClass('d-none');
-                                        $clockIconDebut.removeClass('d-none');
-                                        $clockIconFin.removeClass('d-none');
-                                    } else {
-                                        $timepickerFin.attr('disabled', true);
-                                        $price.attr('disabled', true);
+                                        // Initialiser chaque timepicker avec validation entre "Début" et "Fin"
+                                        timepickerConstants.forEach(function(constant) {
+                                            initTimepickerWithValidation(
+                                                constant.timepickerIdDebut,
+                                                constant.clockIconIdDebut,
+                                                constant.clearIconIdDebut,
+                                                constant.timepickerIdFin,
+                                                constant.clockIconIdFin,
+                                                constant.clearIconIdFin,
+                                                constant.price,
+                                                constant.modalTimeFieldIdFin // Ajouter l'ID du champ du modal pour "Fin"
+                                            );
+                                        });
                                     }
 
-                                    // Icônes pour "Début"
-                                    $clearIconDebut.on('click', function() {
-                                        timepickerDebutInstance.clear();
-                                        $clockIconDebut.removeClass('d-none');
-                                        $clearIconDebut.addClass('d-none');
-                                        $timepickerFin.val('').attr('disabled', true);
-                                        $modalTimeFieldFin.val(''); // Réinitialiser l'heure de fin dans le modal
-                                        $clockIconFin.removeClass('d-none');
-                                        $clearIconFin.addClass('d-none');
-                                    });
-
-                                    // Icônes pour "Fin"
-                                    $clearIconFin.on('click', function() {
-                                        timepickerFinInstance.clear();
-                                        $clockIconFin.removeClass('d-none');
-                                        $clearIconFin.addClass('d-none');
-                                        $modalTimeFieldFin.val('');// Réinitialiser l'heure de fin dans le modal
-                                    });
-                                }
-                                function initAllTimepickers(filmId) {
-                                    // Générer les constantes pour le film
-                                    const timepickerConstants = generateTimepickerConstants(filmId);
-
-                                    // Initialiser chaque timepicker avec validation entre "Début" et "Fin"
-                                    timepickerConstants.forEach(function(constant) {
-                                        initTimepickerWithValidation(
-                                            constant.timepickerIdDebut,
-                                            constant.clockIconIdDebut,
-                                            constant.clearIconIdDebut,
-                                            constant.timepickerIdFin,
-                                            constant.clockIconIdFin,
-                                            constant.clearIconIdFin,
-                                            constant.price,
-                                            constant.modalTimeFieldIdFin // Ajouter l'ID du champ du modal pour "Fin"
-                                        );
-                                    });
-                                }
-
-                                const filmId = film.id;
-                                initAllTimepickers(filmId);
-
-                                // Reset des champs vérouillés
-                                $('#btn-reset-' + film.id).click(function () {
-                                    const data = {
-                                        id: film.id
-                                    }
-                                    axios.post('/administrateur/administration/film/reset', data)
-                                        .then(response => {console.log(response.data)})
-                                        .catch(error => {console.error(error);})
-                                });
+                                        const filmId = film.id;
+                                        initAllTimepickers(filmId);
 
                             });
                         })
@@ -1244,7 +1264,7 @@ import './styles/app.css';
             });
 
         //Compte employé
-            // Page Création compte
+            // Création compte
                 $('#toggleEmployePassword').on('click', function () {
                     const passwordField = $('#employePassword');
                     const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
@@ -1252,7 +1272,7 @@ import './styles/app.css';
                     $(this).toggleClass('bi-eye bi-eye-slash');
                 });
 
-            // Page Réinnitialiser le mot de passe
+            // Réinnitialiser le mot de passe
                 const $clearIconEmploye = $('.close-icon-employe');
 
                 // Au clic sur le bouton choix employés pour afficher/masquer les options
@@ -1301,7 +1321,7 @@ import './styles/app.css';
                     $('.close-icon-employe').removeClass('btn-hover');
                 });
 
-             //Page réservation
+             //Page données réservations
                 const $datepickerReservations = $('#datepicker_reservations');
                 const $calendarIconReservations = $('#icon-calendar-reservations');
                 const $clearIconReservations = $('.close-icon-reservations');

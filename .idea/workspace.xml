@@ -5,10 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifs diverses">
-      <change afterPath="$PROJECT_DIR$/public/image_film/avatar-67409586b3aea389804274.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/image_film/ant-man-6740b534e7fe6194985473.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/image_film/avatar-6740bab6b4402030396447.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/image_film/black-6740b5541eb7a040725354.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/image_film/chat-6741b81087ac2107773325.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/image_film/comte-6740b5190e5d8274983950.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/image_film/dead-6740b24cd87f9229191124.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/image_film/ghosted-6740b21ba6d25674919656.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/image_film/god-6741b82c63306752418279.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/image_film/guetteurs-6740b52761945970295253.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/image_film/joker-6741b7ba44e41117736183.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/image_film/killer-6740b4a955283951816928.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/image_film/m3gan-6741b7c5b1df7172498536.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/image_film/mariage-6740b584a0c7c330970235.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/image_film/panda-6740b5b1c8e96032131257.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/EmployeController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/BaseEmploye.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/employe/index.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/image_film/avatar-67409586b3aea389804274.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AdministrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdministrationController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Film.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Film.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/BaseAdministration.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/BaseAdministration.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,7 +181,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;Page__administration&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/Cinephoria/templates/administration&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/Cinephoria/templates&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -174,10 +194,10 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\Cinephoria\templates" />
       <recent name="C:\xampp\htdocs\Cinephoria\templates\administration" />
       <recent name="C:\xampp\htdocs\Cinephoria\templates\security" />
       <recent name="C:\xampp\htdocs\Cinephoria\templates\reset_password" />
-      <recent name="C:\xampp\htdocs\Cinephoria\templates" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\Cinephoria\templates" />
@@ -279,14 +299,8 @@
       <workItem from="1732183802104" duration="15170000" />
       <workItem from="1732265883502" duration="5881000" />
       <workItem from="1732285691997" duration="1514000" />
-    </task>
-    <task id="LOCAL-00015" summary="Modifs tavle seance">
-      <option name="closed" value="true" />
-      <created>1730707499155</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1730707499155</updated>
+      <workItem from="1732292370684" duration="7602000" />
+      <workItem from="1732357663760" duration="2643000" />
     </task>
     <task id="LOCAL-00016" summary="Modifs bdd">
       <option name="closed" value="true" />
@@ -672,7 +686,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732271656184</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="Modifs diverses">
+      <option name="closed" value="true" />
+      <created>1732292601195</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1732292601196</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

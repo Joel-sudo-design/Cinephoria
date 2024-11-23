@@ -462,9 +462,9 @@ footer #navbarBottom .nav-link {
 
 .container-films {
   position: relative;
-  top: 11rem;
+  top: 10.5rem;
   bottom: 8rem;
-  height: calc(100% - 19rem);
+  height: calc(100% - 18.5rem);
   overflow: auto;
 }
 
@@ -835,30 +835,30 @@ footer #navbarBottom .nav-link {
   display: inline-block;
   background-color: #FF5722;
   color: white;
-  padding: 5px 10px;
+  padding: 5px 5px;
   border-radius: 5px;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .age-badge-16 {
   display: inline-block;
   background-color: #E64A19;
   color: white;
-  padding: 5px 10px;
+  padding: 5px 5px;
   border-radius: 5px;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .age-badge-18 {
   display: inline-block;
   background-color: #D32F2F;
   color: white;
-  padding: 5px 10px;
+  padding: 5px 5px;
   border-radius: 5px;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .dropdown-modal-admin .nav-link {

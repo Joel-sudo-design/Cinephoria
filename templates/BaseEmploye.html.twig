@@ -23,12 +23,12 @@
             <div id="offcanvas-bodyTop" class="row offcanvas-body align-items-center justify-content-center">
                 <ul id="navbarLeft" class="col-5 navbar-nav align-items-center justify-content-center p-0">
                     <li class="nav-item mx-4 my-4 text-white">
-                        <a class="nav-link d-flex align-items-center justify-content-center" href="{{ path('app_accueil_admin') }}">
+                        <a class="nav-link d-flex align-items-center justify-content-center" href="{{ path('app_accueil_employe') }}">
                             <i class="bi bi-house fs-3 ms-2"></i><span class="mx-2">Accueil</span>
                         </a>
                     </li>
                     <li class="nav-item mx-4 my-4 text-white">
-                        <a id="btn-films" class="nav-link d-flex align-items-center justify-content-center" href="{{ path('app_films_admin') }}">
+                        <a id="btn-films" class="nav-link d-flex align-items-center justify-content-center" href="{{ path('app_films_employe') }}">
                             <i class="bi bi-camera-video fs-3 ms-2"></i><span class="mx-2">Films</span>
                         </a>
                     </li>
@@ -42,11 +42,11 @@
                 <ul id="navbarRight" class="col-5 navbar-nav align-items-center justify-content-center p-0">
                     <li class="nav-item mx-4 my-4 text-white">
                         <button id="btn-navbar-admin" class="nav-link d-flex align-items-center justify-content-center active">
-                            <i class="bi bi-person-lines-fill fs-3 ms-2"></i><span class="mx-2">Administration</span>
+                            <i class="bi bi-person-lines-fill fs-3 ms-2"></i><span class="mx-2">Intranet</span>
                         </button>
                     </li>
                     <li class="nav-item mx-4 my-4 text-white">
-                        <a class="nav-link d-flex align-items-center justify-content-center" href="{{ path('app_contact_admin') }}">
+                        <a class="nav-link d-flex align-items-center justify-content-center" href="{{ path('app_contact_employe') }}">
                             <i class="bi bi-envelope fs-3 ms-2"></i><span class="mx-2">Contact</span>
                         </a>
                     </li>
@@ -70,7 +70,7 @@
         </div>
     </div>
 </nav>
-    <div class="d-flex container-fluid justify-content-center align-items-center position-fixed bg-white" style="top: 96px; z-index: 1000; height: 4.5rem">
+    <div class="d-flex container-fluid justify-content-center align-items-center position-fixed bg-white" style="top: 96px; z-index: 1000; height: 5rem">
         {% block extra_content_bouton_creation_film %}{% endblock %}
     </div>
     {% block body %}{% endblock %}

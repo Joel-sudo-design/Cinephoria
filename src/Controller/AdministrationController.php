@@ -192,7 +192,7 @@ class AdministrationController extends AbstractController
         if ($image) {
             $film->setImageFile($image);
         }
-        if ($name != '') {
+        if ($name != 'Titre du film') {
             $film->setName($name);
         }
         if ($stringGenre != '') {
@@ -202,9 +202,7 @@ class AdministrationController extends AbstractController
         if ($age != '') {
             $film->setAgeMinimum($age);
         }
-        if ($label != '') {
-            $film->setLabel($label);
-        }else{$film->setLabel($label);}
+        $film->setLabel($label);
         if ($dateDebut != '') {
             $film->setDateDebut($dateDebut);
         }
@@ -240,7 +238,7 @@ class AdministrationController extends AbstractController
                 }
             }
         }
-        if ($description != '') {
+        if ($description != 'Description du film') {
             $film->setDescription($description);
         }
         if (is_numeric($stringSalle)) {
@@ -292,11 +290,11 @@ class AdministrationController extends AbstractController
         }
         $film->setDateDebut(null);
         $film->setDateFin(null);
-        $film->setName('');
+        $film->setName('Titre du film');
         $film->setGenre(null);
-        $film->setAgeMinimum(null);
+        $film->setAgeMinimum('Aucun');
         $film->setLabel(false);
-        $film->setDescription('');
+        $film->setDescription('Description du film');
         $entityManager->persist($film);
         $entityManager->flush();
         return new JsonResponse(['status' => 'champs reset']);

@@ -20,10 +20,10 @@ class Film
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $name = '';
+    private ?string $name = 'Titre du film';
 
     #[ORM\Column(length: 1000, nullable: true)]
-    private ?string $description = '';
+    private ?string $description = 'Description du film';
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date_debut = null;
@@ -35,7 +35,7 @@ class Film
     private ?bool $label = false;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $age_minimum = '';
+    private ?string $age_minimum = 'Aucun';
 
     #[ORM\ManyToOne(inversedBy: 'films')]
     private ?Genre $genre = null;
