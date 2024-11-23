@@ -230,24 +230,24 @@ import './styles/app.css';
         //Films
             //Générer des films
                 function LoadFilm() {
-                    // Afficher la barre de chargement
-                    const loadingBar = $('#loading-bar');
-                    const progressBar = loadingBar.find('.progress-bar');
-
-                    loadingBar.removeClass('d-none'); // Afficher la barre de chargement
-                    progressBar.css('width', '0%').attr('aria-valuenow', '0'); // Réinitialiser la barre
-
                     // Vider le conteneur des films
                     $('#card-container').empty();
 
-                    // Simuler la progression initiale
+                    const loadingBar = $('#loading-bar');
+                    const progressBar = loadingBar.find('.progress-bar');
+
+                    // Réinitialiser la barre de chargement à 0% immédiatement
+                    loadingBar.removeClass('d-none');
+                    progressBar.css('width', '0%').attr('aria-valuenow', '0');
+
                     let progress = 0;
+                    const updateInterval = 100; // Intervalle pour mise à jour (rapide pour effet fluide)
                     const interval = setInterval(() => {
-                        if (progress < 90) { // Monter jusqu'à 90 %
-                            progress += 10;
+                        if (progress < 90) {
+                            progress += 5; // Incrément de 5% pour une progression fluide
                             progressBar.css('width', progress + '%').attr('aria-valuenow', progress);
                         }
-                    }, 200);
+                    }, updateInterval);
 
                     // Récupérer les films
                     axios.get('/administrateur/administration/film')
@@ -1258,22 +1258,24 @@ import './styles/app.css';
 
                             });
 
-                            // Arrêter la progression simulée et compléter à 100 %
-                            clearInterval(interval);
-                            progressBar.css('width', '100%').attr('aria-valuenow', '100');
+                            // Finaliser la progression à 100 % lorsque les données sont chargées
+                            clearInterval(interval); // Stopper l'intervalle de mise à jour
+                            progress = 100;
+                            progressBar.css('width', '100%').attr('aria-valuenow', progress);
 
-                            // Attendre un peu avant de masquer la barre pour s'assurer qu'elle atteint visuellement 100 %
-                            setTimeout(() => loadingBar.addClass('d-none'), 600);
+                            // Masquer la barre de chargement après un délai de 500ms
+                            setTimeout(() => loadingBar.addClass('d-none'), 500);
                         })
                         .catch(error => {
                             console.error('Erreur lors du chargement des films :', error);
 
-                            // En cas d'erreur, arrêter la progression et compléter à 100 %
+                            // Finaliser à 100 % en cas d'erreur
                             clearInterval(interval);
-                            progressBar.css('width', '100%').attr('aria-valuenow', '100');
+                            progress = 100;
+                            progressBar.css('width', '100%').attr('aria-valuenow', progress);
 
-                            // Attendre un peu avant de masquer la barre
-                            setTimeout(() => loadingBar.addClass('d-none'), 600);
+                            // Masquer la barre de chargement après un délai de 500ms
+                            setTimeout(() => loadingBar.addClass('d-none'), 500);
                         });
                 }
 

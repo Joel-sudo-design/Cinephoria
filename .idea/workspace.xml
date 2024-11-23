@@ -7,8 +7,6 @@
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifs diverses">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AdministrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdministrationController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/administration/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/administration/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -281,15 +279,7 @@
       <workItem from="1732265883502" duration="5881000" />
       <workItem from="1732285691997" duration="1514000" />
       <workItem from="1732292370684" duration="7602000" />
-      <workItem from="1732357663760" duration="6616000" />
-    </task>
-    <task id="LOCAL-00018" summary="Création du template card film, boutons compte employé &amp; données réservation &amp; bouton plus ajout template card">
-      <option name="closed" value="true" />
-      <created>1730721216857</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1730721216857</updated>
+      <workItem from="1732357663760" duration="7980000" />
     </task>
     <task id="LOCAL-00019" summary="Modifs diverses">
       <option name="closed" value="true" />
@@ -675,7 +665,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732360772093</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="Modifs diverses">
+      <option name="closed" value="true" />
+      <created>1732372455866</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1732372455867</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
