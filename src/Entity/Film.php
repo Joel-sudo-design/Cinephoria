@@ -61,6 +61,12 @@ class Film
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
 
+    /**
+     * @var Collection<int, Avis>
+     */
+    #[ORM\OneToMany(targetEntity: Avis::class, mappedBy: 'film', orphanRemoval: true)]
+    private Collection $avis;
+
     public function setImageFile(?File $file = null): static
     {
         $this->imageFile = $file;
@@ -101,6 +107,7 @@ class Film
     {
         $this->cinema = new ArrayCollection();
         $this->seance = new ArrayCollection();
+        $this->avis = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -251,6 +258,36 @@ class Film
             // set the owning side to null (unless already changed)
             if ($seance->getFilm() === $this) {
                 $seance->setFilm(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Avis>
+     */
+    public function getAvis(): Collection
+    {
+        return $this->avis;
+    }
+
+    public function addAvi(Avis $avi): static
+    {
+        if (!$this->avis->contains($avi)) {
+            $this->avis->add($avi);
+            $avi->setFilm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvi(Avis $avi): static
+    {
+        if ($this->avis->removeElement($avi)) {
+            // set the owning side to null (unless already changed)
+            if ($avi->getFilm() === $this) {
+                $avi->setFilm(null);
             }
         }
 

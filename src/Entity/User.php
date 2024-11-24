@@ -60,9 +60,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Seance::class, mappedBy: 'user')]
     private Collection $seances;
 
+    /**
+     * @var Collection<int, Avis>
+     */
+    #[ORM\OneToMany(targetEntity: Avis::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $avis;
+
     public function __construct()
     {
         $this->seances = new ArrayCollection();
+        $this->avis = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -218,6 +225,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->seances->removeElement($seance)) {
             $seance->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Avis>
+     */
+    public function getFilm(): Collection
+    {
+        return $this->avis;
+    }
+
+    public function addFilm(Avis $film): static
+    {
+        if (!$this->avis->contains($film)) {
+            $this->avis->add($film);
+            $film->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFilm(Avis $film): static
+    {
+        if ($this->avis->removeElement($film)) {
+            // set the owning side to null (unless already changed)
+            if ($film->getUser() === $this) {
+                $film->setUser(null);
+            }
         }
 
         return $this;
