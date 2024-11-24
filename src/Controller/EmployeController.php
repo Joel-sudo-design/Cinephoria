@@ -7,6 +7,7 @@ use App\Entity\Film;
 use App\Entity\Genre;
 use App\Entity\Salle;
 use App\Entity\Seance;
+use App\Repository\FilmRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,7 +24,6 @@ class EmployeController extends AbstractController
             'controller_name' => 'EmployeController',
         ]);
     }
-
     #[Route('/film', name: 'app_employe_film')]
     public function Film(EntityManagerInterface $entityManager): Response
     {
@@ -111,7 +111,6 @@ class EmployeController extends AbstractController
 
         return new JsonResponse($AllFilmsArray);
     }
-
     #[Route('/film/create', name: 'app_employe_creation_film')]
     public function CreateFilm(EntityManagerInterface $entityManager): Response
     {
@@ -120,7 +119,6 @@ class EmployeController extends AbstractController
         $entityManager->flush();
         return new JsonResponse(['status' => 'film created']);
     }
-
     #[Route('/film/delete', name: 'app_employe_delete_film')]
     public function FilmDelete(Request $request,EntityManagerInterface $entityManager): Response
     {
@@ -141,7 +139,6 @@ class EmployeController extends AbstractController
         $entityManager->flush();
         return new JsonResponse(['status' => 'film deleted']);
     }
-
     #[Route('/film/validate', name: 'app_employe_validate_film')]
     public function ValidateFilm(Request $request,EntityManagerInterface $entityManager): Response
     {
@@ -246,7 +243,6 @@ class EmployeController extends AbstractController
             }
         }
     }
-
     #[Route('/film/reset', name: 'app_employe_reset_film')]
     public function ResetFilm(Request $request,EntityManagerInterface $entityManager): Response
     {
@@ -277,8 +273,11 @@ class EmployeController extends AbstractController
         return new JsonResponse(['status' => 'champs reset']);
     }
     #[Route('/avis', name: 'app_employe_validation_avis')]
-    public function validationAvis(): Response
+    public function validationAvis(FilmRepository $filmRepository): Response
     {
-        return $this->render('employe/avis.html.twig', []);
+        $films = $filmRepository->findAll();
+        return $this->render('employe/avis.html.twig', [
+            'films' => $films,
+        ]);
     }
 }

@@ -2601,7 +2601,7 @@ import './styles/app.css';
                 });
         });
 
-        //Affichage des films sur clic bouton administration
+        //Affichage des films sur clic bouton Intranet
             $('#btn-navbar-employe').click(function() {
             LoadFilmEmploye();
             });
@@ -2614,7 +2614,7 @@ import './styles/app.css';
         });
 
         //Page Validation des avis
-            function LoadFilmAvis() {
+            function LoadAvis() {
             // Vider le conteneur des films
             $('#card-container-avis').empty();
 
@@ -2637,14 +2637,27 @@ import './styles/app.css';
             // Récupérer les films
             axios.get('/employe/administration/film')
                 .then(response => {
-                    const Film = response.data;
-                    $.each(Film, function(index, film) {
+                    const Avis = response.data;
+                    $.each(Avis, function(index, avis) {
                         $('#card-container-avis').append(
-                            ``);
+                            `<div class="row m-0 mb-2 p-0">
+                                <div class="col-avis col-9 bg-white p-0" style="border: 1px solid white; border-radius: 6px">
+                                    <button class="btn btn-avis w-100 p-1 text-center" style="font-size: 0.8rem; border: none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAvis-${avis.id}" aria-expanded="false" aria-controls="collapseAvis">
+                                        Qu'est-ce que le Lorem Ipsum?
+                                    </button>
+                                    <div id="collapseAvis-${avis.id}" class="collapse">
+                                        <div class="p-2" style="font-size: 0.8rem; color: #6A73AB"></div>
+                                    </div>
+                                </div>
+                                <div class="col-3 d-flex justify-content-center align-items-center">
+                                     <button class="btn bi bi-check-lg p-1 d-flex justify-content-center align-items-center"></button>
+                                     <button class="btn bi bi-x-lg p-1 d-flex justify-content-center align-items-center"></button>
+                                </div>
+                            </div>`);
 
                         // Accordion description films
-                        const accordionButton = $('#btn-description-'+film.id);
-                        const accordionCollapse = $('#collapseDescription-'+film.id);
+                        const accordionButton = $('#btn-avis-'+film.id);
+                        const accordionCollapse = $('#collapseAvis-'+film.id);
 
                         // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
                         $(document).click(function(event) {
@@ -2656,7 +2669,6 @@ import './styles/app.css';
                                 }
                             }
                         });
-
 
                     });
 
