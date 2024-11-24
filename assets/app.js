@@ -255,7 +255,7 @@ import './styles/app.css';
                             const Film = response.data;
                             $.each(Film, function(index, film) {
                                 $('#card-container').append(
-                                    `<div id="card-film" class="col-auto card" style="width: 12rem">
+                                    `<div class="col-auto card" style="width: 12rem">
                                                 <div class="position-relative">
                                                      <button class="btn bi bi-pencil-square text-success p-0 fs-5 bg-admin position-absolute" style="border-radius: 0 0 2px 0" data-bs-toggle="modal" data-bs-target="#modal-${film.id}"></button>
                                                      <button id="x-square-${film.id}" class="btn bi bi-x-square text-danger p-0 fs-5 bg-admin position-absolute" style="top:0; right: 0; border-radius: 0 0 0 2px"></button>  
@@ -1539,7 +1539,6 @@ import './styles/app.css';
                 });
 
     // Page Employé
-
         //Générer des films
             function LoadFilmEmploye() {
             // Vider le conteneur des films
@@ -1567,7 +1566,7 @@ import './styles/app.css';
                     const Film = response.data;
                     $.each(Film, function(index, film) {
                         $('#card-container').append(
-                            `<div id="card-film" class="col-auto card" style="width: 12rem">
+                            `<div class="col-auto card" style="width: 12rem">
                                                 <div class="position-relative">
                                                      <button class="btn bi bi-pencil-square text-success p-0 fs-5 bg-admin position-absolute" style="border-radius: 0 0 2px 0" data-bs-toggle="modal" data-bs-target="#modal-${film.id}"></button>
                                                      <button id="x-square-${film.id}" class="btn bi bi-x-square text-danger p-0 fs-5 bg-admin position-absolute" style="top:0; right: 0; border-radius: 0 0 0 2px"></button>  
@@ -2613,6 +2612,74 @@ import './styles/app.css';
                 .then(response => {console.log(response.data);window.location.href = '/accueil';})
                 .catch(error => {console.error(error);});
         });
+
+        //Page Validation des avis
+            function LoadFilmAvis() {
+            // Vider le conteneur des films
+            $('#card-container-avis').empty();
+
+            const loadingBar = $('#loading-bar-avis');
+            const progressBar = loadingBar.find('.progress-bar');
+
+            // Réinitialiser la barre de chargement à 0% immédiatement
+            loadingBar.removeClass('d-none');
+            progressBar.css('width', '0%').attr('aria-valuenow', '0');
+
+            let progress = 0;
+            const updateInterval = 100; // Intervalle pour mise à jour (rapide pour effet fluide)
+            const interval = setInterval(() => {
+                if (progress < 90) {
+                    progress += 5; // Incrément de 5% pour une progression fluide
+                    progressBar.css('width', progress + '%').attr('aria-valuenow', progress);
+                }
+            }, updateInterval);
+
+            // Récupérer les films
+            axios.get('/employe/administration/film')
+                .then(response => {
+                    const Film = response.data;
+                    $.each(Film, function(index, film) {
+                        $('#card-container-avis').append(
+                            ``);
+
+                        // Accordion description films
+                        const accordionButton = $('#btn-description-'+film.id);
+                        const accordionCollapse = $('#collapseDescription-'+film.id);
+
+                        // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
+                        $(document).click(function(event) {
+                            // Vérifie si le clic est à l'intérieur de l'accordéon
+                            if (!accordionButton.is(event.target) && accordionButton.has(event.target).length === 0 && !accordionCollapse.is(event.target) && accordionCollapse.has(event.target).length === 0) {
+                                // Ferme l'accordéon si ouvert
+                                if (accordionCollapse.hasClass('show')) {
+                                    accordionCollapse.collapse('hide'); // Utilise la méthode Bootstrap pour cacher
+                                }
+                            }
+                        });
+
+
+                    });
+
+                    // Finaliser la progression à 100 % lorsque les données sont chargées
+                    clearInterval(interval); // Stopper l'intervalle de mise à jour
+                    progress = 100;
+                    progressBar.css('width', '100%').attr('aria-valuenow', progress);
+
+                    // Masquer la barre de chargement après un délai de 500ms
+                    setTimeout(() => loadingBar.addClass('d-none'), 500);
+                })
+                .catch(error => {
+                    console.error('Erreur lors du chargement des films :', error);
+
+                    // Finaliser à 100 % en cas d'erreur
+                    clearInterval(interval);
+                    progress = 100;
+                    progressBar.css('width', '100%').attr('aria-valuenow', progress);
+
+                    // Masquer la barre de chargement après un délai de 500ms
+                    setTimeout(() => loadingBar.addClass('d-none'), 500);
+                });
+        }
 
     //Lancement des requètes AJAX au chargement des pages
         if (window.location.pathname === '/administrateur/administration') {LoadFilm();}

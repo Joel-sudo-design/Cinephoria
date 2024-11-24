@@ -545,7 +545,7 @@ footer #navbarBottom .nav-link {
   border: 2px solid white;
 }
 
-#card-film, #card-film .card-img-top {
+.card, .card-img-top {
   border: none;
   border-radius: unset;
   color: #6A73AB;
@@ -954,13 +954,6 @@ footer #navbarBottom .nav-link {
 }
 /* Page Employé */
 
-.avis {
-  background-color: white;
-  color: #6A73AB;
-  border-radius: 6px;
-  text-align: center;
-}
-
 #card-container-avis .card-text::-webkit-scrollbar-thumb, .container-films::-webkit-scrollbar-track {
   background-color: #6A73AB; /* Couleur de la barre */
   border-radius: 5px; /* Bordure arrondie */
@@ -974,6 +967,20 @@ footer #navbarBottom .nav-link {
 #card-container-avis .card-text, .container-films {
   scrollbar-color: #6A73AB #f1f1f1; /* Couleur de la barre et de l'arrière-plan */
   scrollbar-width: auto;
+}
+
+.btn-avis {
+  background-color: white;
+  color: #6A73AB;
+  transition: all 0.2s ease;
+  border: 2px solid #6A73AB; /* Bordure transparente par défaut */
+  border-radius: 6px; /* Garder les arrondis */
+}
+
+.btn-avis:hover {
+  background-color: #6A73AB;
+  color: white;
+  border: 2px solid white; /* Bordure blanche au survol */
 }
 
 /* Media queries */
