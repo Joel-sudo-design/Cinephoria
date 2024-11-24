@@ -581,7 +581,7 @@ footer #navbarBottom .nav-link {
 }
 
 /* Page Administration */
-#btn-plus {
+#btn-plus-admin, #btn-plus-employe {
   background-color: white;
   color: #6A73AB;
   width: 2.5rem;
@@ -594,7 +594,7 @@ footer #navbarBottom .nav-link {
   border: none;
 }
 
-#btn-plus:hover {
+#btn-plus-admin:hover, #btn-plus-employe:hover {
   color: white;
   background-color: #6A73AB;
   scale: 130%;
@@ -951,6 +951,29 @@ footer #navbarBottom .nav-link {
 
 #loading-bar .progress-bar {
   background-color: #6A73AB;
+}
+/* Page Employé */
+
+.avis {
+  background-color: white;
+  color: #6A73AB;
+  border-radius: 6px;
+  text-align: center;
+}
+
+#card-container-avis .card-text::-webkit-scrollbar-thumb, .container-films::-webkit-scrollbar-track {
+  background-color: #6A73AB; /* Couleur de la barre */
+  border-radius: 5px; /* Bordure arrondie */
+}
+
+#card-container-avis .card-text::-webkit-scrollbar-track, .container-films::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Couleur de l'arrière-plan */
+}
+
+/* Pour les navigateurs qui ne supportent pas -webkit- */
+#card-container-avis .card-text, .container-films {
+  scrollbar-color: #6A73AB #f1f1f1; /* Couleur de la barre et de l'arrière-plan */
+  scrollbar-width: auto;
 }
 
 /* Media queries */

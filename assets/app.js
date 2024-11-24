@@ -349,7 +349,7 @@ import './styles/app.css';
                                                                     </div>    
                                                                 </div>
                                                                 <div class="col-8 p-4">
-                                                                    <!--Nom du film et cinéma et boutons validé & sortie-->
+                                                                    <!--Nom du film et cinéma et boutons-->
                                                                     <div class="row">
                                                                         <!--Nom du film-->
                                                                         <div class="col-6 d-flex align-items-center justify-content-start">
@@ -357,7 +357,7 @@ import './styles/app.css';
                                                                             <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="TextareaNom-${film.id}">${film.name}</textarea>
                                                                             <label class="d-none" for="TextareaNom-${film.id}"></label>
                                                                         </div>                                                          
-                                                                        <!--Boutons valider & sortie-->
+                                                                        <!--Boutons valider + sortie + reset-->
                                                                         <div class="col-6 d-flex align-items-center justify-content-end">
                                                                             <button id="btn-reset-${film.id}" class="btn bi bi-arrow-counterclockwise p-2 fs-4 d-flex justify-content-center align-items-center" data-bs-dismiss="modal"></button>
                                                                             <button id="btn-validate-film-${film.id}" class="btn bi bi-check-lg p-2 fs-4 d-flex justify-content-center align-items-center"></button>
@@ -404,7 +404,7 @@ import './styles/app.css';
                                                                     </div>
                                                                     <!--Salle & Places-->
                                                                     <div class="row my-3">                                                                                                                     
-                                                                        <!--Salle et places et bouton reset -->                                                                                                                
+                                                                        <!--Salle et places -->                                                                                                                
                                                                         <div class="col-12 d-flex justify-content-start align-items-center">
                                                                             <div class="text-white align-content-center fs-5 me-2">Salle:</div>                                                               
                                                                             <div class="dropdown dropdown-modal-admin align-content-center me-3">
