@@ -2616,7 +2616,7 @@ import './styles/app.css';
         //Page Validation des avis
             function LoadAvis() {
             // Vider le conteneur des avis
-                $('#card-container-avis').empty();
+                $('.card-container-avis').empty();
             // Récupérer les avis
                 axios.get('/employe/administration/film')
                     .then(response => {
@@ -2627,15 +2627,15 @@ import './styles/app.css';
                                     `<div class="row m-0 mb-2 p-0">
                                         <div class="col-avis col-9 bg-white p-0" style="border: 1px solid white; border-radius: 6px">
                                             <button id="btn-avis-${avis.id}" class="btn btn-avis w-100 p-1 text-center" style="font-size: 0.8rem; border: none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAvis-${avis.id}" aria-expanded="false" aria-controls="collapseAvis">
-                                                Avis de ${avis.user}
+                                                avis de ${avis.user}
                                             </button>
                                             <div id="collapseAvis-${avis.id}" class="collapse">
                                                 <div class="p-2" style="font-size: 0.8rem; color: #6A73AB">${avis.description}</div>
                                             </div>
                                         </div>
                                         <div class="col-3 d-flex justify-content-center align-items-center">
-                                             <button class="btn bi bi-check-lg p-1 d-flex justify-content-center align-items-center"></button>
-                                             <button class="btn bi bi-x-lg p-1 d-flex justify-content-center align-items-center"></button>
+                                             <button id="btn-validate-avis-${avis.id}" class="btn bi bi-check-lg p-1 d-flex justify-content-center align-items-center"></button>
+                                             <button id="btn-delete-avis-${avis.id}" class="btn bi bi-x-lg p-1 d-flex justify-content-center align-items-center"></button>
                                         </div>
                                     </div>`);
 
@@ -2649,10 +2649,27 @@ import './styles/app.css';
                                     if (!accordionButton.is(event.target) && accordionButton.has(event.target).length === 0 && !accordionCollapse.is(event.target) && accordionCollapse.has(event.target).length === 0) {
                                         // Ferme l'accordéon si ouvert
                                         if (accordionCollapse.hasClass('show')) {
-                                            accordionCollapse.collapse('hide'); // Utilise la méthode Bootstrap pour cacher
+                                            accordionCollapse.collapse('hide');
                                         }
                                     }
                                 });
+
+                                //Validation avis
+                                    $('#btn-validate-avis-' + avis.id).click(function () {
+                                    axios.post('/employe/administration/avis/validate', JSON.stringify({id: avis.id}))
+                                        .then(response => {LoadAvis();console.log(response.data);})
+                                        .catch(error => {console.error(error);})
+                                });
+                                    if (avis.isValidate === true) {
+                                        accordionButton.addClass('validate')
+                                    }
+
+                                //Suppression avis
+                                    $('#btn-delete-avis-' + avis.id).click(function () {
+                                    axios.post('/employe/administration/avis/delete', JSON.stringify({id: avis.id}))
+                                        .then(response => {LoadAvis();console.log(response.data);})
+                                        .catch(error => {console.error(error);})
+                                    });
                             });
                         });
                     })
@@ -2662,8 +2679,8 @@ import './styles/app.css';
             }
 
     //Lancement des requètes AJAX au chargement des pages
-        if (window.location.pathname === '/administrateur/administration') {LoadFilm();}
-        if (window.location.pathname === '/administrateur/administration/reservations') {loadReservations();}
-        if (window.location.pathname === '/employe/administration') {LoadFilmEmploye();}
-        if (window.location.pathname === '/employe/administration/avis') {LoadAvis();}
+        if (window.location.pathname === '/administrateur/administration') {LoadFilm()}
+        if (window.location.pathname === '/administrateur/administration/reservations') {loadReservations()}
+        if (window.location.pathname === '/employe/administration') {LoadFilmEmploye()}
+        if (window.location.pathname === '/employe/administration/avis') {LoadAvis()}
     });

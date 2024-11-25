@@ -975,6 +975,11 @@ footer #navbarBottom .nav-link {
   transition: all 0.2s ease;
 }
 
+.btn-avis.validate {
+  background-color: green;
+  color: white;
+}
+
 .btn-avis:hover {
   background-color: #6A73AB;
   color: white;

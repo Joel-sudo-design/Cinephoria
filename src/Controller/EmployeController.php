@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Avis;
 use App\Entity\Cinema;
 use App\Entity\Film;
 use App\Entity\Genre;
@@ -282,12 +283,37 @@ class EmployeController extends AbstractController
         $entityManager->flush();
         return new JsonResponse(['status' => 'champs reset']);
     }
-    #[Route('/avis', name: 'app_employe_validation_avis')]
-    public function validationAvis(FilmRepository $filmRepository): Response
+    #[Route('/avis', name: 'app_employe_avis')]
+    public function avis(FilmRepository $filmRepository): Response
     {
         $films = $filmRepository->findAll();
         return $this->render('employe/avis.html.twig', [
             'films' => $films,
         ]);
+    }
+    #[Route('/avis/validate', name: 'app_employe_validation_avis')]
+    public function validationAvis(Request $request,EntityManagerInterface $entityManager): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        $id = $data['id'];
+        if ($id != null) {
+            $avis = $entityManager->getRepository(Avis::class)->find($id);
+            $avis->setValidate(true);
+            $entityManager->persist($avis);
+            $entityManager->flush();
+        }
+        return new JsonResponse(['status' => 'avis validé']);
+    }
+    #[Route('/avis/delete', name: 'app_employe_delete_avis')]
+    public function deleteAvis(Request $request,EntityManagerInterface $entityManager): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        $id = $data['id'];
+        if ($id != null) {
+            $avis = $entityManager->getRepository(Avis::class)->find($id);
+            $entityManager->remove($avis);
+            $entityManager->flush();
+        }
+        return new JsonResponse(['status' => 'avis supprimé']);
     }
 }

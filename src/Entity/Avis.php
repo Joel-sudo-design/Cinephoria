@@ -25,7 +25,7 @@ class Avis
     private ?film $film = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $isValidate = null;
+    private ?bool $isValidate = false;
 
     public function getId(): ?int
     {
@@ -74,6 +74,7 @@ class Avis
             'id' => $this->getId(),
             'description' => $this->getDescription(),
             'user' => $this->getUser()->getUsername(),
+            'isValidate' => $this->isValidate(),
         ];
     }
 

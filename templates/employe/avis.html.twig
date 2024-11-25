@@ -1,26 +1,21 @@
 {% extends 'baseEmploye.html.twig' %}
 
-{% block title %}Employé: création et modifications de films{% endblock %}
+{% block title %}Employé: validation des avis{% endblock %}
 
 {% block extra_content_bouton_creation_film %}
     <a class="btn-admin mx-3 justify-content-center text-decoration-none" href="{{ path('app_employe') }}">Création film</a>
-    <a class="btn-admin mx-3 justify-content-center text-decoration-none active" href="{{ path('app_employe_validation_avis') }}">Validation avis</a>
+    <a class="btn-admin mx-3 justify-content-center text-decoration-none active" href="{{ path('app_employe_avis') }}">Validation avis</a>
 {% endblock %}
 
 {% block body %}
     <div class="container-fluid container-films">
         <div class="row justify-content-center px-5 py-3" style="gap: 3rem 3rem;">
-            <div id="loading-bar-avis" class="row h-100 justify-content-center align-content-center d-none">
-                <div class="col-2 progress p-0" style="height: 5px">
-                    <div class="progress-bar" role="progressbar" style="width: 0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-            </div>
             {% for film in films %}
                 <div class="card d-flex col-auto flex-row p-0" style="width: 30rem; height: 15rem; background-color: #6A73AB; border-radius: 6px; overflow: hidden; border: none;">
                     <img src="{{ asset('/image_film/' ~ film.imageName) }}" class="card-img-left" alt="{{ film.name }}" style="width: auto; height: 100%; object-fit: cover; margin: 0; border: none;">
                     <div class="card-body p-3">
                         <h5 class="text-white">{{film.name}}</h5>
-                        <div id="card-container-avis-{{ film.id }}" class="card-text m-0" style="max-height: 10rem; overflow-y: auto"></div>
+                        <div id="card-container-avis-{{ film.id }}" class="card-container-avis card-text m-0" style="max-height: 10rem; overflow-y: auto"></div>
                     </div>
                 </div>
             {% else %}
