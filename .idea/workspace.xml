@@ -4,13 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Ajout colonne is_validate dans table avis">
+    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modif diverses page validation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/EmployeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/EmployeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Avis.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Avis.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AdministrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdministrationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/FilmsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FilmsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/accueil/user.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil/user.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/administration/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/administration/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/baseContact.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseContact.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/baseFilms.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseFilms.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/contact/user.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/contact/user.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/employe/avis.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/employe/avis.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/employe/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/employe/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/films/user.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/films/user.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -287,15 +292,7 @@
       <workItem from="1732440980013" duration="15400000" />
       <workItem from="1732518456560" duration="3142000" />
       <workItem from="1732521652440" duration="283000" />
-      <workItem from="1732526557147" duration="7597000" />
-    </task>
-    <task id="LOCAL-00028" summary="Modifs diverses">
-      <option name="closed" value="true" />
-      <created>1730975275357</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1730975275357</updated>
+      <workItem from="1732526557147" duration="10250000" />
     </task>
     <task id="LOCAL-00029" summary="Modifs diverses">
       <option name="closed" value="true" />
@@ -681,7 +678,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732527227583</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="Modif diverses page validation">
+      <option name="closed" value="true" />
+      <created>1732536740694</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1732536740694</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -722,7 +727,8 @@
     <MESSAGE value="Modifs diverses" />
     <MESSAGE value="Création table avis" />
     <MESSAGE value="Ajout colonne is_validate dans table avis" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajout colonne is_validate dans table avis" />
+    <MESSAGE value="Modif diverses page validation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modif diverses page validation" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

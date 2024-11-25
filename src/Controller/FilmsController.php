@@ -2,9 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Film;
+use App\Entity\Seance;
 use App\Repository\CinemaRepository;
+use App\Repository\FilmRepository;
 use App\Repository\GenreRepository;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -21,13 +26,14 @@ class FilmsController extends AbstractController
             'genres' => $genres
         ]);
     }
-
     #[Route('/utilisateur/films', name: 'app_films_user')]
-    public function indexUser(CinemaRepository $cinemaRepository, GenreRepository $genreRepository): Response
+    public function indexUser(CinemaRepository $cinemaRepository, GenreRepository $genreRepository, FilmRepository $filmRepository): Response
     {
+        $films = $filmRepository->findAll();
         $cinemas = $cinemaRepository->findAll();
         $genres = $genreRepository->findAll();
         return $this->render('films/user.html.twig', [
+            'films' => $films,
             'controller_name' => 'FilmsUserController',
             'cinemas' => $cinemas,
             'genres' => $genres

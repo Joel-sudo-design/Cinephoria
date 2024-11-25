@@ -27,8 +27,8 @@ import './styles/app.css';
 //Script
     $(document).ready(function() {
 
-    // Navbar Top & Navbar Footer Bottom
-        // A l'ouverture des navbar pour mobile, on change la couleur de fond, on cache le logo et on modifie la taille des colonnes
+    //Navbar Top & Navbar Footer Bottom
+        //A l'ouverture des navbar pour mobile, on change la couleur de fond, on cache le logo et on modifie la taille des colonnes
             $('#navbar-togglerTop').click(function() {
                 $('#offcanvasNavbarTop').css("background", "linear-gradient(90deg, rgba(106, 115, 171, 0.85) 50%, rgba(43, 46, 69, 0.85) 100%)");
                 $('#logo').hide();
@@ -41,7 +41,7 @@ import './styles/app.css';
                 $('#col-2-bottom').remove()
             });
 
-        // À la fermeture des navbar pour mobile, on remet la couleur de fond par défaut, on affiche le logo et on remet la taille des colonnes
+        //À la fermeture des navbar pour mobile, on remet la couleur de fond par défaut, on affiche le logo et on remet la taille des colonnes
             $('#offcanvasNavbarTop').on('hidden.bs.offcanvas', function () {
                 $('#offcanvasNavbarTop').css("background", "");
                 $('#logo').show();
@@ -54,8 +54,8 @@ import './styles/app.css';
                 $('#col-5-bottom').after('<div id="col-2-bottom" class="col-2" style="width: 7.5rem"></div>');
             });
 
-    // Page de connexion et d'inscription dans mon espace
-        // Masquer le mot de passe de la page de connexion et d'inscription
+    //Page de connexion et d'inscription dans mon espace
+        //Masquer le mot de passe de la page de connexion et d'inscription
             $('#togglePassword').on('click', function () {
                 const passwordField = $('#password');
                 const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
@@ -75,7 +75,7 @@ import './styles/app.css';
                 $(this).toggleClass('bi-eye bi-eye-slash');
             });
 
-        // Vérification de la case à cocher des conditions générales d'utilisation
+        //Vérification de la case à cocher des conditions générales d'utilisation
             $('.btn-register').click(function(event) {
             const checkbox = $("input[name='registration_form[agreeTerms]']");
             const message = $(".checkbox-error");
@@ -91,14 +91,14 @@ import './styles/app.css';
             const $clearIconGenre = $('.close-icon-genre');
             const $clearIconCinema = $('.close-icon-cinema');
 
-        // Au clic sur le bouton cinéma pour afficher/masquer les options
+        //Au clic sur le bouton cinéma pour afficher/masquer les options
             $('.custom-select-btn-cinema').on('click', function(e) {
             e.stopPropagation();
             $('.custom-options-cinema').toggle();
             $('.custom-options-genre').hide();
         });
 
-        // Sélection d'une option de cinéma
+        //Sélection d'une option de cinéma
             $('.custom-option-cinema').on('click', function() {
             let selectedText = $(this).text();
             let selectedValue = $(this).data('value');
@@ -110,7 +110,7 @@ import './styles/app.css';
             $('.close-icon-cinema').removeClass('d-none');
         });
 
-        // Au clic sur l'icône "X" pour réinitialiser la sélection
+        //Au clic sur l'icône "X" pour réinitialiser la sélection
             $clearIconCinema.on('click', function() {
             let customSelect = $('.custom-select-btn-cinema');
             $(this).addClass('d-none');
@@ -120,7 +120,7 @@ import './styles/app.css';
             customSelect.removeClass('no-arrow');
         });
 
-        // Au clic sur le bouton genre pour afficher/masquer les options
+        //Au clic sur le bouton genre pour afficher/masquer les options
             $('.custom-select-btn-genre').on('click', function(e) {
             e.stopPropagation();
             $('.custom-options-genre').toggle();
@@ -151,31 +151,31 @@ import './styles/app.css';
             $('.custom-options-genre').hide();
         });
 
-        // Appliquer le style de hover/focus
+        //Appliquer le style de hover/focus
             $clearIconCinema.on('mouseenter focus', function() {
             $('.custom-select-btn-cinema').addClass('btn-hover');
             $('.close-icon-cinema').addClass('btn-hover');
         });
 
-        // Appliquer le style de hover/focus
+        //Appliquer le style de hover/focus
             $clearIconGenre.on('mouseenter focus', function() {
             $('.custom-select-btn-genre').addClass('btn-hover');
             $('.close-icon-genre').addClass('btn-hover');
         });
 
-        // Retirer le style quand on quitte le survol/focus
+        //Retirer le style quand on quitte le survol/focus
             $clearIconCinema.on('mouseleave blur', function() {
             $('.custom-select-btn-cinema').removeClass('btn-hover');
             $('.close-icon-cinema').removeClass('btn-hover');
         });
 
-        // Retirer le style quand on quitte le survol/focus
+        //Retirer le style quand on quitte le survol/focus
             $clearIconGenre.on('mouseleave blur', function() {
             $('.custom-select-btn-genre').removeClass('btn-hover');
             $('.close-icon-genre').removeClass('btn-hover');
         });
 
-        // Datepicker
+        //Datepicker
             const $datepicker = $('#datepicker');
             const $calendarIcon = $('#icon-calendar');
             const $clearIcon = $('.close-icon-date');
@@ -190,38 +190,38 @@ import './styles/app.css';
                     $clearIcon.removeClass('d-none');
                 });
 
-            // Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
+            //Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
                 $clearIcon.on('click', function () {
                 $datepicker.datepicker('clearDates');
                 $calendarIcon.removeClass('d-none');
                 $clearIcon.addClass('d-none');
             });
 
-            // Appliquer le style de hover/focus
+            //Appliquer le style de hover/focus
                 $clearIcon.on('mouseenter focus', function () {
                 $datepicker.addClass('btn-hover');
                 $clearIcon.addClass('btn-hover');
             });
 
-            // Au clic sur l'icône de croix, on réinitialise la date
+            //Au clic sur l'icône de croix, on réinitialise la date
                 $calendarIcon.on('mouseenter focus', function () {
                 $datepicker.addClass('btn-hover');
                 $calendarIcon.addClass('btn-hover');
             });
 
-            // Retirer le style quand on quitte le survol/focus
+            //Retirer le style quand on quitte le survol/focus
                 $clearIcon.on('mouseleave blur', function () {
                 $datepicker.removeClass('btn-hover');
                 $clearIcon.removeClass('btn-hover');
             });
 
-            // Retirer le style quand on quitte le survol/focus
+            //Retirer le style quand on quitte le survol/focus
                 $calendarIcon.on('mouseleave blur', function () {
                 $datepicker.removeClass('btn-hover');
                 $calendarIcon.removeClass('btn-hover');
             });
 
-            // Ouvrir le calendrier
+            //Ouvrir le calendrier
                 $calendarIcon.on('click', function () {
                 $datepicker.focus();
             });
@@ -1303,7 +1303,7 @@ import './styles/app.css';
             });
 
         //Compte employé
-            // Création compte
+            //Création compte
                 $('#toggleEmployePassword').on('click', function () {
                     const passwordField = $('#employePassword');
                     const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
@@ -1311,17 +1311,17 @@ import './styles/app.css';
                     $(this).toggleClass('bi-eye bi-eye-slash');
                 });
 
-            // Réinnitialiser le mot de passe
+            //Réinnitialiser le mot de passe
                 const $clearIconEmploye = $('.close-icon-employe');
 
-                // Au clic sur le bouton choix employés pour afficher/masquer les options
+                //Au clic sur le bouton choix employés pour afficher/masquer les options
                     $('.custom-select-btn-employe').on('click', function(e) {
                     e.stopPropagation();
                     e.preventDefault();
                     $('.custom-options-employe').toggle();
                 });
 
-                // Sélection d'une option employés
+                //Sélection d'une option employés
                     $('.custom-option-employe').on('click', function() {
                     let selectedText = $(this).text();
                     let selectedValue = $(this).data('value');
@@ -1333,7 +1333,7 @@ import './styles/app.css';
                     $('.close-icon-employe').removeClass('d-none');
                 });
 
-                // Au clic sur l'icône "X" pour réinitialiser la sélection
+                //Au clic sur l'icône "X" pour réinitialiser la sélection
                     $clearIconEmploye.on('click', function() {
                     let customSelect = $('.custom-select-btn-employe');
                     $(this).addClass('d-none');
@@ -1343,18 +1343,18 @@ import './styles/app.css';
                     customSelect.removeClass('no-arrow');
                 });
 
-                // Clic en dehors du menu pour fermer les options
+                //Clic en dehors du menu pour fermer les options
                     $(window).on('click', function() {
                     $('.custom-options-employe').hide();
                 });
 
-                // Appliquer le style de hover/focus
+                //Appliquer le style de hover/focus
                     $clearIconEmploye.on('mouseenter focus', function() {
                     $('.custom-select-btn-employe').addClass('btn-hover');
                     $('.close-icon-employe').addClass('btn-hover');
                 });
 
-                // Retirer le style quand on quitte le survol/focus
+                //Retirer le style quand on quitte le survol/focus
                     $clearIconEmploye.on('mouseleave blur', function() {
                     $('.custom-select-btn-employe').removeClass('btn-hover');
                     $('.close-icon-employe').removeClass('btn-hover');
@@ -1538,7 +1538,7 @@ import './styles/app.css';
                     loadReservations()
                 });
 
-    // Page Employé
+    //Page Employé
         //Générer des films
             function LoadFilmEmploye() {
             // Vider le conteneur des films
@@ -2677,6 +2677,9 @@ import './styles/app.css';
                         console.error('Erreur lors du chargement des Avis :', error);
                     });
             }
+
+    //Page Utilisateur & visiteur
+
 
     //Lancement des requètes AJAX au chargement des pages
         if (window.location.pathname === '/administrateur/administration') {LoadFilm()}

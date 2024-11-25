@@ -43,7 +43,6 @@ class AdministrationController extends AbstractController
         // Récupérer les cinémas et les genres
         $cinemas = $cinemaRepository->findAll();
         $genres = $genreRepository->findAll();
-
         return $this->render('administration/index.html.twig', [
             'controller_name' => 'AdministrationController',
             'cinemas' => $cinemas,
