@@ -64,4 +64,13 @@ class Avis
 
         return $this;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'description' => $this->getDescription(),
+            'user' => $this->getUser()->getUsername(),
+        ];
+    }
 }

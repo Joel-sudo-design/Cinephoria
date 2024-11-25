@@ -952,20 +952,20 @@ footer #navbarBottom .nav-link {
 #loading-bar .progress-bar {
   background-color: #6A73AB;
 }
-/* Page Employé */
 
+/* Page Employé */
 #card-container-avis .card-text::-webkit-scrollbar-thumb, .container-films::-webkit-scrollbar-track {
-  background-color: #6A73AB; /* Couleur de la barre */
-  border-radius: 5px; /* Bordure arrondie */
+  background-color: #6A73AB;
+  border-radius: 5px;
 }
 
 #card-container-avis .card-text::-webkit-scrollbar-track, .container-films::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Couleur de l'arrière-plan */
+  background: #f1f1f1;
 }
 
 /* Pour les navigateurs qui ne supportent pas -webkit- */
 #card-container-avis .card-text, .container-films {
-  scrollbar-color: #6A73AB #f1f1f1; /* Couleur de la barre et de l'arrière-plan */
+  scrollbar-color: #6A73AB #f1f1f1;
   scrollbar-width: auto;
 }
 
@@ -973,14 +973,12 @@ footer #navbarBottom .nav-link {
   background-color: white;
   color: #6A73AB;
   transition: all 0.2s ease;
-  border: 2px solid #6A73AB; /* Bordure transparente par défaut */
-  border-radius: 6px; /* Garder les arrondis */
 }
 
 .btn-avis:hover {
   background-color: #6A73AB;
   color: white;
-  border: 2px solid white; /* Bordure blanche au survol */
+  border: 2px solid white;
 }
 
 /* Media queries */

@@ -105,6 +105,16 @@ class EmployeController extends AbstractController
                 $filmArray['reservations'] = $reservationsByDate;
             }
 
+            // Ajouter les avis
+            $avis = $film->getAvis();
+            if (!empty($avis)) {
+                $avisArray = [];
+                foreach ($avis as $avi) {
+                    $avisArray[] = $avi->toArray();
+                }
+                $filmArray['avis'] = $avisArray;
+            }
+
             // Ajouter le film au tableau final
             $AllFilmsArray[] = $filmArray;
         }

@@ -2615,86 +2615,55 @@ import './styles/app.css';
 
         //Page Validation des avis
             function LoadAvis() {
-            // Vider le conteneur des films
-            $('#card-container-avis').empty();
+            // Vider le conteneur des avis
+                $('#card-container-avis').empty();
+            // Récupérer les avis
+                axios.get('/employe/administration/film')
+                    .then(response => {
+                        const film = response.data;
+                        $.each(film, function(index, film) {
+                            $.each(film.avis, function(index, avis) {
+                                $('#card-container-avis-' + film.id).append(
+                                    `<div class="row m-0 mb-2 p-0">
+                                        <div class="col-avis col-9 bg-white p-0" style="border: 1px solid white; border-radius: 6px">
+                                            <button id="btn-avis-${avis.id}" class="btn btn-avis w-100 p-1 text-center" style="font-size: 0.8rem; border: none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAvis-${avis.id}" aria-expanded="false" aria-controls="collapseAvis">
+                                                Avis de ${avis.user}
+                                            </button>
+                                            <div id="collapseAvis-${avis.id}" class="collapse">
+                                                <div class="p-2" style="font-size: 0.8rem; color: #6A73AB">${avis.description}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3 d-flex justify-content-center align-items-center">
+                                             <button class="btn bi bi-check-lg p-1 d-flex justify-content-center align-items-center"></button>
+                                             <button class="btn bi bi-x-lg p-1 d-flex justify-content-center align-items-center"></button>
+                                        </div>
+                                    </div>`);
 
-            const loadingBar = $('#loading-bar-avis');
-            const progressBar = loadingBar.find('.progress-bar');
+                                // Accordion description Avis
+                                    const accordionButton = $('#btn-avis-' + avis.id);
+                                    const accordionCollapse = $('#collapseAvis-' + avis.id);
 
-            // Réinitialiser la barre de chargement à 0% immédiatement
-            loadingBar.removeClass('d-none');
-            progressBar.css('width', '0%').attr('aria-valuenow', '0');
-
-            let progress = 0;
-            const updateInterval = 100; // Intervalle pour mise à jour (rapide pour effet fluide)
-            const interval = setInterval(() => {
-                if (progress < 90) {
-                    progress += 5; // Incrément de 5% pour une progression fluide
-                    progressBar.css('width', progress + '%').attr('aria-valuenow', progress);
-                }
-            }, updateInterval);
-
-            // Récupérer les films
-            axios.get('/employe/administration/film')
-                .then(response => {
-                    const Avis = response.data;
-                    $.each(Avis, function(index, avis) {
-                        $('#card-container-avis').append(
-                            `<div class="row m-0 mb-2 p-0">
-                                <div class="col-avis col-9 bg-white p-0" style="border: 1px solid white; border-radius: 6px">
-                                    <button class="btn btn-avis w-100 p-1 text-center" style="font-size: 0.8rem; border: none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAvis-${avis.id}" aria-expanded="false" aria-controls="collapseAvis">
-                                        Qu'est-ce que le Lorem Ipsum?
-                                    </button>
-                                    <div id="collapseAvis-${avis.id}" class="collapse">
-                                        <div class="p-2" style="font-size: 0.8rem; color: #6A73AB"></div>
-                                    </div>
-                                </div>
-                                <div class="col-3 d-flex justify-content-center align-items-center">
-                                     <button class="btn bi bi-check-lg p-1 d-flex justify-content-center align-items-center"></button>
-                                     <button class="btn bi bi-x-lg p-1 d-flex justify-content-center align-items-center"></button>
-                                </div>
-                            </div>`);
-
-                        // Accordion description films
-                        const accordionButton = $('#btn-avis-'+film.id);
-                        const accordionCollapse = $('#collapseAvis-'+film.id);
-
-                        // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
-                        $(document).click(function(event) {
-                            // Vérifie si le clic est à l'intérieur de l'accordéon
-                            if (!accordionButton.is(event.target) && accordionButton.has(event.target).length === 0 && !accordionCollapse.is(event.target) && accordionCollapse.has(event.target).length === 0) {
-                                // Ferme l'accordéon si ouvert
-                                if (accordionCollapse.hasClass('show')) {
-                                    accordionCollapse.collapse('hide'); // Utilise la méthode Bootstrap pour cacher
-                                }
-                            }
+                                // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
+                                    $(document).click(function (event) {
+                                    // Vérifie si le clic est à l'intérieur de l'accordéon
+                                    if (!accordionButton.is(event.target) && accordionButton.has(event.target).length === 0 && !accordionCollapse.is(event.target) && accordionCollapse.has(event.target).length === 0) {
+                                        // Ferme l'accordéon si ouvert
+                                        if (accordionCollapse.hasClass('show')) {
+                                            accordionCollapse.collapse('hide'); // Utilise la méthode Bootstrap pour cacher
+                                        }
+                                    }
+                                });
+                            });
                         });
-
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors du chargement des Avis :', error);
                     });
-
-                    // Finaliser la progression à 100 % lorsque les données sont chargées
-                    clearInterval(interval); // Stopper l'intervalle de mise à jour
-                    progress = 100;
-                    progressBar.css('width', '100%').attr('aria-valuenow', progress);
-
-                    // Masquer la barre de chargement après un délai de 500ms
-                    setTimeout(() => loadingBar.addClass('d-none'), 500);
-                })
-                .catch(error => {
-                    console.error('Erreur lors du chargement des films :', error);
-
-                    // Finaliser à 100 % en cas d'erreur
-                    clearInterval(interval);
-                    progress = 100;
-                    progressBar.css('width', '100%').attr('aria-valuenow', progress);
-
-                    // Masquer la barre de chargement après un délai de 500ms
-                    setTimeout(() => loadingBar.addClass('d-none'), 500);
-                });
-        }
+            }
 
     //Lancement des requètes AJAX au chargement des pages
         if (window.location.pathname === '/administrateur/administration') {LoadFilm();}
         if (window.location.pathname === '/administrateur/administration/reservations') {loadReservations();}
         if (window.location.pathname === '/employe/administration') {LoadFilmEmploye();}
+        if (window.location.pathname === '/employe/administration/avis') {LoadAvis();}
     });
