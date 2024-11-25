@@ -24,6 +24,9 @@ class Avis
     #[ORM\JoinColumn(nullable: false)]
     private ?film $film = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isValidate = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -72,5 +75,17 @@ class Avis
             'description' => $this->getDescription(),
             'user' => $this->getUser()->getUsername(),
         ];
+    }
+
+    public function isValidate(): ?bool
+    {
+        return $this->isValidate;
+    }
+
+    public function setValidate(?bool $isValidate): static
+    {
+        $this->isValidate = $isValidate;
+
+        return $this;
     }
 }

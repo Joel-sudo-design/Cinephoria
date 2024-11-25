@@ -6,12 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Création table avis">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20241124161629.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/EmployeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/EmployeController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Avis.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Avis.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/employe/avis.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/employe/avis.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -286,15 +281,9 @@
       <workItem from="1732292370684" duration="7602000" />
       <workItem from="1732357663760" duration="14378000" />
       <workItem from="1732440980013" duration="15400000" />
-      <workItem from="1732518456560" duration="2809000" />
-    </task>
-    <task id="LOCAL-00026" summary="Modifs diverses">
-      <option name="closed" value="true" />
-      <created>1730971787367</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1730971787367</updated>
+      <workItem from="1732518456560" duration="3142000" />
+      <workItem from="1732521652440" duration="283000" />
+      <workItem from="1732526557147" duration="646000" />
     </task>
     <task id="LOCAL-00027" summary="Modifs diverses">
       <option name="closed" value="true" />
@@ -680,7 +669,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732465026300</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="Création table avis">
+      <option name="closed" value="true" />
+      <created>1732521621062</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1732521621062</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
