@@ -4,18 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modif diverses page validation">
+    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Affichage des films sur la page">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/AdministrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdministrationController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/FilmsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FilmsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/accueil/user.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil/user.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/administration/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/administration/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/baseContact.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseContact.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/baseFilms.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseFilms.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/contact/user.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/contact/user.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/employe/avis.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/employe/avis.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/films/user.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/films/user.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Avis.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Avis.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Seance.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Seance.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,7 +163,7 @@
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;JavaScript Debug.test.html.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Page__employe&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Page__film__user&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/Cinephoria/templates/employe&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -293,6 +290,7 @@
       <workItem from="1732518456560" duration="3142000" />
       <workItem from="1732521652440" duration="283000" />
       <workItem from="1732526557147" duration="10250000" />
+      <workItem from="1732604520317" duration="8173000" />
     </task>
     <task id="LOCAL-00029" summary="Modifs diverses">
       <option name="closed" value="true" />
@@ -728,7 +726,8 @@
     <MESSAGE value="Création table avis" />
     <MESSAGE value="Ajout colonne is_validate dans table avis" />
     <MESSAGE value="Modif diverses page validation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modif diverses page validation" />
+    <MESSAGE value="Affichage des films sur la page" />
+    <option name="LAST_COMMIT_MESSAGE" value="Affichage des films sur la page" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

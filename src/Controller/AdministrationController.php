@@ -11,6 +11,7 @@ use App\Entity\User;
 use App\Form\AccountEmployeFormType;
 use App\Form\ChangePasswordFormType;
 use App\Repository\CinemaRepository;
+use App\Repository\FilmRepository;
 use App\Repository\GenreRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -51,10 +52,10 @@ class AdministrationController extends AbstractController
     }
 
     #[Route('/film', name: 'app_administration_film')]
-    public function Film(EntityManagerInterface $entityManager): Response
+    public function Film(EntityManagerInterface $entityManager, FilmRepository $filmRepository): Response
     {
         // Récupérer tous les films
-        $AllFilms = $entityManager->getRepository(Film::class)->findAll();
+        $AllFilms = $filmRepository->findAll();
         $AllFilmsArray = [];
 
         foreach ($AllFilms as $film) {

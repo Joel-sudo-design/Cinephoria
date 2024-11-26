@@ -38,7 +38,7 @@ class Seance
     /**
      * @var Collection<int, user>
      */
-    #[ORM\ManyToMany(targetEntity: user::class, inversedBy: 'seances')]
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'seances')]
     private Collection $user;
 
     /**
