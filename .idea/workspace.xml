@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Affichage des films sur la page">
+    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AdministrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdministrationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/FilmsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FilmsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Avis.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Avis.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Seance.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Seance.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -291,14 +285,8 @@
       <workItem from="1732521652440" duration="283000" />
       <workItem from="1732526557147" duration="10250000" />
       <workItem from="1732604520317" duration="8173000" />
-    </task>
-    <task id="LOCAL-00029" summary="Modifs diverses">
-      <option name="closed" value="true" />
-      <created>1730989106963</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1730989106963</updated>
+      <workItem from="1732613030413" duration="43000" />
+      <workItem from="1732619158652" duration="400000" />
     </task>
     <task id="LOCAL-00030" summary="Modifs diverses">
       <option name="closed" value="true" />
@@ -684,7 +672,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732536740694</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="Modifs">
+      <option name="closed" value="true" />
+      <created>1732613065754</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1732613065755</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -716,7 +712,6 @@
     <MESSAGE value="Fin page de reset password" />
     <MESSAGE value="Modif" />
     <MESSAGE value="Création tables film, salle et seance" />
-    <MESSAGE value="Modifs" />
     <MESSAGE value="Modifs tavle seance" />
     <MESSAGE value="Modifs bdd" />
     <MESSAGE value="Création page administration" />
@@ -727,7 +722,8 @@
     <MESSAGE value="Ajout colonne is_validate dans table avis" />
     <MESSAGE value="Modif diverses page validation" />
     <MESSAGE value="Affichage des films sur la page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Affichage des films sur la page" />
+    <MESSAGE value="Modifs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modifs" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

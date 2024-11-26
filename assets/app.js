@@ -1315,7 +1315,7 @@ import './styles/app.css';
 
             //Compte employé
                 //Fonction pour générer les réservations
-                function loadReservations() {
+                    function loadReservations() {
                     //Page données réservations
                     const $datepickerReservations = $('#datepicker_reservations');
                     const $calendarIconReservations = $('#icon-calendar-reservations');
@@ -1487,7 +1487,7 @@ import './styles/app.css';
                 }
 
                 //Fonction pour gérer les employés
-                function employe() {
+                    function employe() {
                     //Affichage des réservations sur clic datepicker
                     loadReservations();
 
@@ -2706,7 +2706,7 @@ import './styles/app.css';
                 if (window.location.pathname === '/employe/administration') {filmEmploye()}
                 if (window.location.pathname === '/employe/administration/avis') {avis()}
                 if (window.location.pathname === '/employe/films') {film()}
-                if (window.location.pathname === '/films') {film()}
                 if (window.location.pathname === '/utilisateur/films') {film()}
+                if (window.location.pathname === '/films') {film()}
     });
 
