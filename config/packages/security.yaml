@@ -15,7 +15,7 @@ security:
 
         # Définir un firewall spécifique pour /films/loading sans authentification
         films_loading:
-            pattern: ^/films/loading
+            pattern: ^/films
             security: false
 
         # Le firewall principal pour les autres routes

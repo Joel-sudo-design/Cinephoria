@@ -7,6 +7,10 @@
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/FilmsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FilmsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/CinemaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/CinemaRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/baseFilms.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseFilms.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -286,15 +290,9 @@
       <workItem from="1732526557147" duration="10250000" />
       <workItem from="1732604520317" duration="8173000" />
       <workItem from="1732613030413" duration="43000" />
-      <workItem from="1732619158652" duration="400000" />
-    </task>
-    <task id="LOCAL-00030" summary="Modifs diverses">
-      <option name="closed" value="true" />
-      <created>1731077815217</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1731077815217</updated>
+      <workItem from="1732619158652" duration="5284000" />
+      <workItem from="1732631426843" duration="5418000" />
+      <workItem from="1732691960676" duration="5423000" />
     </task>
     <task id="LOCAL-00031" summary="Modifs diverses">
       <option name="closed" value="true" />
@@ -680,7 +678,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732613065755</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="Modifs">
+      <option name="closed" value="true" />
+      <created>1732619603995</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1732619603995</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Seance;
 use App\Repository\CinemaRepository;
 use App\Repository\FilmRepository;
 use App\Repository\GenreRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,61 +26,73 @@ class FilmsController extends AbstractController
             'genres' => $genres
         ]);
     }
-    #[Route('/films/loading', name: 'app_films_loading_user')]
+    #[Route('/films/loading', name: 'app_films_loading')]
     public function film(FilmRepository $filmRepository): Response
     {
         // Récupérer tous les films
-        $AllFilms = $filmRepository->findAll();
+        $films = $filmRepository->findAll();
         $AllFilmsArray = [];
 
-        foreach ($AllFilms as $film) {
+        foreach ($films as $film) {
             // Convertir le film en tableau
             $filmArray = $film->toArray();
 
-            // Récupérer et ajouter les cinémas
-            $cinemasArray = [];
-            foreach ($film->getCinema() as $cinema) {
-                $cinemasArray[] = $cinema->getName();
-            }
-            if (!empty($cinemasArray)) {
-                $filmArray['cinema'] = $cinemasArray;
+            // Ajouter l'image si disponible
+            if ($film->getImageName() !== null) {
+                $filmArray['image'] = $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName();
+                $filmArray['image2'] = $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName();
             } else {
-                $filmArray['cinema'] = 'Aucun';
+                $filmArray['image'] = $this->getParameter('films_images_directory') . '/image_film/' .'default-image.jpg';
+                $filmArray['image2'] = $this->getParameter('films_images_directory') . '/image_film/' .'default-image2.jpg';
             }
 
-            // Ajouter les dates de début et de fin si disponibles
-            if ($film->getDateDebut() !== null) {
-                $filmArray['date_debut'] = $film->getDateDebut()->format('d/m/Y');
-            }
-            if ($film->getDateFin() !== null) {
-                $filmArray['date_fin'] = $film->getDateFin()->format('d/m/Y');
-            }
-
-            // Récupérer les séances totales
-            $seancesTotal = $film->getSeance();
-            $reservations = [];
-            foreach ($seancesTotal as $seance) {
-                $reservations[] = $seance->toArrayReservation();
-            }
-
-            // Regrouper les réservations par date
-            $reservationsByDate = [];
-
-            foreach ($reservations as $reservation) {
-                $date = $reservation['date'];
-
-                // Initialiser le cumul pour cette date si elle n'existe pas encore
-                if (!isset($reservationsByDate[$date])) {
-                    $reservationsByDate[$date] = 0;
-                }
-
-                // Ajouter le nombre de réservations
-                $reservationsByDate[$date] += $reservation['reservation'];
-                $filmArray['reservations'] = $reservationsByDate;
+            // Ajouter le genre si disponible
+            if ($film->getGenre() !== null) {
+                $filmArray['genre'] = $film->getGenre()->getName();
+            } else {
+                $filmArray['genre'] = 'Aucun';
             }
 
             // Ajouter le film au tableau final
             $AllFilmsArray[] = $filmArray;
+        }
+
+        return new JsonResponse($AllFilmsArray);
+    }
+    #[Route('/films/cinema', name: 'app_films_loading_cinema')]
+    public function filtreCinemaFilm(FilmRepository $filmRepository, Request $request, CinemaRepository $cinemaRepository): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        $cinemaId = $data['id'];
+        $AllFilmsArray = [];
+
+        if ($cinemaId !== '') {
+            $cinema = $cinemaRepository->findOneBy(['id' => $cinemaId]);
+            $films= $cinema->getFilms();
+
+            foreach ($films as $film) {
+                // Convertir le film en tableau
+                    $filmArray = $film->toArray();
+
+                // Ajouter l'image si disponible
+                    if ($film->getImageName() !== null) {
+                        $filmArray['image'] = $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName();
+                        $filmArray['image2'] = $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName();
+                    } else {
+                        $filmArray['image'] = $this->getParameter('films_images_directory') . '/image_film/' .'default-image.jpg';
+                        $filmArray['image2'] = $this->getParameter('films_images_directory') . '/image_film/' .'default-image2.jpg';
+                    }
+
+                // Ajouter le genre si disponible
+                    if ($film->getGenre() !== null) {
+                        $filmArray['genre'] = $film->getGenre()->getName();
+                    } else {
+                        $filmArray['genre'] = 'Aucun';
+                    }
+
+                // Ajouter le film au tableau final
+                    $AllFilmsArray[] = $filmArray;
+            }
         }
 
         return new JsonResponse($AllFilmsArray);
