@@ -97,6 +97,44 @@ class FilmsController extends AbstractController
 
         return new JsonResponse($AllFilmsArray);
     }
+    #[Route('/films/genre', name: 'app_films_loading_genre')]
+    public function filtreGenreFilm(FilmRepository $filmRepository, Request $request, GenreRepository $genreRepository): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        $genreId = $data['id'];
+        $AllFilmsArray = [];
+
+        if ($genreId !== '') {
+            $genre = $genreRepository->findOneBy(['id' => $genreId]);
+            $films= $genre->getFilms();
+
+            foreach ($films as $film) {
+                // Convertir le film en tableau
+                $filmArray = $film->toArray();
+
+                // Ajouter l'image si disponible
+                if ($film->getImageName() !== null) {
+                    $filmArray['image'] = $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName();
+                    $filmArray['image2'] = $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName();
+                } else {
+                    $filmArray['image'] = $this->getParameter('films_images_directory') . '/image_film/' .'default-image.jpg';
+                    $filmArray['image2'] = $this->getParameter('films_images_directory') . '/image_film/' .'default-image2.jpg';
+                }
+
+                // Ajouter le genre si disponible
+                if ($film->getGenre() !== null) {
+                    $filmArray['genre'] = $film->getGenre()->getName();
+                } else {
+                    $filmArray['genre'] = 'Aucun';
+                }
+
+                // Ajouter le film au tableau final
+                $AllFilmsArray[] = $filmArray;
+            }
+        }
+
+        return new JsonResponse($AllFilmsArray);
+    }
     #[Route('/utilisateur/films', name: 'app_films_user')]
     public function indexUser(CinemaRepository $cinemaRepository, GenreRepository $genreRepository, FilmRepository $filmRepository): Response
     {
