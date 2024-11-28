@@ -135,6 +135,43 @@ class FilmsController extends AbstractController
 
         return new JsonResponse($AllFilmsArray);
     }
+    #[Route('/films/date', name: 'app_films_loading_date')]
+    public function filtreDateFilm(FilmRepository $filmRepository, Request $request, GenreRepository $genreRepository): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        $dateId = $data['id'];
+        $AllFilmsArray = [];
+
+        if ($dateId !== '') {
+            $films = $filmRepository->findByDate($dateId);
+
+            foreach ($films as $film) {
+                // Convertir le film en tableau
+                $filmArray = $film->toArray();
+
+                // Ajouter l'image si disponible
+                if ($film->getImageName() !== null) {
+                    $filmArray['image'] = $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName();
+                    $filmArray['image2'] = $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName();
+                } else {
+                    $filmArray['image'] = $this->getParameter('films_images_directory') . '/image_film/' .'default-image.jpg';
+                    $filmArray['image2'] = $this->getParameter('films_images_directory') . '/image_film/' .'default-image2.jpg';
+                }
+
+                // Ajouter le genre si disponible
+                if ($film->getGenre() !== null) {
+                    $filmArray['genre'] = $film->getGenre()->getName();
+                } else {
+                    $filmArray['genre'] = 'Aucun';
+                }
+
+                // Ajouter le film au tableau final
+                $AllFilmsArray[] = $filmArray;
+            }
+        }
+
+        return new JsonResponse($AllFilmsArray);
+    }
     #[Route('/utilisateur/films', name: 'app_films_user')]
     public function indexUser(CinemaRepository $cinemaRepository, GenreRepository $genreRepository, FilmRepository $filmRepository): Response
     {

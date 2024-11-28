@@ -89,90 +89,94 @@ import './styles/app.css';
         //Page Films
                 //Affichage de tout les films
                     function film() {
-                        $('#loading-spinner').removeClass('d-none');
-                        axios.get('/films/loading')
-                            .then(response => {
-                                $('#film-container-public').empty(); // Vider le conteneur
-                                const films = response.data;
-                                $.each(films, function(index, film) {
-                                    $('#film-container-public').append(
-                                        `
-                                <div class="col-auto card" style="width: 12rem">
-                                    <div class="position-relative">
-                                        <i id="heart-${film.id}" class="bi bi-heart-fill position-absolute fs-3 text-warning d-none" style="top:1%; right: 5%"></i>
-                                        <img src="${film.image}" class="card-img-top" alt="image">
+                // Afficher le spinner de chargement
+                    $('#loading-spinner').removeClass('d-none');
+
+                // Requête Axios pour récupérer les films par défaut
+                    axios.get('/films/loading')
+                        .then(response => {
+                            // Vider le conteneur des films
+                            $('#film-container-public').empty();
+
+                            // Parcourir les films retournés par la requête
+                            const films = response.data;
+                            $.each(films, function (index, film) {
+                                // Ajouter chaque film dans le conteneur
+                                $('#film-container-public').append(`
+                            <div class="col-auto card" style="width: 12rem">
+                                <div class="position-relative">
+                                    <i id="heart-${film.id}" class="bi bi-heart-fill position-absolute fs-3 text-warning d-none" style="top:1%; right: 5%"></i>
+                                    <img src="${film.image}" class="card-img-top" alt="image">
+                                </div>
+                                <div class="card-body p-0 py-1">
+                                    <div id="age-${film.id}" class="col-12 card-title m-0 fs-5">${film.name}
+                                        <span class="age-badge-12 d-none ms-2">12+</span>
+                                        <span class="age-badge-16 d-none ms-2">16+</span>
+                                        <span class="age-badge-18 d-none ms-2">18+</span>
                                     </div>
-                                    <div class="card-body p-0 py-1">
-                                        <div id="age-${film.id}" class="col-12 card-title m-0 fs-5">${film.name}
-                                            <span class="age-badge-12 d-none ms-2">12+</span>
-                                            <span class="age-badge-16 d-none ms-2">16+</span>
-                                            <span class="age-badge-18 d-none ms-2">18+</span>
-                                        </div>
-                                        <div class="card-title m-0 fs-6">${film.genre}</div>
-                                        <p class="card-text m-0 text-warning" style="margin: 0.3rem 0 0.3rem 0">
-                                            <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
-                                        </p>
-                                        <div class="accordion accordion-flush">
-                                            <div class="accordion-item">
-                                                <div class="accordion-header">
-                                                    <button id="btn-description${film.id}" class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription-${film.id}" aria-expanded="false" aria-controls="collapseDescription">Description</button>
-                                                </div>
-                                                <div id="collapseDescription-${film.id}" class="accordion-collapse collapse">
-                                                    <div class="accordion-body p-0">${film.description}</div>
-                                                </div>
+                                    <div class="card-title m-0 fs-6">${film.genre}</div>
+                                    <p class="card-text m-0 text-warning" style="margin: 0.3rem 0 0.3rem 0">
+                                        <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
+                                    </p>
+                                    <div class="accordion accordion-flush">
+                                        <div class="accordion-item">
+                                            <div class="accordion-header">
+                                                <button id="btn-description${film.id}" class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription-${film.id}" aria-expanded="false" aria-controls="collapseDescription">Description</button>
+                                            </div>
+                                            <div id="collapseDescription-${film.id}" class="accordion-collapse collapse">
+                                                <div class="accordion-body p-0">${film.description}</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!--Modal-->
-                                <div class="modal fade" id="modal-${film.id}" tabindex="-1" aria-labelledby="Modal-film" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-xl">
-                                        <div class="modal-content" style="background-color: #6A73AB">
-                                            <div class="modal-body modal-admin row justify-content-center m-0 p-0"></div>
-                                        </div>
+                            </div>
+                            <!--Modal-->
+                            <div class="modal fade" id="modal-${film.id}" tabindex="-1" aria-labelledby="Modal-film" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-xl">
+                                    <div class="modal-content" style="background-color: #6A73AB">
+                                        <div class="modal-body modal-admin row justify-content-center m-0 p-0"></div>
                                     </div>
                                 </div>
-                            `);
+                            </div>
+                        `);
 
-                                    // Affichage cœur si Coup de cœur
-                                    if (film.label === true) {
-                                        $('#heart-'+film.id).removeClass('d-none');
-                                    }
+                                // Affichage du cœur si le film est un coup de cœur
+                                if (film.label === true) {
+                                    $(`#heart-${film.id}`).removeClass('d-none');
+                                }
 
-                                    // Logique pour les badges d'âge
-                                    function displayAgeBadge() {
-                                        const ageFilm = $('#age-' + film.id);
-                                        const ageBadge12 = ageFilm.find('.age-badge-12');
-                                        const ageBadge16 = ageFilm.find('.age-badge-16');
-                                        const ageBadge18 = ageFilm.find('.age-badge-18');
-                                        if (film.age_minimum === '12') {
-                                            ageBadge12.removeClass('d-none');
-                                            ageBadge16.addClass('d-none');
-                                            ageBadge18.addClass('d-none');
-                                        } else if (film.age_minimum === '16') {
-                                            ageBadge16.removeClass('d-none');
-                                            ageBadge12.addClass('d-none');
-                                            ageBadge18.addClass('d-none');
-                                        } else if (film.age_minimum === '18') {
-                                            ageBadge18.removeClass('d-none');
-                                            ageBadge12.addClass('d-none');
-                                            ageBadge16.addClass('d-none');
-                                        } else {
-                                            ageBadge12.addClass('d-none');
-                                            ageBadge16.addClass('d-none');
-                                            ageBadge18.addClass('d-none');
-                                        }
-                                    }
-                                    displayAgeBadge();
-                                });
-                            })
-                            .catch(error => {
-                                console.log(error);
-                            })
-                            .finally(() => {
-                                // Supprimer le spinner
-                                $('#loading-spinner').addClass('d-none');
+                                // Gestion des badges d'âge
+                                const ageFilm = $(`#age-${film.id}`);
+                                const ageBadge12 = ageFilm.find('.age-badge-12');
+                                const ageBadge16 = ageFilm.find('.age-badge-16');
+                                const ageBadge18 = ageFilm.find('.age-badge-18');
+
+                                if (film.age_minimum === '12') {
+                                    ageBadge12.removeClass('d-none');
+                                    ageBadge16.addClass('d-none');
+                                    ageBadge18.addClass('d-none');
+                                } else if (film.age_minimum === '16') {
+                                    ageBadge16.removeClass('d-none');
+                                    ageBadge12.addClass('d-none');
+                                    ageBadge18.addClass('d-none');
+                                } else if (film.age_minimum === '18') {
+                                    ageBadge18.removeClass('d-none');
+                                    ageBadge12.addClass('d-none');
+                                    ageBadge16.addClass('d-none');
+                                } else {
+                                    ageBadge12.addClass('d-none');
+                                    ageBadge16.addClass('d-none');
+                                    ageBadge18.addClass('d-none');
+                                }
                             });
+                        })
+                        .catch(error => {
+                            console.error('Erreur lors du chargement des films :', error);
+                        })
+                        .finally(() => {
+                            // Cacher le spinner de chargement
+                            $('#loading-spinner').addClass('d-none');
+                        });
                     }
 
                 //Filtrage des films par cinéma, genre et date
@@ -470,41 +474,144 @@ import './styles/app.css';
                         // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
                         $calendarIcon.addClass('d-none');
                         $clearIcon.removeClass('d-none');
+                        // Récupère la valeur sélectionnée
+                        const selectedDate = $datepicker.val();
+                        const [day, month, year] = selectedDate.split('/');
+                        const FormattedDate = `${year}-${month}-${day}`;
+                        axios.post('/films/date', {id:FormattedDate})
+                            .then(response => {
+                                $('#film-container-public').empty();
+                                const films = response.data;
+                                $.each(films, function(index, film) {
+                                    $('#film-container-public').append(
+                                        `
+                                                                <div class="col-auto card" style="width: 12rem">
+                                                                    <div class="position-relative">
+                                                                        <i id="heart-${film.id}" class="bi bi-heart-fill position-absolute fs-3 text-warning d-none" style="top:1%; right: 5%"></i>
+                                                                        <img src="${film.image}" class="card-img-top" alt="image">
+                                                                    </div>
+                                                                    <div class="card-body p-0 py-1">
+                                                                        <div id="age-${film.id}" class="col-12 card-title m-0 fs-5">${film.name}
+                                                                            <span class="age-badge-12 d-none ms-2">12+</span>
+                                                                            <span class="age-badge-16 d-none ms-2">16+</span>
+                                                                            <span class="age-badge-18 d-none ms-2">18+</span>
+                                                                        </div>
+                                                                        <div class="card-title m-0 fs-6">${film.genre}</div>
+                                                                        <p class="card-text m-0 text-warning" style="margin: 0.3rem 0 0.3rem 0">
+                                                                            <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
+                                                                        </p>
+                                                                        <div class="accordion accordion-flush">
+                                                                            <div class="accordion-item">
+                                                                                <div class="accordion-header">
+                                                                                    <button id="btn-description${film.id}" class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription-${film.id}" aria-expanded="false" aria-controls="collapseDescription">Description</button>
+                                                                                </div>
+                                                                                <div id="collapseDescription-${film.id}" class="accordion-collapse collapse">
+                                                                                    <div class="accordion-body p-0">${film.description}</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--Modal-->
+                                                                <div class="modal fade" id="modal-${film.id}" tabindex="-1" aria-labelledby="Modal-film" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                                                                        <div class="modal-content" style="background-color: #6A73AB">
+                                                                            <div class="modal-body modal-admin row justify-content-center m-0 p-0"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            `);
+
+                                    // Affichage cœur si Coup de cœur
+                                    if (film.label === true) {
+                                        $('#heart-'+film.id).removeClass('d-none');
+                                    }
+
+                                    // Accordion description films
+                                    const accordionButton = $('#btn-description-'+film.id);
+                                    const accordionCollapse = $('#collapseDescription-'+film.id);
+                                    // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
+                                    $(document).click(function(event) {
+                                        // Vérifie si le clic est à l'intérieur de l'accordéon
+                                        if (!accordionButton.is(event.target) && accordionButton.has(event.target).length === 0 && !accordionCollapse.is(event.target) && accordionCollapse.has(event.target).length === 0) {
+                                            // Ferme l'accordéon si ouvert
+                                            if (accordionCollapse.hasClass('show')) {
+                                                accordionCollapse.collapse('hide'); // Utilise la méthode Bootstrap pour cacher
+                                            }
+                                        }
+                                    });
+
+                                    //Affichage badge age mini
+                                    function displayAgeBadge() {
+                                        const  ageFilm = $('#age-' + film.id);
+                                        // Ciblez chaque badge d'âge à partir du conteneur
+                                        const ageBadge12 = ageFilm.find('.age-badge-12');
+                                        const ageBadge16 = ageFilm.find('.age-badge-16');
+                                        const ageBadge18 = ageFilm.find('.age-badge-18');
+                                        // Logique de gestion des classes pour afficher/masquer les badges d'âge
+                                        if (film.age_minimum === '12') {
+                                            ageBadge12.removeClass('d-none');
+                                            ageBadge16.addClass('d-none');
+                                            ageBadge18.addClass('d-none');
+                                        } else if (film.age_minimum === '16') {
+                                            ageBadge16.removeClass('d-none');
+                                            ageBadge12.addClass('d-none');
+                                            ageBadge18.addClass('d-none');
+                                        } else if (film.age_minimum === '18') {
+                                            ageBadge18.removeClass('d-none');
+                                            ageBadge12.addClass('d-none');
+                                            ageBadge16.addClass('d-none');
+                                        } else {
+                                            ageBadge12.addClass('d-none');
+                                            ageBadge16.addClass('d-none');
+                                            ageBadge18.addClass('d-none');
+                                        }
+                                    }
+                                    displayAgeBadge()
+                                });
+                            })
+                            .catch(error => {console.log(error)})
+                            .finally(() => {$('#loading-spinner').addClass('d-none') });
                     });
 
                     //Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
-                    $clearIcon.on('click', function () {
-                        $datepicker.datepicker('clearDates');
-                        $calendarIcon.removeClass('d-none');
-                        $clearIcon.addClass('d-none');
-                    });
+                        $clearIcon.on('click', function () {
+
+                            // Effacer la date sélectionnée en réinitialisant la valeur du champ
+                            $datepicker.val('');
+                            // Afficher l'icône du calendrier et masquer l'icône de suppression
+                            $clearIcon.addClass('d-none');
+                            $calendarIcon.removeClass('d-none');
+
+                            // Recharger les films par défaut
+                            film();
+
+                        });
 
                     //Appliquer le style de hover/focus
-                    $clearIcon.on('mouseenter focus', function () {
+                        $clearIcon.on('mouseenter focus', function () {
                         $datepicker.addClass('btn-hover');
                         $clearIcon.addClass('btn-hover');
                     });
 
-                    //Au clic sur l'icône de croix, on réinitialise la date
-                    $calendarIcon.on('mouseenter focus', function () {
+                        $calendarIcon.on('mouseenter focus', function () {
                         $datepicker.addClass('btn-hover');
                         $calendarIcon.addClass('btn-hover');
                     });
 
                     //Retirer le style quand on quitte le survol/focus
-                    $clearIcon.on('mouseleave blur', function () {
+                        $clearIcon.on('mouseleave blur', function () {
                         $datepicker.removeClass('btn-hover');
                         $clearIcon.removeClass('btn-hover');
                     });
 
-                    //Retirer le style quand on quitte le survol/focus
-                    $calendarIcon.on('mouseleave blur', function () {
+                        $calendarIcon.on('mouseleave blur', function () {
                         $datepicker.removeClass('btn-hover');
                         $calendarIcon.removeClass('btn-hover');
                     });
 
                     //Ouvrir le calendrier
-                    $calendarIcon.on('click', function () {
+                        $calendarIcon.on('click', function () {
                         $datepicker.focus();
                     });
 

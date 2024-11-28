@@ -16,20 +16,19 @@ class FilmRepository extends ServiceEntityRepository
         parent::__construct($registry, Film::class);
     }
 
-    //    /**
-    //     * @return Film[] Returns an array of Film objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('f')
-    //            ->andWhere('f.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('f.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+        /**
+         * @return Film[] Returns an array of Film objects
+         */
+    public function findByDate($value): array
+    {
+        return $this->createQueryBuilder('f')
+            ->andWhere(':val BETWEEN f.date_debut AND f.date_fin')
+            ->setParameter('val', $value)
+            ->orderBy('f.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 
     //    public function findOneBySomeField($value): ?Film
     //    {
