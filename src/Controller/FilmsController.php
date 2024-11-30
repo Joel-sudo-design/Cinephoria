@@ -172,6 +172,42 @@ class FilmsController extends AbstractController
 
         return new JsonResponse($AllFilmsArray);
     }
+    #[Route('/films/seances', name: 'app_films_loading_seances')]
+    public function seancesFilm(FilmRepository $filmRepository, Request $request): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        $filmId = $data['filmId'];
+        $structuredSeances = [];
+
+        if ($filmId !== '') {
+            $seances = $filmRepository->findOneBy(['id' => $filmId])->getSeance();
+
+            foreach ($seances as $seance) {
+                $seanceArray = $seance->toArray();
+
+                // Regrouper les séances par date
+                $date = $seanceArray['date'];
+                if (!isset($structuredSeances[$date])) {
+                    $structuredSeances[$date] = [
+                        'date' => $date,
+                        'seances' => []
+                    ];
+                }
+                $structuredSeances[$date]['seances'][] = [
+                    'heureDebut' => $seanceArray['heure_debut_seance'],
+                    'heureFin' => $seanceArray['heure_fin_seance'],
+                    'format' => $seanceArray['qualite'],
+                    'salle' => 'Salle ' . $seanceArray['salle'],
+                    'tarif' => $seanceArray['price']
+                ];
+            }
+        }
+
+        // Convertir l'objet associatif en un tableau indexé pour respecter la structure demandée
+        $response = array_values($structuredSeances);
+
+        return new JsonResponse($response);
+    }
     #[Route('/utilisateur/films', name: 'app_films_user')]
     public function indexUser(CinemaRepository $cinemaRepository, GenreRepository $genreRepository, FilmRepository $filmRepository): Response
     {

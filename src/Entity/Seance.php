@@ -133,6 +133,7 @@ class Seance
     public function toArray(): array
     {
         return [
+            'date' => $this->date->format('d/m/Y'),
             'salle' => $this->salle->getId(),
             'qualite' => $this->salle->getQualite(),
             'heure_debut_seance' => $this->heure_debut->format('H:i'),

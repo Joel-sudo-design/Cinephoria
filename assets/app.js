@@ -89,100 +89,263 @@ import './styles/app.css';
         //Page Films
                 //Affichage de tout les films
                     function film() {
-                // Afficher le spinner de chargement
-                    $('#loading-spinner').removeClass('d-none');
+                        // Afficher le spinner de chargement
+                        $('#loading-spinner').removeClass('d-none');
 
-                // Requête Axios pour récupérer les films par défaut
-                    axios.get('/films/loading')
-                        .then(response => {
-                            // Vider le conteneur des films
-                            $('#film-container-public').empty();
+                        // Requête Axios pour récupérer les films par défaut
+                        axios.get('/films/loading')
+                            .then(response => {
+                                // Vider le conteneur des films
+                                $('#film-container-public').empty();
 
-                            // Parcourir les films retournés par la requête
-                            const films = response.data;
-                            $.each(films, function (index, film) {
-                                // Ajouter chaque film dans le conteneur
-                                $('#film-container-public').append(`
-                            <div class="col-auto card" style="width: 12rem">
-                                <div class="position-relative">
-                                    <i id="heart-${film.id}" class="bi bi-heart-fill position-absolute fs-3 text-warning d-none" style="top:1%; right: 5%"></i>
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modal-${film.id}">
-                                      <img src="${film.image}" class="card-img-top" alt="image" />
-                                    </a>
-                                </div>
-                                <div class="card-body p-0 py-1">
-                                    <div id="age-${film.id}" class="col-12 card-title m-0 fs-5">${film.name}
-                                        <span class="age-badge-12 d-none ms-2">12+</span>
-                                        <span class="age-badge-16 d-none ms-2">16+</span>
-                                        <span class="age-badge-18 d-none ms-2">18+</span>
-                                    </div>
-                                    <div class="card-title m-0 fs-6">${film.genre}</div>
-                                    <p class="card-text m-0 text-warning" style="margin: 0.3rem 0 0.3rem 0">
-                                        <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
-                                    </p>
-                                    <div class="accordion accordion-flush">
-                                        <div class="accordion-item">
-                                            <div class="accordion-header">
-                                                <button id="btn-description${film.id}" class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription-${film.id}" aria-expanded="false" aria-controls="collapseDescription">Description</button>
+                                // Parcourir les films retournés par la requête
+                                const films = response.data;
+                                $.each(films, function (index, film) {
+                                    // Ajouter chaque film dans le conteneur
+                                    $('#film-container-public').append(`
+                                            <div class="col-auto card" style="width: 12rem">
+                                                <div class="position-relative">
+                                                    <i id="heart-${film.id}" class="bi bi-heart-fill position-absolute fs-3 text-warning d-none" style="top:1%; right: 5%"></i>
+                                                    <a href="" data-bs-toggle="modal" data-bs-target="#modal-${film.id}">
+                                                      <img src="${film.image}" class="card-img-top" alt="image" />
+                                                    </a>
+                                                </div>
+                                                <div class="card-body p-0 py-1">
+                                                    <div id="age-${film.id}" class="col-12 card-title m-0 fs-5">${film.name}
+                                                        <span class="age-badge-12 d-none ms-2">12+</span>
+                                                        <span class="age-badge-16 d-none ms-2">16+</span>
+                                                        <span class="age-badge-18 d-none ms-2">18+</span>
+                                                    </div>
+                                                    <div class="card-title m-0 fs-6">${film.genre}</div>
+                                                    <p class="card-text m-0 text-warning" style="margin: 0.3rem 0 0.3rem 0">
+                                                        <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
+                                                    </p>
+                                                    <div class="accordion accordion-flush">
+                                                        <div class="accordion-item">
+                                                            <div class="accordion-header">
+                                                                <button id="btn-description-${film.id}" class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription-${film.id}" aria-expanded="false" aria-controls="collapseDescription">Description</button>
+                                                            </div>
+                                                            <div id="collapseDescription-${film.id}" class="accordion-collapse collapse">
+                                                                <div class="accordion-body p-0">${film.description}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div id="collapseDescription-${film.id}" class="accordion-collapse collapse">
-                                                <div class="accordion-body p-0">${film.description}</div>
+                                            <!--Modal-->
+                                            <div class="modal fade" id="modal-${film.id}" tabindex="-1" aria-labelledby="Modal-film" data-bs-keyboard="false" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                    <div class="modal-content seances">
+                                                        <div class="modal-header position-relative header-seances" style="border: none">
+                                                            <div class="modal-title position-absolute text-center fs-3 fw-semibold" style="left:50%; transform: translateX(-50%)">${film.name}</div>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body modal-admin row justify-content-center m-0 p-3">
+                                                            <div class="row justify-content-center align-items-center mb-4">
+                                                                <div class="col-12 d-flex justify-content-center align-items-center">
+                                                                    <div class="position-relative">
+                                                                        <input type="text" class="btn-date" id="datepicker-${film.id}" placeholder="Date" readonly data-film-id="${film.id}">
+                                                                        <label for="datepicker-${film.id}" class="d-none"></label>
+                                                                        <span class="bi bi-calendar" id="icon-calendar-${film.id}"></span>
+                                                                        <span class="bi bi-x-circle d-none" id="close-icon-date-${film.id}"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div id="modal-date-seance-${film.id}" class="row justify-content-center align-items-center text-center"></div>
+                                                            <div id="date-seance-${film.id}" class="row justify-content-center align-items-center mt-2"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Modal-->
-                            <div class="modal fade" id="modal-${film.id}" tabindex="-1" aria-labelledby="Modal-film" data-bs-keyboard="false" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered modal-xl">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5 d-flex justify-content-center align-items-center" id="exampleModalLabel">${film.name}</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                         </div>
-                                        <div class="modal-body modal-admin row justify-content-center m-0 p-0"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        `);
+                                        `);
 
-                                // Affichage du cœur si le film est un coup de cœur
-                                if (film.label === true) {
-                                    $(`#heart-${film.id}`).removeClass('d-none');
-                                }
 
-                                // Gestion des badges d'âge
-                                const ageFilm = $(`#age-${film.id}`);
-                                const ageBadge12 = ageFilm.find('.age-badge-12');
-                                const ageBadge16 = ageFilm.find('.age-badge-16');
-                                const ageBadge18 = ageFilm.find('.age-badge-18');
+                                    // Fonction appelée après sélection d'une date
+                                    function updateModalAndSessions(filmId, selectedDate) {
+                                        // Vider les conteneurs avant de les remplir
+                                        const seancesContainer = $('#date-seance-' + filmId);
+                                        const modalContainer = $('#modal-date-seance-' + filmId);
+                                        seancesContainer.empty();
+                                        modalContainer.empty();
 
-                                if (film.age_minimum === '12') {
-                                    ageBadge12.removeClass('d-none');
-                                    ageBadge16.addClass('d-none');
-                                    ageBadge18.addClass('d-none');
-                                } else if (film.age_minimum === '16') {
-                                    ageBadge16.removeClass('d-none');
-                                    ageBadge12.addClass('d-none');
-                                    ageBadge18.addClass('d-none');
-                                } else if (film.age_minimum === '18') {
-                                    ageBadge18.removeClass('d-none');
-                                    ageBadge12.addClass('d-none');
-                                    ageBadge16.addClass('d-none');
-                                } else {
-                                    ageBadge12.addClass('d-none');
-                                    ageBadge16.addClass('d-none');
-                                    ageBadge18.addClass('d-none');
-                                }
+                                        // Convertir la date sélectionnée en objet Date pour comparaison
+                                        const selectedDateObj = new Date(selectedDate);
+                                        const selectedDateFormatted = selectedDateObj.toLocaleDateString('fr-FR', {
+                                            day: '2-digit',
+                                            month: '2-digit',
+                                            year: 'numeric',
+                                        });
+
+                                        // Préparer les 7 prochains jours
+                                        const days = [];
+                                        for (let i = 0; i < 7; i++) {
+                                            const nextDay = new Date(selectedDateObj);
+                                            nextDay.setDate(selectedDateObj.getDate() + i);
+                                            days.push(nextDay.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' }));
+                                        }
+
+                                        // Mettre à jour le conteneur des dates dans la modale
+                                        modalContainer.html(
+                                            days.map(day => `<div class="col">${day}</div>`).join('')
+                                        );
+
+                                        // Charger les séances correspondantes via AJAX (Axios)
+                                        axios.post('/films/seances', { filmId })
+                                            .then(response => {
+                                                const seances = response.data; // Liste des séances par date
+                                                console.log('Séances pour le film', filmId, seances);
+
+                                                // Trouver les séances correspondant à la date sélectionnée
+                                                const seancesForSelectedDate = seances.find(date => date.date === selectedDateFormatted);
+
+                                                // Si des séances existent pour la date sélectionnée
+                                                if (seancesForSelectedDate && seancesForSelectedDate.seances.length > 0) {
+                                                    // Afficher les séances
+                                                    seancesForSelectedDate.seances.forEach(seance => {
+                                                        seancesContainer.append(`
+                                                            <div class="col-6">
+                                                                <div class="uniform-block fs-5">
+                                                                    <div class="row justify-content-center align-items-center p-3">
+                                                                        <div class="col-3">VF</div>
+                                                                        <div class="col-6 d-flex flex-column text-center">
+                                                                            <span>${seance.heureDebut}</span>
+                                                                            <span>(fin ${seance.heureFin})</span>
+                                                                        </div>
+                                                                        <div class="col-3">${seance.format}</div>
+                                                                    </div>
+                                                                    <div class="row text-center p-3">
+                                                                        <div class="col-12">
+                                                                            <div class="salle mb-3 fs-5">${seance.salle}</div>
+                                                                            <div>Tarif: ${seance.tarif}€</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        `);
+                                                    });
+                                                } else {
+                                                    // Afficher un message si aucune séance n'est disponible
+                                                    seancesContainer.html('<div class="col-12 text-center">Aucune séance disponible pour cette date.</div>');
+                                                }
+                                            })
+                                            .catch(error => {
+                                                console.error('Erreur lors du chargement des séances:', error);
+                                                seancesContainer.html('<div class="col-12 text-center text-danger">Erreur de chargement.</div>');
+                                            });
+                                    }
+
+                                    //Datepicker modal
+                                    const $calendarIcon = $('#icon-calendar-'+film.id);
+                                    const $clearIcon = $('#close-icon-date-'+film.id);
+                                    const $datepicker = $(`#datepicker-${film.id}`);
+                                    $datepicker.datepicker({
+                                        format: "dd/mm/yyyy",
+                                        orientation: "bottom",
+                                        language: "fr",
+                                        autoclose: true
+                                    })
+                                        .on('changeDate', function () {
+                                            // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
+                                            $calendarIcon.addClass('d-none');
+                                            $clearIcon.removeClass('d-none');
+                                            const selectedDate = $(this).val();
+                                            // Convertir la date au format souhaité ici
+                                            const [day, month, year] = selectedDate.split('/');
+                                            const formattedDate = `${year}-${month}-${day}`;
+
+                                            const filmId = $(this).data('film-id');
+                                            updateModalAndSessions(filmId, formattedDate);
+                                        });
+
+                                    //Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
+                                    $clearIcon.on('click', function () {
+
+                                        // Effacer la date sélectionnée en réinitialisant la valeur du champ
+                                        $datepicker.val('');
+                                        // Afficher l'icône du calendrier et masquer l'icône de suppression
+                                        $clearIcon.addClass('d-none');
+                                        $calendarIcon.removeClass('d-none');
+                                        $('#date-seance-' + film.id).empty();
+                                        $('#modal-date-seance-' + film.id).empty();
+                                    });
+
+                                    //Appliquer le style de hover/focus
+                                    $clearIcon.on('mouseenter focus', function () {
+                                        $datepicker.addClass('btn-hover');
+                                        $clearIcon.addClass('btn-hover');
+                                    });
+                                    $calendarIcon.on('mouseenter focus', function () {
+                                        $datepicker.addClass('btn-hover');
+                                        $calendarIcon.addClass('btn-hover');
+                                    });
+
+                                    //Retirer le style quand on quitte le survol/focus
+                                    $clearIcon.on('mouseleave blur', function () {
+                                        $datepicker.removeClass('btn-hover');
+                                        $clearIcon.removeClass('btn-hover');
+                                    });
+                                    $calendarIcon.on('mouseleave blur', function () {
+                                        $datepicker.removeClass('btn-hover');
+                                        $calendarIcon.removeClass('btn-hover');
+                                    });
+
+                                    //Ouvrir le calendrier
+                                    $calendarIcon.on('click', function () {
+                                        $datepicker.focus();
+                                    });
+
+                                    // Affichage du cœur si le film est un coup de cœur
+                                    if (film.label === true) {
+                                        $(`#heart-${film.id}`).removeClass('d-none');
+                                    }
+
+                                    // Accordion description films
+                                    const accordionButton = $('#btn-description-'+film.id);
+                                    const accordionCollapse = $('#collapseDescription-'+film.id);
+
+                                    // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
+                                    $(document).click(function(event) {
+                                        // Vérifie si le clic est à l'intérieur de l'accordéon
+                                        if (!accordionButton.is(event.target) && accordionButton.has(event.target).length === 0 && !accordionCollapse.is(event.target) && accordionCollapse.has(event.target).length === 0) {
+                                            // Ferme l'accordéon si ouvert
+                                            if (accordionCollapse.hasClass('show')) {
+                                                accordionCollapse.collapse('hide'); // Utilise la méthode Bootstrap pour cacher
+                                            }
+                                        }
+                                    });
+
+                                    // Gestion des badges d'âge
+                                    const ageFilm = $(`#age-${film.id}`);
+                                    const ageBadge12 = ageFilm.find('.age-badge-12');
+                                    const ageBadge16 = ageFilm.find('.age-badge-16');
+                                    const ageBadge18 = ageFilm.find('.age-badge-18');
+
+                                    if (film.age_minimum === '12') {
+                                        ageBadge12.removeClass('d-none');
+                                        ageBadge16.addClass('d-none');
+                                        ageBadge18.addClass('d-none');
+                                    } else if (film.age_minimum === '16') {
+                                        ageBadge16.removeClass('d-none');
+                                        ageBadge12.addClass('d-none');
+                                        ageBadge18.addClass('d-none');
+                                    } else if (film.age_minimum === '18') {
+                                        ageBadge18.removeClass('d-none');
+                                        ageBadge12.addClass('d-none');
+                                        ageBadge16.addClass('d-none');
+                                    } else {
+                                        ageBadge12.addClass('d-none');
+                                        ageBadge16.addClass('d-none');
+                                        ageBadge18.addClass('d-none');
+                                    }
+                                });
+                            })
+                            .catch(error => {
+                                console.error('Erreur lors du chargement des films :', error);
+                            })
+                            .finally(() => {
+                                // Cacher le spinner de chargement
+                                $('#loading-spinner').addClass('d-none');
                             });
-                        })
-                        .catch(error => {
-                            console.error('Erreur lors du chargement des films :', error);
-                        })
-                        .finally(() => {
-                            // Cacher le spinner de chargement
-                            $('#loading-spinner').addClass('d-none');
-                        });
                     }
 
                 //Filtrage des films par cinéma, genre et date
@@ -1154,8 +1317,8 @@ import './styles/app.css';
                                             dropdownMenuLabel.text(film.label ? 'Oui' : 'Non');
 
                                         // Menu déroulant Salle
-                                            const dropdownMenuSalle = $('#dropdownSalle-'+film.id);
-                                            const dropSalle = dropdownMenuSalle.find('.drop-salle');
+                                            const dropdownMenuSalle = $('#dropdownMenuSalle-'+film.id);
+                                            const dropSalle = dropdownMenuSalle.siblings('.dropdown-menu').find('.drop-salle');
                                             let selectedSalle= '';
                                             dropSalle.click(function(e) {
                                                 e.preventDefault();
@@ -1699,175 +1862,174 @@ import './styles/app.css';
             //Compte employé
                 //Fonction pour générer les réservations
                     function loadReservations() {
-                    //Page données réservations
-                    const $datepickerReservations = $('#datepicker_reservations');
-                    const $calendarIconReservations = $('#icon-calendar-reservations');
-                    const $clearIconReservations = $('.close-icon-reservations');
-                    $('#reservations-container').empty();
-                    axios.get('/administrateur/administration/film')
-                        .then(response => {
-                            const films = response.data;
-                            const datesWithReservations = {};
-                            const datepicker = $('#datepicker_reservations');
-                            // Initialiser le datepicker avec les réservations
-                            if (films.reservations) {
-                                films.forEach(film => {
-                                    Object.keys(film.reservations).forEach(date => {
-                                        if (!datesWithReservations[date]) {
-                                            datesWithReservations[date] = 0;
+                            const $datepickerReservations = $('#datepicker_reservations');
+                            const $calendarIconReservations = $('#icon-calendar-reservations');
+                            const $clearIconReservations = $('.close-icon-reservations');
+                            $('#reservations-container').empty();
+                            axios.get('/administrateur/administration/film')
+                                .then(response => {
+                                    const films = response.data;
+                                    const datesWithReservations = {};
+                                    const datepicker = $('#datepicker_reservations');
+                                    // Initialiser le datepicker avec les réservations
+                                    if (films.reservations) {
+                                        films.forEach(film => {
+                                            Object.keys(film.reservations).forEach(date => {
+                                                if (!datesWithReservations[date]) {
+                                                    datesWithReservations[date] = 0;
+                                                }
+                                                datesWithReservations[date] += film.reservations[date];
+                                            });
+                                        });
+                                        datepicker.datepicker({
+                                            orientation: "bottom",
+                                            language: "fr",
+                                            autoclose: true,
+                                            todayHighlight: true,
+                                            format: 'dd/mm/yyyy',
+                                            beforeShowDay: function (date) {
+                                                const dateString = date.toLocaleDateString('fr-FR');
+                                                const reservations = datesWithReservations[dateString] || 0;
+                                                const day = date.getDate();
+                                                if (reservations > 0) {
+                                                    return {
+                                                        classes: 'has-reservation',
+                                                        tooltip: `Réservations: ${reservations}`
+                                                    };
+                                                } else {
+                                                    return {tooltip: 'Aucune réservation'};
+                                                }
+                                            }
+                                        });
+                                    }
+
+                                    // Fonction pour formater les dates au format "dd/mm/yyyy"
+                                    function formatDate(date) {
+                                        let day = date.getDate();
+                                        let month = date.getMonth() + 1; // Les mois commencent à
+                                        let year = date.getFullYear();
+                                        return `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month}/${year}`;
+                                    }
+
+                                    // Fonction pour obtenir les 7 jours à partir de la date sélectionnée
+                                    function getNext7Days(selectedDate) {
+                                        const days = [];
+                                        const baseDate = new Date(selectedDate);
+                                        for (let i = 0; i < 7; i++) {
+                                            let newDate = new Date(baseDate);
+                                            newDate.setDate(baseDate.getDate() + i);
+                                            days.push(newDate);
                                         }
-                                        datesWithReservations[date] += film.reservations[date];
-                                    });
-                                });
-                                datepicker.datepicker({
-                                    orientation: "bottom",
-                                    language: "fr",
-                                    autoclose: true,
-                                    todayHighlight: true,
-                                    format: 'dd/mm/yyyy',
-                                    beforeShowDay: function (date) {
-                                        const dateString = date.toLocaleDateString('fr-FR');
-                                        const reservations = datesWithReservations[dateString] || 0;
-                                        const day = date.getDate();
-                                        if (reservations > 0) {
-                                            return {
-                                                classes: 'has-reservation',
-                                                tooltip: `Réservations: ${reservations}`
-                                            };
+                                        return days;
+                                    }
+
+                                    // Fonction pour afficher les informations dans le tableau
+                                    function updateTableWithReservations(selectedDate) {
+                                        const container = $('#reservations-container');
+                                        if (films.reservations) {
+                                            const days = getNext7Days(selectedDate); // Récupère les 7 jours à partir de la date sélectionnée
+                                            const formattedDays = days.map(date => formatDate(date)); // Formate chaque date
+                                            container.empty();
+
+                                            // Créer la première colonne : Noms des films
+                                            const col2 = $('<div class="col-2" style="background-color: #6A73AB"></div>');
+                                            col2.append('<div class="row"><div class="col grid-cell fw-bold">Nombre de réservations</div></div>');
+
+                                            films.forEach(film => {
+                                                col2.append(`<div class="row"><div class="col grid-cell fw-bold">${film.name}</div></div>`);
+                                            });
+
+                                            // Créer la deuxième colonne : Dates et réservations
+                                            const col6 = $('<div class="col-6" style="background-color: #6A73AB"></div>');
+
+                                            // Ajouter les dates formatées
+                                            const datesRow = $('<div class="row"></div>');
+                                            formattedDays.forEach(day => {
+                                                const dayFormatted = day.slice(0, 5); // Afficher uniquement le format dd/mm
+                                                datesRow.append(`<div class="col grid-cell fw-bold">${dayFormatted}</div>`);
+                                            });
+                                            col6.append(datesRow);
+
+                                            // Ajouter les lignes pour les films
+                                            films.forEach(film => {
+                                                const filmRow = $('<div class="row"></div>');
+                                                formattedDays.forEach(day => {
+                                                    const reservations = film.reservations[day] || 0; // Obtenir le nombre de réservations
+                                                    filmRow.append(`<div class="col grid-cell">${reservations}</div>`);
+                                                });
+                                                col6.append(filmRow);
+                                            });
+
+                                            // Ajouter les colonnes au conteneur principal
+                                            const headerRow = $('<div class="row justify-content-center text-white"></div>');
+                                            headerRow.append(col2).append(col6);
+                                            container.append(headerRow);
                                         } else {
-                                            return {tooltip: 'Aucune réservation'};
+                                            container.html('<p class="text-center" style="color: #6A73AB">Aucune réservation pour le moment.</p>');
                                         }
                                     }
-                                });
-                            }
 
-                            // Fonction pour formater les dates au format "dd/mm/yyyy"
-                            function formatDate(date) {
-                                let day = date.getDate();
-                                let month = date.getMonth() + 1; // Les mois commencent à
-                                let year = date.getFullYear();
-                                return `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month}/${year}`;
-                            }
-
-                            // Fonction pour obtenir les 7 jours à partir de la date sélectionnée
-                            function getNext7Days(selectedDate) {
-                                const days = [];
-                                const baseDate = new Date(selectedDate);
-                                for (let i = 0; i < 7; i++) {
-                                    let newDate = new Date(baseDate);
-                                    newDate.setDate(baseDate.getDate() + i);
-                                    days.push(newDate);
-                                }
-                                return days;
-                            }
-
-                            // Fonction pour afficher les informations dans le tableau
-                            function updateTableWithReservations(selectedDate) {
-                                const container = $('#reservations-container');
-                                if (films.reservations) {
-                                    const days = getNext7Days(selectedDate); // Récupère les 7 jours à partir de la date sélectionnée
-                                    const formattedDays = days.map(date => formatDate(date)); // Formate chaque date
-                                    container.empty();
-
-                                    // Créer la première colonne : Noms des films
-                                    const col2 = $('<div class="col-2" style="background-color: #6A73AB"></div>');
-                                    col2.append('<div class="row"><div class="col grid-cell fw-bold">Nombre de réservations</div></div>');
-
-                                    films.forEach(film => {
-                                        col2.append(`<div class="row"><div class="col grid-cell fw-bold">${film.name}</div></div>`);
+                                    // Écouter le changement de date dans le datepicker
+                                    datepicker.datepicker({
+                                        autoclose: true,
+                                        format: 'dd/mm/yyyy',
+                                        language: 'fr',
+                                    }).on('changeDate', function (e) {
+                                        // Appeler la fonction pour mettre à jour le tableau avec les réservations
+                                        updateTableWithReservations(e.date);
                                     });
 
-                                    // Créer la deuxième colonne : Dates et réservations
-                                    const col6 = $('<div class="col-6" style="background-color: #6A73AB"></div>');
-
-                                    // Ajouter les dates formatées
-                                    const datesRow = $('<div class="row"></div>');
-                                    formattedDays.forEach(day => {
-                                        const dayFormatted = day.slice(0, 5); // Afficher uniquement le format dd/mm
-                                        datesRow.append(`<div class="col grid-cell fw-bold">${dayFormatted}</div>`);
-                                    });
-                                    col6.append(datesRow);
-
-                                    // Ajouter les lignes pour les films
-                                    films.forEach(film => {
-                                        const filmRow = $('<div class="row"></div>');
-                                        formattedDays.forEach(day => {
-                                            const reservations = film.reservations[day] || 0; // Obtenir le nombre de réservations
-                                            filmRow.append(`<div class="col grid-cell">${reservations}</div>`);
-                                        });
-                                        col6.append(filmRow);
+                                    // Datepicker
+                                    $datepickerReservations.on('changeDate', function (e) {
+                                        // Lors de la sélection d'une date
+                                        const selectedDate = e.date;
+                                        updateTableWithReservations(selectedDate);
+                                        // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
+                                        $calendarIconReservations.addClass('d-none');
+                                        $clearIconReservations.removeClass('d-none');
                                     });
 
-                                    // Ajouter les colonnes au conteneur principal
-                                    const headerRow = $('<div class="row justify-content-center text-white"></div>');
-                                    headerRow.append(col2).append(col6);
-                                    container.append(headerRow);
-                                } else {
-                                    container.html('<p class="text-center" style="color: #6A73AB">Aucune réservation pour le moment.</p>');
-                                }
-                            }
+                                    // Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
+                                    $clearIconReservations.on('click', function () {
+                                        $datepickerReservations.datepicker('clearDates');
+                                        $calendarIconReservations.removeClass('d-none');
+                                        $clearIconReservations.addClass('d-none');
+                                        $('#reservations-container').empty();
+                                    });
 
-                            // Écouter le changement de date dans le datepicker
-                            datepicker.datepicker({
-                                autoclose: true,
-                                format: 'dd/mm/yyyy',
-                                language: 'fr',
-                            }).on('changeDate', function (e) {
-                                // Appeler la fonction pour mettre à jour le tableau avec les réservations
-                                updateTableWithReservations(e.date);
-                            });
+                                    // Appliquer le style de hover/focus
+                                    $clearIconReservations.on('mouseenter focus', function () {
+                                        $datepickerReservations.addClass('btn-hover');
+                                        $clearIconReservations.addClass('btn-hover');
+                                    });
 
-                            // Datepicker
-                            $datepickerReservations.on('changeDate', function (e) {
-                                // Lors de la sélection d'une date
-                                const selectedDate = e.date;
-                                updateTableWithReservations(selectedDate);
-                                // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
-                                $calendarIconReservations.addClass('d-none');
-                                $clearIconReservations.removeClass('d-none');
-                            });
+                                    // Au clic sur l'icône de croix, on réinitialise la date
+                                    $calendarIconReservations.on('mouseenter focus', function () {
+                                        $datepickerReservations.addClass('btn-hover');
+                                        $calendarIconReservations.addClass('btn-hover');
+                                    });
 
-                            // Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
-                            $clearIconReservations.on('click', function () {
-                                $datepickerReservations.datepicker('clearDates');
-                                $calendarIconReservations.removeClass('d-none');
-                                $clearIconReservations.addClass('d-none');
-                                $('#reservations-container').empty();
-                            });
+                                    // Retirer le style quand on quitte le survol/focus
+                                    $clearIconReservations.on('mouseleave blur', function () {
+                                        $datepickerReservations.removeClass('btn-hover');
+                                        $clearIconReservations.removeClass('btn-hover');
+                                    });
 
-                            // Appliquer le style de hover/focus
-                            $clearIconReservations.on('mouseenter focus', function () {
-                                $datepickerReservations.addClass('btn-hover');
-                                $clearIconReservations.addClass('btn-hover');
-                            });
+                                    // Retirer le style quand on quitte le survol/focus
+                                    $calendarIconReservations.on('mouseleave blur', function () {
+                                        $datepickerReservations.removeClass('btn-hover');
+                                        $calendarIconReservations.removeClass('btn-hover');
+                                    });
 
-                            // Au clic sur l'icône de croix, on réinitialise la date
-                            $calendarIconReservations.on('mouseenter focus', function () {
-                                $datepickerReservations.addClass('btn-hover');
-                                $calendarIconReservations.addClass('btn-hover');
-                            });
-
-                            // Retirer le style quand on quitte le survol/focus
-                            $clearIconReservations.on('mouseleave blur', function () {
-                                $datepickerReservations.removeClass('btn-hover');
-                                $clearIconReservations.removeClass('btn-hover');
-                            });
-
-                            // Retirer le style quand on quitte le survol/focus
-                            $calendarIconReservations.on('mouseleave blur', function () {
-                                $datepickerReservations.removeClass('btn-hover');
-                                $calendarIconReservations.removeClass('btn-hover');
-                            });
-
-                            // Ouvrir le calendrier
-                            $calendarIconReservations.on('click', function () {
-                                $datepickerReservations.focus();
-                            });
-                        })
-                        .catch(error => {
-                            console.error(error);
-                        })
-                }
+                                    // Ouvrir le calendrier
+                                    $calendarIconReservations.on('click', function () {
+                                        $datepickerReservations.focus();
+                                    });
+                                })
+                                .catch(error => {
+                                    console.error(error);
+                                })
+                        }
 
                 //Fonction pour gérer les employés
                     function employe() {
