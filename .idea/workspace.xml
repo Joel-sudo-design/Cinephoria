@@ -9,8 +9,6 @@
       <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/FilmsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FilmsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Seance.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Seance.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/baseFilms.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseFilms.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,6 +159,7 @@
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;JavaScript Debug.test.html.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;Page__film__user&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/Cinephoria/templates/employe&quot;,
@@ -300,15 +299,11 @@
       <workItem from="1732865431429" duration="1326000" />
       <workItem from="1732885980592" duration="2540000" />
       <workItem from="1732897358282" duration="3862000" />
-      <workItem from="1732967206392" duration="16520000" />
-    </task>
-    <task id="LOCAL-00035" summary="Modifs diverses">
-      <option name="closed" value="true" />
-      <created>1731252353925</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1731252353925</updated>
+      <workItem from="1732967206392" duration="18470000" />
+      <workItem from="1733044065952" duration="686000" />
+      <workItem from="1733044772395" duration="9436000" />
+      <workItem from="1733054483362" duration="7000" />
+      <workItem from="1733061299853" duration="1531000" />
     </task>
     <task id="LOCAL-00036" summary="Modifs diverses">
       <option name="closed" value="true" />
@@ -694,7 +689,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732865248838</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="Modifs">
+      <option name="closed" value="true" />
+      <created>1732986912661</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1732986912662</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

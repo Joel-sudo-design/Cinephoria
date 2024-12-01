@@ -443,7 +443,7 @@ footer #navbarBottom .nav-link {
 
 .btn-films:focus, .btn-date:focus {
   background-color: #6A73AB;
-  color: white;
+  color: white !important;
   outline: none;
 }
 
@@ -1015,6 +1015,35 @@ footer #navbarBottom .nav-link {
 
 .header-seances {
   padding:2rem 2rem 1rem 2rem;
+}
+
+.clickable-day {
+  background-color: white;
+  color: #6A73AB;
+  margin: 0 1.4rem 0 1.4rem;
+  padding: 0.3rem;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.clickable-day:hover, .clickable-day:focus {
+  background-color: #6A73AB;
+  color: white;
+  border-radius: 6px;
+}
+
+.clickable-day.active {
+  background-color: #6A73AB;
+  color: white;
+  border-radius: 6px;
+}
+
+.btn-close-seances {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%236A73AB' d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414'/%3E%3C/svg%3E");
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 /* Media queries */

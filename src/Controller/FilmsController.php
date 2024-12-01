@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Seance;
 use App\Repository\CinemaRepository;
 use App\Repository\FilmRepository;
 use App\Repository\GenreRepository;
