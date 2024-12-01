@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifs" />
+    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Création page réservation">
+      <change afterPath="$PROJECT_DIR$/templates/baseReservation.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/accueil/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/baseContact.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseContact.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/baseFilms.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseFilms.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/contact/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/contact/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/films/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/films/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/reservation/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/reservation/index.html.twig" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -157,7 +167,7 @@
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "git-widget-placeholder": "Page__reservation",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/xampp/htdocs/Cinephoria/templates/employe",
+    "last_opened_file_path": "C:/xampp/htdocs/Cinephoria/templates",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -170,8 +180,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\Cinephoria\templates\employe" />
       <recent name="C:\xampp\htdocs\Cinephoria\templates" />
+      <recent name="C:\xampp\htdocs\Cinephoria\templates\employe" />
       <recent name="C:\xampp\htdocs\Cinephoria\templates\administration" />
       <recent name="C:\xampp\htdocs\Cinephoria\templates\security" />
       <recent name="C:\xampp\htdocs\Cinephoria\templates\reset_password" />
@@ -299,14 +309,6 @@
       <workItem from="1733044772395" duration="9436000" />
       <workItem from="1733054483362" duration="7000" />
       <workItem from="1733061299853" duration="2884000" />
-    </task>
-    <task id="LOCAL-00037" summary="Modifs diverses">
-      <option name="closed" value="true" />
-      <created>1731318868105</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1731318868105</updated>
     </task>
     <task id="LOCAL-00038" summary="Modifs diverses">
       <option name="closed" value="true" />
@@ -692,7 +694,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733063056171</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="Création page réservation">
+      <option name="closed" value="true" />
+      <created>1733064940522</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1733064940522</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -735,7 +745,8 @@
     <MESSAGE value="Modif diverses page validation" />
     <MESSAGE value="Affichage des films sur la page" />
     <MESSAGE value="Modifs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modifs" />
+    <MESSAGE value="Création page réservation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Création page réservation" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

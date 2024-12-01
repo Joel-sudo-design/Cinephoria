@@ -24,11 +24,7 @@
                     <ul id="navbarLeft" class="col-5 navbar-nav align-items-center justify-content-center p-0">
                         {% block extra_content_bouton_accueil %}{% endblock %}
                         {% block extra_content_bouton_films %}{% endblock %}
-                        <li class="nav-item mx-4 my-4 text-white">
-                            <a class="nav-link d-flex align-items-center justify-content-center" href="">
-                                <i class="bi bi-ticket-perforated fs-3 ms-2"></i><span class="mx-2">Réservation</span>
-                            </a>
-                        </li>
+                        {% block extra_content_bouton_reservation %}{% endblock %}
                     </ul>
                     <img id="logo" src="{{ asset('build/images/logo.svg')}}" class="col-2 img-fluid" style="width: 7.5rem; height: auto" alt="logo" />
                     <ul id="navbarRight" class="col-5 navbar-nav align-items-center justify-content-center p-0">
