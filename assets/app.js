@@ -2310,8 +2310,6 @@ import './styles/app.css';
                         $('.close-icon-employe').removeClass('btn-hover');
                     });
 
-
-
                     //Affichage des réservations sur clic bouton données réservations
                     $('#btn-reservations').click(function () {
                     loadReservations()
