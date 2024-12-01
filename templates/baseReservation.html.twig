@@ -43,9 +43,10 @@
                 </div>
             </div>
         </nav>
-        <div id="container-accueil" class="container-fluid text-center align-content-center">
+        <div class="d-flex container-fluid justify-content-center align-items-center position-fixed bg-white" style="top: 96px; z-index: 1000; height: 5rem">
 
         </div>
+        <div id="container-accueil" class="container-fluid text-center align-content-center"></div>
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}

@@ -1002,6 +1002,9 @@ import './styles/app.css';
                         $datepicker.focus();
                     });
 
+        //Page Réservation
+
+
         //Page Administration
             //Films
                 //Générer des films
