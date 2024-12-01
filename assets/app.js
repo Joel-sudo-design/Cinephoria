@@ -89,15 +89,16 @@ import './styles/app.css';
         //Page Films
                 //Affichage de tout les films
                     function film() {
+
+                        // Vider le conteneur des films
+                        $('#film-container-public').empty();
+
                         // Afficher le spinner de chargement
                         $('#loading-spinner').removeClass('d-none');
 
                         // Requête Axios pour récupérer les films par défaut
                         axios.get('/films/loading')
                             .then(response => {
-                                // Vider le conteneur des films
-                                $('#film-container-public').empty();
-
                                 // Parcourir les films retournés par la requête
                                 const films = response.data;
                                 $.each(films, function (index, film) {
@@ -425,12 +426,11 @@ import './styles/app.css';
                         $('.custom-options-cinema').hide();
                         customSelect.addClass('no-arrow');
                         $('.close-icon-cinema').removeClass('d-none');
+                        // Vider le conteneur des films
+                        $('#film-container-public').empty();
                         $('#loading-spinner').removeClass('d-none');
                         axios.post('/films/cinema', {id:selectedValue})
                             .then(response => {
-                                // Vider le conteneur des films
-                                $('#film-container-public').empty();
-
                                 // Parcourir les films retournés par la requête
                                 const films = response.data;
                                 $.each(films, function (index, film) {
@@ -695,6 +695,8 @@ import './styles/app.css';
                         $('.custom-options-genre').toggle();
                         $('.custom-options-cinema').hide();
                     });
+
+                    //Sélection d'une option de genre
                     $('.custom-option-genre').on('click', function() {
                         let selectedText = $(this).text();
                         let selectedValue = $(this).data('value');
@@ -704,10 +706,12 @@ import './styles/app.css';
                         $('.custom-options-genre').hide();
                         customSelect.addClass('no-arrow');
                         $('.close-icon-genre').removeClass('d-none');
+                        // Vider le conteneur des films
+                        $('#film-container-public').empty();
+                        // Afficher le spinner de chargement
                         $('#loading-spinner').removeClass('d-none');
                         axios.post('/films/genre', {id:selectedValue})
                             .then(response => {
-                                $('#film-container-public').empty();
                                 const films = response.data;
                                 $.each(films, function(index, film) {
                                     $('#film-container-public').append(
@@ -860,9 +864,12 @@ import './styles/app.css';
                         const selectedDate = $datepicker.val();
                         const [day, month, year] = selectedDate.split('/');
                         const FormattedDate = `${year}-${month}-${day}`;
+                            // Vide le conteneur des films
+                            $('#film-container-public').empty();
+                            // Affiche le spinner de chargement
+                            $('#loading-spinner').removeClass('d-none');
                         axios.post('/films/date', {id:FormattedDate})
                             .then(response => {
-                                $('#film-container-public').empty();
                                 const films = response.data;
                                 $.each(films, function(index, film) {
                                     $('#film-container-public').append(
