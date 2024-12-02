@@ -44,7 +44,24 @@
             </div>
         </nav>
         <div class="d-flex container-fluid justify-content-center align-items-center position-fixed bg-white" style="top: 96px; z-index: 1000; height: 5rem">
-
+            <div id="films-data" data-films="{{ filmsData|json_encode|e('html_attr') }}"></div>
+            <div class="custom-dropdown mx-3">
+                <!-- Bouton principal pour les cinémas -->
+                <button class="btn-films custom-select-btn-cinema">Cinéma</button>
+                <!-- Liste des cinémas -->
+                    <div class="custom-options-cinema">
+                        {% for cinema in cinemas %}
+                            <div class="custom-option-cinema" data-cinema-id="{{ cinema.id }}">{{ cinema.name }}</div>
+                            <!-- Sous-menu pour les films (initialement caché) -->
+                            <div class="custom-options-films d-none" id="films-{{ cinema.id }}"></div>
+                        {% endfor %}
+                    </div>
+                <!-- Champs cachés pour stocker les sélections -->
+                <input type="hidden" name="Cinema" id="cinema-input">
+                <input type="hidden" name="Film" id="film-input">
+                <!-- Icône pour réinitialiser la sélection -->
+                <span class="bi bi-x-circle d-none close-icon-cinema"></span>
+            </div>
         </div>
         <div id="container-accueil" class="container-fluid text-center align-content-center"></div>
         {% block javascripts %}

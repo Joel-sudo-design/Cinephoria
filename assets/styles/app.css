@@ -987,7 +987,7 @@ footer #navbarBottom .nav-link {
   border: 2px solid white;
 }
 
-/*Page Film*/
+/*Page Film */
 
 .uniform-block {
   border: 2px solid white;
@@ -1046,8 +1046,29 @@ footer #navbarBottom .nav-link {
   box-shadow: none !important;
 }
 
-/*Page Réservation*/
+/* Page réservation */
 
+.custom-options-films {
+  position: absolute;
+  margin-left: 0.2rem;
+  width: 100%;
+  background-color: #6A73AB;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+}
+
+.custom-option-film {
+  padding: 0.5rem 0.75rem;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.custom-option-film:hover {
+  background-color: white;
+  color: #6A73AB;
+}
 
 /* Media queries */
 @media (min-width: 1921px) {
