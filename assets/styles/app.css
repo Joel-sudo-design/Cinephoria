@@ -1070,6 +1070,66 @@ footer #navbarBottom .nav-link {
   color: #6A73AB;
 }
 
+.btn-reservation {
+  background-color: transparent;
+  color: white;
+  border: 2px solid #6A73AB;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-reservation:hover {
+  background-color: #7749F8;
+  border: 2px solid white;
+  color: white;
+}
+
+.btn-paiement {
+  background-color: white;
+  color: green;
+  border: 2px solid green;
+  border-radius: 6px;
+  padding: 0.4rem;
+  transition: all 0.2s ease;
+}
+
+.btn-paiement:hover {
+  background-color: green;
+  color: white;
+  border: 2px solid white;
+}
+
+.seat {
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.seat.libre { background-color: #d3d3d3; } /* Gris clair pour libre */
+.seat.reserve { background-color: #000; } /* Noir pour réservé */
+.seat.selectionne { background-color: #7749F8; } /* Violet pour sélectionné */
+.screen {
+  text-align: center;
+  margin: 20px 0;
+  font-weight: bold;
+}
+.status-label {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 10px;
+}
+.status-label span {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  display: inline-block;
+}
+
 /* Media queries */
 @media (min-width: 1921px) {
 

@@ -1,81 +1,81 @@
 import './styles/app.css';
 
 //Active jQuery
-    const $ = require('jquery');
-    window.$ = window.jQuery = $;
+const $ = require('jquery');
+window.$ = window.jQuery = $;
 
 //Active Bootstrap
-    import 'bootstrap';
-    import 'bootstrap/dist/css/bootstrap.min.css';
-    import 'bootstrap-icons/font/bootstrap-icons.css';
-    import 'bootstrap-datepicker';
-    import 'bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css';
-    import 'bootstrap-datepicker/dist/locales/bootstrap-datepicker.fr.min.js';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'bootstrap-datepicker';
+import 'bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css';
+import 'bootstrap-datepicker/dist/locales/bootstrap-datepicker.fr.min.js';
 
 //Active Flatpickr
-    import flatpickr from 'flatpickr';
-    import 'flatpickr/dist/flatpickr.min.css';
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
 
 //Autoload images
-    const imagesContext = require.context('../assets/images', true, /\.(png|jpg|jpeg|gif|ico|svg|webp)$/);
-    imagesContext.keys().forEach(imagesContext);
+const imagesContext = require.context('../assets/images', true, /\.(png|jpg|jpeg|gif|ico|svg|webp)$/);
+imagesContext.keys().forEach(imagesContext);
 
 //Axios
-    const axios = require('axios');
-    axios.defaults.withCredentials = true;
+const axios = require('axios');
+axios.defaults.withCredentials = true;
 
 //Script
     $(document).ready(function() {
         //Navbar Top & Navbar Footer Bottom
-            //A l'ouverture des navbar pour mobile, on change la couleur de fond, on cache le logo et on modifie la taille des colonnes
-                $('#navbar-togglerTop').click(function() {
+        //A l'ouverture des navbar pour mobile, on change la couleur de fond, on cache le logo et on modifie la taille des colonnes
+        $('#navbar-togglerTop').click(function() {
                     $('#offcanvasNavbarTop').css("background", "linear-gradient(90deg, rgba(106, 115, 171, 0.85) 50%, rgba(43, 46, 69, 0.85) 100%)");
                     $('#logo').hide();
                     $('#offcanvas-bodyTop').removeClass('row')
                     $('#navbarLeft').removeClass('col-5').addClass('col-12');
                     $('#navbarRight').removeClass('col-5').addClass('col-12');
                 });
-                $('#navbar-togglerBottom').click(function() {
+        $('#navbar-togglerBottom').click(function() {
                     $('#offcanvasNavbarBottom').css("background", "linear-gradient(90deg, rgba(106, 115, 171, 0.85) 50%, rgba(43, 46, 69, 0.85) 100%)");
                     $('#col-2-bottom').remove()
                 });
 
-            //À la fermeture des navbar pour mobile, on remet la couleur de fond par défaut, on affiche le logo et on remet la taille des colonnes
-                $('#offcanvasNavbarTop').on('hidden.bs.offcanvas', function () {
+        //À la fermeture des navbar pour mobile, on remet la couleur de fond par défaut, on affiche le logo et on remet la taille des colonnes
+        $('#offcanvasNavbarTop').on('hidden.bs.offcanvas', function () {
                     $('#offcanvasNavbarTop').css("background", "");
                     $('#logo').show();
                     $('#offcanvas-bodyTop').addClass('row')
                     $('#navbarLeft').removeClass('col-12').addClass('col-5');
                     $('#navbarRight').removeClass('col-12').addClass('col-5');
                 });
-                $('#offcanvasNavbarBottom').on('hidden.bs.offcanvas', function () {
+        $('#offcanvasNavbarBottom').on('hidden.bs.offcanvas', function () {
                     $('#offcanvasNavbarBottom').css("background", "");
                     $('#col-5-bottom').after('<div id="col-2-bottom" class="col-2" style="width: 7.5rem"></div>');
                 });
 
         //Page de connexion et d'inscription dans mon espace
-            //Masquer le mot de passe de la page de connexion et d'inscription
-                $('#togglePassword').on('click', function () {
+        //Masquer le mot de passe de la page de connexion et d'inscription
+        $('#togglePassword').on('click', function () {
                     const passwordField = $('#password');
                     const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
                     passwordField.attr('type', type);
                     $(this).toggleClass('bi-eye bi-eye-slash');
                 });
-                $('#toggleConfirmPassword').on('click', function () {
+        $('#toggleConfirmPassword').on('click', function () {
                     const passwordField = $('#confirmPassword');
                     const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
                     passwordField.attr('type', type);
                     $(this).toggleClass('bi-eye bi-eye-slash');
                 });
-                $('#toggleProvisionalPassword').on('click', function () {
+        $('#toggleProvisionalPassword').on('click', function () {
                     const passwordField = $('#provisional-password');
                     const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
                     passwordField.attr('type', type);
                     $(this).toggleClass('bi-eye bi-eye-slash');
                 });
 
-            //Vérification de la case à cocher des conditions générales d'utilisation
-                $('.btn-register').click(function(event) {
+        //Vérification de la case à cocher des conditions générales d'utilisation
+        $('.btn-register').click(function(event) {
                 const checkbox = $("input[name='registration_form[agreeTerms]']");
                 const message = $(".checkbox-error");
                 if (!checkbox.is(":checked")) {
@@ -87,210 +87,487 @@ import './styles/app.css';
             });
 
         //Page Films
-            //Affichage de tout les films
-                function film() {
+        //Affichage de tout les films
+        function film() {
+            // Vider le conteneur des films
+            $('#film-container-public').empty();
+            // Afficher le spinner de chargement
+            $('#loading-spinner').removeClass('d-none');
+            // Requête Axios pour récupérer les films par défaut
+            axios.get('/films/loading')
+            .then(response => {
+                                    // Parcourir les films retournés par la requête
+                                    const films = response.data;
+                                    $.each(films, function (index, film) {
+                                        // Ajouter chaque film dans le conteneur
+                                        $('#film-container-public').append(`
+                                                <div class="col-auto card" style="width: 12rem">
+                                                    <div class="position-relative">
+                                                        <i id="heart-${film.id}" class="bi bi-heart-fill position-absolute fs-3 text-warning d-none" style="top:1%; right: 5%"></i>
+                                                        <a href="" data-bs-toggle="modal" data-bs-target="#modal-${film.id}">
+                                                          <img src="${film.image}" class="card-img-top" alt="image" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="card-body p-0 py-1">
+                                                        <div id="age-${film.id}" class="col-12 card-title m-0 fs-5">${film.name}
+                                                            <span class="age-badge-12 d-none ms-2">12+</span>
+                                                            <span class="age-badge-16 d-none ms-2">16+</span>
+                                                            <span class="age-badge-18 d-none ms-2">18+</span>
+                                                        </div>
+                                                        <div class="card-title m-0 fs-6">${film.genre}</div>
+                                                        <p class="card-text m-0 text-warning" style="margin: 0.3rem 0 0.3rem 0">
+                                                            <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
+                                                        </p>
+                                                        <div class="accordion accordion-flush">
+                                                            <div class="accordion-item">
+                                                                <div class="accordion-header">
+                                                                    <button id="btn-description-${film.id}" class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription-${film.id}" aria-expanded="false" aria-controls="collapseDescription">Description</button>
+                                                                </div>
+                                                                <div id="collapseDescription-${film.id}" class="accordion-collapse collapse">
+                                                                    <div class="accordion-body p-0">${film.description}</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--Modal-->
+                                                <div class="modal fade" id="modal-${film.id}" tabindex="-1" aria-labelledby="Modal-film" data-bs-keyboard="false" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                        <div class="modal-content seances">
+                                                            <div class="modal-header position-relative header-seances" style="border: none">
+                                                                <div class="modal-title position-absolute text-center fs-3 fw-semibold" style="left:50%; transform: translateX(-50%)">${film.name}</div>
+                                                                <button type="button" class="btn-close btn-close-seances" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body modal-admin row justify-content-center m-0 p-3">
+                                                                <div class="row justify-content-center align-items-center mb-4">
+                                                                    <div class="col-12 d-flex justify-content-center align-items-center">
+                                                                        <div class="position-relative">
+                                                                            <input type="text" class="btn-date" id="datepicker-${film.id}" placeholder="Date" readonly data-film-id="${film.id}">
+                                                                            <label for="datepicker-${film.id}" class="d-none"></label>
+                                                                            <span class="bi bi-calendar" id="icon-calendar-${film.id}"></span>
+                                                                            <span class="bi bi-x-circle d-none" id="close-icon-date-${film.id}"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="modal-date-seance-${film.id}" class="row text-center"></div>
+                                                                <div id="loading-spinner-seances-${film.id}" class="row justify-content-center align-content-center d-none my-3">
+                                                                    <div class="spinner-border" role="status" style="color: #6A73AB;">
+                                                                         <span class="visually-hidden">Loading...</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="date-seance-${film.id}" class="row text-center mt-2"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            `);
 
+                                        // Ajout du gestionnaire d'événements pour ouvrir le modal et initialiser la date
+                                        $(`a[data-bs-toggle="modal"][data-bs-target="#modal-${film.id}"]`).on('click', function () {
+                                            // Définir la date du jour dans le datepicker
+                                            const today = new Date();
+                                            const day = ("0" + today.getDate()).slice(-2); // Ajoute un zéro si le jour est inférieur à 10
+                                            const month = ("0" + (today.getMonth() + 1)).slice(-2); // Ajoute un zéro si le mois est inférieur à 10
+                                            const year = today.getFullYear();
+                                            const todayFormatted = `${day}/${month}/${year}`;
+                                            const formattedDate = `${year}-${month}-${day}`;
+                                            const dayFormatted = `${day}/${month}`;
+
+                                            // Exécuter la fonction pour charger les séances avec la date du jour
+                                            updateModalAndSessions(film.id, formattedDate);
+
+                                            // Mettre à jour la valeur du datepicker
+                                            $(`#datepicker-${film.id}`).datepicker('setDate', todayFormatted);
+
+                                            // Afficher l'icône de croix et masquer l'icône calendrier après sélection d'une date
+                                            $(`#icon-calendar-${film.id}`).addClass('d-none');
+                                            $(`#close-icon-date-${film.id}`).removeClass('d-none');
+
+                                            // Ajouter la classe active à la journée correspondant à la date du jour dans le modal
+                                            $(`#modal-${film.id} .clickable-day[data-date="${dayFormatted}"]`).addClass('active').siblings().removeClass('active');
+                                        });
+
+                                        // Fonction appelée après sélection d'une date
+                                        function updateModalAndSessions(filmId, selectedDate) {
+                                            // Afficher le spinner de chargement
+                                            const spinner = $('#loading-spinner-seances-' + filmId);
+                                            spinner.removeClass('d-none');
+
+                                            // Vider les conteneurs avant de les remplir
+                                            const seancesContainer = $('#date-seance-' + filmId);
+                                            const modalContainer = $('#modal-date-seance-' + filmId);
+                                            seancesContainer.empty();
+
+                                            // Convertir la date sélectionnée en un objet Date
+                                            const selectedDateObj = new Date(selectedDate);
+
+                                            // Préparer les 7 prochains jours pour la modale
+                                            const days = [];
+                                            const nextDay = new Date(selectedDateObj);
+                                            const day = ("0" + nextDay.getDate()).slice(-2); // Ajoute un zéro si le jour est inférieur à 10
+                                            const month = ("0" + (nextDay.getMonth() + 1)).slice(-2); // Ajoute un zéro si le mois est inférieur à 10
+                                            const dayFormatted = `${day}/${month}`;
+                                            for (let i = 0; i < 7; i++) {
+                                                nextDay.setDate(selectedDateObj.getDate() + i);
+                                                days.push(nextDay.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' }));
+                                            }
+
+                                            // Générer le contenu des jours cliquables dans la modale
+                                            modalContainer.html(days.map(day => `<div class="col clickable-day" data-date="${day}">${day}</div>`).join(''));
+
+                                            // Ajouter la classe active à la journée correspondant à la date du jour dans le modal
+                                            $(`#modal-${film.id} .clickable-day[data-date="${dayFormatted}"]`).addClass('active').siblings().removeClass('active');
+
+                                            // Charger les séances correspondantes via AJAX (Axios)
+                                            axios
+                                                .post('/films/seances', { filmId })
+                                                .then(response => {
+                                                    const seances = response.data; // Liste des séances par date
+
+                                                    // Fonction pour afficher les séances pour une date donnée
+                                                    function displaySeancesForDate(clickedDate) {
+                                                        seancesContainer.empty();
+
+                                                        // Reformater la date cliquée (dd/mm) en (dd/mm/yyyy)
+                                                        const parts = clickedDate.split('/');
+                                                        const reformattedDate = `${parts[0]}/${parts[1]}/${selectedDateObj.getFullYear()}`;
+
+                                                        // Trouver les séances pour la date donnée
+                                                        const seancesForSelectedDate = seances.find(seance => seance.date === reformattedDate);
+
+                                                        if (seancesForSelectedDate && seancesForSelectedDate.seances.length > 0) {
+                                                            // Afficher les séances
+                                                            seancesForSelectedDate.seances.forEach(seance => {
+                                                                seancesContainer.append(`
+                                                                    <div class="col-6">
+                                                                        <div class="uniform-block fs-5">
+                                                                            <div class="row justify-content-center align-items-center p-3">
+                                                                                <div class="col-3">VF</div>
+                                                                                <div class="col-6 d-flex flex-column text-center">
+                                                                                    <span>${seance.heureDebut}</span>
+                                                                                    <span>(fin ${seance.heureFin})</span>
+                                                                                </div>
+                                                                                <div class="col-3">${seance.format}</div>
+                                                                            </div>
+                                                                            <div class="row text-center p-3">
+                                                                                <div class="col-12">
+                                                                                    <div class="salle mb-3 fs-5">${seance.salle}</div>
+                                                                                    <div>Tarif: ${seance.tarif}€</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                `);
+                                                            });
+                                                        } else {
+                                                            // Si aucune séance n'est trouvée, afficher un message
+                                                            seancesContainer.append('<div class="my-3" style="color: #6A73AB">Aucune séance disponible pour cette date.</div>');
+                                                        }
+                                                    }
+
+                                                    // Initialement, afficher les séances pour la date sélectionnée
+                                                    const initialFormattedDate = selectedDateObj.toLocaleDateString('fr-FR', {
+                                                        day: '2-digit',
+                                                        month: '2-digit',
+                                                        year: 'numeric',
+                                                    });
+                                                    displaySeancesForDate(initialFormattedDate);
+
+                                                    // Ajouter un gestionnaire d'événements pour chaque jour cliquable
+                                                    $('.clickable-day').on('click', function () {
+                                                        $('.clickable-day').removeClass('active');
+                                                        $(this).addClass('active');
+                                                        const clickedDate = $(this).data('date'); // Format dd/mm
+                                                        displaySeancesForDate(clickedDate);
+                                                    });
+                                                })
+                                                .catch(error => console.error('Erreur lors du chargement des séances:', error))
+                                                .finally(() => spinner.addClass('d-none'));
+                                        }
+
+                                        //Datepicker modal
+                                        const $calendarIcon = $('#icon-calendar-'+film.id);
+                                        const $clearIcon = $('#close-icon-date-'+film.id);
+                                        const $datepicker = $(`#datepicker-${film.id}`);
+                                        $datepicker.datepicker({
+                                            format: "dd/mm/yyyy",
+                                            orientation: "bottom",
+                                            language: "fr",
+                                            autoclose: true
+                                        })
+                                            .on('changeDate', function () {
+                                                // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
+                                                $calendarIcon.addClass('d-none');
+                                                $clearIcon.removeClass('d-none');
+                                                const selectedDate = $(this).val();
+                                                // Convertir la date au format souhaité ici
+                                                const [day, month, year] = selectedDate.split('/');
+                                                const formattedDate = `${year}-${month}-${day}`;
+
+                                                const filmId = $(this).data('film-id');
+                                                updateModalAndSessions(filmId, formattedDate);
+                                            });
+
+                                        //Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
+                                        $clearIcon.on('click', function () {
+
+                                            // Effacer la date sélectionnée en réinitialisant la valeur du champ
+                                            $datepicker.val('');
+                                            // Afficher l'icône du calendrier et masquer l'icône de suppression
+                                            $clearIcon.addClass('d-none');
+                                            $calendarIcon.removeClass('d-none');
+                                            $('#date-seance-' + film.id).empty();
+                                            $('#modal-date-seance-' + film.id).empty();
+                                        });
+
+                                        //Appliquer le style de hover/focus
+                                        $clearIcon.on('mouseenter focus', function () {
+                                            $datepicker.addClass('btn-hover');
+                                            $clearIcon.addClass('btn-hover');
+                                        });
+                                        $calendarIcon.on('mouseenter focus', function () {
+                                            $datepicker.addClass('btn-hover');
+                                            $calendarIcon.addClass('btn-hover');
+                                        });
+
+                                        //Retirer le style quand on quitte le survol/focus
+                                        $clearIcon.on('mouseleave blur', function () {
+                                            $datepicker.removeClass('btn-hover');
+                                            $clearIcon.removeClass('btn-hover');
+                                        });
+                                        $calendarIcon.on('mouseleave blur', function () {
+                                            $datepicker.removeClass('btn-hover');
+                                            $calendarIcon.removeClass('btn-hover');
+                                        });
+
+                                        //Ouvrir le calendrier
+                                        $calendarIcon.on('click', function () {
+                                            $datepicker.focus();
+                                        });
+
+                                        // Affichage du cœur si le film est un coup de cœur
+                                        if (film.label === true) {
+                                            $(`#heart-${film.id}`).removeClass('d-none');
+                                        }
+
+                                        // Accordion description films
+                                        const accordionButton = $('#btn-description-'+film.id);
+                                        const accordionCollapse = $('#collapseDescription-'+film.id);
+
+                                        // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
+                                        $(document).click(function(event) {
+                                            // Vérifie si le clic est à l'intérieur de l'accordéon
+                                            if (!accordionButton.is(event.target) && accordionButton.has(event.target).length === 0 && !accordionCollapse.is(event.target) && accordionCollapse.has(event.target).length === 0) {
+                                                // Ferme l'accordéon si ouvert
+                                                if (accordionCollapse.hasClass('show')) {
+                                                    accordionCollapse.collapse('hide'); // Utilise la méthode Bootstrap pour cacher
+                                                }
+                                            }
+                                        });
+
+                                        // Gestion des badges d'âge
+                                        const ageFilm = $(`#age-${film.id}`);
+                                        const ageBadge12 = ageFilm.find('.age-badge-12');
+                                        const ageBadge16 = ageFilm.find('.age-badge-16');
+                                        const ageBadge18 = ageFilm.find('.age-badge-18');
+
+                                        if (film.age_minimum === '12') {
+                                            ageBadge12.removeClass('d-none');
+                                            ageBadge16.addClass('d-none');
+                                            ageBadge18.addClass('d-none');
+                                        }
+                                        else if (film.age_minimum === '16') {
+                                            ageBadge16.removeClass('d-none');
+                                            ageBadge12.addClass('d-none');
+                                            ageBadge18.addClass('d-none');
+                                        }
+                                        else if (film.age_minimum === '18') {
+                                            ageBadge18.removeClass('d-none');
+                                            ageBadge12.addClass('d-none');
+                                            ageBadge16.addClass('d-none');
+                                        }
+                                        else {
+                                            ageBadge12.addClass('d-none');
+                                            ageBadge16.addClass('d-none');
+                                            ageBadge18.addClass('d-none');
+                                        }
+                                    });
+                                })
+            .catch(error => {
+                                    console.error('Erreur lors du chargement des films :', error);
+                                })
+            .finally(() => {
+                                    // Cacher le spinner de chargement
+                                    $('#loading-spinner').addClass('d-none');
+                                });
+        }
+        // Menu Films
+        function menuFilms() {
+                    //Filtrage des films par cinéma, genre et date
+                    const $clearIconGenre = $('.close-icon-genre');
+                    const $clearIconCinema = $('.close-icon-cinema');
+
+                    //Au clic sur le bouton cinéma pour afficher/masquer les options
+                    $('.custom-select-btn-cinema').on('click', function (e) {
+                        e.stopPropagation();
+                        $('.custom-options-cinema').toggle();
+                        $('.custom-options-genre').hide();
+                    });
+
+                    //Sélection d'une option de cinéma
+                    $('.custom-option-cinema').on('click', function () {
+                        let selectedText = $(this).text();
+                        let selectedValue = $(this).data('value');
+                        let customSelect = $('.custom-select-btn-cinema');
+                        customSelect.text(selectedText);
+                        $('#cinema-input').val(selectedValue);
+                        $('.custom-options-cinema').hide();
+                        customSelect.addClass('no-arrow');
+                        $('.close-icon-cinema').removeClass('d-none');
                         // Vider le conteneur des films
                         $('#film-container-public').empty();
-
-                        // Afficher le spinner de chargement
                         $('#loading-spinner').removeClass('d-none');
-
-                        // Requête Axios pour récupérer les films par défaut
-                        axios.get('/films/loading')
+                        axios.post('/films/cinema', {id: selectedValue})
                             .then(response => {
                                 // Parcourir les films retournés par la requête
                                 const films = response.data;
                                 $.each(films, function (index, film) {
                                     // Ajouter chaque film dans le conteneur
                                     $('#film-container-public').append(`
-                                            <div class="col-auto card" style="width: 12rem">
-                                                <div class="position-relative">
-                                                    <i id="heart-${film.id}" class="bi bi-heart-fill position-absolute fs-3 text-warning d-none" style="top:1%; right: 5%"></i>
-                                                    <a href="" data-bs-toggle="modal" data-bs-target="#modal-${film.id}">
-                                                      <img src="${film.image}" class="card-img-top" alt="image" />
-                                                    </a>
-                                                </div>
-                                                <div class="card-body p-0 py-1">
-                                                    <div id="age-${film.id}" class="col-12 card-title m-0 fs-5">${film.name}
-                                                        <span class="age-badge-12 d-none ms-2">12+</span>
-                                                        <span class="age-badge-16 d-none ms-2">16+</span>
-                                                        <span class="age-badge-18 d-none ms-2">18+</span>
-                                                    </div>
-                                                    <div class="card-title m-0 fs-6">${film.genre}</div>
-                                                    <p class="card-text m-0 text-warning" style="margin: 0.3rem 0 0.3rem 0">
-                                                        <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
-                                                    </p>
-                                                    <div class="accordion accordion-flush">
-                                                        <div class="accordion-item">
-                                                            <div class="accordion-header">
-                                                                <button id="btn-description-${film.id}" class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription-${film.id}" aria-expanded="false" aria-controls="collapseDescription">Description</button>
-                                                            </div>
-                                                            <div id="collapseDescription-${film.id}" class="accordion-collapse collapse">
-                                                                <div class="accordion-body p-0">${film.description}</div>
-                                                            </div>
+                                                    <div class="col-auto card" style="width: 12rem">
+                                                        <div class="position-relative">
+                                                            <i id="heart-${film.id}" class="bi bi-heart-fill position-absolute fs-3 text-warning d-none" style="top:1%; right: 5%"></i>
+                                                            <a href="" data-bs-toggle="modal" data-bs-target="#modal-${film.id}">
+                                                              <img src="${film.image}" class="card-img-top" alt="image" />
+                                                            </a>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Modal-->
-                                            <div class="modal fade" id="modal-${film.id}" tabindex="-1" aria-labelledby="Modal-film" data-bs-keyboard="false" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered modal-lg">
-                                                    <div class="modal-content seances">
-                                                        <div class="modal-header position-relative header-seances" style="border: none">
-                                                            <div class="modal-title position-absolute text-center fs-3 fw-semibold" style="left:50%; transform: translateX(-50%)">${film.name}</div>
-                                                            <button type="button" class="btn-close btn-close-seances" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body modal-admin row justify-content-center m-0 p-3">
-                                                            <div class="row justify-content-center align-items-center mb-4">
-                                                                <div class="col-12 d-flex justify-content-center align-items-center">
-                                                                    <div class="position-relative">
-                                                                        <input type="text" class="btn-date" id="datepicker-${film.id}" placeholder="Date" readonly data-film-id="${film.id}">
-                                                                        <label for="datepicker-${film.id}" class="d-none"></label>
-                                                                        <span class="bi bi-calendar" id="icon-calendar-${film.id}"></span>
-                                                                        <span class="bi bi-x-circle d-none" id="close-icon-date-${film.id}"></span>
+                                                        <div class="card-body p-0 py-1">
+                                                            <div id="age-${film.id}" class="col-12 card-title m-0 fs-5">${film.name}
+                                                                <span class="age-badge-12 d-none ms-2">12+</span>
+                                                                <span class="age-badge-16 d-none ms-2">16+</span>
+                                                                <span class="age-badge-18 d-none ms-2">18+</span>
+                                                            </div>
+                                                            <div class="card-title m-0 fs-6">${film.genre}</div>
+                                                            <p class="card-text m-0 text-warning" style="margin: 0.3rem 0 0.3rem 0">
+                                                                <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
+                                                            </p>
+                                                            <div class="accordion accordion-flush">
+                                                                <div class="accordion-item">
+                                                                    <div class="accordion-header">
+                                                                        <button id="btn-description-${film.id}" class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription-${film.id}" aria-expanded="false" aria-controls="collapseDescription">Description</button>
+                                                                    </div>
+                                                                    <div id="collapseDescription-${film.id}" class="accordion-collapse collapse">
+                                                                        <div class="accordion-body p-0">${film.description}</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div id="modal-date-seance-${film.id}" class="row text-center"></div>
-                                                            <div id="loading-spinner-seances-${film.id}" class="row justify-content-center align-content-center d-none my-3">
-                                                                <div class="spinner-border" role="status" style="color: #6A73AB;">
-                                                                     <span class="visually-hidden">Loading...</span>
-                                                                </div>
-                                                            </div>
-                                                            <div id="date-seance-${film.id}" class="row text-center mt-2"></div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        `);
+                                                    <!--Modal-->
+                                                    <div class="modal fade" id="modal-${film.id}" tabindex="-1" aria-labelledby="Modal-film" data-bs-keyboard="false" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                            <div class="modal-content seances">
+                                                                <div class="modal-header position-relative header-seances" style="border: none">
+                                                                    <div class="modal-title position-absolute text-center fs-3 fw-semibold" style="left:50%; transform: translateX(-50%)">${film.name}</div>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body modal-admin row justify-content-center m-0 p-3">
+                                                                    <div class="row justify-content-center align-items-center mb-4">
+                                                                        <div class="col-12 d-flex justify-content-center align-items-center">
+                                                                            <div class="position-relative">
+                                                                                <input type="text" class="btn-date" id="datepicker-${film.id}" placeholder="Date" readonly data-film-id="${film.id}">
+                                                                                <label for="datepicker-${film.id}" class="d-none"></label>
+                                                                                <span class="bi bi-calendar" id="icon-calendar-${film.id}"></span>
+                                                                                <span class="bi bi-x-circle d-none" id="close-icon-date-${film.id}"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div id="modal-date-seance-${film.id}" class="row justify-content-center align-items-center text-center"></div>
+                                                                    <div id="date-seance-${film.id}" class="row justify-content-center align-items-center mt-2"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                `);
 
-                                    // Ajout du gestionnaire d'événements pour ouvrir le modal et initialiser la date
-                                    $(`a[data-bs-toggle="modal"][data-bs-target="#modal-${film.id}"]`).on('click', function () {
-                                        // Définir la date du jour dans le datepicker
-                                        const today = new Date();
-                                        const day = ("0" + today.getDate()).slice(-2); // Ajoute un zéro si le jour est inférieur à 10
-                                        const month = ("0" + (today.getMonth() + 1)).slice(-2); // Ajoute un zéro si le mois est inférieur à 10
-                                        const year = today.getFullYear();
-                                        const todayFormatted = `${day}/${month}/${year}`;
-                                        const formattedDate = `${year}-${month}-${day}`;
-                                        const dayFormatted = `${day}/${month}`;
-
-                                        // Exécuter la fonction pour charger les séances avec la date du jour
-                                        updateModalAndSessions(film.id, formattedDate);
-
-                                        // Mettre à jour la valeur du datepicker
-                                        $(`#datepicker-${film.id}`).datepicker('setDate', todayFormatted);
-
-                                        // Afficher l'icône de croix et masquer l'icône calendrier après sélection d'une date
-                                        $(`#icon-calendar-${film.id}`).addClass('d-none');
-                                        $(`#close-icon-date-${film.id}`).removeClass('d-none');
-
-                                        // Ajouter la classe active à la journée correspondant à la date du jour dans le modal
-                                        $(`#modal-${film.id} .clickable-day[data-date="${dayFormatted}"]`).addClass('active').siblings().removeClass('active');
-                                    });
 
                                     // Fonction appelée après sélection d'une date
                                     function updateModalAndSessions(filmId, selectedDate) {
-                                        // Afficher le spinner de chargement
-                                        const spinner = $('#loading-spinner-seances-' + filmId);
-                                        spinner.removeClass('d-none');
-
                                         // Vider les conteneurs avant de les remplir
                                         const seancesContainer = $('#date-seance-' + filmId);
                                         const modalContainer = $('#modal-date-seance-' + filmId);
                                         seancesContainer.empty();
+                                        modalContainer.empty();
 
-                                        // Convertir la date sélectionnée en un objet Date
+                                        // Convertir la date sélectionnée en objet Date pour comparaison
                                         const selectedDateObj = new Date(selectedDate);
+                                        const selectedDateFormatted = selectedDateObj.toLocaleDateString('fr-FR', {
+                                            day: '2-digit',
+                                            month: '2-digit',
+                                            year: 'numeric',
+                                        });
 
-                                        // Préparer les 7 prochains jours pour la modale
+                                        // Préparer les 7 prochains jours
                                         const days = [];
-                                        const nextDay = new Date(selectedDateObj);
-                                        const day = ("0" + nextDay.getDate()).slice(-2); // Ajoute un zéro si le jour est inférieur à 10
-                                        const month = ("0" + (nextDay.getMonth() + 1)).slice(-2); // Ajoute un zéro si le mois est inférieur à 10
-                                        const dayFormatted = `${day}/${month}`;
                                         for (let i = 0; i < 7; i++) {
+                                            const nextDay = new Date(selectedDateObj);
                                             nextDay.setDate(selectedDateObj.getDate() + i);
-                                            days.push(nextDay.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' }));
+                                            days.push(nextDay.toLocaleDateString('fr-FR', {day: '2-digit', month: '2-digit'}));
                                         }
 
-                                        // Générer le contenu des jours cliquables dans la modale
-                                        modalContainer.html(days.map(day => `<div class="col clickable-day" data-date="${day}">${day}</div>`).join(''));
-
-                                        // Ajouter la classe active à la journée correspondant à la date du jour dans le modal
-                                        $(`#modal-${film.id} .clickable-day[data-date="${dayFormatted}"]`).addClass('active').siblings().removeClass('active');
+                                        // Mettre à jour le conteneur des dates dans la modale
+                                        modalContainer.html(
+                                            days.map(day => `<div class="col">${day}</div>`).join('')
+                                        );
 
                                         // Charger les séances correspondantes via AJAX (Axios)
-                                        axios
-                                            .post('/films/seances', { filmId })
+                                        axios.post('/films/seances', {filmId})
                                             .then(response => {
                                                 const seances = response.data; // Liste des séances par date
+                                                console.log('Séances pour le film', filmId, seances);
 
-                                                // Fonction pour afficher les séances pour une date donnée
-                                                function displaySeancesForDate(clickedDate) {
-                                                    seancesContainer.empty();
+                                                // Trouver les séances correspondant à la date sélectionnée
+                                                const seancesForSelectedDate = seances.find(date => date.date === selectedDateFormatted);
 
-                                                    // Reformater la date cliquée (dd/mm) en (dd/mm/yyyy)
-                                                    const parts = clickedDate.split('/');
-                                                    const reformattedDate = `${parts[0]}/${parts[1]}/${selectedDateObj.getFullYear()}`;
-
-                                                    // Trouver les séances pour la date donnée
-                                                    const seancesForSelectedDate = seances.find(seance => seance.date === reformattedDate);
-
-                                                    if (seancesForSelectedDate && seancesForSelectedDate.seances.length > 0) {
-                                                        // Afficher les séances
-                                                        seancesForSelectedDate.seances.forEach(seance => {
-                                                            seancesContainer.append(`
-                                                                <div class="col-6">
-                                                                    <div class="uniform-block fs-5">
-                                                                        <div class="row justify-content-center align-items-center p-3">
-                                                                            <div class="col-3">VF</div>
-                                                                            <div class="col-6 d-flex flex-column text-center">
-                                                                                <span>${seance.heureDebut}</span>
-                                                                                <span>(fin ${seance.heureFin})</span>
+                                                // Si des séances existent pour la date sélectionnée
+                                                if (seancesForSelectedDate && seancesForSelectedDate.seances.length > 0) {
+                                                    // Afficher les séances
+                                                    seancesForSelectedDate.seances.forEach(seance => {
+                                                        seancesContainer.append(`
+                                                                    <div class="col-6">
+                                                                        <div class="uniform-block fs-5">
+                                                                            <div class="row justify-content-center align-items-center p-3">
+                                                                                <div class="col-3">VF</div>
+                                                                                <div class="col-6 d-flex flex-column text-center">
+                                                                                    <span>${seance.heureDebut}</span>
+                                                                                    <span>(fin ${seance.heureFin})</span>
+                                                                                </div>
+                                                                                <div class="col-3">${seance.format}</div>
                                                                             </div>
-                                                                            <div class="col-3">${seance.format}</div>
-                                                                        </div>
-                                                                        <div class="row text-center p-3">
-                                                                            <div class="col-12">
-                                                                                <div class="salle mb-3 fs-5">${seance.salle}</div>
-                                                                                <div>Tarif: ${seance.tarif}€</div>
+                                                                            <div class="row text-center p-3">
+                                                                                <div class="col-12">
+                                                                                    <div class="salle mb-3 fs-5">${seance.salle}</div>
+                                                                                    <div>Tarif: ${seance.tarif}€</div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            `);
-                                                        });
-                                                    } else {
-                                                        // Si aucune séance n'est trouvée, afficher un message
-                                                        seancesContainer.append('<div class="my-3" style="color: #6A73AB">Aucune séance disponible pour cette date.</div>');
-                                                    }
+                                                                `);
+                                                    });
+                                                } else {
+                                                    // Afficher un message si aucune séance n'est disponible
+                                                    seancesContainer.html('<div class="col-12 text-center my-3" style="color:#6A73AB">Aucune séance disponible pour cette date.</div>');
                                                 }
-
-                                                // Initialement, afficher les séances pour la date sélectionnée
-                                                const initialFormattedDate = selectedDateObj.toLocaleDateString('fr-FR', {
-                                                    day: '2-digit',
-                                                    month: '2-digit',
-                                                    year: 'numeric',
-                                                });
-                                                displaySeancesForDate(initialFormattedDate);
-
-                                                // Ajouter un gestionnaire d'événements pour chaque jour cliquable
-                                                $('.clickable-day').on('click', function () {
-                                                    $('.clickable-day').removeClass('active');
-                                                    $(this).addClass('active');
-                                                    const clickedDate = $(this).data('date'); // Format dd/mm
-                                                    displaySeancesForDate(clickedDate);
-                                                });
                                             })
-                                            .catch(error => console.error('Erreur lors du chargement des séances:', error))
-                                            .finally(() => spinner.addClass('d-none'));
+                                            .catch(error => {
+                                                console.error('Erreur lors du chargement des séances:', error);
+                                                seancesContainer.html('<div class="col-12 text-center text-danger">Erreur de chargement.</div>');
+                                            });
                                     }
 
                                     //Datepicker modal
-                                    const $calendarIcon = $('#icon-calendar-'+film.id);
-                                    const $clearIcon = $('#close-icon-date-'+film.id);
+                                    const $calendarIcon = $('#icon-calendar-' + film.id);
+                                    const $clearIcon = $('#close-icon-date-' + film.id);
                                     const $datepicker = $(`#datepicker-${film.id}`);
                                     $datepicker.datepicker({
                                         format: "dd/mm/yyyy",
@@ -354,11 +631,11 @@ import './styles/app.css';
                                     }
 
                                     // Accordion description films
-                                    const accordionButton = $('#btn-description-'+film.id);
-                                    const accordionCollapse = $('#collapseDescription-'+film.id);
+                                    const accordionButton = $('#btn-description-' + film.id);
+                                    const accordionCollapse = $('#collapseDescription-' + film.id);
 
                                     // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
-                                    $(document).click(function(event) {
+                                    $(document).click(function (event) {
                                         // Vérifie si le clic est à l'intérieur de l'accordéon
                                         if (!accordionButton.is(event.target) && accordionButton.has(event.target).length === 0 && !accordionCollapse.is(event.target) && accordionCollapse.has(event.target).length === 0) {
                                             // Ferme l'accordéon si ouvert
@@ -378,415 +655,6 @@ import './styles/app.css';
                                         ageBadge12.removeClass('d-none');
                                         ageBadge16.addClass('d-none');
                                         ageBadge18.addClass('d-none');
-                                    }
-                                    else if (film.age_minimum === '16') {
-                                        ageBadge16.removeClass('d-none');
-                                        ageBadge12.addClass('d-none');
-                                        ageBadge18.addClass('d-none');
-                                    }
-                                    else if (film.age_minimum === '18') {
-                                        ageBadge18.removeClass('d-none');
-                                        ageBadge12.addClass('d-none');
-                                        ageBadge16.addClass('d-none');
-                                    }
-                                    else {
-                                        ageBadge12.addClass('d-none');
-                                        ageBadge16.addClass('d-none');
-                                        ageBadge18.addClass('d-none');
-                                    }
-                                });
-                            })
-                            .catch(error => {
-                                console.error('Erreur lors du chargement des films :', error);
-                            })
-                            .finally(() => {
-                                // Cacher le spinner de chargement
-                                $('#loading-spinner').addClass('d-none');
-                            });
-                    }
-            // Menu Films
-                function menuFilms() {
-                //Filtrage des films par cinéma, genre et date
-                const $clearIconGenre = $('.close-icon-genre');
-                const $clearIconCinema = $('.close-icon-cinema');
-
-                //Au clic sur le bouton cinéma pour afficher/masquer les options
-                $('.custom-select-btn-cinema').on('click', function (e) {
-                    e.stopPropagation();
-                    $('.custom-options-cinema').toggle();
-                    $('.custom-options-genre').hide();
-                });
-
-                //Sélection d'une option de cinéma
-                $('.custom-option-cinema').on('click', function () {
-                    let selectedText = $(this).text();
-                    let selectedValue = $(this).data('value');
-                    let customSelect = $('.custom-select-btn-cinema');
-                    customSelect.text(selectedText);
-                    $('#cinema-input').val(selectedValue);
-                    $('.custom-options-cinema').hide();
-                    customSelect.addClass('no-arrow');
-                    $('.close-icon-cinema').removeClass('d-none');
-                    // Vider le conteneur des films
-                    $('#film-container-public').empty();
-                    $('#loading-spinner').removeClass('d-none');
-                    axios.post('/films/cinema', {id: selectedValue})
-                        .then(response => {
-                            // Parcourir les films retournés par la requête
-                            const films = response.data;
-                            $.each(films, function (index, film) {
-                                // Ajouter chaque film dans le conteneur
-                                $('#film-container-public').append(`
-                                                <div class="col-auto card" style="width: 12rem">
-                                                    <div class="position-relative">
-                                                        <i id="heart-${film.id}" class="bi bi-heart-fill position-absolute fs-3 text-warning d-none" style="top:1%; right: 5%"></i>
-                                                        <a href="" data-bs-toggle="modal" data-bs-target="#modal-${film.id}">
-                                                          <img src="${film.image}" class="card-img-top" alt="image" />
-                                                        </a>
-                                                    </div>
-                                                    <div class="card-body p-0 py-1">
-                                                        <div id="age-${film.id}" class="col-12 card-title m-0 fs-5">${film.name}
-                                                            <span class="age-badge-12 d-none ms-2">12+</span>
-                                                            <span class="age-badge-16 d-none ms-2">16+</span>
-                                                            <span class="age-badge-18 d-none ms-2">18+</span>
-                                                        </div>
-                                                        <div class="card-title m-0 fs-6">${film.genre}</div>
-                                                        <p class="card-text m-0 text-warning" style="margin: 0.3rem 0 0.3rem 0">
-                                                            <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
-                                                        </p>
-                                                        <div class="accordion accordion-flush">
-                                                            <div class="accordion-item">
-                                                                <div class="accordion-header">
-                                                                    <button id="btn-description-${film.id}" class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription-${film.id}" aria-expanded="false" aria-controls="collapseDescription">Description</button>
-                                                                </div>
-                                                                <div id="collapseDescription-${film.id}" class="accordion-collapse collapse">
-                                                                    <div class="accordion-body p-0">${film.description}</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--Modal-->
-                                                <div class="modal fade" id="modal-${film.id}" tabindex="-1" aria-labelledby="Modal-film" data-bs-keyboard="false" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                                                        <div class="modal-content seances">
-                                                            <div class="modal-header position-relative header-seances" style="border: none">
-                                                                <div class="modal-title position-absolute text-center fs-3 fw-semibold" style="left:50%; transform: translateX(-50%)">${film.name}</div>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body modal-admin row justify-content-center m-0 p-3">
-                                                                <div class="row justify-content-center align-items-center mb-4">
-                                                                    <div class="col-12 d-flex justify-content-center align-items-center">
-                                                                        <div class="position-relative">
-                                                                            <input type="text" class="btn-date" id="datepicker-${film.id}" placeholder="Date" readonly data-film-id="${film.id}">
-                                                                            <label for="datepicker-${film.id}" class="d-none"></label>
-                                                                            <span class="bi bi-calendar" id="icon-calendar-${film.id}"></span>
-                                                                            <span class="bi bi-x-circle d-none" id="close-icon-date-${film.id}"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div id="modal-date-seance-${film.id}" class="row justify-content-center align-items-center text-center"></div>
-                                                                <div id="date-seance-${film.id}" class="row justify-content-center align-items-center mt-2"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            `);
-
-
-                                // Fonction appelée après sélection d'une date
-                                function updateModalAndSessions(filmId, selectedDate) {
-                                    // Vider les conteneurs avant de les remplir
-                                    const seancesContainer = $('#date-seance-' + filmId);
-                                    const modalContainer = $('#modal-date-seance-' + filmId);
-                                    seancesContainer.empty();
-                                    modalContainer.empty();
-
-                                    // Convertir la date sélectionnée en objet Date pour comparaison
-                                    const selectedDateObj = new Date(selectedDate);
-                                    const selectedDateFormatted = selectedDateObj.toLocaleDateString('fr-FR', {
-                                        day: '2-digit',
-                                        month: '2-digit',
-                                        year: 'numeric',
-                                    });
-
-                                    // Préparer les 7 prochains jours
-                                    const days = [];
-                                    for (let i = 0; i < 7; i++) {
-                                        const nextDay = new Date(selectedDateObj);
-                                        nextDay.setDate(selectedDateObj.getDate() + i);
-                                        days.push(nextDay.toLocaleDateString('fr-FR', {day: '2-digit', month: '2-digit'}));
-                                    }
-
-                                    // Mettre à jour le conteneur des dates dans la modale
-                                    modalContainer.html(
-                                        days.map(day => `<div class="col">${day}</div>`).join('')
-                                    );
-
-                                    // Charger les séances correspondantes via AJAX (Axios)
-                                    axios.post('/films/seances', {filmId})
-                                        .then(response => {
-                                            const seances = response.data; // Liste des séances par date
-                                            console.log('Séances pour le film', filmId, seances);
-
-                                            // Trouver les séances correspondant à la date sélectionnée
-                                            const seancesForSelectedDate = seances.find(date => date.date === selectedDateFormatted);
-
-                                            // Si des séances existent pour la date sélectionnée
-                                            if (seancesForSelectedDate && seancesForSelectedDate.seances.length > 0) {
-                                                // Afficher les séances
-                                                seancesForSelectedDate.seances.forEach(seance => {
-                                                    seancesContainer.append(`
-                                                                <div class="col-6">
-                                                                    <div class="uniform-block fs-5">
-                                                                        <div class="row justify-content-center align-items-center p-3">
-                                                                            <div class="col-3">VF</div>
-                                                                            <div class="col-6 d-flex flex-column text-center">
-                                                                                <span>${seance.heureDebut}</span>
-                                                                                <span>(fin ${seance.heureFin})</span>
-                                                                            </div>
-                                                                            <div class="col-3">${seance.format}</div>
-                                                                        </div>
-                                                                        <div class="row text-center p-3">
-                                                                            <div class="col-12">
-                                                                                <div class="salle mb-3 fs-5">${seance.salle}</div>
-                                                                                <div>Tarif: ${seance.tarif}€</div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            `);
-                                                });
-                                            } else {
-                                                // Afficher un message si aucune séance n'est disponible
-                                                seancesContainer.html('<div class="col-12 text-center my-3" style="color:#6A73AB">Aucune séance disponible pour cette date.</div>');
-                                            }
-                                        })
-                                        .catch(error => {
-                                            console.error('Erreur lors du chargement des séances:', error);
-                                            seancesContainer.html('<div class="col-12 text-center text-danger">Erreur de chargement.</div>');
-                                        });
-                                }
-
-                                //Datepicker modal
-                                const $calendarIcon = $('#icon-calendar-' + film.id);
-                                const $clearIcon = $('#close-icon-date-' + film.id);
-                                const $datepicker = $(`#datepicker-${film.id}`);
-                                $datepicker.datepicker({
-                                    format: "dd/mm/yyyy",
-                                    orientation: "bottom",
-                                    language: "fr",
-                                    autoclose: true
-                                })
-                                    .on('changeDate', function () {
-                                        // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
-                                        $calendarIcon.addClass('d-none');
-                                        $clearIcon.removeClass('d-none');
-                                        const selectedDate = $(this).val();
-                                        // Convertir la date au format souhaité ici
-                                        const [day, month, year] = selectedDate.split('/');
-                                        const formattedDate = `${year}-${month}-${day}`;
-
-                                        const filmId = $(this).data('film-id');
-                                        updateModalAndSessions(filmId, formattedDate);
-                                    });
-
-                                //Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
-                                $clearIcon.on('click', function () {
-
-                                    // Effacer la date sélectionnée en réinitialisant la valeur du champ
-                                    $datepicker.val('');
-                                    // Afficher l'icône du calendrier et masquer l'icône de suppression
-                                    $clearIcon.addClass('d-none');
-                                    $calendarIcon.removeClass('d-none');
-                                    $('#date-seance-' + film.id).empty();
-                                    $('#modal-date-seance-' + film.id).empty();
-                                });
-
-                                //Appliquer le style de hover/focus
-                                $clearIcon.on('mouseenter focus', function () {
-                                    $datepicker.addClass('btn-hover');
-                                    $clearIcon.addClass('btn-hover');
-                                });
-                                $calendarIcon.on('mouseenter focus', function () {
-                                    $datepicker.addClass('btn-hover');
-                                    $calendarIcon.addClass('btn-hover');
-                                });
-
-                                //Retirer le style quand on quitte le survol/focus
-                                $clearIcon.on('mouseleave blur', function () {
-                                    $datepicker.removeClass('btn-hover');
-                                    $clearIcon.removeClass('btn-hover');
-                                });
-                                $calendarIcon.on('mouseleave blur', function () {
-                                    $datepicker.removeClass('btn-hover');
-                                    $calendarIcon.removeClass('btn-hover');
-                                });
-
-                                //Ouvrir le calendrier
-                                $calendarIcon.on('click', function () {
-                                    $datepicker.focus();
-                                });
-
-                                // Affichage du cœur si le film est un coup de cœur
-                                if (film.label === true) {
-                                    $(`#heart-${film.id}`).removeClass('d-none');
-                                }
-
-                                // Accordion description films
-                                const accordionButton = $('#btn-description-' + film.id);
-                                const accordionCollapse = $('#collapseDescription-' + film.id);
-
-                                // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
-                                $(document).click(function (event) {
-                                    // Vérifie si le clic est à l'intérieur de l'accordéon
-                                    if (!accordionButton.is(event.target) && accordionButton.has(event.target).length === 0 && !accordionCollapse.is(event.target) && accordionCollapse.has(event.target).length === 0) {
-                                        // Ferme l'accordéon si ouvert
-                                        if (accordionCollapse.hasClass('show')) {
-                                            accordionCollapse.collapse('hide'); // Utilise la méthode Bootstrap pour cacher
-                                        }
-                                    }
-                                });
-
-                                // Gestion des badges d'âge
-                                const ageFilm = $(`#age-${film.id}`);
-                                const ageBadge12 = ageFilm.find('.age-badge-12');
-                                const ageBadge16 = ageFilm.find('.age-badge-16');
-                                const ageBadge18 = ageFilm.find('.age-badge-18');
-
-                                if (film.age_minimum === '12') {
-                                    ageBadge12.removeClass('d-none');
-                                    ageBadge16.addClass('d-none');
-                                    ageBadge18.addClass('d-none');
-                                } else if (film.age_minimum === '16') {
-                                    ageBadge16.removeClass('d-none');
-                                    ageBadge12.addClass('d-none');
-                                    ageBadge18.addClass('d-none');
-                                } else if (film.age_minimum === '18') {
-                                    ageBadge18.removeClass('d-none');
-                                    ageBadge12.addClass('d-none');
-                                    ageBadge16.addClass('d-none');
-                                } else {
-                                    ageBadge12.addClass('d-none');
-                                    ageBadge16.addClass('d-none');
-                                    ageBadge18.addClass('d-none');
-                                }
-                            });
-                        })
-                        .catch(error => {
-                            console.error('Erreur lors du chargement des films :', error);
-                        })
-                        .finally(() => {
-                            $('#loading-spinner').addClass('d-none')
-                        });
-                });
-
-                //Au clic sur l'icône "X" pour réinitialiser la sélection
-                $clearIconCinema.on('click', function () {
-                    let customSelect = $('.custom-select-btn-cinema');
-                    $(this).addClass('d-none');
-                    $('#cinema-input').val('');
-                    customSelect.text('Cinéma');
-                    $('.custom-options-cinema').hide();
-                    customSelect.removeClass('no-arrow');
-                    film();
-                });
-
-                //Au clic sur le bouton genre pour afficher/masquer les options
-                $('.custom-select-btn-genre').on('click', function (e) {
-                    e.stopPropagation();
-                    $('.custom-options-genre').toggle();
-                    $('.custom-options-cinema').hide();
-                });
-
-                //Sélection d'une option de genre
-                $('.custom-option-genre').on('click', function () {
-                    let selectedText = $(this).text();
-                    let selectedValue = $(this).data('value');
-                    let customSelect = $('.custom-select-btn-genre');
-                    customSelect.text(selectedText);
-                    $('#genre-input').val(selectedValue);
-                    $('.custom-options-genre').hide();
-                    customSelect.addClass('no-arrow');
-                    $('.close-icon-genre').removeClass('d-none');
-                    // Vider le conteneur des films
-                    $('#film-container-public').empty();
-                    // Afficher le spinner de chargement
-                    $('#loading-spinner').removeClass('d-none');
-                    axios.post('/films/genre', {id: selectedValue})
-                        .then(response => {
-                            const films = response.data;
-                            $.each(films, function (index, film) {
-                                $('#film-container-public').append(
-                                    `
-                                                                    <div class="col-auto card" style="width: 12rem">
-                                                                        <div class="position-relative">
-                                                                            <i id="heart-${film.id}" class="bi bi-heart-fill position-absolute fs-3 text-warning d-none" style="top:1%; right: 5%"></i>
-                                                                            <img src="${film.image}" class="card-img-top" alt="image">
-                                                                        </div>
-                                                                        <div class="card-body p-0 py-1">
-                                                                            <div id="age-${film.id}" class="col-12 card-title m-0 fs-5">${film.name}
-                                                                                <span class="age-badge-12 d-none ms-2">12+</span>
-                                                                                <span class="age-badge-16 d-none ms-2">16+</span>
-                                                                                <span class="age-badge-18 d-none ms-2">18+</span>
-                                                                            </div>
-                                                                            <div class="card-title m-0 fs-6">${film.genre}</div>
-                                                                            <p class="card-text m-0 text-warning" style="margin: 0.3rem 0 0.3rem 0">
-                                                                                <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
-                                                                            </p>
-                                                                            <div class="accordion accordion-flush">
-                                                                                <div class="accordion-item">
-                                                                                    <div class="accordion-header">
-                                                                                        <button id="btn-description${film.id}" class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription-${film.id}" aria-expanded="false" aria-controls="collapseDescription">Description</button>
-                                                                                    </div>
-                                                                                    <div id="collapseDescription-${film.id}" class="accordion-collapse collapse">
-                                                                                        <div class="accordion-body p-0">${film.description}</div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--Modal-->
-                                                                    <div class="modal fade" id="modal-${film.id}" tabindex="-1" aria-labelledby="Modal-film" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
-                                                                        <div class="modal-dialog modal-dialog-centered modal-xl">
-                                                                            <div class="modal-content" style="background-color: #6A73AB">
-                                                                                <div class="modal-body modal-admin row justify-content-center m-0 p-0"></div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                `);
-
-                                // Affichage cœur si Coup de cœur
-                                if (film.label === true) {
-                                    $('#heart-' + film.id).removeClass('d-none');
-                                }
-
-                                // Accordion description films
-                                const accordionButton = $('#btn-description-' + film.id);
-                                const accordionCollapse = $('#collapseDescription-' + film.id);
-                                // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
-                                $(document).click(function (event) {
-                                    // Vérifie si le clic est à l'intérieur de l'accordéon
-                                    if (!accordionButton.is(event.target) && accordionButton.has(event.target).length === 0 && !accordionCollapse.is(event.target) && accordionCollapse.has(event.target).length === 0) {
-                                        // Ferme l'accordéon si ouvert
-                                        if (accordionCollapse.hasClass('show')) {
-                                            accordionCollapse.collapse('hide'); // Utilise la méthode Bootstrap pour cacher
-                                        }
-                                    }
-                                });
-
-                                //Affichage badge age mini
-                                function displayAgeBadge() {
-                                    const ageFilm = $('#age-' + film.id);
-                                    // Ciblez chaque badge d'âge à partir du conteneur
-                                    const ageBadge12 = ageFilm.find('.age-badge-12');
-                                    const ageBadge16 = ageFilm.find('.age-badge-16');
-                                    const ageBadge18 = ageFilm.find('.age-badge-18');
-                                    // Logique de gestion des classes pour afficher/masquer les badges d'âge
-                                    if (film.age_minimum === '12') {
-                                        ageBadge12.removeClass('d-none');
-                                        ageBadge16.addClass('d-none');
-                                        ageBadge18.addClass('d-none');
                                     } else if (film.age_minimum === '16') {
                                         ageBadge16.removeClass('d-none');
                                         ageBadge12.addClass('d-none');
@@ -800,124 +668,90 @@ import './styles/app.css';
                                         ageBadge16.addClass('d-none');
                                         ageBadge18.addClass('d-none');
                                     }
-                                }
-
-                                displayAgeBadge()
+                                });
+                            })
+                            .catch(error => {
+                                console.error('Erreur lors du chargement des films :', error);
+                            })
+                            .finally(() => {
+                                $('#loading-spinner').addClass('d-none')
                             });
-                        })
-                        .catch(error => {
-                            console.log(error)
-                        })
-                        .finally(() => {
-                            $('#loading-spinner').addClass('d-none')
-                        });
-                });
+                    });
 
-                //Au clic sur l'icône "X" pour réinitialiser la sélection
-                $clearIconGenre.on('click', function () {
-                    let customSelect = $('.custom-select-btn-genre');
-                    $(this).addClass('d-none');
-                    $('#genre-input').val('');
-                    customSelect.text('Genre');
-                    $('.custom-options-genre').hide();
-                    customSelect.removeClass('no-arrow');
-                    film();
-                });
+                    //Au clic sur l'icône "X" pour réinitialiser la sélection
+                    $clearIconCinema.on('click', function () {
+                        let customSelect = $('.custom-select-btn-cinema');
+                        $(this).addClass('d-none');
+                        $('#cinema-input').val('');
+                        customSelect.text('Cinéma');
+                        $('.custom-options-cinema').hide();
+                        customSelect.removeClass('no-arrow');
+                        film();
+                    });
 
-                // Clic en dehors du menu pour fermer les options
-                $(window).on('click', function () {
-                    $('.custom-options-cinema').hide();
-                    $('.custom-options-genre').hide();
-                });
+                    //Au clic sur le bouton genre pour afficher/masquer les options
+                    $('.custom-select-btn-genre').on('click', function (e) {
+                        e.stopPropagation();
+                        $('.custom-options-genre').toggle();
+                        $('.custom-options-cinema').hide();
+                    });
 
-                //Appliquer le style de hover/focus
-                $clearIconCinema.on('mouseenter focus', function () {
-                    $('.custom-select-btn-cinema').addClass('btn-hover');
-                    $('.close-icon-cinema').addClass('btn-hover');
-                });
-
-                //Appliquer le style de hover/focus
-                $clearIconGenre.on('mouseenter focus', function () {
-                    $('.custom-select-btn-genre').addClass('btn-hover');
-                    $('.close-icon-genre').addClass('btn-hover');
-                });
-
-                //Retirer le style quand on quitte le survol/focus
-                $clearIconCinema.on('mouseleave blur', function () {
-                    $('.custom-select-btn-cinema').removeClass('btn-hover');
-                    $('.close-icon-cinema').removeClass('btn-hover');
-                });
-
-                //Retirer le style quand on quitte le survol/focus
-                $clearIconGenre.on('mouseleave blur', function () {
-                    $('.custom-select-btn-genre').removeClass('btn-hover');
-                    $('.close-icon-genre').removeClass('btn-hover');
-                });
-
-                //Datepicker
-                const $datepicker = $('#datepicker');
-                const $calendarIcon = $('#icon-calendar');
-                const $clearIcon = $('.close-icon-date');
-                $datepicker.datepicker({
-                    format: "dd/mm/yyyy",
-                    orientation: "bottom",
-                    language: "fr",
-                    autoclose: true
-                })
-                    .on('changeDate', function () {
-                        // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
-                        $calendarIcon.addClass('d-none');
-                        $clearIcon.removeClass('d-none');
-                        // Récupère la valeur sélectionnée
-                        const selectedDate = $datepicker.val();
-                        const [day, month, year] = selectedDate.split('/');
-                        const FormattedDate = `${year}-${month}-${day}`;
-                        // Vide le conteneur des films
+                    //Sélection d'une option de genre
+                    $('.custom-option-genre').on('click', function () {
+                        let selectedText = $(this).text();
+                        let selectedValue = $(this).data('value');
+                        let customSelect = $('.custom-select-btn-genre');
+                        customSelect.text(selectedText);
+                        $('#genre-input').val(selectedValue);
+                        $('.custom-options-genre').hide();
+                        customSelect.addClass('no-arrow');
+                        $('.close-icon-genre').removeClass('d-none');
+                        // Vider le conteneur des films
                         $('#film-container-public').empty();
-                        // Affiche le spinner de chargement
+                        // Afficher le spinner de chargement
                         $('#loading-spinner').removeClass('d-none');
-                        axios.post('/films/date', {id: FormattedDate})
+                        axios.post('/films/genre', {id: selectedValue})
                             .then(response => {
                                 const films = response.data;
                                 $.each(films, function (index, film) {
                                     $('#film-container-public').append(
                                         `
-                                                                    <div class="col-auto card" style="width: 12rem">
-                                                                        <div class="position-relative">
-                                                                            <i id="heart-${film.id}" class="bi bi-heart-fill position-absolute fs-3 text-warning d-none" style="top:1%; right: 5%"></i>
-                                                                            <img src="${film.image}" class="card-img-top" alt="image">
-                                                                        </div>
-                                                                        <div class="card-body p-0 py-1">
-                                                                            <div id="age-${film.id}" class="col-12 card-title m-0 fs-5">${film.name}
-                                                                                <span class="age-badge-12 d-none ms-2">12+</span>
-                                                                                <span class="age-badge-16 d-none ms-2">16+</span>
-                                                                                <span class="age-badge-18 d-none ms-2">18+</span>
+                                                                        <div class="col-auto card" style="width: 12rem">
+                                                                            <div class="position-relative">
+                                                                                <i id="heart-${film.id}" class="bi bi-heart-fill position-absolute fs-3 text-warning d-none" style="top:1%; right: 5%"></i>
+                                                                                <img src="${film.image}" class="card-img-top" alt="image">
                                                                             </div>
-                                                                            <div class="card-title m-0 fs-6">${film.genre}</div>
-                                                                            <p class="card-text m-0 text-warning" style="margin: 0.3rem 0 0.3rem 0">
-                                                                                <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
-                                                                            </p>
-                                                                            <div class="accordion accordion-flush">
-                                                                                <div class="accordion-item">
-                                                                                    <div class="accordion-header">
-                                                                                        <button id="btn-description${film.id}" class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription-${film.id}" aria-expanded="false" aria-controls="collapseDescription">Description</button>
-                                                                                    </div>
-                                                                                    <div id="collapseDescription-${film.id}" class="accordion-collapse collapse">
-                                                                                        <div class="accordion-body p-0">${film.description}</div>
+                                                                            <div class="card-body p-0 py-1">
+                                                                                <div id="age-${film.id}" class="col-12 card-title m-0 fs-5">${film.name}
+                                                                                    <span class="age-badge-12 d-none ms-2">12+</span>
+                                                                                    <span class="age-badge-16 d-none ms-2">16+</span>
+                                                                                    <span class="age-badge-18 d-none ms-2">18+</span>
+                                                                                </div>
+                                                                                <div class="card-title m-0 fs-6">${film.genre}</div>
+                                                                                <p class="card-text m-0 text-warning" style="margin: 0.3rem 0 0.3rem 0">
+                                                                                    <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
+                                                                                </p>
+                                                                                <div class="accordion accordion-flush">
+                                                                                    <div class="accordion-item">
+                                                                                        <div class="accordion-header">
+                                                                                            <button id="btn-description${film.id}" class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription-${film.id}" aria-expanded="false" aria-controls="collapseDescription">Description</button>
+                                                                                        </div>
+                                                                                        <div id="collapseDescription-${film.id}" class="accordion-collapse collapse">
+                                                                                            <div class="accordion-body p-0">${film.description}</div>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <!--Modal-->
-                                                                    <div class="modal fade" id="modal-${film.id}" tabindex="-1" aria-labelledby="Modal-film" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
-                                                                        <div class="modal-dialog modal-dialog-centered modal-xl">
-                                                                            <div class="modal-content" style="background-color: #6A73AB">
-                                                                                <div class="modal-body modal-admin row justify-content-center m-0 p-0"></div>
+                                                                        <!--Modal-->
+                                                                        <div class="modal fade" id="modal-${film.id}" tabindex="-1" aria-labelledby="Modal-film" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+                                                                            <div class="modal-dialog modal-dialog-centered modal-xl">
+                                                                                <div class="modal-content" style="background-color: #6A73AB">
+                                                                                    <div class="modal-body modal-admin row justify-content-center m-0 p-0"></div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                `);
+                                                                    `);
 
                                     // Affichage cœur si Coup de cœur
                                     if (film.label === true) {
@@ -976,45 +810,208 @@ import './styles/app.css';
                             });
                     });
 
-                //Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
-                $clearIcon.on('click', function () {
+                    //Au clic sur l'icône "X" pour réinitialiser la sélection
+                    $clearIconGenre.on('click', function () {
+                        let customSelect = $('.custom-select-btn-genre');
+                        $(this).addClass('d-none');
+                        $('#genre-input').val('');
+                        customSelect.text('Genre');
+                        $('.custom-options-genre').hide();
+                        customSelect.removeClass('no-arrow');
+                        film();
+                    });
 
-                    // Effacer la date sélectionnée en réinitialisant la valeur du champ
-                    $datepicker.val('');
-                    // Afficher l'icône du calendrier et masquer l'icône de suppression
-                    $clearIcon.addClass('d-none');
-                    $calendarIcon.removeClass('d-none');
+                    // Clic en dehors du menu pour fermer les options
+                    $(window).on('click', function () {
+                        $('.custom-options-cinema').hide();
+                        $('.custom-options-genre').hide();
+                    });
 
-                    // Recharger les films par défaut
-                    film();
+                    //Appliquer le style de hover/focus
+                    $clearIconCinema.on('mouseenter focus', function () {
+                        $('.custom-select-btn-cinema').addClass('btn-hover');
+                        $('.close-icon-cinema').addClass('btn-hover');
+                    });
 
-                });
+                    //Appliquer le style de hover/focus
+                    $clearIconGenre.on('mouseenter focus', function () {
+                        $('.custom-select-btn-genre').addClass('btn-hover');
+                        $('.close-icon-genre').addClass('btn-hover');
+                    });
 
-                //Appliquer le style de hover/focus
-                $clearIcon.on('mouseenter focus', function () {
-                    $datepicker.addClass('btn-hover');
-                    $clearIcon.addClass('btn-hover');
-                });
-                $calendarIcon.on('mouseenter focus', function () {
-                    $datepicker.addClass('btn-hover');
-                    $calendarIcon.addClass('btn-hover');
-                });
+                    //Retirer le style quand on quitte le survol/focus
+                    $clearIconCinema.on('mouseleave blur', function () {
+                        $('.custom-select-btn-cinema').removeClass('btn-hover');
+                        $('.close-icon-cinema').removeClass('btn-hover');
+                    });
 
-                //Retirer le style quand on quitte le survol/focus
-                $clearIcon.on('mouseleave blur', function () {
-                    $datepicker.removeClass('btn-hover');
-                    $clearIcon.removeClass('btn-hover');
-                });
-                $calendarIcon.on('mouseleave blur', function () {
-                    $datepicker.removeClass('btn-hover');
-                    $calendarIcon.removeClass('btn-hover');
-                });
+                    //Retirer le style quand on quitte le survol/focus
+                    $clearIconGenre.on('mouseleave blur', function () {
+                        $('.custom-select-btn-genre').removeClass('btn-hover');
+                        $('.close-icon-genre').removeClass('btn-hover');
+                    });
 
-                //Ouvrir le calendrier
-                $calendarIcon.on('click', function () {
-                    $datepicker.focus();
-                });
-            }
+                    //Datepicker
+                    const $datepicker = $('#datepicker');
+                    const $calendarIcon = $('#icon-calendar');
+                    const $clearIcon = $('.close-icon-date');
+                    $datepicker.datepicker({
+                        format: "dd/mm/yyyy",
+                        orientation: "bottom",
+                        language: "fr",
+                        autoclose: true
+                    })
+                        .on('changeDate', function () {
+                            // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
+                            $calendarIcon.addClass('d-none');
+                            $clearIcon.removeClass('d-none');
+                            // Récupère la valeur sélectionnée
+                            const selectedDate = $datepicker.val();
+                            const [day, month, year] = selectedDate.split('/');
+                            const FormattedDate = `${year}-${month}-${day}`;
+                            // Vide le conteneur des films
+                            $('#film-container-public').empty();
+                            // Affiche le spinner de chargement
+                            $('#loading-spinner').removeClass('d-none');
+                            axios.post('/films/date', {id: FormattedDate})
+                                .then(response => {
+                                    const films = response.data;
+                                    $.each(films, function (index, film) {
+                                        $('#film-container-public').append(
+                                            `
+                                                                        <div class="col-auto card" style="width: 12rem">
+                                                                            <div class="position-relative">
+                                                                                <i id="heart-${film.id}" class="bi bi-heart-fill position-absolute fs-3 text-warning d-none" style="top:1%; right: 5%"></i>
+                                                                                <img src="${film.image}" class="card-img-top" alt="image">
+                                                                            </div>
+                                                                            <div class="card-body p-0 py-1">
+                                                                                <div id="age-${film.id}" class="col-12 card-title m-0 fs-5">${film.name}
+                                                                                    <span class="age-badge-12 d-none ms-2">12+</span>
+                                                                                    <span class="age-badge-16 d-none ms-2">16+</span>
+                                                                                    <span class="age-badge-18 d-none ms-2">18+</span>
+                                                                                </div>
+                                                                                <div class="card-title m-0 fs-6">${film.genre}</div>
+                                                                                <p class="card-text m-0 text-warning" style="margin: 0.3rem 0 0.3rem 0">
+                                                                                    <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
+                                                                                </p>
+                                                                                <div class="accordion accordion-flush">
+                                                                                    <div class="accordion-item">
+                                                                                        <div class="accordion-header">
+                                                                                            <button id="btn-description${film.id}" class="btn btn-description p-0 pb-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription-${film.id}" aria-expanded="false" aria-controls="collapseDescription">Description</button>
+                                                                                        </div>
+                                                                                        <div id="collapseDescription-${film.id}" class="accordion-collapse collapse">
+                                                                                            <div class="accordion-body p-0">${film.description}</div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!--Modal-->
+                                                                        <div class="modal fade" id="modal-${film.id}" tabindex="-1" aria-labelledby="Modal-film" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+                                                                            <div class="modal-dialog modal-dialog-centered modal-xl">
+                                                                                <div class="modal-content" style="background-color: #6A73AB">
+                                                                                    <div class="modal-body modal-admin row justify-content-center m-0 p-0"></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    `);
+
+                                        // Affichage cœur si Coup de cœur
+                                        if (film.label === true) {
+                                            $('#heart-' + film.id).removeClass('d-none');
+                                        }
+
+                                        // Accordion description films
+                                        const accordionButton = $('#btn-description-' + film.id);
+                                        const accordionCollapse = $('#collapseDescription-' + film.id);
+                                        // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
+                                        $(document).click(function (event) {
+                                            // Vérifie si le clic est à l'intérieur de l'accordéon
+                                            if (!accordionButton.is(event.target) && accordionButton.has(event.target).length === 0 && !accordionCollapse.is(event.target) && accordionCollapse.has(event.target).length === 0) {
+                                                // Ferme l'accordéon si ouvert
+                                                if (accordionCollapse.hasClass('show')) {
+                                                    accordionCollapse.collapse('hide'); // Utilise la méthode Bootstrap pour cacher
+                                                }
+                                            }
+                                        });
+
+                                        //Affichage badge age mini
+                                        function displayAgeBadge() {
+                                            const ageFilm = $('#age-' + film.id);
+                                            // Ciblez chaque badge d'âge à partir du conteneur
+                                            const ageBadge12 = ageFilm.find('.age-badge-12');
+                                            const ageBadge16 = ageFilm.find('.age-badge-16');
+                                            const ageBadge18 = ageFilm.find('.age-badge-18');
+                                            // Logique de gestion des classes pour afficher/masquer les badges d'âge
+                                            if (film.age_minimum === '12') {
+                                                ageBadge12.removeClass('d-none');
+                                                ageBadge16.addClass('d-none');
+                                                ageBadge18.addClass('d-none');
+                                            } else if (film.age_minimum === '16') {
+                                                ageBadge16.removeClass('d-none');
+                                                ageBadge12.addClass('d-none');
+                                                ageBadge18.addClass('d-none');
+                                            } else if (film.age_minimum === '18') {
+                                                ageBadge18.removeClass('d-none');
+                                                ageBadge12.addClass('d-none');
+                                                ageBadge16.addClass('d-none');
+                                            } else {
+                                                ageBadge12.addClass('d-none');
+                                                ageBadge16.addClass('d-none');
+                                                ageBadge18.addClass('d-none');
+                                            }
+                                        }
+
+                                        displayAgeBadge()
+                                    });
+                                })
+                                .catch(error => {
+                                    console.log(error)
+                                })
+                                .finally(() => {
+                                    $('#loading-spinner').addClass('d-none')
+                                });
+                        });
+
+                    //Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
+                    $clearIcon.on('click', function () {
+
+                        // Effacer la date sélectionnée en réinitialisant la valeur du champ
+                        $datepicker.val('');
+                        // Afficher l'icône du calendrier et masquer l'icône de suppression
+                        $clearIcon.addClass('d-none');
+                        $calendarIcon.removeClass('d-none');
+
+                        // Recharger les films par défaut
+                        film();
+
+                    });
+
+                    //Appliquer le style de hover/focus
+                    $clearIcon.on('mouseenter focus', function () {
+                        $datepicker.addClass('btn-hover');
+                        $clearIcon.addClass('btn-hover');
+                    });
+                    $calendarIcon.on('mouseenter focus', function () {
+                        $datepicker.addClass('btn-hover');
+                        $calendarIcon.addClass('btn-hover');
+                    });
+
+                    //Retirer le style quand on quitte le survol/focus
+                    $clearIcon.on('mouseleave blur', function () {
+                        $datepicker.removeClass('btn-hover');
+                        $clearIcon.removeClass('btn-hover');
+                    });
+                    $calendarIcon.on('mouseleave blur', function () {
+                        $datepicker.removeClass('btn-hover');
+                        $calendarIcon.removeClass('btn-hover');
+                    });
+
+                    //Ouvrir le calendrier
+                    $calendarIcon.on('click', function () {
+                        $datepicker.focus();
+                    });
+                }
 
         //Page Réservation
         function reservation() {
@@ -1120,9 +1117,9 @@ import './styles/app.css';
         }
 
         //Page Administration
-            //Films
-                //Générer des films
-                    function filmAdmin() {
+        //Films
+        //Générer des films
+        function filmAdmin() {
                         // Vider le conteneur des films
                         $('#card-container').empty();
 
@@ -2171,31 +2168,28 @@ import './styles/app.css';
                                 setTimeout(() => loadingBar.addClass('d-none'), 500);
                             });
                     }
-
-                //Création d'un film sur clic bouton plus
-                    $('#btn-plus-admin').click(function () {
+        //Création d'un film sur clic bouton plus
+        $('#btn-plus-admin').click(function () {
                         axios.post('/administrateur/administration/film/create')
                         .then(response => {filmAdmin();console.log(response.data);})
                         .catch(error => {
                             console.error(error);
                         });
                 });
-
-                //Affichage des films sur clic bouton administration
-                    $('#btn-navbar-admin').click(function() {
+        //Affichage des films sur clic bouton administration
+        $('#btn-navbar-admin').click(function() {
                     filmAdmin();
                 });
-
-                //Déconnexion sur clic bouton déconnexion
-                    $('#btn-deconnexion-admin').click(function() {
+        //Déconnexion sur clic bouton déconnexion
+        $('#btn-deconnexion-admin').click(function() {
                     axios.post('/logout')
                         .then(response => {console.log(response.data);window.location.href = '/accueil';})
                         .catch(error => {console.error(error);});
                 });
 
-            //Compte employé
-                //Fonction pour générer les réservations
-                    function loadReservations() {
+        //Compte employé
+        //Fonction pour générer les réservations
+        function loadReservations() {
                             const $datepickerReservations = $('#datepicker_reservations');
                             const $calendarIconReservations = $('#icon-calendar-reservations');
                             const $clearIconReservations = $('.close-icon-reservations');
@@ -2364,9 +2358,8 @@ import './styles/app.css';
                                     console.error(error);
                                 })
                         }
-
-                //Fonction pour gérer les employés
-                    function employe() {
+        //Fonction pour gérer les employés
+        function employe() {
                     //Affichage des réservations sur clic datepicker
                     loadReservations();
 
@@ -2434,9 +2427,9 @@ import './styles/app.css';
                 }
 
         //Page Employé
-            //Films
-                //Générer des films
-                    function filmEmploye() {
+        //Films
+        //Générer des films
+        function filmEmploye() {
 
                         // Vider le conteneur des films
                             $('#card-container').empty();
@@ -3488,30 +3481,26 @@ import './styles/app.css';
                                     setTimeout(() => loadingBar.addClass('d-none'), 500);
                                 });
                     }
-
-                //Création d'un film sur clic bouton plus
-                    $('#btn-plus-employe').click(function () {
+        //Création d'un film sur clic bouton plus
+        $('#btn-plus-employe').click(function () {
                     axios.post('/employe/administration/film/create')
                         .then(response => {filmEmploye();console.log(response.data);})
                         .catch(error => {
                             console.error(error);
                         });
                 });
-
-                //Affichage des films sur clic bouton Intranet
-                    $('#btn-navbar-employe').click(function() {
+        //Affichage des films sur clic bouton Intranet
+        $('#btn-navbar-employe').click(function() {
                     filmEmploye();
                 });
-
-                //Déconnexion sur clic bouton déconnexion
-                    $('#btn-deconnexion-employe').click(function() {
+        //Déconnexion sur clic bouton déconnexion
+        $('#btn-deconnexion-employe').click(function() {
                     axios.post('/logout')
                         .then(response => {console.log(response.data);window.location.href = '/accueil';})
                         .catch(error => {console.error(error);});
                 });
-
-            //Page Validation des avis
-                function avis() {
+        //Page Validation des avis
+        function avis() {
                 // Vider le conteneur des avis
                     $('.card-container-avis').empty();
                 // Récupérer les avis
@@ -3574,17 +3563,16 @@ import './styles/app.css';
                             console.error('Erreur lors du chargement des Avis :', error);
                         });
                 }
-
-            //Lancement des requètes AJAX et fonctions au chargement des pages
-                if (window.location.pathname === '/administrateur/administration') {filmAdmin()}
-                if (window.location.pathname === '/administrateur/administration/account_employe') {employe()}
-                if (window.location.pathname === '/administrateur/administration/reservations') {employe()}
-                if (window.location.pathname === '/administrateur/films') {film()}
-                if (window.location.pathname === '/employe/administration') {filmEmploye()}
-                if (window.location.pathname === '/employe/administration/avis') {avis()}
-                if (window.location.pathname === '/employe/films') {film()}
-                if (window.location.pathname === '/utilisateur/films') {film()}
-                if (window.location.pathname === '/films') {film(); menuFilms()}
-                if (window.location.pathname === '/reservation') {reservation()}
+        //Lancement des requètes AJAX et fonctions au chargement des pages
+        if (window.location.pathname === '/administrateur/administration') {filmAdmin()}
+        if (window.location.pathname === '/administrateur/administration/account_employe') {employe()}
+        if (window.location.pathname === '/administrateur/administration/reservations') {employe()}
+        if (window.location.pathname === '/administrateur/films') {film()}
+        if (window.location.pathname === '/employe/administration') {filmEmploye()}
+        if (window.location.pathname === '/employe/administration/avis') {avis()}
+        if (window.location.pathname === '/employe/films') {film()}
+        if (window.location.pathname === '/utilisateur/films') {film()}
+        if (window.location.pathname === '/films') {film(); menuFilms()}
+        if (window.location.pathname === '/reservation') {reservation()}
     });
 

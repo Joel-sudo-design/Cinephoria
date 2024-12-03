@@ -10,7 +10,7 @@
         {% endblock %}
     </head>
     <body>
-        <nav id="navbarTop" class="navbar navbar-expand-lg navbar-light fixed-top" style="height: 6rem; z-index: 1100">
+        <nav id="navbarTop" class="navbar navbar-expand-lg navbar-light fixed-top" style="height: 6rem; z-index: 1050">
             <div class="container-fluid">
                 <button id="navbar-togglerTop" class="navbar-toggler text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarTop" aria-controls="offcanvasNavbarTop" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -63,7 +63,97 @@
                 <span class="bi bi-x-circle d-none close-icon-cinema"></span>
             </div>
         </div>
-        <div id="container-accueil" class="container-fluid text-center align-content-center"></div>
+        <div id="container-accueil" class="container-fluid row justify-content-center align-content-center">
+            <div class="col-6 d-flex justify-content-center align-content-center" style="background-color: #6A73AB">
+                <div class="col-4 p-4 text-white position-relative">
+                    <!--Image-->
+                    <div class="position-relative">
+                        <input type="file" id="fileInput" style="display: none">
+                        <img src="{{ asset('image_film/default-image2.jpg')}}" class="img-fluid" alt="image">
+                    </div>
+                </div>
+                <div class="col-8 p-4">
+                    <div class="row justify-content-center align-content-center">
+                        <!--Nom du film & cinéma-->
+                        <div class="row ps-0">
+                            <div class="col-auto">
+                                <div class="text-white align-content-center fs-3 me-2">Joker - TOULOUSE</div>
+                            </div>
+                        </div>
+                        <div class="row ps-0">
+                            <div class="col-6">
+                                <!--Choix Date-->
+                                <div class="row my-4">
+                                    <div class="col-auto d-flex justify-content-start align-items-center">
+                                        <div class="position-relative me-3">
+                                            <input type="text" class="btn-date" id="datepicker" placeholder="Date" readonly>
+                                            <label for="datepicker" class="d-none"></label>
+                                            <span class="bi bi-calendar" id="icon-calendar"></span>
+                                            <span class="bi bi-x-circle d-none" id="close-icon-date"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Choix places-->
+                                <div class="row">
+                                    <div class="col-auto d-flex justify-content-start align-items-center">
+                                        <div class="text-white align-content-center fs-5 me-2">Nombre de places:</div>
+                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" style="width: 4rem" placeholder="" id="Textarea"></textarea>
+                                        <label for="Textarea"></label>
+                                    </div>
+                                </div>
+                                <div class="row my-4">
+                                    <div class="col-auto align-content-center">
+                                        <div class="text-white fs-5 me-2">Prix: 10€</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="btn btn-paiement fs-5">Paiement<i class="ms-2 bi bi-cart-check"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <!--Sance choisie-->
+                                <div class="row pb-2 p-0 mt-3"  style="border-bottom: white 2px solid">
+                                    <div class="col-12 text-center">
+                                        <div class="text-white align-content-center fs-5 me-2">Qualité 4DX - 12h30</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="btn btn-reservation col-3 text-center mt-2">3DX 10h30 11h30</div>
+                                    <div class="btn btn-reservation col-3 text-center mt-2">4DX 10h30 11h30</div>
+                                    <div class="btn btn-reservation col-3 text-center mt-2">IMAX 10h30 11h30</div>
+                                    <div class="btn btn-reservation col-3 text-center mt-2">Dolby 10h30 11h30</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Salle-->
+                    <div class="row">
+                        <div class="col-12 text-white align-items-center justify-content-start position-relative">
+                            <div class="fs-5">Salle 2</div>
+                            <div class="fs-5 position-absolute" style="width: auto; left: 50%; transform: translateX(-50%) translateY(-100%); text-align: center;">Ecran</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="container mt-5">
+                            <div id="seating-area" class="d-flex justify-content-center flex-wrap">
+                                <!-- Les sièges seront générés dynamiquement ici -->
+                            </div>
+                            <div class="mt-4 text-center">
+                                <div class="status-label">
+                                    <span class="seat libre"></span> Libre
+                                </div>
+                                <div class="status-label">
+                                    <span class="seat reserve"></span> Réservé
+                                </div>
+                                <div class="status-label">
+                                    <span class="seat selectionne"></span> Sélectionné
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
