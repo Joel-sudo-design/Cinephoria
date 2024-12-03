@@ -1099,34 +1099,36 @@ footer #navbarBottom .nav-link {
   border: 2px solid white;
 }
 
+/* Sièges */
 .seat {
-  width: 40px;
-  height: 40px;
-  margin: 5px;
-  text-align: center;
-  vertical-align: middle;
-  line-height: 40px;
+  background-color: #f4f4f4;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  margin: 2px;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
-.seat.libre { background-color: #d3d3d3; } /* Gris clair pour libre */
-.seat.reserve { background-color: #000; } /* Noir pour réservé */
-.seat.selectionne { background-color: #7749F8; } /* Violet pour sélectionné */
-.screen {
-  text-align: center;
-  margin: 20px 0;
-  font-weight: bold;
+
+.seat.libre:hover, .seat.reserve:hover, .seat.selectionne:hover {
+  background-color: #7749F8;
+  border: 1px solid #ccc;
 }
-.status-label {
-  display: inline-flex;
-  align-items: center;
-  margin-left: 10px;
+
+.seat.libre {
+  background-color: white;
 }
-.status-label span {
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
+.seat.reserve {
+  background-color: black;
+}
+.seat.selectionne {
+  background-color: #7749F8;
+}
+
+/*Légende*/
+.legend-square {
+  width: 18px;
+  height: 18px;
+  border: 1px solid white;
+  margin-right: 5px;
   display: inline-block;
 }
 
