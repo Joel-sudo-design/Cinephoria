@@ -1115,6 +1115,71 @@ axios.defaults.withCredentials = true;
                 $('.close-icon-cinema').removeClass('btn-hover');
             });
         }
+        // Fonction pour récupérer les données du film et des séances
+        function reservationFilmData() {
+            axios.get('/reservation/film')
+                .then(function (response) {
+                    const data = response.data;
+                    if (data.film) {
+                        // Mettre à jour les informations du film
+                        $('#film-name').text(data.film.name + " - " + data.film.cinema);
+
+                        // Gérer les séances
+                        const availableSeances = data.seances[0].informations;
+                        $('#seances-buttons .btn-reservation').each(function() {
+                            const seanceType = $(this).data('seance');
+                            const isAvailable = availableSeances.some(function(info) {
+                                return info.qualite === seanceType;
+                            });
+
+                            // Si la séance est disponible, activer le bouton
+                            if (isAvailable) {
+                                $(this).removeClass('disabled').on('click', function() {
+                                    // Retirer la classe active des autres boutons
+                                    $('#seances-buttons .btn-reservation').not(this).removeClass('active');
+                                    // Ajouter la classe active au bouton cliqué
+                                    $(this).addClass('active');
+
+                                    // Logique de réservation : mettre à jour l'interface avec la séance choisie
+                                    const seance = availableSeances.find(function(info) {
+                                        return info.qualite === seanceType;
+                                    });
+
+                                    if (seance) {
+                                        // Mettre à jour l'affichage de la séance
+                                        $('#seance-selected').text(`${seance.qualite} - ${seance.heureDebut} à ${seance.heureFin}`);
+
+                                        // Réinitialiser les sièges
+                                        $('#seating-area .seat').each(function() {
+                                            $(this).removeClass('reserve selectionne').addClass('libre');
+                                        });
+
+                                        // Marquer les sièges réservés
+                                        if (seance.sieges_reserves) {
+                                            seance.sieges_reserves.forEach(function(seatId) {
+                                                $(`#seating-area .seat[data-id="${seatId}"]`).removeClass('libre').addClass('reserve');
+                                            });
+                                        }
+
+                                        // Gestion des sièges sélectionnables
+                                        $('#seating-area .seat').off('click').on('click', function() {
+                                            if (!$(this).hasClass('reserve')) {
+                                                $(this).toggleClass('selectionne');
+                                            }
+                                        });
+                                    }
+                                });
+                            } else {
+                                // Si la séance n'est pas disponible, griser le bouton
+                                $(this).addClass('disabled').off('click');
+                            }
+                        });
+                    }
+                })
+                .catch(function (error) {
+                    console.error('Erreur lors de la récupération des données :', error);
+                });
+        }
 
         //Page Administration
         //Films
@@ -3573,6 +3638,6 @@ axios.defaults.withCredentials = true;
         if (window.location.pathname === '/employe/films') {film()}
         if (window.location.pathname === '/utilisateur/films') {film()}
         if (window.location.pathname === '/films') {film(); menuFilms()}
-        if (window.location.pathname === '/reservation') {reservation()}
+        if (window.location.pathname === '/reservation') {reservation(); reservationFilmData()}
     });
 

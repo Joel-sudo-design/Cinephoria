@@ -1079,10 +1079,10 @@ footer #navbarBottom .nav-link {
   transition: all 0.2s ease;
 }
 
-.btn-reservation:hover {
-  background-color: #7749F8;
-  border: 2px solid white;
-  color: white;
+.btn-reservation:hover, .btn-reservation.active, .btn-reservation:focus {
+  background-color: #7749F8 !important;
+  border: 2px solid white !important;
+  color: white !important;
 }
 
 .btn-paiement {
@@ -1131,6 +1131,12 @@ footer #navbarBottom .nav-link {
   border: 1px solid white;
   margin-right: 5px;
   display: inline-block;
+}
+
+.btn-reservation.disabled{
+  background-color: gray !important;
+  color: white !important;
+  cursor: not-allowed;
 }
 
 /* Media queries */

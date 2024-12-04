@@ -6,11 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/FilmsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FilmsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/ReservationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReservationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Film.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Film.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Reservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Reservation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/baseReservation.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseReservation.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration/register.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/register.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -312,23 +313,7 @@
       <workItem from="1733218334135" duration="11473000" />
       <workItem from="1733237941390" duration="4604000" />
       <workItem from="1733297455039" duration="2939000" />
-      <workItem from="1733307847525" duration="1266000" />
-    </task>
-    <task id="LOCAL-00044" summary="Modifs diverses">
-      <option name="closed" value="true" />
-      <created>1731594178172</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1731594178172</updated>
-    </task>
-    <task id="LOCAL-00045" summary="Modifs diverses">
-      <option name="closed" value="true" />
-      <created>1731768556941</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1731768556941</updated>
+      <workItem from="1733307847525" duration="16200000" />
     </task>
     <task id="LOCAL-00046" summary="Modifs diverses">
       <option name="closed" value="true" />
@@ -706,7 +691,23 @@
       <option name="project" value="LOCAL" />
       <updated>1733240041712</updated>
     </task>
-    <option name="localTasksCounter" value="93" />
+    <task id="LOCAL-00093" summary="Modifs">
+      <option name="closed" value="true" />
+      <created>1733309213424</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1733309213425</updated>
+    </task>
+    <task id="LOCAL-00094" summary="Modifs">
+      <option name="closed" value="true" />
+      <created>1733309384766</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1733309384766</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

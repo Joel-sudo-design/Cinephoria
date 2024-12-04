@@ -53,7 +53,7 @@ class ReservationController extends AbstractController
                 if (!isset($structuredSeances[$date])) {
                     $structuredSeances[$date] = [
                         'date' => $date,
-                        'informations' => []
+                        'informations' => [],
                     ];
                 }
                 $structuredSeances[$date]['informations'][] = [
@@ -63,7 +63,26 @@ class ReservationController extends AbstractController
                     'salle' => 'Salle ' . $seanceArray['salle'],
                     'tarif' => $seanceArray['price']
                 ];
+                // Récupérer les réservations de la séance
+                $reservations = $seance->getReservation();
+                foreach ($reservations as $res) {
+                    $reservationArray = $res->toArray();
+
+                    // Vérifier si la clé 'sieges_reserves' existe dans la dernière séance ajoutée
+                    $lastIndex = count($structuredSeances[$date]['informations']) - 1;
+
+                    // Ajouter tous les sièges réservés dans le tableau 'sieges_reserves' unique
+                    if (!isset($structuredSeances[$date]['informations'][$lastIndex]['sieges_reserves'])) {
+                        $structuredSeances[$date]['informations'][$lastIndex]['sieges_reserves'] = [];
+                    }
+
+                    $structuredSeances[$date]['informations'][$lastIndex]['sieges_reserves'] = array_merge(
+                        $structuredSeances[$date]['informations'][$lastIndex]['sieges_reserves'],
+                        $reservationArray['siege_reserve']
+                    );
+                }
             }
+
             // Convertir l'objet associatif en un tableau indexé
             $seancesArray = array_values($structuredSeances);
             //Informations sur le film
@@ -73,7 +92,7 @@ class ReservationController extends AbstractController
             if ($film->getDateDebut() && $film->getDateFin() !== null) {
                 $filmArray['film'] = $film->toArray()
                     + ['cinema' => $cinema->getName()]
-                    + ['Date_début' => $film->getDateDebut()->format('d/m/Y')]
+                    + ['Date_debut' => $film->getDateDebut()->format('d/m/Y')]
                     + ['Date_fin' => $film->getDateFin()->format('d/m/Y')]
                     + ['image' => $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName()];
             }

@@ -14,10 +14,7 @@ class Reservation
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $place = null;
-
-    #[ORM\Column]
-    private array $siege = [];
+    private array $siege_reserve = [];
 
     #[ORM\ManyToOne(inversedBy: 'reservation')]
     private ?Seance $seance = null;
@@ -59,5 +56,12 @@ class Reservation
         $this->seance = $seance;
 
         return $this;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'siege_reserve' => $this->siege_reserve,
+        ];
     }
 }
