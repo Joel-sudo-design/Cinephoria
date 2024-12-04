@@ -1024,7 +1024,7 @@ axios.defaults.withCredentials = true;
             });
 
             // Quand un cinéma est sélectionné
-            $(document).on('click', '.custom-option-cinema', function (e) {
+            $(document).on('mouseenter', '.custom-option-cinema', function (e) {
                 e.stopPropagation(); // Empêche la fermeture involontaire du menu
                 const cinemaId = $(this).data('cinema-id');
 
