@@ -105,5 +105,4 @@ class ReservationController extends AbstractController
         }
         return new JsonResponse($filmArray);
     }
-
 }

@@ -1123,6 +1123,7 @@ axios.defaults.withCredentials = true;
                     if (data.film) {
                         // Mettre à jour les informations du film
                         $('#film-name').text(data.film.name + " - " + data.film.cinema);
+                        $('#reservation .img-fluid').attr('src', data.film.image);
 
                         // Gérer les séances
                         const availableSeances = data.seances[0].informations;
