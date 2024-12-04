@@ -1147,7 +1147,7 @@ axios.defaults.withCredentials = true;
 
                                     if (seance) {
                                         // Mettre à jour l'affichage de la séance
-                                        $('#seance-selected').text(`${seance.qualite} - ${seance.heureDebut} à ${seance.heureFin}`);
+                                        $('#seance-selected').text(`Qualité ${seance.qualite} - ${seance.heureDebut} à ${seance.heureFin}`);
 
                                         // Réinitialiser les sièges
                                         $('#seating-area .seat').each(function() {
