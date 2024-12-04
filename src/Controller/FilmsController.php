@@ -135,7 +135,7 @@ class FilmsController extends AbstractController
         return new JsonResponse($AllFilmsArray);
     }
     #[Route('/films/date', name: 'app_films_loading_date')]
-    public function filtreDateFilm(FilmRepository $filmRepository, Request $request, GenreRepository $genreRepository): Response
+    public function filtreDateFilm(FilmRepository $filmRepository, Request $request): Response
     {
         $data = json_decode($request->getContent(), true);
         $dateId = $data['id'];

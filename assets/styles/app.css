@@ -1055,6 +1055,7 @@ footer #navbarBottom .nav-link {
   background-color: #6A73AB;
   border-radius: 6px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid white;
   z-index: 1001;
 }
 
