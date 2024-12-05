@@ -1079,7 +1079,7 @@ footer #navbarBottom .nav-link {
   transition: all 0.2s ease;
 }
 
-.btn-reservation:hover, .btn-reservation.active, .btn-reservation:focus {
+#seances-buttons:not(.disabled) .btn-reservation:hover,#seances-buttons:not(.disabled) .btn-reservation.active, #seances-buttons:not(.disabled) .btn-reservation:focus {
   background-color: #7749F8 !important;
   border: 2px solid white !important;
   color: white !important;
@@ -1124,6 +1124,21 @@ footer #navbarBottom .nav-link {
   background-color: #7749F8;
 }
 
+.btn-reservation.disabled, #seances-buttons.disabled, #row-reservations-places.disabled {
+  background-color: gray !important;
+  color: white !important;
+  border: none !important;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+#seances-buttons.disabled .btn-reservation, #row-reservations-places.disabled .Textarea-places-reservations  {
+  background-color: gray !important;
+  color: white !important;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
 /*Légende*/
 .legend-square {
   width: 18px;
@@ -1131,12 +1146,6 @@ footer #navbarBottom .nav-link {
   border: 1px solid white;
   margin-right: 5px;
   display: inline-block;
-}
-
-.btn-reservation.disabled{
-  background-color: gray !important;
-  color: white !important;
-  cursor: not-allowed;
 }
 
 /* Media queries */

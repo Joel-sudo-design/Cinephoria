@@ -1151,7 +1151,8 @@ axios.defaults.withCredentials = true;
                                         $('#seance-selected').text(`Qualité ${seance.qualite} - ${seance.heureDebut} à ${seance.heureFin}`);
 
                                         // Réinitialiser les sièges
-                                        $('#seating-area .seat').each(function() {
+                                        const seatingArea = $('#seating-area');
+                                        seatingArea.each(function() {
                                             $(this).removeClass('reserve selectionne').addClass('libre');
                                         });
 
@@ -1163,7 +1164,7 @@ axios.defaults.withCredentials = true;
                                         }
 
                                         // Gestion des sièges sélectionnables
-                                        $('#seating-area .seat').off('click').on('click', function() {
+                                        seatingArea.off('click').on('click', function() {
                                             if (!$(this).hasClass('reserve')) {
                                                 $(this).toggleClass('selectionne');
                                             }
@@ -1180,6 +1181,61 @@ axios.defaults.withCredentials = true;
                 .catch(function (error) {
                     console.error('Erreur lors de la récupération des données :', error);
                 });
+
+            //Datepicker
+            const $datepicker = $('#datepicker');
+            const $calendarIcon = $('#icon-calendar');
+            const $clearIcon = $('#close-icon-date');
+            $datepicker.datepicker({
+                format: "dd/mm/yyyy",
+                orientation: "bottom",
+                language: "fr",
+                autoclose: true
+            })
+                .on('changeDate', function () {
+                    // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
+                    $calendarIcon.addClass('d-none');
+                    $clearIcon.removeClass('d-none');
+                    // Récupère la valeur sélectionnée
+                    const selectedDate = $datepicker.val();
+                    const [day, month, year] = selectedDate.split('/');
+                    const FormattedDate = `${year}-${month}-${day}`;
+                });
+
+            //Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
+            $clearIcon.on('click', function () {
+
+                // Effacer la date sélectionnée en réinitialisant la valeur du champ
+                $datepicker.val('');
+                // Afficher l'icône du calendrier et masquer l'icône de suppression
+                $clearIcon.addClass('d-none');
+                $calendarIcon.removeClass('d-none');
+            });
+
+            //Appliquer le style de hover/focus
+            $clearIcon.on('mouseenter focus', function () {
+                $datepicker.addClass('btn-hover');
+                $clearIcon.addClass('btn-hover');
+            });
+            $calendarIcon.on('mouseenter focus', function () {
+                $datepicker.addClass('btn-hover');
+                $calendarIcon.addClass('btn-hover');
+            });
+
+            //Retirer le style quand on quitte le survol/focus
+            $clearIcon.on('mouseleave blur', function () {
+                $datepicker.removeClass('btn-hover');
+                $clearIcon.removeClass('btn-hover');
+            });
+            $calendarIcon.on('mouseleave blur', function () {
+                $datepicker.removeClass('btn-hover');
+                $calendarIcon.removeClass('btn-hover');
+            });
+
+            //Ouvrir le calendrier
+            $calendarIcon.on('click', function () {
+                $datepicker.focus();
+            });
         }
 
         //Page Administration
@@ -3629,6 +3685,7 @@ axios.defaults.withCredentials = true;
                             console.error('Erreur lors du chargement des Avis :', error);
                         });
                 }
+
         //Lancement des requètes AJAX et fonctions au chargement des pages
         if (window.location.pathname === '/administrateur/administration') {filmAdmin()}
         if (window.location.pathname === '/administrateur/administration/account_employe') {employe()}

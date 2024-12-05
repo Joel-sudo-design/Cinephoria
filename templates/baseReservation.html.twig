@@ -64,7 +64,7 @@
             </div>
         </div>
         <div class="container-fluid container-films row justify-content-center align-content-center">
-            <div id="reservation" class="col-6 d-flex justify-content-center align-content-center" style="background-color: #6A73AB; width: 70rem">
+            <div id="reservation" class="col-6 d-flex justify-content-center align-item-center mb-4" style="background-color: #6A73AB; width: 70rem">
                 <div class="col-4 p-4 text-white position-relative">
                     <div class="row">
                         <!--Image-->
@@ -108,10 +108,10 @@
                                 </div>
                                 <!-- Choix places -->
                                 <div class="row">
-                                    <div class="col-auto d-flex justify-content-start align-items-center">
+                                    <div id="row-reservations-places" class="col-auto d-flex justify-content-start align-items-center disabled">
                                         <div class="text-white align-content-center fs-5 me-2">Nombre de places:</div>
-                                        <textarea class="form-control p-2 align-content-center textarea-uniforme" style="width: 4rem" placeholder="" id="Textarea"></textarea>
-                                        <label for="Textarea"></label>
+                                        <textarea class="form-control p-2 align-content-center textarea-uniforme Textarea-places-reservations disabled" style="width: 4rem" placeholder="" id="Textarea-places-reservations"></textarea>
+                                        <label for="Textarea-places-reservations"></label>
                                     </div>
                                 </div>
                                 <div class="row my-4">
@@ -130,7 +130,7 @@
                                         <div class="text-white align-content-center fs-5 me-2" id="seance-selected"></div>
                                     </div>
                                 </div>
-                                <div class="row" id="seances-buttons">
+                                <div class="row disabled" id="seances-buttons">
                                     <button class="btn btn-reservation col text-center mt-2 me-1" data-seance="3DX">3DX 10h30 11h30</button>
                                     <button class="btn btn-reservation col text-center mt-2 me-1" data-seance="4DX">4DX 10h30 11h30</button>
                                     <button class="btn btn-reservation col text-center mt-2 me-1" data-seance="IMAX">IMAX 10h30 11h30</button>
