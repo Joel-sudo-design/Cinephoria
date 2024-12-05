@@ -1132,11 +1132,12 @@ footer #navbarBottom .nav-link {
   opacity: 0.6;
 }
 
-#seances-buttons.disabled .btn-reservation, #row-reservations-places.disabled .Textarea-places-reservations  {
+#seances-buttons.disabled .btn-reservation, #Textarea-places-reservations, #paiement-reservations.disabled, #selection-sieges.disabled {
   background-color: gray !important;
   color: white !important;
   pointer-events: none;
   opacity: 0.6;
+  border: none;
 }
 
 /*Légende*/

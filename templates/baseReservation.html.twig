@@ -108,9 +108,9 @@
                                 </div>
                                 <!-- Choix places -->
                                 <div class="row">
-                                    <div id="row-reservations-places" class="col-auto d-flex justify-content-start align-items-center disabled">
+                                    <div class="col-auto d-flex justify-content-start align-items-center">
                                         <div class="text-white align-content-center fs-5 me-2">Nombre de places:</div>
-                                        <textarea class="form-control p-2 align-content-center textarea-uniforme Textarea-places-reservations disabled" style="width: 4rem" placeholder="" id="Textarea-places-reservations"></textarea>
+                                        <textarea class="form-control p-2 align-content-center textarea-uniforme disabled" style="width: 4rem" placeholder="" id="Textarea-places-reservations"></textarea>
                                         <label for="Textarea-places-reservations"></label>
                                     </div>
                                 </div>
@@ -119,7 +119,7 @@
                                         <div class="text-white fs-5 me-2">Prix: 10€</div>
                                     </div>
                                     <div class="col-auto">
-                                        <div class="btn btn-paiement fs-5 px-3">Paiement<i class="ms-2 bi bi-cart-check"></i></div>
+                                        <div id="paiement-reservations" class="btn btn-paiement fs-5 px-3 disabled">Paiement<i class="ms-2 bi bi-cart-check"></i></div>
                                     </div>
                                 </div>
                             </div>
@@ -147,7 +147,7 @@
                         </div>
                     </div>
                     <!--Sélection des places-->
-                    <div class="row">
+                    <div id="selection-sieges" class="row disabled">
                         <div class="row m-0 p-0">
                             <div class="col-12">
                                 <div id="seating-area" class="row justify-content-center mt-1">
