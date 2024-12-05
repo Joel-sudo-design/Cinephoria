@@ -1124,20 +1124,20 @@ footer #navbarBottom .nav-link {
   background-color: #7749F8;
 }
 
-.btn-reservation.disabled, #seances-buttons.disabled, #row-reservations-places.disabled {
+.btn-reservation, #seances-buttons, #row-reservations-places,
+#paiement-reservations, #Textarea-places-reservations, #selection-sieges {
+    transition: all 0.2s ease;
+    background-color: transparent !important;
+    color: white !important;
+}
+
+.btn-reservation.disabled, #seances-buttons.disabled, #row-reservations-places.disabled,
+#paiement-reservations.disabled, #Textarea-places-reservations.disabled, #selection-sieges.disabled {
   background-color: gray !important;
   color: white !important;
   border: none !important;
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-#seances-buttons.disabled .btn-reservation, #Textarea-places-reservations, #paiement-reservations.disabled, #selection-sieges.disabled {
-  background-color: gray !important;
-  color: white !important;
   pointer-events: none;
   opacity: 0.6;
-  border: none;
 }
 
 /*Légende*/

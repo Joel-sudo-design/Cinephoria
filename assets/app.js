@@ -1117,124 +1117,146 @@ axios.defaults.withCredentials = true;
         }
         // Fonction pour récupérer les données du film et des séances
         function reservationFilmData() {
-            axios.get('/reservation/film')
-                .then(function (response) {
-                    const data = response.data;
-                    if (data.film) {
-                        // Mettre à jour les informations du film
-                        $('#film-name').text(data.film.name + " - " + data.film.cinema);
-                        $('#reservation .img-fluid').attr('src', data.film.image);
-
-                        // Gérer les séances
-                        const availableSeances = data.seances[0].informations;
-                        $('#seances-buttons .btn-reservation').each(function() {
-                            const seanceType = $(this).data('seance');
-                            const isAvailable = availableSeances.some(function(info) {
-                                return info.qualite === seanceType;
-                            });
-
-                            // Si la séance est disponible, activer le bouton
-                            if (isAvailable) {
-                                $(this).removeClass('disabled').on('click', function() {
-                                    // Retirer la classe active des autres boutons
-                                    $('#seances-buttons .btn-reservation').not(this).removeClass('active');
-                                    // Ajouter la classe active au bouton cliqué
-                                    $(this).addClass('active');
-
-                                    // Logique de réservation : mettre à jour l'interface avec la séance choisie
-                                    const seance = availableSeances.find(function(info) {
-                                        return info.qualite === seanceType;
-                                    });
-
-                                    if (seance) {
-                                        // Mettre à jour l'affichage de la séance
-                                        $('#seance-selected').text(`Qualité ${seance.qualite} - ${seance.heureDebut} à ${seance.heureFin}`);
-
-                                        // Réinitialiser les sièges
-                                        const seatingArea = $('#seating-area');
-                                        seatingArea.each(function() {
-                                            $(this).removeClass('reserve selectionne').addClass('libre');
-                                        });
-
-                                        // Marquer les sièges réservés
-                                        if (seance.sieges_reserves) {
-                                            seance.sieges_reserves.forEach(function(seatId) {
-                                                $(`#seating-area .seat[data-id="${seatId}"]`).removeClass('libre').addClass('reserve');
-                                            });
-                                        }
-
-                                        // Gestion des sièges sélectionnables
-                                        seatingArea.off('click').on('click', function() {
-                                            if (!$(this).hasClass('reserve')) {
-                                                $(this).toggleClass('selectionne');
-                                            }
-                                        });
+            $(document).on('click', '.custom-option-film', function (){
+                const cinemaId = $('#cinema-input').val();
+                const filmId = $('#film-input').val();
+                // Masque tous les menus
+                $('.custom-options-cinema').toggle();
+                axios.post('/reservation/film', {'cinemaId': cinemaId, 'filmId': filmId})
+                    .then(response => {
+                        const data = response.data;
+                        if (data.film) {
+                            // Mettre à jour les informations du film
+                            $('#film-name').text(data.film.name + " - " + data.film.cinema);
+                            $('#reservation .img-fluid').attr('src', data.film.image);
+                            const seancesSelected = $('#seance-selected');
+                            function updateSeances(selectedDate) {
+                                seancesSelected.text('Choisir la qualité');
+                                // Initialisez un tableau pour stocker les séances disponibles à la date sélectionnée
+                                let availableSeances = [];
+                                // Filtrer les séances correspondant à la date sélectionnée
+                                data.seances.forEach(function (seance) {
+                                    if (seance.date === selectedDate) {
+                                        availableSeances = availableSeances.concat(seance.informations);
                                     }
                                 });
-                            } else {
-                                // Si la séance n'est pas disponible, griser le bouton
-                                $(this).addClass('disabled').off('click');
+
+                                // Si aucune séance n'est disponible pour cette date, afficher un message d'alerte
+                                if (availableSeances.length === 0) {
+                                    alert('Aucune séance disponible pour cette date.');
+                                    $('#seances-buttons').addClass('disabled'); // Désactive les boutons
+                                    seancesSelected.text('');
+                                } else {
+                                    $('#seances-buttons').removeClass('disabled'); // Active les boutons
+
+                                    // Gérer l'affichage des séances
+                                    $('#seances-buttons .btn-reservation').each(function () {
+                                        const seanceType = $(this).data('seance');
+                                        const isAvailable = availableSeances.some(function (info) {
+                                            return info.qualite === seanceType;
+                                        });
+
+                                        if (isAvailable) {
+                                            $(this).removeClass('disabled').on('click', function () {
+                                                // Retirer la classe active des autres boutons
+                                                $('#seances-buttons .btn-reservation').not(this).removeClass('active');
+                                                // Ajouter la classe active au bouton cliqué
+                                                $(this).addClass('active');
+
+                                                // Mettre à jour l'affichage de la séance
+                                                const seance = availableSeances.find(function (info) {
+                                                    return info.qualite === seanceType;
+                                                });
+
+                                                if (seance) {
+                                                    seancesSelected.text(`Qualité choisie ${seance.qualite}`);
+                                                    // Réinitialiser les sièges
+                                                    const seatingArea = $('#seating-area');
+                                                    seatingArea.each(function () {
+                                                        $(this).removeClass('reserve selectionne').addClass('libre');
+                                                    });
+
+                                                    // Marquer les sièges réservés
+                                                    if (seance.sieges_reserves) {
+                                                        seance.sieges_reserves.forEach(function (seatId) {
+                                                            $(`#seating-area .seat[data-id="${seatId}"]`).removeClass('libre').addClass('reserve');
+                                                        });
+                                                    }
+
+                                                    // Gestion des sièges sélectionnables
+                                                    seatingArea.off('click').on('click', function () {
+                                                        if (!$(this).hasClass('reserve')) {
+                                                            $(this).toggleClass('selectionne');
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        } else {
+                                            $(this).addClass('disabled').off('click');
+                                        }
+                                    });
+                                }
                             }
-                        });
-                    }
-                })
-                .catch(function (error) {
-                    console.error('Erreur lors de la récupération des données :', error);
-                });
+                            //Datepicker
+                            const $datepicker = $('#datepicker');
+                            const $calendarIcon = $('#icon-calendar');
+                            const $clearIcon = $('#close-icon-date');
 
-            //Datepicker
-            const $datepicker = $('#datepicker');
-            const $calendarIcon = $('#icon-calendar');
-            const $clearIcon = $('#close-icon-date');
-            $datepicker.datepicker({
-                format: "dd/mm/yyyy",
-                orientation: "bottom",
-                language: "fr",
-                autoclose: true
-            })
-                .on('changeDate', function () {
-                    // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
-                    $calendarIcon.addClass('d-none');
-                    $clearIcon.removeClass('d-none');
-                    // Récupère la valeur sélectionnée
-                    const selectedDate = $datepicker.val();
-                    const [day, month, year] = selectedDate.split('/');
-                    const FormattedDate = `${year}-${month}-${day}`;
-                });
+                            $datepicker.datepicker({
+                                format: "dd/mm/yyyy",
+                                orientation: "bottom",
+                                language: "fr",
+                                autoclose: true
+                            })
+                                // Lorsque la date est sélectionnée, on filtre les séances par date
+                                .on('changeDate', function () {
+                                    // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
+                                    $calendarIcon.addClass('d-none');
+                                    $clearIcon.removeClass('d-none');
+                                    const selectedDate = $('#datepicker').val();
+                                    updateSeances(selectedDate);
+                                });
 
-            //Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
-            $clearIcon.on('click', function () {
+                            //Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
+                            $clearIcon.on('click', function () {
+                                // Effacer la date sélectionnée en réinitialisant la valeur du champ
+                                $datepicker.val('');
+                                // Afficher l'icône du calendrier et masquer l'icône de suppression
+                                $clearIcon.addClass('d-none');
+                                $calendarIcon.removeClass('d-none');
+                                $('#seances-buttons .btn-reservation').removeClass('active')
+                                $('#seances-buttons').addClass('disabled');
+                                seancesSelected.text('');
+                            });
 
-                // Effacer la date sélectionnée en réinitialisant la valeur du champ
-                $datepicker.val('');
-                // Afficher l'icône du calendrier et masquer l'icône de suppression
-                $clearIcon.addClass('d-none');
-                $calendarIcon.removeClass('d-none');
-            });
+                            //Appliquer le style de hover/focus
+                            $clearIcon.on('mouseenter focus', function () {
+                                $datepicker.addClass('btn-hover');
+                                $clearIcon.addClass('btn-hover');
+                            });
+                            $calendarIcon.on('mouseenter focus', function () {
+                                $datepicker.addClass('btn-hover');
+                                $calendarIcon.addClass('btn-hover');
+                            });
 
-            //Appliquer le style de hover/focus
-            $clearIcon.on('mouseenter focus', function () {
-                $datepicker.addClass('btn-hover');
-                $clearIcon.addClass('btn-hover');
-            });
-            $calendarIcon.on('mouseenter focus', function () {
-                $datepicker.addClass('btn-hover');
-                $calendarIcon.addClass('btn-hover');
-            });
+                            //Retirer le style quand on quitte le survol/focus
+                            $clearIcon.on('mouseleave blur', function () {
+                                $datepicker.removeClass('btn-hover');
+                                $clearIcon.removeClass('btn-hover');
+                            });
+                            $calendarIcon.on('mouseleave blur', function () {
+                                $datepicker.removeClass('btn-hover');
+                                $calendarIcon.removeClass('btn-hover');
+                            });
 
-            //Retirer le style quand on quitte le survol/focus
-            $clearIcon.on('mouseleave blur', function () {
-                $datepicker.removeClass('btn-hover');
-                $clearIcon.removeClass('btn-hover');
-            });
-            $calendarIcon.on('mouseleave blur', function () {
-                $datepicker.removeClass('btn-hover');
-                $calendarIcon.removeClass('btn-hover');
-            });
+                            //Ouvrir le calendrier
+                            $calendarIcon.on('click', function () {
+                                $datepicker.focus();
+                            });
 
-            //Ouvrir le calendrier
-            $calendarIcon.on('click', function () {
-                $datepicker.focus();
+                        }
+                    })
+                .catch(error => { console.error('Erreur lors de la récupération des données :', error); });
             });
         }
 
