@@ -73,15 +73,11 @@
                             <img src="{{ asset('image_film/default-image2.jpg')}}" class="img-fluid" alt="image">
                         </div>
                     </div>
-                    <div class="row my-4 fs-5">
+                    <div class="row mt-3 fs-5">
                         <!--Genre-->
-                        <div class="col-6 text-center">
-                            Genre: Action
-                        </div>
+                        <div id="film-genre" class="col-12 text-center"></div>
                         <!--Durée-->
-                        <div class="col-6 text-center">
-                            Durée: 1h30
-                        </div>
+                        <div id="film-duree" class="col-12 text-center mt-2"></div>
                     </div>
                 </div>
                 <div class="col-8 p-4">
@@ -99,7 +95,7 @@
                                 <div class="row my-4">
                                     <div class="col-auto d-flex justify-content-start align-items-center">
                                         <div class="position-relative me-3">
-                                            <input type="text" class="btn-date-admin" id="datepicker" placeholder="Date" readonly>
+                                            <input type="text" class="btn-date-admin disabled" id="datepicker" placeholder="Date" readonly>
                                             <label for="datepicker" class="d-none"></label>
                                             <span class="bi bi-calendar" id="icon-calendar"></span>
                                             <span class="bi bi-x-circle d-none" id="close-icon-date"></span>
@@ -131,10 +127,10 @@
                                     </div>
                                 </div>
                                 <div class="row disabled" id="seances-buttons">
-                                    <button class="btn btn-reservation col text-center mt-2 me-1" data-seance="3DX">3DX</button>
-                                    <button class="btn btn-reservation col text-center mt-2 me-1" data-seance="4DX">4DX</button>
-                                    <button class="btn btn-reservation col text-center mt-2 me-1" data-seance="IMAX">IMAX</button>
-                                    <button class="btn btn-reservation col text-center mt-2" data-seance="Dolby">Dolby</button>
+                                    <button class="btn btn-reservation col text-center mt-2 me-1"></button>
+                                    <button class="btn btn-reservation col text-center mt-2 me-1"></button>
+                                    <button class="btn btn-reservation col text-center mt-2 me-1"></button>
+                                    <button class="btn btn-reservation col text-center mt-2"></button>
                                 </div>
                             </div>
                         </div>

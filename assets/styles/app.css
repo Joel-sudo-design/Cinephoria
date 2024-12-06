@@ -1079,7 +1079,8 @@ footer #navbarBottom .nav-link {
   transition: all 0.2s ease;
 }
 
-#seances-buttons:not(.disabled) .btn-reservation:hover,#seances-buttons:not(.disabled) .btn-reservation.active, #seances-buttons:not(.disabled) .btn-reservation:focus {
+#seances-buttons:not(.disabled) .btn-reservation:hover,#seances-buttons:not(.disabled) .btn-reservation.active,
+#seances-buttons:not(.disabled) .btn-reservation:focus {
   background-color: #7749F8 !important;
   border: 2px solid white !important;
   color: white !important;
@@ -1132,7 +1133,8 @@ footer #navbarBottom .nav-link {
 }
 
 .btn-reservation.disabled, #seances-buttons.disabled, #row-reservations-places.disabled,
-#paiement-reservations.disabled, #Textarea-places-reservations.disabled, #selection-sieges.disabled {
+#paiement-reservations.disabled, #Textarea-places-reservations.disabled,
+#selection-sieges.disabled, #datepicker.disabled {
   background-color: gray !important;
   color: white !important;
   border: none !important;

@@ -40,8 +40,8 @@ class ReservationController extends AbstractController
     public function reservation(FilmRepository $filmRepository, Request $request, CinemaRepository $cinemaRepository): Response
     {
         $data = json_decode($request->getContent(), true);
-        $filmId = $data['filmId'] ?? null; // Récupérer filmId, null par défaut
-        $cinemaId = $data['cinemaId'] ?? null; // Récupérer cinemaId, null par défaut
+        $filmId = $data['filmId'];
+        $cinemaId = $data['cinemaId'];
 
         // Initialiser la réponse par défaut à un tableau vide
         $filmArray = [
@@ -103,6 +103,7 @@ class ReservationController extends AbstractController
                     'image' => $film->getImageName()
                         ? $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName()
                         : null,
+                    'genre' => $film->getGenre()->getName(),
                 ];
                 $filmArray['seances'] = $seancesArray;
             }
