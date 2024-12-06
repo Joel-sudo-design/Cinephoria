@@ -71,7 +71,7 @@ class ReservationController extends AbstractController
                         'heureFin' => $seanceArray['heure_fin_seance'],
                         'qualite' => $seanceArray['qualite'],
                         'salle' => 'Salle ' . $seanceArray['salle'],
-                        'tarif' => $seanceArray['price']
+                        'prix' => $seanceArray['price']
                     ];
 
                     // Gérer les réservations de la séance

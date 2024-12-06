@@ -1091,9 +1091,26 @@ axios.defaults.withCredentials = true;
             $clearIconCinema.on('click', function () {
                 $('#cinema-input').val('');
                 $('#film-input').val('');
-                $('.custom-select-btn-cinema').text('Cinéma');
+                $('.custom-select-btn-cinema').text('Cinéma').removeClass('no-arrow', 'btn-hover');
                 $('.custom-options-films').addClass('d-none').empty();
                 $(this).addClass('d-none');
+                $('#film-name').text('');
+                $('#reservation .img-fluid').attr('src', '/image_film/default-image2.jpg');
+                $('#film-genre').text('');
+                $('#film-duree').text('')
+                $('#datepicker').addClass('disabled').val('');
+                $('#icon-calendar').removeClass('d-none');
+                $('#close-icon-date').addClass('d-none');
+                $('#Textarea-places-reservations').addClass('disabled').val('');
+                $('#seances-buttons').empty().addClass('disabled');
+                $('#selection-sieges').addClass('disabled');
+                $('#seance-selected').text('');
+                $('#prix-reservations').text(`Prix :`);
+                // Remettre tous les sièges en état "libre"
+                $('[id^="seating-area"] .seat').each(function() {
+                    $(this).removeClass('selectionne').removeClass('reserve'); // Retirer les classes de sélection et de réservation
+                    $(this).addClass('libre'); // Ajouter la classe libre pour rendre le siège disponible
+                });
             });
 
             // Clic en dehors pour fermer les menus
@@ -1157,9 +1174,46 @@ axios.defaults.withCredentials = true;
                             const $seancesButtons = $('#seances-buttons');
                             const $seancesSelected = $('#seance-selected');
 
+                            // Afficher les sièges réservés
+                            function afficherSiegesReserves(seance) {
+                                // Réinitialiser tous les sièges à l'état libre
+                                $('.seat').removeClass('reserve selectionne').addClass('libre');
+
+                                // Marquer les sièges réservés
+                                if (seance.sieges_reserves && seance.sieges_reserves.length > 0) {
+                                    seance.sieges_reserves.forEach(idSiege => {
+                                        $(`.seat[data-id="${idSiege}"]`).removeClass('libre').addClass('reserve');
+                                    });
+                                }
+                            }
+
+                            // Initialiser les sièges
+                            function initialiserSieges() {
+                                $('[id^="seating-area"]').on('click', '.seat', function () {
+                                    const $seat = $(this);
+
+                                    // Vérifier l'état actuel du siège
+                                    if ($seat.hasClass('reserve')) {
+                                        // Si le siège est déjà réservé, afficher un message ou empêcher l'action
+                                        alert("Ce siège est déjà réservé !");
+                                        return;
+                                    }
+
+                                    if ($seat.hasClass('selectionne')) {
+                                        // Si le siège est déjà sélectionné, on le désélectionne
+                                        $seat.removeClass('selectionne');
+                                    } else {
+                                        // Sinon, on le sélectionne
+                                        $seat.addClass('selectionne');
+                                    }
+                                });
+                            }
+
+                            // Mettre à jour les séances disponibles
                             function updateSeances(selectedDate) {
                                 $seancesButtons.empty(); // Effacer les anciens boutons
                                 let availableSeances = [];
+                                let atLeastOneAvailable = false; // Indicateur pour vérifier la disponibilité des sièges
 
                                 // Filtrer les séances correspondant à la date sélectionnée
                                 data.seances.forEach(seance => {
@@ -1171,40 +1225,91 @@ axios.defaults.withCredentials = true;
                                 if (availableSeances.length === 0) {
                                     $seancesButtons.addClass('disabled'); // Désactive la `row`
                                     $seancesSelected.text('Aucune séance disponible pour cette date');
+                                    $('#Textarea-places-reservations').addClass('disabled').val('');
+                                    $('#selection-sieges').addClass('disabled'); // Désactiver la sélection des sièges
                                 } else {
                                     $seancesSelected.text('Séances disponibles'); // Réinitialise le message
+                                    $('#Textarea-places-reservations').removeClass('disabled');
 
                                     // Ajouter les boutons pour chaque séance
                                     availableSeances.forEach(seance => {
-                                        const $button = $(`<button class="btn btn-reservation col text-center mt-2">${seance.qualite}</button>`);
-                                        $button.on('click', function () {
-                                            // Gestion de la sélection de la séance
-                                            $('#seances-buttons .btn-reservation').removeClass('active');
-                                            $(this).addClass('active');
+                                        const $button = $(`
+                                            <button class="btn btn-reservation col mt-2 disabled d-flex justify-content-center align-items-center flex-column text-center mx-2">
+                                                <span>${seance.qualite}</span>
+                                                <span>${seance.heureDebut}</span>
+                                                <span>${seance.heureFin}</span>
+                                            </button>
+                                        `);
 
-                                            // Mettre à jour l'affichage de la séance sélectionnée
-                                            $seancesSelected.text(`Qualité choisie : ${seance.qualite}`);
-                                        });
                                         $seancesButtons.append($button);
+
+                                        // Calcul des sièges réservés et gestion de l'état des boutons
+                                        let totalReservedSeats = seance.sieges_reserves ? seance.sieges_reserves.length : 0;
+                                        const remainingSeats = 100 - totalReservedSeats;
+
+                                        // Vérification dynamique lors de la saisie
+                                        $('#Textarea-places-reservations').on('input', function () {
+                                            $('#seances-buttons .btn-reservation').removeClass('active');
+                                            const requestedSeats = parseInt($(this).val(), 10) || 0;
+
+                                            if (requestedSeats <= remainingSeats) {
+                                                $button.removeClass('disabled');
+                                                atLeastOneAvailable = true; // Marque qu'au moins une séance est disponible
+                                            } else {
+                                                $button.addClass('disabled');
+                                            }
+
+                                            // Mise à jour globale des états
+                                            if (atLeastOneAvailable) {
+                                                $('#selection-sieges, #seances-buttons').removeClass('disabled');
+                                            } else {
+                                                $('#selection-sieges, #seances-buttons').addClass('disabled');
+                                            }
+
+                                            if (requestedSeats === null || requestedSeats === 0) {
+                                                $seancesSelected.text('Séances disponibles');
+                                                $('#seances-buttons').addClass('disabled')
+                                                $('#selection-sieges').addClass('disabled');
+                                                $('#prix-reservations').text(`Prix :`);
+                                            }
+                                        });
+
+                                        // Gestion du clic sur le bouton
+                                        $button.on('click', function () {
+                                            if (!$(this).hasClass('disabled')) {
+                                                // Gestion de la sélection de la séance
+                                                $('#seances-buttons .btn-reservation').removeClass('active');
+                                                $(this).addClass('active');
+
+                                                // Mettre à jour l'affichage de la séance sélectionnée
+                                                $seancesSelected.text(`Qualité choisie : ${seance.qualite}`);
+
+                                                // Mettre à jour le prix
+                                                $('#prix-reservations').text(`Prix : ${seance.prix} €`);
+                                            }
+                                            // Afficher les sièges réservés pour cette séance
+                                            afficherSiegesReserves(seance);
+                                        });
                                     });
                                 }
                             }
 
+                            // Initialiser le datepicker
                             const $calendarIcon = $('#icon-calendar');
                             const $clearIcon = $('#close-icon-date');
-
-                            // Initialiser le datepicker
                             const $datepicker = $('#datepicker');
                             $datepicker.datepicker({
                                 format: "dd/mm/yyyy",
                                 orientation: "bottom",
                                 language: "fr",
                                 autoclose: true
-                            }).on('changeDate', function () {
+                            })
+                                .on('changeDate', function () {
                                 const selectedDate = $datepicker.val();
                                 $calendarIcon.addClass('d-none');
                                 $clearIcon.removeClass('d-none');
                                 updateSeances(selectedDate);
+                                initialiserSieges();
                             });
 
                             //Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
@@ -1216,6 +1321,14 @@ axios.defaults.withCredentials = true;
                                 $calendarIcon.removeClass('d-none');
                                 $seancesButtons.empty().addClass('disabled');
                                 $seancesSelected.text('');
+                                $('#Textarea-places-reservations').addClass('disabled').val('');
+                                $('#seances-buttons').addClass('disabled');
+                                $('#selection-sieges').addClass('disabled');
+                                $('#prix-reservations').text(`Prix :`);
+                                $('[id^="seating-area"] .seat').each(function() {
+                                    $(this).removeClass('selectionne').removeClass('reserve'); // Retirer les classes de sélection et de réservation
+                                    $(this).addClass('libre'); // Ajouter la classe libre pour rendre le siège disponible
+                                });
                             });
 
                             //Appliquer le style de hover/focus

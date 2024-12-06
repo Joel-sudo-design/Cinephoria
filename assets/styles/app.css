@@ -1151,6 +1151,31 @@ footer #navbarBottom .nav-link {
   display: inline-block;
 }
 
+#Textarea-places-reservations {
+  background-color: white !important;
+  color: #6A73AB !important;
+  border: 2px solid #6A73AB !important;
+  border-radius: 6px;
+  padding: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+#Textarea-places-reservations:hover {
+  background-color: #6A73AB !important;
+  border: 2px solid white !important;
+  color: white !important;
+}
+
+#Textarea-places-reservations:focus {
+  background-color: #6A73AB !important;
+  color: white !important;
+  border: 2px solid white !important;
+}
+
+#datepicker.disabled ~ #icon-calendar {
+  pointer-events: none;
+}
+
 /* Media queries */
 @media (min-width: 1921px) {
 
