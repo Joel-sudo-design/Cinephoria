@@ -458,7 +458,6 @@ axios.defaults.withCredentials = true;
                 // Envoyer la requête avec les filtres actifs
                 axios.post('/films/filter', filters)
                     .then(response => {
-                        console.log('Réponse de la requête de filtrage :', response.data);
                         const films = response.data;
 
                         // Vérifier si aucun film ne correspond aux critères de recherche
