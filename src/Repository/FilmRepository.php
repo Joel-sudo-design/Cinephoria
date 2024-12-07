@@ -29,6 +29,38 @@ class FilmRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    // src/Repository/FilmRepository.php
+
+    public function findByFilters($cinemaId, $genreId, $date)
+    {
+        // Créez le QueryBuilder pour la requête
+        $queryBuilder = $this->createQueryBuilder('f')
+            ->leftJoin('f.cinema', 'c')  // Jointure avec la table de cinéma (relation ManyToMany)
+            ->leftJoin('f.genre', 'g');    // Jointure avec l'entité Genre (relation ManyToOne)
+
+        // Filtrage par cinéma si l'ID est fourni
+        if ($cinemaId) {
+            $queryBuilder->andWhere('c.id = :cinemaId')
+                ->setParameter('cinemaId', $cinemaId);
+        }
+
+        // Filtrage par genre si l'ID est fourni
+        if ($genreId) {
+            $queryBuilder->andWhere('g.id = :genreId')
+                ->setParameter('genreId', $genreId);
+        }
+
+        // Filtrage par date si la date est fournie
+        if ($date) {
+            $queryBuilder->andWhere(':date BETWEEN f.date_debut AND f.date_fin')
+                ->setParameter('date', $date);
+        }
+
+        // Exécuter la requête et retourner les résultats
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+
 
     //    public function findOneBySomeField($value): ?Film
     //    {

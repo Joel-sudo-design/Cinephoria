@@ -58,117 +58,40 @@ class FilmsController extends AbstractController
 
         return new JsonResponse($AllFilmsArray);
     }
-    #[Route('/films/cinema', name: 'app_films_loading_cinema')]
-    public function filtreCinemaFilm(FilmRepository $filmRepository, Request $request, CinemaRepository $cinemaRepository): Response
+    #[Route('/films/filter', name: 'app_films_loading_filter')]
+    public function filterFilms(FilmRepository $filmRepository, CinemaRepository $cinemaRepository, GenreRepository $genreRepository, Request $request): Response
     {
+        // Décoder les données envoyées dans la requête
         $data = json_decode($request->getContent(), true);
-        $cinemaId = $data['id'];
+
+        // Initialisation du tableau des films
         $AllFilmsArray = [];
 
-        if ($cinemaId !== '') {
-            $cinema = $cinemaRepository->findOneBy(['id' => $cinemaId]);
-            $films= $cinema->getFilms();
+        // Traitement des filtres
+        $cinemaId = $data['cinema'] ?? null;
+        $genreId = $data['genre'] ?? null;
+        $date = $data['date'] ?? null;
 
-            foreach ($films as $film) {
-                // Convertir le film en tableau
-                    $filmArray = $film->toArray();
+        // Effectuer la recherche basée sur les filtres
+        $films = $filmRepository->findByFilters($cinemaId, $genreId, $date);
 
-                // Ajouter l'image si disponible
-                    if ($film->getImageName() !== null) {
-                        $filmArray['image'] = $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName();
-                        $filmArray['image2'] = $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName();
-                    } else {
-                        $filmArray['image'] = $this->getParameter('films_images_directory') . '/image_film/' .'default-image.jpg';
-                        $filmArray['image2'] = $this->getParameter('films_images_directory') . '/image_film/' .'default-image2.jpg';
-                    }
+        // Traitement des films obtenus
+        foreach ($films as $film) {
+            $filmArray = $film->toArray();
 
-                // Ajouter le genre si disponible
-                    if ($film->getGenre() !== null) {
-                        $filmArray['genre'] = $film->getGenre()->getName();
-                    } else {
-                        $filmArray['genre'] = 'Aucun';
-                    }
+            // Ajouter l'image principale et secondaire
+            $imageName = $film->getImageName();
+            $imagePath = $this->getParameter('films_images_directory') . '/image_film/';
+            $filmArray['image'] = $imageName ? $imagePath . $imageName : $imagePath . 'default-image.jpg';
+            $filmArray['image2'] = $imageName ? $imagePath . $imageName : $imagePath . 'default-image2.jpg';
 
-                // Ajouter le film au tableau final
-                    $AllFilmsArray[] = $filmArray;
-            }
+            // Ajouter le genre
+            $filmArray['genre'] = $film->getGenre() ? $film->getGenre()->getName() : 'Aucun';
+
+            $AllFilmsArray[] = $filmArray;
         }
 
-        return new JsonResponse($AllFilmsArray);
-    }
-    #[Route('/films/genre', name: 'app_films_loading_genre')]
-    public function filtreGenreFilm(FilmRepository $filmRepository, Request $request, GenreRepository $genreRepository): Response
-    {
-        $data = json_decode($request->getContent(), true);
-        $genreId = $data['id'];
-        $AllFilmsArray = [];
-
-        if ($genreId !== '') {
-            $genre = $genreRepository->findOneBy(['id' => $genreId]);
-            $films= $genre->getFilms();
-
-            foreach ($films as $film) {
-                // Convertir le film en tableau
-                $filmArray = $film->toArray();
-
-                // Ajouter l'image si disponible
-                if ($film->getImageName() !== null) {
-                    $filmArray['image'] = $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName();
-                    $filmArray['image2'] = $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName();
-                } else {
-                    $filmArray['image'] = $this->getParameter('films_images_directory') . '/image_film/' .'default-image.jpg';
-                    $filmArray['image2'] = $this->getParameter('films_images_directory') . '/image_film/' .'default-image2.jpg';
-                }
-
-                // Ajouter le genre si disponible
-                if ($film->getGenre() !== null) {
-                    $filmArray['genre'] = $film->getGenre()->getName();
-                } else {
-                    $filmArray['genre'] = 'Aucun';
-                }
-
-                // Ajouter le film au tableau final
-                $AllFilmsArray[] = $filmArray;
-            }
-        }
-
-        return new JsonResponse($AllFilmsArray);
-    }
-    #[Route('/films/date', name: 'app_films_loading_date')]
-    public function filtreDateFilm(FilmRepository $filmRepository, Request $request): Response
-    {
-        $data = json_decode($request->getContent(), true);
-        $dateId = $data['id'];
-        $AllFilmsArray = [];
-
-        if ($dateId !== '') {
-            $films = $filmRepository->findByDate($dateId);
-
-            foreach ($films as $film) {
-                // Convertir le film en tableau
-                $filmArray = $film->toArray();
-
-                // Ajouter l'image si disponible
-                if ($film->getImageName() !== null) {
-                    $filmArray['image'] = $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName();
-                    $filmArray['image2'] = $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName();
-                } else {
-                    $filmArray['image'] = $this->getParameter('films_images_directory') . '/image_film/' .'default-image.jpg';
-                    $filmArray['image2'] = $this->getParameter('films_images_directory') . '/image_film/' .'default-image2.jpg';
-                }
-
-                // Ajouter le genre si disponible
-                if ($film->getGenre() !== null) {
-                    $filmArray['genre'] = $film->getGenre()->getName();
-                } else {
-                    $filmArray['genre'] = 'Aucun';
-                }
-
-                // Ajouter le film au tableau final
-                $AllFilmsArray[] = $filmArray;
-            }
-        }
-
+        // Retourner les films sous forme de JSON
         return new JsonResponse($AllFilmsArray);
     }
     #[Route('/films/seances', name: 'app_films_loading_seances')]
