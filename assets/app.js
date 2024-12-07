@@ -87,7 +87,159 @@ axios.defaults.withCredentials = true;
             });
 
         //Page Films
-        //Affichage de tout les films
+        // Fonction pour affichage du badge coupe de cœur
+        function displayAgeBadge() {
+            const ageFilm = $('#age-' + film.id);
+            // Ciblez chaque badge d'âge à partir du conteneur
+            const ageBadge12 = ageFilm.find('.age-badge-12');
+            const ageBadge16 = ageFilm.find('.age-badge-16');
+            const ageBadge18 = ageFilm.find('.age-badge-18');
+            // Logique de gestion des classes pour afficher/masquer les badges d'âge
+            if (film.age_minimum === '12') {
+                ageBadge12.removeClass('d-none');
+                ageBadge16.addClass('d-none');
+                ageBadge18.addClass('d-none');
+            } else if (film.age_minimum === '16') {
+                ageBadge16.removeClass('d-none');
+                ageBadge12.addClass('d-none');
+                ageBadge18.addClass('d-none');
+            } else if (film.age_minimum === '18') {
+                ageBadge18.removeClass('d-none');
+                ageBadge12.addClass('d-none');
+                ageBadge16.addClass('d-none');
+            } else {
+                ageBadge12.addClass('d-none');
+                ageBadge16.addClass('d-none');
+                ageBadge18.addClass('d-none');
+            }
+        }
+        // Fonction pour charger les séances avec la date sélectionnée
+        function updateModalAndSessions(filmId, selectedDate) {
+            // Vider les conteneurs avant de les remplir
+            const seancesContainer = $('#date-seance-' + filmId);
+            const modalContainer = $('#modal-date-seance-' + filmId);
+            seancesContainer.empty();
+            modalContainer.empty();
+
+            // Convertir la date sélectionnée en objet Date pour comparaison
+            const selectedDateObj = new Date(selectedDate);
+            const selectedDateFormatted = selectedDateObj.toLocaleDateString('fr-FR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+            });
+
+            // Préparer les 7 prochains jours
+            const days = [];
+            for (let i = 0; i < 7; i++) {
+                const nextDay = new Date(selectedDateObj);
+                nextDay.setDate(selectedDateObj.getDate() + i);
+                days.push(nextDay.toLocaleDateString('fr-FR', {day: '2-digit', month: '2-digit'}));
+            }
+
+            // Mettre à jour le conteneur des dates dans la modale
+            modalContainer.html(
+                days.map(day => `<div class="col">${day}</div>`).join('')
+            );
+
+            // Charger les séances correspondantes via AJAX (Axios)
+            axios.post('/films/seances', {filmId})
+                .then(response => {
+                    const seances = response.data; // Liste des séances par date
+                    console.log('Séances pour le film', filmId, seances);
+
+                    // Trouver les séances correspondant à la date sélectionnée
+                    const seancesForSelectedDate = seances.find(date => date.date === selectedDateFormatted);
+
+                    // Si des séances existent pour la date sélectionnée
+                    if (seancesForSelectedDate && seancesForSelectedDate.seances.length > 0) {
+                        // Afficher les séances
+                        seancesForSelectedDate.seances.forEach(seance => {
+                            seancesContainer.append(`
+                                                                    <div class="col-6">
+                                                                        <div class="uniform-block fs-5">
+                                                                            <div class="row justify-content-center align-items-center p-3">
+                                                                                <div class="col-3">VF</div>
+                                                                                <div class="col-6 d-flex flex-column text-center">
+                                                                                    <span>${seance.heureDebut}</span>
+                                                                                    <span>(fin ${seance.heureFin})</span>
+                                                                                </div>
+                                                                                <div class="col-3">${seance.format}</div>
+                                                                            </div>
+                                                                            <div class="row text-center p-3">
+                                                                                <div class="col-12">
+                                                                                    <div class="salle mb-3 fs-5">${seance.salle}</div>
+                                                                                    <div>Tarif: ${seance.tarif}€</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                `);
+                        });
+                    } else {
+                        // Afficher un message si aucune séance n'est disponible
+                        seancesContainer.html('<div class="col-12 text-center my-3" style="color:#6A73AB">Aucune séance disponible pour cette date.</div>');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur lors du chargement des séances:', error);
+                    seancesContainer.html('<div class="col-12 text-center text-danger">Erreur de chargement.</div>');
+                });
+        }
+        // Fonction pour charger les séances avec le Datepicker
+        function initializeDatepicker(filmId) {
+            const $datepicker = $(`#datepicker-${filmId}`);
+            const $calendarIcon = $(`#icon-calendar-${filmId}`);
+            const $clearIcon = $(`#close-icon-date-${filmId}`);
+            const $dateSeance = $(`#date-seance-${filmId}`);
+            const $modalDateSeance = $(`#modal-date-seance-${filmId}`);
+
+            // Initialisation du datepicker
+            $datepicker.datepicker({
+                format: "dd/mm/yyyy",
+                orientation: "bottom",
+                language: "fr",
+                autoclose: true
+            }).on('changeDate', function () {
+                // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
+                $calendarIcon.addClass('d-none');
+                $clearIcon.removeClass('d-none');
+                const selectedDate = $(this).val();
+                const [day, month, year] = selectedDate.split('/');
+                const formattedDate = `${year}-${month}-${day}`;
+
+                // Charger les séances pour la date sélectionnée
+                updateModalAndSessions(filmId, formattedDate);
+            });
+
+            // Gestion du clic sur l'icône de croix
+            $clearIcon.on('click', function () {
+                // Réinitialiser la date
+                $datepicker.val('');
+                $calendarIcon.removeClass('d-none');
+                $clearIcon.addClass('d-none');
+                $dateSeance.empty();
+                $modalDateSeance.empty();
+            });
+
+            // Gestion des effets de survol
+            [$calendarIcon, $clearIcon].forEach($icon => {
+                $icon.on('mouseenter focus', function () {
+                    $datepicker.addClass('btn-hover');
+                    $icon.addClass('btn-hover');
+                }).on('mouseleave blur', function () {
+                    $datepicker.removeClass('btn-hover');
+                    $icon.removeClass('btn-hover');
+                });
+            });
+
+            // Ouvrir le calendrier au clic sur l'icône calendrier
+            $calendarIcon.on('click', function () {
+                $datepicker.focus();
+            });
+        }
+
+        //Affichage de tous les films
         function film() {
             // Vider le conteneur des films
             $('#film-container-public').empty();
@@ -159,8 +311,7 @@ axios.defaults.withCredentials = true;
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            `);
+                                                </div>`);
 
                                         // Ajout du gestionnaire d'événements pour ouvrir le modal et initialiser la date
                                         $(`a[data-bs-toggle="modal"][data-bs-target="#modal-${film.id}"]`).on('click', function () {
@@ -187,163 +338,8 @@ axios.defaults.withCredentials = true;
                                             $(`#modal-${film.id} .clickable-day[data-date="${dayFormatted}"]`).addClass('active').siblings().removeClass('active');
                                         });
 
-                                        // Fonction appelée après sélection d'une date
-                                        function updateModalAndSessions(filmId, selectedDate) {
-                                            // Afficher le spinner de chargement
-                                            const spinner = $('#loading-spinner-seances-' + filmId);
-                                            spinner.removeClass('d-none');
-
-                                            // Vider les conteneurs avant de les remplir
-                                            const seancesContainer = $('#date-seance-' + filmId);
-                                            const modalContainer = $('#modal-date-seance-' + filmId);
-                                            seancesContainer.empty();
-
-                                            // Convertir la date sélectionnée en un objet Date
-                                            const selectedDateObj = new Date(selectedDate);
-
-                                            // Préparer les 7 prochains jours pour la modale
-                                            const days = [];
-                                            const nextDay = new Date(selectedDateObj);
-                                            const day = ("0" + nextDay.getDate()).slice(-2); // Ajoute un zéro si le jour est inférieur à 10
-                                            const month = ("0" + (nextDay.getMonth() + 1)).slice(-2); // Ajoute un zéro si le mois est inférieur à 10
-                                            const dayFormatted = `${day}/${month}`;
-                                            for (let i = 0; i < 7; i++) {
-                                                nextDay.setDate(selectedDateObj.getDate() + i);
-                                                days.push(nextDay.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' }));
-                                            }
-
-                                            // Générer le contenu des jours cliquables dans la modale
-                                            modalContainer.html(days.map(day => `<div class="col clickable-day" data-date="${day}">${day}</div>`).join(''));
-
-                                            // Ajouter la classe active à la journée correspondant à la date du jour dans le modal
-                                            $(`#modal-${film.id} .clickable-day[data-date="${dayFormatted}"]`).addClass('active').siblings().removeClass('active');
-
-                                            // Charger les séances correspondantes via AJAX (Axios)
-                                            axios
-                                                .post('/films/seances', { filmId })
-                                                .then(response => {
-                                                    const seances = response.data; // Liste des séances par date
-
-                                                    // Fonction pour afficher les séances pour une date donnée
-                                                    function displaySeancesForDate(clickedDate) {
-                                                        seancesContainer.empty();
-
-                                                        // Reformater la date cliquée (dd/mm) en (dd/mm/yyyy)
-                                                        const parts = clickedDate.split('/');
-                                                        const reformattedDate = `${parts[0]}/${parts[1]}/${selectedDateObj.getFullYear()}`;
-
-                                                        // Trouver les séances pour la date donnée
-                                                        const seancesForSelectedDate = seances.find(seance => seance.date === reformattedDate);
-
-                                                        if (seancesForSelectedDate && seancesForSelectedDate.seances.length > 0) {
-                                                            // Afficher les séances
-                                                            seancesForSelectedDate.seances.forEach(seance => {
-                                                                seancesContainer.append(`
-                                                                    <div class="col-6">
-                                                                        <div class="uniform-block fs-5">
-                                                                            <div class="row justify-content-center align-items-center p-3">
-                                                                                <div class="col-3">VF</div>
-                                                                                <div class="col-6 d-flex flex-column text-center">
-                                                                                    <span>${seance.heureDebut}</span>
-                                                                                    <span>(fin ${seance.heureFin})</span>
-                                                                                </div>
-                                                                                <div class="col-3">${seance.format}</div>
-                                                                            </div>
-                                                                            <div class="row text-center p-3">
-                                                                                <div class="col-12">
-                                                                                    <div class="salle mb-3 fs-5">${seance.salle}</div>
-                                                                                    <div>Tarif: ${seance.tarif}€</div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                `);
-                                                            });
-                                                        } else {
-                                                            // Si aucune séance n'est trouvée, afficher un message
-                                                            seancesContainer.append('<div class="my-3" style="color: #6A73AB">Aucune séance disponible pour cette date.</div>');
-                                                        }
-                                                    }
-
-                                                    // Initialement, afficher les séances pour la date sélectionnée
-                                                    const initialFormattedDate = selectedDateObj.toLocaleDateString('fr-FR', {
-                                                        day: '2-digit',
-                                                        month: '2-digit',
-                                                        year: 'numeric',
-                                                    });
-                                                    displaySeancesForDate(initialFormattedDate);
-
-                                                    // Ajouter un gestionnaire d'événements pour chaque jour cliquable
-                                                    $('.clickable-day').on('click', function () {
-                                                        $('.clickable-day').removeClass('active');
-                                                        $(this).addClass('active');
-                                                        const clickedDate = $(this).data('date'); // Format dd/mm
-                                                        displaySeancesForDate(clickedDate);
-                                                    });
-                                                })
-                                                .catch(error => console.error('Erreur lors du chargement des séances:', error))
-                                                .finally(() => spinner.addClass('d-none'));
-                                        }
-
-                                        //Datepicker modal
-                                        const $calendarIcon = $('#icon-calendar-'+film.id);
-                                        const $clearIcon = $('#close-icon-date-'+film.id);
-                                        const $datepicker = $(`#datepicker-${film.id}`);
-                                        $datepicker.datepicker({
-                                            format: "dd/mm/yyyy",
-                                            orientation: "bottom",
-                                            language: "fr",
-                                            autoclose: true
-                                        })
-                                            .on('changeDate', function () {
-                                                // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
-                                                $calendarIcon.addClass('d-none');
-                                                $clearIcon.removeClass('d-none');
-                                                const selectedDate = $(this).val();
-                                                // Convertir la date au format souhaité ici
-                                                const [day, month, year] = selectedDate.split('/');
-                                                const formattedDate = `${year}-${month}-${day}`;
-
-                                                const filmId = $(this).data('film-id');
-                                                updateModalAndSessions(filmId, formattedDate);
-                                            });
-
-                                        //Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
-                                        $clearIcon.on('click', function () {
-
-                                            // Effacer la date sélectionnée en réinitialisant la valeur du champ
-                                            $datepicker.val('');
-                                            // Afficher l'icône du calendrier et masquer l'icône de suppression
-                                            $clearIcon.addClass('d-none');
-                                            $calendarIcon.removeClass('d-none');
-                                            $('#date-seance-' + film.id).empty();
-                                            $('#modal-date-seance-' + film.id).empty();
-                                        });
-
-                                        //Appliquer le style de hover/focus
-                                        $clearIcon.on('mouseenter focus', function () {
-                                            $datepicker.addClass('btn-hover');
-                                            $clearIcon.addClass('btn-hover');
-                                        });
-                                        $calendarIcon.on('mouseenter focus', function () {
-                                            $datepicker.addClass('btn-hover');
-                                            $calendarIcon.addClass('btn-hover');
-                                        });
-
-                                        //Retirer le style quand on quitte le survol/focus
-                                        $clearIcon.on('mouseleave blur', function () {
-                                            $datepicker.removeClass('btn-hover');
-                                            $clearIcon.removeClass('btn-hover');
-                                        });
-                                        $calendarIcon.on('mouseleave blur', function () {
-                                            $datepicker.removeClass('btn-hover');
-                                            $calendarIcon.removeClass('btn-hover');
-                                        });
-
-                                        //Ouvrir le calendrier
-                                        $calendarIcon.on('click', function () {
-                                            $datepicker.focus();
-                                        });
+                                        // Initialiser le datepicker pour ce film
+                                        initializeDatepicker(film.id);
 
                                         // Affichage du cœur si le film est un coup de cœur
                                         if (film.label === true) {
@@ -365,32 +361,8 @@ axios.defaults.withCredentials = true;
                                             }
                                         });
 
-                                        // Gestion des badges d'âge
-                                        const ageFilm = $(`#age-${film.id}`);
-                                        const ageBadge12 = ageFilm.find('.age-badge-12');
-                                        const ageBadge16 = ageFilm.find('.age-badge-16');
-                                        const ageBadge18 = ageFilm.find('.age-badge-18');
-
-                                        if (film.age_minimum === '12') {
-                                            ageBadge12.removeClass('d-none');
-                                            ageBadge16.addClass('d-none');
-                                            ageBadge18.addClass('d-none');
-                                        }
-                                        else if (film.age_minimum === '16') {
-                                            ageBadge16.removeClass('d-none');
-                                            ageBadge12.addClass('d-none');
-                                            ageBadge18.addClass('d-none');
-                                        }
-                                        else if (film.age_minimum === '18') {
-                                            ageBadge18.removeClass('d-none');
-                                            ageBadge12.addClass('d-none');
-                                            ageBadge16.addClass('d-none');
-                                        }
-                                        else {
-                                            ageBadge12.addClass('d-none');
-                                            ageBadge16.addClass('d-none');
-                                            ageBadge18.addClass('d-none');
-                                        }
+                                        //Affichage badge age mini
+                                        displayAgeBadge()
                                     });
                                 })
             .catch(error => {
@@ -490,81 +462,6 @@ axios.defaults.withCredentials = true;
                                                     </div>
                                                 `);
 
-
-                                    // Fonction appelée après sélection d'une date
-                                    function updateModalAndSessions(filmId, selectedDate) {
-                                        // Vider les conteneurs avant de les remplir
-                                        const seancesContainer = $('#date-seance-' + filmId);
-                                        const modalContainer = $('#modal-date-seance-' + filmId);
-                                        seancesContainer.empty();
-                                        modalContainer.empty();
-
-                                        // Convertir la date sélectionnée en objet Date pour comparaison
-                                        const selectedDateObj = new Date(selectedDate);
-                                        const selectedDateFormatted = selectedDateObj.toLocaleDateString('fr-FR', {
-                                            day: '2-digit',
-                                            month: '2-digit',
-                                            year: 'numeric',
-                                        });
-
-                                        // Préparer les 7 prochains jours
-                                        const days = [];
-                                        for (let i = 0; i < 7; i++) {
-                                            const nextDay = new Date(selectedDateObj);
-                                            nextDay.setDate(selectedDateObj.getDate() + i);
-                                            days.push(nextDay.toLocaleDateString('fr-FR', {day: '2-digit', month: '2-digit'}));
-                                        }
-
-                                        // Mettre à jour le conteneur des dates dans la modale
-                                        modalContainer.html(
-                                            days.map(day => `<div class="col">${day}</div>`).join('')
-                                        );
-
-                                        // Charger les séances correspondantes via AJAX (Axios)
-                                        axios.post('/films/seances', {filmId})
-                                            .then(response => {
-                                                const seances = response.data; // Liste des séances par date
-                                                console.log('Séances pour le film', filmId, seances);
-
-                                                // Trouver les séances correspondant à la date sélectionnée
-                                                const seancesForSelectedDate = seances.find(date => date.date === selectedDateFormatted);
-
-                                                // Si des séances existent pour la date sélectionnée
-                                                if (seancesForSelectedDate && seancesForSelectedDate.seances.length > 0) {
-                                                    // Afficher les séances
-                                                    seancesForSelectedDate.seances.forEach(seance => {
-                                                        seancesContainer.append(`
-                                                                    <div class="col-6">
-                                                                        <div class="uniform-block fs-5">
-                                                                            <div class="row justify-content-center align-items-center p-3">
-                                                                                <div class="col-3">VF</div>
-                                                                                <div class="col-6 d-flex flex-column text-center">
-                                                                                    <span>${seance.heureDebut}</span>
-                                                                                    <span>(fin ${seance.heureFin})</span>
-                                                                                </div>
-                                                                                <div class="col-3">${seance.format}</div>
-                                                                            </div>
-                                                                            <div class="row text-center p-3">
-                                                                                <div class="col-12">
-                                                                                    <div class="salle mb-3 fs-5">${seance.salle}</div>
-                                                                                    <div>Tarif: ${seance.tarif}€</div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                `);
-                                                    });
-                                                } else {
-                                                    // Afficher un message si aucune séance n'est disponible
-                                                    seancesContainer.html('<div class="col-12 text-center my-3" style="color:#6A73AB">Aucune séance disponible pour cette date.</div>');
-                                                }
-                                            })
-                                            .catch(error => {
-                                                console.error('Erreur lors du chargement des séances:', error);
-                                                seancesContainer.html('<div class="col-12 text-center text-danger">Erreur de chargement.</div>');
-                                            });
-                                    }
-
                                     //Datepicker modal
                                     const $calendarIcon = $('#icon-calendar-' + film.id);
                                     const $clearIcon = $('#close-icon-date-' + film.id);
@@ -625,9 +522,9 @@ axios.defaults.withCredentials = true;
                                         $datepicker.focus();
                                     });
 
-                                    // Affichage du cœur si le film est un coup de cœur
+                                    // Affichage cœur si Coup de cœur
                                     if (film.label === true) {
-                                        $(`#heart-${film.id}`).removeClass('d-none');
+                                        $('#heart-' + film.id).removeClass('d-none');
                                     }
 
                                     // Accordion description films
@@ -645,29 +542,8 @@ axios.defaults.withCredentials = true;
                                         }
                                     });
 
-                                    // Gestion des badges d'âge
-                                    const ageFilm = $(`#age-${film.id}`);
-                                    const ageBadge12 = ageFilm.find('.age-badge-12');
-                                    const ageBadge16 = ageFilm.find('.age-badge-16');
-                                    const ageBadge18 = ageFilm.find('.age-badge-18');
-
-                                    if (film.age_minimum === '12') {
-                                        ageBadge12.removeClass('d-none');
-                                        ageBadge16.addClass('d-none');
-                                        ageBadge18.addClass('d-none');
-                                    } else if (film.age_minimum === '16') {
-                                        ageBadge16.removeClass('d-none');
-                                        ageBadge12.addClass('d-none');
-                                        ageBadge18.addClass('d-none');
-                                    } else if (film.age_minimum === '18') {
-                                        ageBadge18.removeClass('d-none');
-                                        ageBadge12.addClass('d-none');
-                                        ageBadge16.addClass('d-none');
-                                    } else {
-                                        ageBadge12.addClass('d-none');
-                                        ageBadge16.addClass('d-none');
-                                        ageBadge18.addClass('d-none');
-                                    }
+                                    //Affichage badge age mini
+                                    displayAgeBadge()
                                 });
                             })
                             .catch(error => {
@@ -761,6 +637,7 @@ axios.defaults.withCredentials = true;
                                     // Accordion description films
                                     const accordionButton = $('#btn-description-' + film.id);
                                     const accordionCollapse = $('#collapseDescription-' + film.id);
+
                                     // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
                                     $(document).click(function (event) {
                                         // Vérifie si le clic est à l'intérieur de l'accordéon
@@ -773,32 +650,6 @@ axios.defaults.withCredentials = true;
                                     });
 
                                     //Affichage badge age mini
-                                    function displayAgeBadge() {
-                                        const ageFilm = $('#age-' + film.id);
-                                        // Ciblez chaque badge d'âge à partir du conteneur
-                                        const ageBadge12 = ageFilm.find('.age-badge-12');
-                                        const ageBadge16 = ageFilm.find('.age-badge-16');
-                                        const ageBadge18 = ageFilm.find('.age-badge-18');
-                                        // Logique de gestion des classes pour afficher/masquer les badges d'âge
-                                        if (film.age_minimum === '12') {
-                                            ageBadge12.removeClass('d-none');
-                                            ageBadge16.addClass('d-none');
-                                            ageBadge18.addClass('d-none');
-                                        } else if (film.age_minimum === '16') {
-                                            ageBadge16.removeClass('d-none');
-                                            ageBadge12.addClass('d-none');
-                                            ageBadge18.addClass('d-none');
-                                        } else if (film.age_minimum === '18') {
-                                            ageBadge18.removeClass('d-none');
-                                            ageBadge12.addClass('d-none');
-                                            ageBadge16.addClass('d-none');
-                                        } else {
-                                            ageBadge12.addClass('d-none');
-                                            ageBadge16.addClass('d-none');
-                                            ageBadge18.addClass('d-none');
-                                        }
-                                    }
-
                                     displayAgeBadge()
                                 });
                             })
@@ -924,6 +775,7 @@ axios.defaults.withCredentials = true;
                                         // Accordion description films
                                         const accordionButton = $('#btn-description-' + film.id);
                                         const accordionCollapse = $('#collapseDescription-' + film.id);
+
                                         // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
                                         $(document).click(function (event) {
                                             // Vérifie si le clic est à l'intérieur de l'accordéon
@@ -936,32 +788,6 @@ axios.defaults.withCredentials = true;
                                         });
 
                                         //Affichage badge age mini
-                                        function displayAgeBadge() {
-                                            const ageFilm = $('#age-' + film.id);
-                                            // Ciblez chaque badge d'âge à partir du conteneur
-                                            const ageBadge12 = ageFilm.find('.age-badge-12');
-                                            const ageBadge16 = ageFilm.find('.age-badge-16');
-                                            const ageBadge18 = ageFilm.find('.age-badge-18');
-                                            // Logique de gestion des classes pour afficher/masquer les badges d'âge
-                                            if (film.age_minimum === '12') {
-                                                ageBadge12.removeClass('d-none');
-                                                ageBadge16.addClass('d-none');
-                                                ageBadge18.addClass('d-none');
-                                            } else if (film.age_minimum === '16') {
-                                                ageBadge16.removeClass('d-none');
-                                                ageBadge12.addClass('d-none');
-                                                ageBadge18.addClass('d-none');
-                                            } else if (film.age_minimum === '18') {
-                                                ageBadge18.removeClass('d-none');
-                                                ageBadge12.addClass('d-none');
-                                                ageBadge16.addClass('d-none');
-                                            } else {
-                                                ageBadge12.addClass('d-none');
-                                                ageBadge16.addClass('d-none');
-                                                ageBadge18.addClass('d-none');
-                                            }
-                                        }
-
                                         displayAgeBadge()
                                     });
                                 })
