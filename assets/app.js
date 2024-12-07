@@ -1111,6 +1111,7 @@ axios.defaults.withCredentials = true;
                     $(this).removeClass('selectionne').removeClass('reserve'); // Retirer les classes de sélection et de réservation
                     $(this).addClass('libre'); // Ajouter la classe libre pour rendre le siège disponible
                 });
+                $('#salle-reservations').text('');
             });
 
             // Clic en dehors pour fermer les menus
@@ -1177,7 +1178,7 @@ axios.defaults.withCredentials = true;
                             // Afficher les sièges réservés
                             function afficherSiegesReserves(seance) {
                                 // Réinitialiser tous les sièges à l'état libre
-                                $('.seat').removeClass('reserve selectionne').addClass('libre');
+                                $('[id^="seating-area"] .seat').removeClass('reserve selectionne').addClass('libre');
 
                                 // Marquer les sièges réservés
                                 if (seance.sieges_reserves && seance.sieges_reserves.length > 0) {
@@ -1271,12 +1272,19 @@ axios.defaults.withCredentials = true;
                                                 $('#seances-buttons').addClass('disabled')
                                                 $('#selection-sieges').addClass('disabled');
                                                 $('#prix-reservations').text(`Prix :`);
+                                                $('[id^="seating-area"] .seat').each(function() {
+                                                    $(this).removeClass('selectionne').removeClass('reserve'); // Retirer les classes de sélection et de réservation
+                                                    $(this).addClass('libre'); // Ajouter la classe libre pour rendre le siège disponible
+                                                });
+                                                $('#salle-reservations').text('');
                                             }
                                         });
 
                                         // Gestion du clic sur le bouton
                                         $button.on('click', function () {
                                             if (!$(this).hasClass('disabled')) {
+                                                // Ajout de la salle
+                                                $('#salle-reservations').text(`${seance.salle}`);
                                                 // Gestion de la sélection de la séance
                                                 $('#seances-buttons .btn-reservation').removeClass('active');
                                                 $(this).addClass('active');
@@ -1329,6 +1337,7 @@ axios.defaults.withCredentials = true;
                                     $(this).removeClass('selectionne').removeClass('reserve'); // Retirer les classes de sélection et de réservation
                                     $(this).addClass('libre'); // Ajouter la classe libre pour rendre le siège disponible
                                 });
+                                $('#salle-reservations').text('');
                             });
 
                             //Appliquer le style de hover/focus
