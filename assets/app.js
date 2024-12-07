@@ -424,9 +424,7 @@ axios.defaults.withCredentials = true;
                                         displayAgeBadge()
                                     });
                                 })
-            .catch(error => {
-                                    console.error('Erreur lors du chargement des films :', error);
-                                })
+            .catch(error => {console.error('Erreur lors du chargement des films :', error);})
             .finally(() => {
                                     // Cacher le spinner de chargement
                                     $('#loading-spinner').addClass('d-none');
@@ -452,44 +450,57 @@ axios.defaults.withCredentials = true;
                     genre: genreId || null,
                     date: formattedDate || null
                 };
-
-                // Afficher le spinner
+                // Vider le conteneur des films
                 $('#film-container-public').empty();
+                // Afficher le spinner
                 $('#loading-spinner').removeClass('d-none');
 
                 // Envoyer la requête avec les filtres actifs
                 axios.post('/films/filter', filters)
                     .then(response => {
+                        console.log('Réponse de la requête de filtrage :', response.data);
                         const films = response.data;
-                        const filmContainer = $('#film-container-public');
-                        const containerFilms = $('.container-films');
 
-                        // Afficher un message si aucun film n'est disponible
+                        // Vérifier si aucun film ne correspond aux critères de recherche
                         if (films.length === 0) {
-                            containerFilms.html(`
-                                <div class="row h-100">
-                                    <div class="col-12 d-flex justify-content-center align-items-center" style="color: #6A73AB;">
-                                        Aucun film disponible pour les filtres sélectionnés
-                                    </div>
-                                </div>
-                            `);
+                            $('#film-container-public').append('<div class="col-12 text-center my-3" style="color:#6A73AB">Aucun film ne correspond aux critères de recherche.</div>');
                         }
 
                         // Ajouter les films au conteneur
                         $.each(films, function (index, film) {
                             const filmHTML = generateFilmCardHTML(film);
-                            filmContainer.append(filmHTML);
+                            $('#film-container-public').append(filmHTML);
 
-                            // Initialisations spécifiques
+                            // Initialiser le modal et le datepicker avec la date du jour pour ce film
                             initializeModalAndDatepicker(film.id, updateModalAndSessions);
+
+                            // Initialiser le datepicker pour ce film
                             initializeDatepicker(film.id);
+
+                            // Gérer le clic sur les jours pour les séances
                             handleDateClick(film.id);
 
+                            // Affichage du cœur si le film est un coup de cœur
                             if (film.label === true) {
                                 $(`#heart-${film.id}`).removeClass('d-none');
                             }
 
-                            displayAgeBadge();
+                            // Accordion description films
+                            // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
+                            $(document).click(function(event) {
+                                const accordionButton = $('#btn-description-'+film.id);
+                                const accordionCollapse = $('#collapseDescription-'+film.id);
+                                // Vérifie si le clic est à l'intérieur de l'accordéon
+                                if (!accordionButton.is(event.target) && accordionButton.has(event.target).length === 0 && !accordionCollapse.is(event.target) && accordionCollapse.has(event.target).length === 0) {
+                                    // Ferme l'accordéon si ouvert
+                                    if (accordionCollapse.hasClass('show')) {
+                                        accordionCollapse.collapse('hide'); // Utilise la méthode Bootstrap pour cacher
+                                    }
+                                }
+                            });
+
+                            //Affichage badge age mini
+                            displayAgeBadge()
                         });
                     })
                     .catch(error => {
