@@ -244,7 +244,6 @@ axios.defaults.withCredentials = true;
                             seancesContainer.html('<div class="col-12 text-center text-danger">Erreur de chargement.</div>');
                         });
         }
-
         // Fonction pour charger les séances avec le Datepicker selon la date choisie
         function initializeDatepicker(filmId) {
             const $datepicker = $(`#datepicker-${filmId}`);
@@ -428,7 +427,6 @@ axios.defaults.withCredentials = true;
                 updateModalAndSessions(filmId, selectedDateWithYear, false); // Ne pas mettre à jour les 7 jours
             });
         }
-
         //Affichage de tous les films
         function film() {
             // Vider le conteneur des films
@@ -1085,7 +1083,6 @@ axios.defaults.withCredentials = true;
         }
 
         //Page Administration
-        //Films
         //Générer des films
         function filmAdmin() {
                         // Vider le conteneur des films
@@ -2154,8 +2151,6 @@ axios.defaults.withCredentials = true;
                         .then(response => {console.log(response.data);window.location.href = '/accueil';})
                         .catch(error => {console.error(error);});
                 });
-
-        //Compte employé
         //Fonction pour générer les réservations
         function loadReservations() {
                             const $datepickerReservations = $('#datepicker_reservations');
@@ -2395,7 +2390,6 @@ axios.defaults.withCredentials = true;
                 }
 
         //Page Employé
-        //Films
         //Générer des films
         function filmEmploye() {
 
@@ -3532,12 +3526,13 @@ axios.defaults.withCredentials = true;
                         });
                 }
 
-        //Lancement des requètes AJAX et fonctions au chargement des pages
+        //Lancement des fonctions au chargement des pages
         if (window.location.pathname === '/accueil') {resizeCarrousel()}
+        if (window.location.pathname === '/administrateur/accueil') {resizeCarrousel()}
         if (window.location.pathname === '/administrateur/administration') {filmAdmin()}
         if (window.location.pathname === '/administrateur/administration/account_employe') {employe()}
         if (window.location.pathname === '/administrateur/administration/reservations') {employe()}
-        if (window.location.pathname === '/administrateur/films') {film()}
+        if (window.location.pathname === '/administrateur/films') {film(); menuFilms()}
         if (window.location.pathname === '/employe/administration') {filmEmploye()}
         if (window.location.pathname === '/employe/administration/avis') {avis()}
         if (window.location.pathname === '/employe/films') {film()}

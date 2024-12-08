@@ -11,50 +11,43 @@ use Symfony\Component\Routing\Attribute\Route;
 class AccueilController extends AbstractController
 {
     #[Route('/accueil', name: 'app_accueil')]
-public function index(EntityManagerInterface $entityManager, FilmRepository $filmRepository): Response
-{
-    // Supposons que vous ayez déjà calculé $lastWednesday
-    $lastWednesday = $this->getLastWednesday();
-
-    // Récupérer les films filtrés
-    $films = $filmRepository->findFilmsWithLastWednesdayBetweenDates($lastWednesday);
-
-    // Si aucun film n'est trouvé, récupérer tous les films
-    if (empty($films)) {
-        $films = $filmRepository->findAll();  // Récupérer tous les films
-    }
-
-    $filmsArray = [];
-    foreach ($films as $film) {
-        $filmsArray[] = [
-            'image' => $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName()
-        ];
-    }
-
-    return $this->render('accueil/index.html.twig', [
-        'controller_name' => 'AccueilController',
-        'films' => $filmsArray,
-    ]);
-}
-    #[Route('/utilisateur/accueil', name: 'app_accueil_user')]
-    public function indexUser(): Response
+    public function index(EntityManagerInterface $entityManager, FilmRepository $filmRepository): Response
     {
+        $filmsArray = $this->getFilmsArray($filmRepository);
+
+        return $this->render('accueil/index.html.twig', [
+            'controller_name' => 'AccueilController',
+            'films' => $filmsArray,
+        ]);
+    }
+    #[Route('/utilisateur/accueil', name: 'app_accueil_user')]
+    public function indexUser(EntityManagerInterface $entityManager, FilmRepository $filmRepository): Response
+    {
+        $filmsArray = $this->getFilmsArray($filmRepository);
+
         return $this->render('accueil/user.html.twig', [
             'controller_name' => 'AccueilUserController',
+            'films' => $filmsArray,
         ]);
     }
     #[Route('/employe/accueil', name: 'app_accueil_employe')]
-    public function indexEmploye(): Response
+    public function indexEmploye(EntityManagerInterface $entityManager, FilmRepository $filmRepository): Response
     {
+        $filmsArray = $this->getFilmsArray($filmRepository);
+
         return $this->render('accueil/employe.html.twig', [
             'controller_name' => 'AccueilEmployeController',
+            'films' => $filmsArray,
         ]);
     }
     #[Route('/administrateur/accueil', name: 'app_accueil_admin')]
-    public function indexAdmin(): Response
+    public function indexAdmin(EntityManagerInterface $entityManager, FilmRepository $filmRepository): Response
     {
+        $filmsArray = $this->getFilmsArray($filmRepository);
+
         return $this->render('accueil/admin.html.twig', [
             'controller_name' => 'AccueilAdminController',
+            'films' => $filmsArray,
         ]);
     }
     // Fonction pour calculer le dernier mercredi
@@ -69,4 +62,24 @@ public function index(EntityManagerInterface $entityManager, FilmRepository $fil
 
         return $currentDate;
     }
+    // Méthode privée pour récupérer les films sous forme de tableau
+    private function getFilmsArray(FilmRepository $filmRepository): array
+    {
+        $lastWednesday = $this->getLastWednesday();
+        $films = $filmRepository->findFilmsWithLastWednesdayBetweenDates($lastWednesday);
+
+        if (empty($films)) {
+            $films = $filmRepository->findAll();
+        }
+
+        $filmsArray = [];
+        foreach ($films as $film) {
+            $filmsArray[] = [
+                'image' => $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName()
+            ];
+        }
+
+        return $filmsArray;
+    }
+
 }
