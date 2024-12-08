@@ -60,6 +60,18 @@ class FilmRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
+    public function findFilmsWithLastWednesdayBetweenDates(\DateTime $lastWednesday): array
+    {
+        $queryBuilder = $this->createQueryBuilder('f')
+            ->where(':lastWednesday = f.date_debut')
+            ->orWhere(':lastWednesday = f.date_fin')
+            ->orWhere(':lastWednesday BETWEEN f.date_debut AND f.date_fin')
+            ->setParameter('lastWednesday', $lastWednesday->format('Y-m-d'))
+            ->getQuery();
+
+        return $queryBuilder->getResult();
+    }
+
 
 
     //    public function findOneBySomeField($value): ?Film

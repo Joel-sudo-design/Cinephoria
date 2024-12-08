@@ -86,11 +86,42 @@ axios.defaults.withCredentials = true;
                 }
             });
 
+        // Page accueil
+        function resizeCarrousel() {
+            const carousel = document.getElementById('carouselExample');
+            const imageContainers = carousel.querySelectorAll('.carousel-inner .image-carousel');
+            const totalImages = imageContainers.length;
+
+            let newWidth = 75; // Largeur de base pour 7 images
+
+            // Si moins de 7 images, ajuster la largeur proportionnellement
+            if (totalImages < 7) {
+                newWidth = 75 * (totalImages / 7); // Proportionnellement à 75%
+            }
+
+            // Appliquer la nouvelle largeur au carrousel
+            carousel.style.width = `${newWidth}%`;
+
+            // Calculer la largeur des images pour qu'elles tiennent sur une ligne
+            const imageWidthPercentage = 100 / Math.min(totalImages, 7); // Max 7 images par ligne
+
+            imageContainers.forEach((container) => {
+                const image = container.querySelector('img');
+                if (image) {
+                    container.style.flex = `0 0 ${imageWidthPercentage}%`; // Ajuster la largeur
+                    image.style.width = '100%'; // S'assurer que l'image remplit son conteneur
+                    image.style.height = 'auto'; // Conserver les proportions
+                    image.style.objectFit = 'cover'; // Ajuster l'image au conteneur sans déformation
+                }
+            });
+        }
+
         //Page Films
-        // Fonction pour affichage du badge coupe de cœur
-        function displayAgeBadge() {
-            const ageFilm = $('#age-' + film.id);
+        // Fonction pour affichage du badge age minimum
+        function displayAgeBadge(film) {
+            const ageFilm = $('#age-' + film.id).closest('.d-flex');
             // Ciblez chaque badge d'âge à partir du conteneur
+            const ageBadgePublic = ageFilm.find('.age-badge-public');
             const ageBadge12 = ageFilm.find('.age-badge-12');
             const ageBadge16 = ageFilm.find('.age-badge-16');
             const ageBadge18 = ageFilm.find('.age-badge-18');
@@ -99,15 +130,19 @@ axios.defaults.withCredentials = true;
                 ageBadge12.removeClass('d-none');
                 ageBadge16.addClass('d-none');
                 ageBadge18.addClass('d-none');
+                ageBadgePublic.addClass('d-none');
             } else if (film.age_minimum === '16') {
                 ageBadge16.removeClass('d-none');
                 ageBadge12.addClass('d-none');
                 ageBadge18.addClass('d-none');
+                ageBadgePublic.addClass('d-none');
             } else if (film.age_minimum === '18') {
                 ageBadge18.removeClass('d-none');
                 ageBadge12.addClass('d-none');
                 ageBadge16.addClass('d-none');
+                ageBadgePublic.addClass('d-none');
             } else {
+                ageBadgePublic.removeClass('d-none');
                 ageBadge12.addClass('d-none');
                 ageBadge16.addClass('d-none');
                 ageBadge18.addClass('d-none');
@@ -115,92 +150,101 @@ axios.defaults.withCredentials = true;
         }
         // Fonction pour charger les séances selon la date
         function updateModalAndSessions(filmId, selectedDate, updateDays = true) {
-            // Vider les conteneurs avant de les remplir
-            const seancesContainer = $('#date-seance-' + filmId);
-            const modalContainer = $('#modal-date-seance-' + filmId);
-            seancesContainer.empty();
+                    // Vider les conteneurs avant de les remplir
+                    const seancesContainer = $('#date-seance-' + filmId);
+                    const modalContainer = $('#modal-date-seance-' + filmId);
+                    seancesContainer.empty();
 
-            // Si updateDays est vrai, préparer les 7 prochains jours
-            if (updateDays) {
-                const selectedDateObj = new Date(selectedDate); // Date dans le format "mois/jour"
-                const days = [];
-                for (let i = 0; i < 7; i++) {
-                    const nextDay = new Date(selectedDateObj);
-                    nextDay.setDate(selectedDateObj.getDate() + i);
-                    days.push(nextDay.toLocaleDateString('fr-FR', {day: '2-digit', month: '2-digit'}));
-                }
+                    // Ajouter un spinner de chargement
+                    const spinner = `
+                <div class="text-center my-3">
+                    <div class="spinner-border" style="color: #6A73AB" role="status">
+                        <span class="visually-hidden">Chargement...</span>
+                    </div>
+                </div>
+            `;
+                    seancesContainer.html(spinner);
 
-                // Mettre à jour le conteneur des dates dans la modale
-                modalContainer.html(
-                    days.map(day => `<div class="col clickable-day">${day}</div>`).join('')
-                );
-            }
+                    // Si updateDays est vrai, préparer les 7 prochains jours
+                    if (updateDays) {
+                        const selectedDateObj = new Date(selectedDate); // Date dans le format "mois/jour"
+                        const days = [];
+                        for (let i = 0; i < 7; i++) {
+                            const nextDay = new Date(selectedDateObj);
+                            nextDay.setDate(selectedDateObj.getDate() + i);
+                            days.push(nextDay.toLocaleDateString('fr-FR', {day: '2-digit', month: '2-digit'}));
+                        }
 
-            // Convertir la date sélectionnée en objet Date pour comparaison
-            const selectedDateObj = new Date(selectedDate); // La date est déjà dans le format "mois/jour"
-            const selectedDateFormatted = selectedDateObj.toLocaleDateString('fr-FR', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-            });
+                        // Mettre à jour le conteneur des dates dans la modale
+                        modalContainer.html(
+                            days.map(day => `<div class="col clickable-day">${day}</div>`).join('')
+                        );
+                    }
 
-            // Ajouter la classe active pour le jour correspondant
-            modalContainer.find('.clickable-day').each(function () {
-                const dayText = $(this).text().trim(); // Récupérer le texte au format "jour/mois"
+                    // Convertir la date sélectionnée en objet Date pour comparaison
+                    const selectedDateObj = new Date(selectedDate); // La date est déjà dans le format "mois/jour"
+                    const selectedDateFormatted = selectedDateObj.toLocaleDateString('fr-FR', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                    });
 
-                // Ajouter l'année courante à la date inversée
-                const currentYear = new Date().getFullYear(); // Récupérer l'année actuelle
-                const selectedDateWithYear = `${dayText}/${currentYear}`; // Créer la date complète "YYYY-MM-DD"
-                if (selectedDateWithYear === selectedDateFormatted) {
-                    $(this).addClass('active');
-                } else {
-                    $(this).removeClass('active');
-                }
-            });
+                    // Ajouter la classe active pour le jour correspondant
+                    modalContainer.find('.clickable-day').each(function () {
+                        const dayText = $(this).text().trim(); // Récupérer le texte au format "jour/mois"
 
-            // Charger les séances correspondantes via AJAX (Axios)
-            axios.post('/films/seances', {filmId})
-                .then(response => {
-                    const seances = response.data; // Liste des séances par date
+                        // Ajouter l'année courante à la date inversée
+                        const currentYear = new Date().getFullYear(); // Récupérer l'année actuelle
+                        const selectedDateWithYear = `${dayText}/${currentYear}`; // Créer la date complète "YYYY-MM-DD"
+                        if (selectedDateWithYear === selectedDateFormatted) {
+                            $(this).addClass('active');
+                        } else {
+                            $(this).removeClass('active');
+                        }
+                    });
 
-                    // Trouver les séances correspondant à la date sélectionnée
-                    const seancesForSelectedDate = seances.find(date => date.date === selectedDateFormatted);
+                    // Charger les séances correspondantes via AJAX (Axios)
+                    axios.post('/films/seances', {filmId})
+                        .then(response => {
+                            const seances = response.data; // Liste des séances par date
 
-                    // Si des séances existent pour la date sélectionnée
-                    if (seancesForSelectedDate && seancesForSelectedDate.seances.length > 0) {
-                        // Afficher les séances
-                        seancesForSelectedDate.seances.forEach(seance => {
-                            seancesContainer.append(`
-                        <div class="col-6">
-                            <div class="uniform-block fs-5">
-                                <div class="row justify-content-center align-items-center p-3">
-                                    <div class="col-3">VF</div>
-                                    <div class="col-6 d-flex flex-column text-center">
-                                        <span>${seance.heureDebut}</span>
-                                        <span>(fin ${seance.heureFin})</span>
+                            // Trouver les séances correspondant à la date sélectionnée
+                            const seancesForSelectedDate = seances.find(date => date.date === selectedDateFormatted);
+
+                            // Si des séances existent pour la date sélectionnée
+                            if (seancesForSelectedDate && seancesForSelectedDate.seances.length > 0) {
+                                // Afficher les séances
+                                seancesContainer.html(seancesForSelectedDate.seances.map(seance => `
+                            <div class="col-6">
+                                <div class="uniform-block fs-5">
+                                    <div class="row justify-content-center align-items-center p-3">
+                                        <div class="col-3">VF</div>
+                                        <div class="col-6 d-flex flex-column text-center">
+                                            <span>${seance.heureDebut}</span>
+                                            <span>(fin ${seance.heureFin})</span>
+                                        </div>
+                                        <div class="col-3">${seance.format}</div>
                                     </div>
-                                    <div class="col-3">${seance.format}</div>
-                                </div>
-                                <div class="row text-center p-3">
-                                    <div class="col-12">
-                                        <div class="salle mb-3 fs-5">${seance.salle}</div>
-                                        <div>Tarif: ${seance.tarif}€</div>
+                                    <div class="row text-center p-3">
+                                        <div class="col-12">
+                                            <div class="salle mb-3 fs-5">${seance.salle}</div>
+                                            <div>Tarif: ${seance.tarif}€</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    `);
+                        `).join(''));
+                            } else {
+                                // Afficher un message si aucune séance n'est disponible
+                                seancesContainer.html('<div class="col-12 text-center my-3" style="color:#6A73AB">Aucune séance disponible pour cette date.</div>');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Erreur lors du chargement des séances:', error);
+                            seancesContainer.html('<div class="col-12 text-center text-danger">Erreur de chargement.</div>');
                         });
-                    } else {
-                        // Afficher un message si aucune séance n'est disponible
-                        seancesContainer.html('<div class="col-12 text-center my-3" style="color:#6A73AB">Aucune séance disponible pour cette date.</div>');
-                    }
-                })
-                .catch(error => {
-                    console.error('Erreur lors du chargement des séances:', error);
-                    seancesContainer.html('<div class="col-12 text-center text-danger">Erreur de chargement.</div>');
-                });
         }
+
         // Fonction pour charger les séances avec le Datepicker selon la date choisie
         function initializeDatepicker(filmId) {
             const $datepicker = $(`#datepicker-${filmId}`);
@@ -230,7 +274,7 @@ axios.defaults.withCredentials = true;
             // Gestion du clic sur l'icône de croix
             $clearIcon.on('click', function () {
                 // Réinitialiser la date
-                $datepicker.val('');
+                $datepicker.datepicker('update', '').val('');
                 $calendarIcon.removeClass('d-none');
                 $clearIcon.addClass('d-none');
                 $dateSeance.empty();
@@ -301,13 +345,22 @@ axios.defaults.withCredentials = true;
                             </a>
                         </div>
                         <div class="card-body p-0 py-1">
-                            <div id="age-${film.id}" class="col-12 card-title m-0 fs-5">${film.name}
-                                <span class="age-badge-12 d-none ms-2">12+</span>
-                                <span class="age-badge-16 d-none ms-2">16+</span>
-                                <span class="age-badge-18 d-none ms-2">18+</span>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <!-- Titre du film -->
+                                <div id="age-${film.id}" class="card-title m-0 fs-5">${film.name}</div>
+                                <!-- Badges -->
+                                <div class="d-flex">
+                                    <span class="age-badge-public d-none mx-2">
+                                        <div>tout</div>
+                                        <div>public</div>
+                                    </span>
+                                    <span class="age-badge-12 d-none mx-2">12+</span>
+                                    <span class="age-badge-16 d-none mx-2">16+</span>
+                                    <span class="age-badge-18 d-none mx-2">18+</span>
+                                </div>
                             </div>
                             <div class="card-title m-0 fs-6">${film.genre}</div>
-                            <p class="card-text m-0 text-warning" style="margin: 0.3rem 0 0.3rem 0">
+                            <p class="card-text m-0 text-warning my-2">
                                 <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
                             </p>
                             <div class="accordion accordion-flush">
@@ -421,7 +474,7 @@ axios.defaults.withCredentials = true;
                                         });
 
                                         //Affichage badge age mini
-                                        displayAgeBadge()
+                                        displayAgeBadge(film)
                                     });
                                 })
             .catch(error => {console.error('Erreur lors du chargement des films :', error);})
@@ -499,7 +552,7 @@ axios.defaults.withCredentials = true;
                             });
 
                             //Affichage badge age mini
-                            displayAgeBadge()
+                            displayAgeBadge(film)
                         });
                     })
                     .catch(error => {
@@ -641,7 +694,7 @@ axios.defaults.withCredentials = true;
 
             //Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
             $clearIcon.on('click', function () {
-                        $datepicker.val(''); // Réinitialiser la valeur du champ
+                        $datepicker.datepicker('update', '').val(''); // Réinitialiser la valeur du champ
                         $clearIcon.addClass('d-none'); // Masquer l'icône de croix
                         $calendarIcon.removeClass('d-none'); // Afficher l'icône du calendrier
                         reloadFilms();
@@ -3480,6 +3533,7 @@ axios.defaults.withCredentials = true;
                 }
 
         //Lancement des requètes AJAX et fonctions au chargement des pages
+        if (window.location.pathname === '/accueil') {resizeCarrousel()}
         if (window.location.pathname === '/administrateur/administration') {filmAdmin()}
         if (window.location.pathname === '/administrateur/administration/account_employe') {employe()}
         if (window.location.pathname === '/administrateur/administration/reservations') {employe()}

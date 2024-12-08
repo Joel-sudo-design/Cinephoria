@@ -822,44 +822,55 @@ footer #navbarBottom .nav-link {
   border-bottom: 2px solid white !important;
 }
 
+/* Badge Tout Public */
 .age-badge-public {
-  display: inline-block;
-  background-color: #157347;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #AED581; /* Vert pour Tout Public */
   color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 8px;
+  line-height: 1;
+  padding: 0;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Badge 12+ */
+.age-badge-12,
+.age-badge-16,
+.age-badge-18 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 1;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .age-badge-12 {
-  display: inline-block;
-  background-color: #FF5722;
+  background-color: #FF5722; /* Orange */
   color: white;
-  padding: 5px 5px;
-  border-radius: 5px;
-  font-weight: bold;
-  font-size: 12px;
 }
 
 .age-badge-16 {
-  display: inline-block;
-  background-color: #E64A19;
+  background-color: #E64A19; /* Rouge clair */
   color: white;
-  padding: 5px 5px;
-  border-radius: 5px;
-  font-weight: bold;
-  font-size: 12px;
 }
 
 .age-badge-18 {
-  display: inline-block;
-  background-color: #D32F2F;
+  background-color: #D32F2F; /* Rouge foncé */
   color: white;
-  padding: 5px 5px;
-  border-radius: 5px;
-  font-weight: bold;
-  font-size: 12px;
 }
 
 .dropdown-modal-admin .nav-link {
