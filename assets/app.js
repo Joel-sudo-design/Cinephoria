@@ -895,6 +895,13 @@ axios.defaults.withCredentials = true;
                                 if (seance.sieges_reserves && seance.sieges_reserves.length > 0) {
                                     seance.sieges_reserves.forEach(idSiege => {
                                         $(`.seat[data-id="${idSiege}"]`).removeClass('libre').addClass('reserve');
+                                        [1, 2,3,4].forEach(id => {
+                                            $(`.seat[data-id="${id}"]`).addClass('reserve');
+                                        });
+                                    });
+                                } else {
+                                    [1, 2,3,4].forEach(id => {
+                                        $(`.seat[data-id="${id}"]`).addClass('reserve');
                                     });
                                 }
                             }
@@ -908,6 +915,14 @@ axios.defaults.withCredentials = true;
                                     if ($seat.hasClass('reserve')) {
                                         // Si le siège est déjà réservé, afficher un message ou empêcher l'action
                                         alert("Ce siège est déjà réservé !");
+                                        return;
+                                    }
+
+                                    // Empeche plus de selction que le nombre de place indiqué
+                                    const maxSeats = parseInt($('#Textarea-places-reservations').val(), 10) || 0;
+                                    const totalSeatsSelected = $('.seat.selectionne').length;
+                                    if (totalSeatsSelected > maxSeats && !$seat.hasClass('selectionne')) {
+                                        alert("Le nombre de sièges réservés dépasse le nombre de places!");
                                         return;
                                     }
 
@@ -973,9 +988,9 @@ axios.defaults.withCredentials = true;
 
                                             // Mise à jour globale des états
                                             if (atLeastOneAvailable) {
-                                                $('#selection-sieges, #seances-buttons').removeClass('disabled');
+                                                $('#seances-buttons').removeClass('disabled');
                                             } else {
-                                                $('#selection-sieges, #seances-buttons').addClass('disabled');
+                                                $('#seances-buttons').addClass('disabled');
                                             }
 
                                             if (requestedSeats === null || requestedSeats === 0) {
@@ -1007,6 +1022,7 @@ axios.defaults.withCredentials = true;
                                                 $('#prix-reservations').text(`Prix : ${seance.prix} €`);
                                             }
                                             // Afficher les sièges réservés pour cette séance
+                                            $('#selection-sieges').removeClass('disabled');
                                             afficherSiegesReserves(seance);
                                         });
                                     });
@@ -1034,7 +1050,7 @@ axios.defaults.withCredentials = true;
                             //Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
                             $clearIcon.on('click', function () {
                                 // Effacer la date sélectionnée en réinitialisant la valeur du champ
-                                $datepicker.val('');
+                                $datepicker.datepicker('update', '').val('');
                                 // Afficher l'icône du calendrier et masquer l'icône de suppression
                                 $clearIcon.addClass('d-none');
                                 $calendarIcon.removeClass('d-none');
