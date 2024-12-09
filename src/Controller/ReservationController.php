@@ -98,12 +98,12 @@ class ReservationController extends AbstractController
                 $filmArray['film'] = [
                     'name' => $film->getName(),
                     'cinema' => $cinema ? $cinema->getName() : null,
-                    'dateDebut' => $film->getDateDebut() ? $film->getDateDebut()->format('d/m/Y') : null,
-                    'dateFin' => $film->getDateFin() ? $film->getDateFin()->format('d/m/Y') : null,
+                    'dateDebut' => $film->getDateDebut()?->format('d/m/Y'),
+                    'dateFin' => $film->getDateFin()?->format('d/m/Y'),
                     'image' => $film->getImageName()
                         ? $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName()
                         : null,
-                    'genre' => $film->getGenre()->getName(),
+                    'genre' => $film->getGenre() ? $film->getGenre()->getName() : 'aucun',
                 ];
                 $filmArray['seances'] = $seancesArray;
             }

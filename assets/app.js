@@ -725,6 +725,7 @@ axios.defaults.withCredentials = true;
         }
 
         //Page Réservation
+        // Fonction pour récupérer les données du film et des séances
         function reservation() {
             // Parse les données des films depuis l'attribut data-films
             const filmsData = JSON.parse($('#films-data').attr('data-films'));
@@ -781,8 +782,6 @@ axios.defaults.withCredentials = true;
                 const filmId = $(this).data('film-id');
                 const filmTitle = $(this).text().trim();
                 let customSelect = $('.custom-select-btn-cinema');
-                // Met à jour le champ caché pour le film
-                $('#film-input').val(filmId);
 
                 // Met à jour le texte du bouton principal pour indiquer le film sélectionné
                 customSelect.text(filmTitle);
@@ -794,62 +793,8 @@ axios.defaults.withCredentials = true;
                 customSelect.addClass('no-arrow');
                 $('.close-icon-cinema').removeClass('d-none');
                 $('#datepicker').removeClass('disabled');
-            });
 
-            const $clearIconCinema = $('.close-icon-cinema')
-
-            // Réinitialiser la sélection avec l'icône de fermeture
-            $clearIconCinema.on('click', function () {
-                $('#cinema-input').val('');
-                $('#film-input').val('');
-                $('.custom-select-btn-cinema').text('Cinéma').removeClass('no-arrow', 'btn-hover');
-                $('.custom-options-films').addClass('d-none').empty();
-                $(this).addClass('d-none');
-                $('#film-name').text('');
-                $('#reservation .img-fluid').attr('src', '/image_film/default-image2.jpg');
-                $('#film-genre').text('');
-                $('#film-duree').text('')
-                $('#datepicker').addClass('disabled').val('');
-                $('#icon-calendar').removeClass('d-none');
-                $('#close-icon-date').addClass('d-none');
-                $('#Textarea-places-reservations').addClass('disabled').val('');
-                $('#seances-buttons').empty().addClass('disabled');
-                $('#selection-sieges').addClass('disabled');
-                $('#seance-selected').text('');
-                $('#prix-reservations').text(`Prix :`);
-                // Remettre tous les sièges en état "libre"
-                $('[id^="seating-area"] .seat').each(function() {
-                    $(this).removeClass('selectionne').removeClass('reserve'); // Retirer les classes de sélection et de réservation
-                    $(this).addClass('libre'); // Ajouter la classe libre pour rendre le siège disponible
-                });
-                $('#salle-reservations').text('');
-            });
-
-            // Clic en dehors pour fermer les menus
-            $(document).on('click', function (e) {
-                if (!$(e.target).closest('.custom-dropdown').length) {
-                    $('.custom-options-cinema').hide();
-                    $('.custom-options-films').addClass('d-none');
-                }
-            });
-
-            //Appliquer le style de hover/focus
-            $clearIconCinema.on('mouseenter focus', function () {
-                $('.custom-select-btn-cinema').addClass('btn-hover');
-                $('.close-icon-cinema').addClass('btn-hover');
-            });
-
-            //Retirer le style quand on quitte le survol/focus
-            $clearIconCinema.on('mouseleave blur', function () {
-                $('.custom-select-btn-cinema').removeClass('btn-hover');
-                $('.close-icon-cinema').removeClass('btn-hover');
-            });
-        }
-        // Fonction pour récupérer les données du film et des séances
-        function reservationFilmData() {
-            $(document).on('click', '.custom-option-film', function () {
                 const cinemaId = $('#cinema-input').val();
-                const filmId = $('#film-input').val();
                 $('.custom-options-cinema').toggle(); // Masque les menus déroulants
 
                 axios.post('/reservation/film', { 'cinemaId': cinemaId, 'filmId': filmId })
@@ -1040,12 +985,12 @@ axios.defaults.withCredentials = true;
                                 autoclose: true
                             })
                                 .on('changeDate', function () {
-                                const selectedDate = $datepicker.val();
-                                $calendarIcon.addClass('d-none');
-                                $clearIcon.removeClass('d-none');
-                                updateSeances(selectedDate);
-                                initialiserSieges();
-                            });
+                                    const selectedDate = $datepicker.val();
+                                    $calendarIcon.addClass('d-none');
+                                    $clearIcon.removeClass('d-none');
+                                    updateSeances(selectedDate);
+                                    initialiserSieges();
+                                });
 
                             //Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
                             $clearIcon.on('click', function () {
@@ -1094,7 +1039,56 @@ axios.defaults.withCredentials = true;
 
                         }
                     })
-                .catch(error => { console.error('Erreur lors de la récupération des données :', error); });
+                    .catch(error => { console.error('Erreur lors de la récupération des données :', error); });
+            });
+
+            const $clearIconCinema = $('.close-icon-cinema')
+
+            // Réinitialiser la sélection avec l'icône de fermeture
+            $clearIconCinema.on('click', function () {
+                $('#cinema-input').val('');
+                $('#film-input').val('');
+                $('.custom-select-btn-cinema').text('Cinéma').removeClass('no-arrow', 'btn-hover');
+                $('.custom-options-films').addClass('d-none').empty();
+                $(this).addClass('d-none');
+                $('#film-name').text('');
+                $('#reservation .img-fluid').attr('src', '/image_film/default-image2.jpg');
+                $('#film-genre').text('');
+                $('#film-duree').text('')
+                $('#datepicker').addClass('disabled').val('');
+                $('#icon-calendar').removeClass('d-none');
+                $('#close-icon-date').addClass('d-none');
+                $('#Textarea-places-reservations').addClass('disabled').val('');
+                $('#seances-buttons').empty().addClass('disabled');
+                $('#selection-sieges').addClass('disabled');
+                $('#seance-selected').text('');
+                $('#prix-reservations').text(`Prix :`);
+                // Remettre tous les sièges en état "libre"
+                $('[id^="seating-area"] .seat').each(function() {
+                    $(this).removeClass('selectionne').removeClass('reserve'); // Retirer les classes de sélection et de réservation
+                    $(this).addClass('libre'); // Ajouter la classe libre pour rendre le siège disponible
+                });
+                $('#salle-reservations').text('');
+            });
+
+            // Clic en dehors pour fermer les menus
+            $(document).on('click', function (e) {
+                if (!$(e.target).closest('.custom-dropdown').length) {
+                    $('.custom-options-cinema').hide();
+                    $('.custom-options-films').addClass('d-none');
+                }
+            });
+
+            //Appliquer le style de hover/focus
+            $clearIconCinema.on('mouseenter focus', function () {
+                $('.custom-select-btn-cinema').addClass('btn-hover');
+                $('.close-icon-cinema').addClass('btn-hover');
+            });
+
+            //Retirer le style quand on quitte le survol/focus
+            $clearIconCinema.on('mouseleave blur', function () {
+                $('.custom-select-btn-cinema').removeClass('btn-hover');
+                $('.close-icon-cinema').removeClass('btn-hover');
             });
         }
 
@@ -3541,6 +3535,6 @@ axios.defaults.withCredentials = true;
         if (window.location.pathname === '/employe/films') {film()}
         if (window.location.pathname === '/utilisateur/films') {film()}
         if (window.location.pathname === '/films') {film(); menuFilms()}
-        if (window.location.pathname === '/reservation') {reservation(); reservationFilmData()}
+        if (window.location.pathname === '/reservation') {reservation()}
     });
 
