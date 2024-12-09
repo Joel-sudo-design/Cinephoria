@@ -926,16 +926,18 @@ footer #navbarBottom .nav-link {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   border: 2px solid white;
+  transition: all 0.2s ease;
 }
 
-.custom-options-employe  {
-  padding: 0.5rem 0.75rem 0.5rem 0.75rem;
+.custom-option-employe {
+  padding: 0.5rem;
+  background-color: #6A73AB;
   color: white;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.custom-options-employe:hover {
+.custom-options-employe:hover, .custom-option-employe:hover {
   background-color: white;
   color: #6A73AB;
 }
@@ -954,7 +956,7 @@ footer #navbarBottom .nav-link {
 }
 
 .grid-cell {
-  border: 1px solid black;
+  border: 1px solid white;
   border-radius: 4px;
   padding: 10px;
   margin: 6px;

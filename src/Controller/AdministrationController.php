@@ -129,8 +129,8 @@ class AdministrationController extends AbstractController
 
                 // Ajouter le nombre de réservations
                 $reservationsByDate[$date] += $reservation['reservation'];
-                $filmArray['reservations'] = $reservationsByDate;
             }
+            $filmArray['reservations'] = $reservationsByDate;
 
             // Ajouter le film au tableau final
             $AllFilmsArray[] = $filmArray;

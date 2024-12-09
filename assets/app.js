@@ -2169,174 +2169,161 @@ axios.defaults.withCredentials = true;
                 });
         //Fonction pour générer les réservations
         function loadReservations() {
-                            const $datepickerReservations = $('#datepicker_reservations');
-                            const $calendarIconReservations = $('#icon-calendar-reservations');
-                            const $clearIconReservations = $('.close-icon-reservations');
-                            $('#reservations-container').empty();
-                            axios.get('/administrateur/administration/film')
-                                .then(response => {
-                                    const films = response.data;
-                                    const datesWithReservations = {};
-                                    const datepicker = $('#datepicker_reservations');
-                                    // Initialiser le datepicker avec les réservations
-                                    if (films.reservations) {
-                                        films.forEach(film => {
-                                            Object.keys(film.reservations).forEach(date => {
-                                                if (!datesWithReservations[date]) {
-                                                    datesWithReservations[date] = 0;
-                                                }
-                                                datesWithReservations[date] += film.reservations[date];
-                                            });
-                                        });
-                                        datepicker.datepicker({
-                                            orientation: "bottom",
-                                            language: "fr",
-                                            autoclose: true,
-                                            todayHighlight: true,
-                                            format: 'dd/mm/yyyy',
-                                            beforeShowDay: function (date) {
-                                                const dateString = date.toLocaleDateString('fr-FR');
-                                                const reservations = datesWithReservations[dateString] || 0;
-                                                const day = date.getDate();
-                                                if (reservations > 0) {
-                                                    return {
-                                                        classes: 'has-reservation',
-                                                        tooltip: `Réservations: ${reservations}`
-                                                    };
-                                                } else {
-                                                    return {tooltip: 'Aucune réservation'};
-                                                }
-                                            }
-                                        });
-                                    }
+            const $datepickerReservations = $('#datepicker_reservations');
+            const $calendarIconReservations = $('#icon-calendar-reservations');
+            const $clearIconReservations = $('.close-icon-reservations');
+            const $reservationsContainer = $('#reservations-container');
 
-                                    // Fonction pour formater les dates au format "dd/mm/yyyy"
-                                    function formatDate(date) {
-                                        let day = date.getDate();
-                                        let month = date.getMonth() + 1; // Les mois commencent à
-                                        let year = date.getFullYear();
-                                        return `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month}/${year}`;
-                                    }
+            $reservationsContainer.empty();
+            axios.get('/administrateur/administration/film')
+                .then(response => {
+                    const films = response.data;
+                    const datesWithReservations = {};
 
-                                    // Fonction pour obtenir les 7 jours à partir de la date sélectionnée
-                                    function getNext7Days(selectedDate) {
-                                        const days = [];
-                                        const baseDate = new Date(selectedDate);
-                                        for (let i = 0; i < 7; i++) {
-                                            let newDate = new Date(baseDate);
-                                            newDate.setDate(baseDate.getDate() + i);
-                                            days.push(newDate);
-                                        }
-                                        return days;
-                                    }
-
-                                    // Fonction pour afficher les informations dans le tableau
-                                    function updateTableWithReservations(selectedDate) {
-                                        const container = $('#reservations-container');
-                                        if (films.reservations) {
-                                            const days = getNext7Days(selectedDate); // Récupère les 7 jours à partir de la date sélectionnée
-                                            const formattedDays = days.map(date => formatDate(date)); // Formate chaque date
-                                            container.empty();
-
-                                            // Créer la première colonne : Noms des films
-                                            const col2 = $('<div class="col-2" style="background-color: #6A73AB"></div>');
-                                            col2.append('<div class="row"><div class="col grid-cell fw-bold">Nombre de réservations</div></div>');
-
-                                            films.forEach(film => {
-                                                col2.append(`<div class="row"><div class="col grid-cell fw-bold">${film.name}</div></div>`);
-                                            });
-
-                                            // Créer la deuxième colonne : Dates et réservations
-                                            const col6 = $('<div class="col-6" style="background-color: #6A73AB"></div>');
-
-                                            // Ajouter les dates formatées
-                                            const datesRow = $('<div class="row"></div>');
-                                            formattedDays.forEach(day => {
-                                                const dayFormatted = day.slice(0, 5); // Afficher uniquement le format dd/mm
-                                                datesRow.append(`<div class="col grid-cell fw-bold">${dayFormatted}</div>`);
-                                            });
-                                            col6.append(datesRow);
-
-                                            // Ajouter les lignes pour les films
-                                            films.forEach(film => {
-                                                const filmRow = $('<div class="row"></div>');
-                                                formattedDays.forEach(day => {
-                                                    const reservations = film.reservations[day] || 0; // Obtenir le nombre de réservations
-                                                    filmRow.append(`<div class="col grid-cell">${reservations}</div>`);
-                                                });
-                                                col6.append(filmRow);
-                                            });
-
-                                            // Ajouter les colonnes au conteneur principal
-                                            const headerRow = $('<div class="row justify-content-center text-white"></div>');
-                                            headerRow.append(col2).append(col6);
-                                            container.append(headerRow);
-                                        } else {
-                                            container.html('<p class="text-center" style="color: #6A73AB">Aucune réservation pour le moment.</p>');
-                                        }
-                                    }
-
-                                    // Écouter le changement de date dans le datepicker
-                                    datepicker.datepicker({
-                                        autoclose: true,
-                                        format: 'dd/mm/yyyy',
-                                        language: 'fr',
-                                    }).on('changeDate', function (e) {
-                                        // Appeler la fonction pour mettre à jour le tableau avec les réservations
-                                        updateTableWithReservations(e.date);
-                                    });
-
-                                    // Datepicker
-                                    $datepickerReservations.on('changeDate', function (e) {
-                                        // Lors de la sélection d'une date
-                                        const selectedDate = e.date;
-                                        updateTableWithReservations(selectedDate);
-                                        // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
-                                        $calendarIconReservations.addClass('d-none');
-                                        $clearIconReservations.removeClass('d-none');
-                                    });
-
-                                    // Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
-                                    $clearIconReservations.on('click', function () {
-                                        $datepickerReservations.datepicker('clearDates');
-                                        $calendarIconReservations.removeClass('d-none');
-                                        $clearIconReservations.addClass('d-none');
-                                        $('#reservations-container').empty();
-                                    });
-
-                                    // Appliquer le style de hover/focus
-                                    $clearIconReservations.on('mouseenter focus', function () {
-                                        $datepickerReservations.addClass('btn-hover');
-                                        $clearIconReservations.addClass('btn-hover');
-                                    });
-
-                                    // Au clic sur l'icône de croix, on réinitialise la date
-                                    $calendarIconReservations.on('mouseenter focus', function () {
-                                        $datepickerReservations.addClass('btn-hover');
-                                        $calendarIconReservations.addClass('btn-hover');
-                                    });
-
-                                    // Retirer le style quand on quitte le survol/focus
-                                    $clearIconReservations.on('mouseleave blur', function () {
-                                        $datepickerReservations.removeClass('btn-hover');
-                                        $clearIconReservations.removeClass('btn-hover');
-                                    });
-
-                                    // Retirer le style quand on quitte le survol/focus
-                                    $calendarIconReservations.on('mouseleave blur', function () {
-                                        $datepickerReservations.removeClass('btn-hover');
-                                        $calendarIconReservations.removeClass('btn-hover');
-                                    });
-
-                                    // Ouvrir le calendrier
-                                    $calendarIconReservations.on('click', function () {
-                                        $datepickerReservations.focus();
-                                    });
-                                })
-                                .catch(error => {
-                                    console.error(error);
-                                })
+                    films.forEach(film => {
+                        if (film.reservations) {
+                            Object.keys(film.reservations).forEach(date => {
+                                if (!datesWithReservations[date]) {
+                                    datesWithReservations[date] = 0;
+                                }
+                                datesWithReservations[date] += film.reservations[date];
+                            });
                         }
+                    });
+                    // Initialisation du datepicker
+                    $datepickerReservations.datepicker({
+                        orientation: "bottom",
+                        language: "fr",
+                        autoclose: true,
+                        format: 'dd/mm/yyyy',
+                        beforeShowDay: function (date) {
+                            const dateString = formatDate(date);
+                            const reservations = datesWithReservations[dateString] || 0;
+                            if (reservations > 0) {
+                                return {
+                                    classes: 'has-reservation',
+                                    tooltip: `Réservations: ${reservations}`
+                                };
+                            } else {
+                                return {tooltip: 'Aucune réservation'};
+                            }
+                        }
+                    });
+
+                    // Fonction pour formater les dates au format "dd/mm/yyyy"
+                    function formatDate(date) {
+                        let day = date.getDate();
+                        let month = date.getMonth() + 1; // Les mois commencent à
+                        let year = date.getFullYear();
+                        return `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month}/${year}`;
+                    }
+
+                    // Fonction pour obtenir les 7 jours à partir de la date sélectionnée
+                    function getNext7Days(selectedDate) {
+                        const days = [];
+                        const baseDate = new Date(selectedDate);
+                        for (let i = 0; i < 7; i++) {
+                            let newDate = new Date(baseDate);
+                            newDate.setDate(baseDate.getDate() + i);
+                            days.push(newDate);
+                        }
+                        return days;
+                    }
+
+                    // Fonction pour afficher les informations dans le tableau
+                    function updateTableWithReservations(selectedDate) {
+                        const days = getNext7Days(selectedDate);
+                        const formattedDays = days.map(date => formatDate(date));
+
+                        $reservationsContainer.empty();
+
+                        // Créer la première colonne : Noms des films
+                        const col2 = $('<div class="col-2" style="background-color: #6A73AB"></div>');
+                        col2.append('<div class="row"><div class="col grid-cell fw-bold">Nombre de réservations</div></div>');
+                        films.forEach(film => {
+                            col2.append(`<div class="row"><div class="col grid-cell fw-bold">${film.name}</div></div>`);
+                        });
+
+                        // Créer la deuxième colonne : Dates et réservations
+                        const col6 = $('<div class="col-6" style="background-color: #6A73AB"></div>');
+
+                        // Ajouter les dates formatées
+                        const datesRow = $('<div class="row"></div>');
+                        formattedDays.forEach(day => {
+                            const dayFormatted = day.slice(0, 5);
+                            datesRow.append(`<div class="col grid-cell fw-bold">${dayFormatted}</div>`);
+                        });
+                        col6.append(datesRow);
+
+                        // Ajouter les lignes pour les films
+                        films.forEach(film => {
+                            const filmRow = $('<div class="row"></div>');
+                            formattedDays.forEach(day => {
+                                const reservations = film.reservations[day] || 0;
+                                filmRow.append(`<div class="col grid-cell">${reservations}</div>`);
+                            });
+                            col6.append(filmRow);
+                        })
+
+                        // Ajouter les colonnes au conteneur principal
+                        const headerRow = $('<div class="row justify-content-center text-white mb-4"></div>');
+                        headerRow.append(col2).append(col6);
+                        $reservationsContainer.append(headerRow);
+                    }
+
+                    // Datepicker
+                    $datepickerReservations.on('changeDate', function (e) {
+                        // Lors de la sélection d'une date
+                        const selectedDate = $(this).val();
+                        const [day, month, year] = selectedDate.split('/');
+                        const formattedDate = `${year}-${month}-${day}`;
+                        updateTableWithReservations(formattedDate);
+                        // Affiche l'icône de croix et cache l'icône calendrier après sélection d'une date
+                        $calendarIconReservations.addClass('d-none');
+                        $clearIconReservations.removeClass('d-none');
+                    });
+
+                    // Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
+                    $clearIconReservations.on('click', function () {
+                        $datepickerReservations.datepicker('clearDates');
+                        $calendarIconReservations.removeClass('d-none');
+                        $clearIconReservations.addClass('d-none');
+                        $('#reservations-container').empty();
+                    });
+
+                    // Appliquer le style de hover/focus
+                    $clearIconReservations.on('mouseenter focus', function () {
+                        $datepickerReservations.addClass('btn-hover');
+                        $clearIconReservations.addClass('btn-hover');
+                    });
+
+                    // Au clic sur l'icône de croix, on réinitialise la date
+                    $calendarIconReservations.on('mouseenter focus', function () {
+                        $datepickerReservations.addClass('btn-hover');
+                        $calendarIconReservations.addClass('btn-hover');
+                    });
+
+                    // Retirer le style quand on quitte le survol/focus
+                    $clearIconReservations.on('mouseleave blur', function () {
+                        $datepickerReservations.removeClass('btn-hover');
+                        $clearIconReservations.removeClass('btn-hover');
+                    });
+
+                    // Retirer le style quand on quitte le survol/focus
+                    $calendarIconReservations.on('mouseleave blur', function () {
+                        $datepickerReservations.removeClass('btn-hover');
+                        $calendarIconReservations.removeClass('btn-hover');
+                    });
+
+                    // Ouvrir le calendrier
+                    $calendarIconReservations.on('click', function () {
+                        $datepickerReservations.focus();
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        }
         //Fonction pour gérer les employés
         function employe() {
                     //Affichage des réservations sur clic datepicker
