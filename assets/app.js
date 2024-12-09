@@ -783,6 +783,8 @@ axios.defaults.withCredentials = true;
                 const filmTitle = $(this).text().trim();
                 let customSelect = $('.custom-select-btn-cinema');
 
+                $('#film-input').val(filmId); // Met à jour le champ caché pour le film
+
                 // Met à jour le texte du bouton principal pour indiquer le film sélectionné
                 customSelect.text(filmTitle);
 
@@ -796,6 +798,29 @@ axios.defaults.withCredentials = true;
 
                 const cinemaId = $('#cinema-input').val();
                 $('.custom-options-cinema').toggle(); // Masque les menus déroulants
+
+                $('#paiement-reservations').on('click', function () {
+                    const selectedSeanceId = $('#seances-buttons .btn-reservation.active').attr('id');
+                    const selectedSeats = $('.seat.selectionne').map(function () {
+                        return $(this).data('id');
+                    }).get(); // Récupère tous les sièges sélectionnés
+                    const filmId = $('#film-input').val();
+                    console.log(selectedSeanceId, selectedSeats, filmId);
+                    // Envoie des données au serveur pour valider la réservation
+                    axios.post('/utilisateur/commandes/paiement', {
+                        seanceId: selectedSeanceId,
+                        seats: selectedSeats,
+                        filmId: filmId
+                    })
+                        .then(response => {
+                            // Gérer la réponse du serveur
+                            window.location.href = '/utilisateur/commandes/paiement';
+                        })
+                        .catch(error => {
+                            console.error('Erreur lors du paiement :', error);
+                            alert('Une erreur est survenue. Veuillez réessayer.');
+                        });
+                });
 
                 axios.post('/reservation/film', { 'cinemaId': cinemaId, 'filmId': filmId })
                     .then(response => {
