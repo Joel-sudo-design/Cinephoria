@@ -885,7 +885,7 @@ axios.defaults.withCredentials = true;
                             function updateSeances(selectedDate) {
                                 $seancesButtons.empty(); // Effacer les anciens boutons
                                 let availableSeances = [];
-                                let atLeastOneAvailable = false; // Indicateur pour vérifier la disponibilité des sièges
+                                let atLeastOneAvailable = false;
 
                                 // Filtrer les séances correspondant à la date sélectionnée
                                 data.seances.forEach(seance => {
@@ -893,6 +893,7 @@ axios.defaults.withCredentials = true;
                                         availableSeances = availableSeances.concat(seance.informations);
                                     }
                                 });
+                                console.log(availableSeances);
 
                                 if (availableSeances.length === 0) {
                                     $seancesButtons.addClass('disabled'); // Désactive la `row`
@@ -906,7 +907,7 @@ axios.defaults.withCredentials = true;
                                     // Ajouter les boutons pour chaque séance
                                     availableSeances.forEach(seance => {
                                         const $button = $(`
-                                            <button class="btn btn-reservation col mt-2 disabled d-flex justify-content-center align-items-center flex-column text-center mx-2">
+                                            <button id="${seance.id}" class="btn btn-reservation col mt-2 disabled d-flex justify-content-center align-items-center flex-column text-center mx-2">
                                                 <span>${seance.qualite}</span>
                                                 <span>${seance.heureDebut}</span>
                                                 <span>${seance.heureFin}</span>
@@ -964,7 +965,18 @@ axios.defaults.withCredentials = true;
                                                 $seancesSelected.text(`Qualité choisie : ${seance.qualite}`);
 
                                                 // Mettre à jour le prix
-                                                $('#prix-reservations').text(`Prix : ${seance.prix} €`);
+                                                let nombrePlaces = parseInt($('#Textarea-places-reservations').val(), 10);
+                                                let prixUnitaire = seance.prix;
+
+                                                // Calcul du prix dégressif
+                                                if (nombrePlaces >= 5) {
+                                                    prixUnitaire = prixUnitaire * 0.8; // 20% de réduction
+                                                } else if (nombrePlaces >= 2) {
+                                                    prixUnitaire = prixUnitaire * 0.9; // 10% de réduction
+                                                }
+
+                                                // Mettre à jour l'affichage du prix
+                                                $('#prix-reservations').text(`Prix : ${prixUnitaire.toFixed(2)} €`);
                                             }
                                             // Afficher les sièges réservés pour cette séance
                                             $('#selection-sieges').removeClass('disabled');

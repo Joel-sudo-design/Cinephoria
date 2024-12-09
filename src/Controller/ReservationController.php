@@ -37,7 +37,7 @@ class ReservationController extends AbstractController
         ]);
     }
     #[Route('/reservation/film', name: 'app_reservation_film')]
-    public function reservation(FilmRepository $filmRepository, Request $request, CinemaRepository $cinemaRepository): Response
+    public function loadFilm(FilmRepository $filmRepository, Request $request, CinemaRepository $cinemaRepository): Response
     {
         $data = json_decode($request->getContent(), true);
         $filmId = $data['filmId'];
@@ -67,6 +67,7 @@ class ReservationController extends AbstractController
                         ];
                     }
                     $structuredSeances[$date]['informations'][] = [
+                        'id' => $seanceArray['id'],
                         'heureDebut' => $seanceArray['heure_debut_seance'],
                         'heureFin' => $seanceArray['heure_fin_seance'],
                         'qualite' => $seanceArray['qualite'],
