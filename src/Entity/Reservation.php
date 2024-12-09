@@ -19,6 +19,9 @@ class Reservation
     #[ORM\ManyToOne(inversedBy: 'reservation')]
     private ?Seance $seance = null;
 
+    #[ORM\ManyToOne(inversedBy: 'reservation')]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -63,5 +66,17 @@ class Reservation
         return [
             'siege_reserve' => $this->siege_reserve,
         ];
+    }
+
+    public function getUser(): ?user
+    {
+        return $this->user;
+    }
+
+    public function setUser(?user $user): static
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }

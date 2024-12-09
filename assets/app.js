@@ -893,7 +893,6 @@ axios.defaults.withCredentials = true;
                                         availableSeances = availableSeances.concat(seance.informations);
                                     }
                                 });
-                                console.log(availableSeances);
 
                                 if (availableSeances.length === 0) {
                                     $seancesButtons.addClass('disabled'); // Désactive la `row`
@@ -1004,7 +1003,7 @@ axios.defaults.withCredentials = true;
                                     initialiserSieges();
                                 });
 
-                            //Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
+                            // Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
                             $clearIcon.on('click', function () {
                                 // Effacer la date sélectionnée en réinitialisant la valeur du champ
                                 $datepicker.datepicker('update', '').val('');
@@ -1024,7 +1023,7 @@ axios.defaults.withCredentials = true;
                                 $('#salle-reservations').text('');
                             });
 
-                            //Appliquer le style de hover/focus
+                            // Appliquer le style de hover/focus
                             $clearIcon.on('mouseenter focus', function () {
                                 $datepicker.addClass('btn-hover');
                                 $clearIcon.addClass('btn-hover');
@@ -1034,7 +1033,7 @@ axios.defaults.withCredentials = true;
                                 $calendarIcon.addClass('btn-hover');
                             });
 
-                            //Retirer le style quand on quitte le survol/focus
+                            // Retirer le style quand on quitte le survol/focus
                             $clearIcon.on('mouseleave blur', function () {
                                 $datepicker.removeClass('btn-hover');
                                 $clearIcon.removeClass('btn-hover');
@@ -1044,11 +1043,10 @@ axios.defaults.withCredentials = true;
                                 $calendarIcon.removeClass('btn-hover');
                             });
 
-                            //Ouvrir le calendrier
+                            // Ouvrir le calendrier
                             $calendarIcon.on('click', function () {
                                 $datepicker.focus();
                             });
-
                         }
                     })
                     .catch(error => { console.error('Erreur lors de la récupération des données :', error); });

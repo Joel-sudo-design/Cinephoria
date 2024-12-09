@@ -8,11 +8,11 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class CommandesController extends AbstractController
 {
-    #[Route('/commandes', name: 'app_commandes')]
+    #[Route('/utilisateur/commandes/paiement', name: 'app_commandes_user_paiement')]
     public function index(): Response
     {
-        return $this->render('commandes/index.html.twig', [
-            'controller_name' => 'CommandesController',
+        return $this->render('commandes/paiement.html.twig', [
+            'controller_name' => 'paiementController',
         ]);
     }
 }
