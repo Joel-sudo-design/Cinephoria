@@ -1,0 +1,15 @@
+{% extends 'baseCommandes.html.twig' %}
+
+{% block title %}Paiement{% endblock %}
+
+{% block body %}
+    <div id="container-accueil" class="container-fluid align-content-center">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-11 col-sm-7 col-md-6 col-lg-6 col-xl-4 col-xxl-4 text-center p-4" style="background-color: #6A73AB">
+                <i class="bi bi-check-circle-fill text-white fs-1"></i>
+                <div class="text-center text-white py-3 fs-5">Paiement effectué avec succès!</div>
+                <a href="{{ path('app_commandes_user') }}" class="btn btn-account-created text-white fs-6 p-0" style="font-size: 0.9rem; color: #6A73AB">Voir les commandes</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

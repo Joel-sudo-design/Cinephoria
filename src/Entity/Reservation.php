@@ -27,26 +27,14 @@ class Reservation
         return $this->id;
     }
 
-    public function getPlace(): ?int
-    {
-        return $this->place;
-    }
-
-    public function setPlace(int $place): static
-    {
-        $this->place = $place;
-
-        return $this;
-    }
-
     public function getSiege(): array
     {
-        return $this->siege;
+        return $this->siege_reserve;
     }
 
     public function setSiege(array $siege): void
     {
-        $this->siege = $siege;
+        $this->siege_reserve = $siege;
     }
 
     public function getSeance(): ?Seance

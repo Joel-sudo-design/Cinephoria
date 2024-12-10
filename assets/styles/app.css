@@ -1100,18 +1100,18 @@ footer #navbarBottom .nav-link {
 }
 
 .btn-paiement {
-  background-color: white;
-  color: green;
-  border: 2px solid green;
+  background-color: white !important;
+  color: green !important;
+  border: 2px solid green !important;
   border-radius: 6px;
   padding: 0.4rem;
   transition: all 0.2s ease;
 }
 
 .btn-paiement:hover {
-  background-color: green;
-  color: white;
-  border: 2px solid white;
+  background-color: green !important;
+  color: white !important;
+  border: 2px solid white !important;
 }
 
 /* Sièges */
@@ -1123,7 +1123,9 @@ footer #navbarBottom .nav-link {
   transition: all 0.2s ease;
 }
 
-.seat.libre:hover, .seat.reserve:hover, .seat.selectionne:hover {
+.seat:not(.legend-square).libre:hover,
+.seat:not(.legend-square).reserve:hover,
+.seat:not(.legend-square).selectionne:hover {
   background-color: #7749F8;
   border: 1px solid #ccc;
 }
@@ -1138,8 +1140,7 @@ footer #navbarBottom .nav-link {
   background-color: #7749F8;
 }
 
-.btn-reservation, #seances-buttons, #row-reservations-places,
-#paiement-reservations, #Textarea-places-reservations, #selection-sieges {
+.btn-reservation, #seances-buttons, #row-reservations-places, #Textarea-places-reservations, #selection-sieges {
     transition: all 0.2s ease;
     background-color: transparent !important;
     color: white !important;
@@ -1162,6 +1163,7 @@ footer #navbarBottom .nav-link {
   border: 1px solid white;
   margin-right: 5px;
   display: inline-block;
+  cursor: none;
 }
 
 #Textarea-places-reservations {

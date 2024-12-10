@@ -5,10 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifs">
+      <change afterPath="$PROJECT_DIR$/templates/reservation/user.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20241209134627.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/baseReservation.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseReservation.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/CommandesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CommandesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ReservationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReservationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Reservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Reservation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/accueil/employe.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil/employe.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/accueil/user.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil/user.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/commandes/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/commandes/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/commandes/paiement.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/reservation/paiement.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +169,7 @@
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "git-widget-placeholder": "Page__reservation",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/xampp/htdocs/Cinephoria/templates/commandes",
+    "last_opened_file_path": "C:/xampp/htdocs/Cinephoria/templates/reservation",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -175,17 +182,18 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\Cinephoria\templates\reservation" />
       <recent name="C:\xampp\htdocs\Cinephoria\templates\commandes" />
       <recent name="C:\xampp\htdocs\Cinephoria\templates" />
       <recent name="C:\xampp\htdocs\Cinephoria\templates\employe" />
       <recent name="C:\xampp\htdocs\Cinephoria\templates\administration" />
-      <recent name="C:\xampp\htdocs\Cinephoria\templates\security" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\Cinephoria\templates\reservation" />
+      <recent name="C:\xampp\htdocs\Cinephoria\templates\registration" />
       <recent name="C:\xampp\htdocs\Cinephoria\templates" />
       <recent name="C:\xampp\htdocs\Cinephoria\public\image_film" />
       <recent name="C:\xampp\htdocs\Cinephoria\public" />
-      <recent name="C:\xampp\htdocs\Cinephoria\templates\administration" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -317,15 +325,9 @@
       <workItem from="1733503422725" duration="4914000" />
       <workItem from="1733562410816" duration="25548000" />
       <workItem from="1733649368641" duration="24400000" />
-      <workItem from="1733727764685" duration="24403000" />
-    </task>
-    <task id="LOCAL-00067" summary="Modifs diverses">
-      <option name="closed" value="true" />
-      <created>1732372455866</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
-      <option name="project" value="LOCAL" />
-      <updated>1732372455867</updated>
+      <workItem from="1733727764685" duration="25012000" />
+      <workItem from="1733814360470" duration="4509000" />
+      <workItem from="1733833291554" duration="5592000" />
     </task>
     <task id="LOCAL-00068" summary="Modifs diverses">
       <option name="closed" value="true" />
@@ -711,7 +713,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733754685670</updated>
     </task>
-    <option name="localTasksCounter" value="116" />
+    <task id="LOCAL-00116" summary="Modifs">
+      <option name="closed" value="true" />
+      <created>1733757786966</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1733757786966</updated>
+    </task>
+    <option name="localTasksCounter" value="117" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
