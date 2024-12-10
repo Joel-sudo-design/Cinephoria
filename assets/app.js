@@ -1086,12 +1086,20 @@ axios.defaults.withCredentials = true;
                         seanceId: selectedSeanceId,
                         seats: selectedSeats,
                     })
-                        .then(response => {
-                            console.log('Réponse du paiement :', response);
+                        .then(function (response) {
+                            if (response.data.redirectToLogin) {
+                                // Si l'utilisateur n'est pas connecté, redirection vers la page de connexion
+                                window.location.href = response.data.redirectToLogin;
+                            } else if (response.data.redirect) {
+                                // Si la réservation est réussie, redirection vers la page de paiement
+                                window.location.href = response.data.redirect;
+                            } else if (response.data.error) {
+                                alert(response.data.error);
+                            }
                         })
-                        .catch(error => {
-                            console.error('Erreur lors du paiement :', error);
-                            alert('Une erreur est survenue. Veuillez réessayer.');
+                        .catch(function (error) {
+                            console.error(error);
+                            alert('Une erreur est survenue');
                         });
                 });
 

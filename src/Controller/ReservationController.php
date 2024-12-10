@@ -167,7 +167,7 @@ class ReservationController extends AbstractController
             $entityManager->flush();
 
             // Redirection vers la page de paiement après la réservation
-            return $this->json(['redirect' => $this->generateUrl('app_reservation_paiement')]);
+            return $this->json(['redirect' => $this->generateUrl('app_reservation_paiement_user')]);
         }
 
         return $this->json(['error' => 'Invalid reservation data.']);
