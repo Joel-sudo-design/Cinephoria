@@ -1,6 +1,6 @@
 {% extends 'baseFilms.html.twig' %}
 
-{% block title %}Films Utilisateur Cinéphoria{% endblock %}
+{% block title %}Films utilisateur cinéphoria{% endblock %}
 
 {% block extra_content_bouton_accueil %}
     <li class="nav-item mx-4 my-4 text-white">
@@ -12,8 +12,16 @@
 
 {% block extra_content_bouton_films %}
     <li class="nav-item mx-4 my-4 text-white">
-        <a id="btn-films" class="nav-link d-flex align-items-center justify-content-center" href="{{ path('app_films_user') }}">
+        <a id="btn-films" class="nav-link d-flex align-items-center justify-content-center active" href="{{ path('app_films_user') }}">
             <i class="bi bi-camera-video fs-3 ms-2"></i><span class="mx-2">Films</span>
+        </a>
+    </li>
+{% endblock %}
+
+{% block extra_content_bouton_reservation %}
+    <li class="nav-item mx-4 my-4 text-white">
+        <a class="nav-link d-flex align-items-center justify-content-center" href="{{ path('app_reservation_user') }}">
+            <i class="bi bi-ticket-perforated fs-3 ms-2"></i><span class="mx-2">Réservation</span>
         </a>
     </li>
 {% endblock %}
