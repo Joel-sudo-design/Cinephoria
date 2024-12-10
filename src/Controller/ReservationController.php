@@ -63,6 +63,11 @@ class ReservationController extends AbstractController
             'filmsData' => $filmsData
         ]);
     }
+    #[Route('/utilisateur/reservation/paiement', name: 'app_reservation_paiement_user')]
+    public function paid(): Response
+    {
+        return $this->render('reservation/paiement.html.twig');
+    }
     #[Route('/reservation/film', name: 'app_reservation_film')]
     public function loadFilm(FilmRepository $filmRepository, Request $request, CinemaRepository $cinemaRepository): Response
     {
@@ -147,22 +152,25 @@ class ReservationController extends AbstractController
         $seanceId = $reservationData['seanceId'];
         $seats = $reservationData['seats'];
 
-        if ($user) {
-            if ($seanceId && !empty ($seats)){
-                    $reservation = new Reservation();
-                    $reservation->setUser($user);
-                    $seance = $entityManager->getRepository(Seance::class)->find($seanceId);
-                    $reservation->setSeance($seance);
-                    $reservation->setSiege($seats);
-                    $entityManager->persist($reservation);
-                    $entityManager->flush();
-            }
+        if (!$user) {
+            // Si l'utilisateur n'est pas authentifié, renvoyez l'URL de la page de connexion
+            return $this->json(['redirectToLogin' => $this->generateUrl('app_login')]);
         }
-        return new JsonResponse(['success' => 'seats']);
+
+        if ($seanceId && !empty($seats)) {
+            $reservation = new Reservation();
+            $reservation->setUser($user);
+            $seance = $entityManager->getRepository(Seance::class)->find($seanceId);
+            $reservation->setSeance($seance);
+            $reservation->setSiege($seats);
+            $entityManager->persist($reservation);
+            $entityManager->flush();
+
+            // Redirection vers la page de paiement après la réservation
+            return $this->json(['redirect' => $this->generateUrl('app_reservation_paiement')]);
+        }
+
+        return $this->json(['error' => 'Invalid reservation data.']);
     }
-    #[Route('/utilisateur/reservation/paiement', name: 'app_reservation_paiement_user')]
-    public function paid(): Response
-    {
-        return $this->render('reservation/paiement.html.twig');
-    }
+
 }
