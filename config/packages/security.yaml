@@ -27,11 +27,13 @@ security:
                 login_path: app_login
                 check_path: app_login
                 default_target_path: app_accueil
+                target_path_parameter: redirect_to
                 enable_csrf: true
             logout:
                 path: app_logout
                 target: app_accueil
             entry_point: form_login
+
 
     access_control:
         - { path: ^/administrateur, roles: ROLE_ADMIN }

@@ -58,20 +58,34 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        // Vérifie si une URL cible est passée via le paramètre "redirect_to"
+        $redirectTo = $request->query->get('redirect_to');
+        if ($redirectTo) {
+            return new RedirectResponse($redirectTo);
+        }
+
+        // Vérifie si une URL cible est stockée dans la session pour le firewall
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
 
-        $user = $token->getRoleNames();
-        if ($user == ['ROLE_USER']) {
-            return new RedirectResponse($this->urlGenerator->generate('app_accueil_user'));
-        } else if ($user == ['ROLE_EMPLOYE']) {
-            return new RedirectResponse($this->urlGenerator->generate('app_accueil_employe'));
-        } else if ($user == ['ROLE_ADMIN']) {
+        // Vérifie les rôles de l'utilisateur
+        $roles = $token->getRoleNames();
+
+        if (in_array('ROLE_ADMIN', $roles, true)) {
             return new RedirectResponse($this->urlGenerator->generate('app_accueil_admin'));
-        } else {
-            return new RedirectResponse($this->urlGenerator->generate('app_accueil'));
         }
+
+        if (in_array('ROLE_EMPLOYE', $roles, true)) {
+            return new RedirectResponse($this->urlGenerator->generate('app_accueil_employe'));
+        }
+
+        if (in_array('ROLE_USER', $roles, true)) {
+            return new RedirectResponse($this->urlGenerator->generate('app_accueil_user'));
+        }
+
+        // Redirection par défaut si aucun rôle n'est trouvé (ou en cas de rôle non prévu)
+        return new RedirectResponse($this->urlGenerator->generate('app_accueil'));
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response

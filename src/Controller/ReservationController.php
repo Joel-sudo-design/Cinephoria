@@ -154,7 +154,9 @@ class ReservationController extends AbstractController
 
         if (!$user) {
             // Si l'utilisateur n'est pas authentifié, renvoyez l'URL de la page de connexion
-            return $this->json(['redirectToLogin' => $this->generateUrl('app_login')]);
+            return $this->json([
+                'redirectToLogin' => $this->generateUrl('app_login', ['redirect_to' => $this->generateUrl('app_reservation_paiement_user')])
+            ]);
         }
 
         if ($seanceId && !empty($seats)) {

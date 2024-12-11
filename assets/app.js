@@ -1059,6 +1059,7 @@ axios.defaults.withCredentials = true;
 
                 const filmTitle = $(this).text().trim();
                 let customSelect = $('.custom-select-btn-cinema');
+                const $clearIconCinema = $('.close-icon-cinema')
 
                 $('#film-input').val(filmId); // Met à jour le champ caché pour le film
 
@@ -1070,7 +1071,7 @@ axios.defaults.withCredentials = true;
 
                 // Affiche l'icône de fermeture
                 customSelect.addClass('no-arrow');
-                $('.close-icon-cinema').removeClass('d-none');
+                $clearIconCinema.removeClass('d-none');
                 $('#datepicker').removeClass('disabled');
 
 
@@ -1104,7 +1105,6 @@ axios.defaults.withCredentials = true;
                 });
 
                 // Réinitialiser la sélection avec l'icône de fermeture
-                const $clearIconCinema = $('.close-icon-cinema')
                 $clearIconCinema.on('click', function () {
                     $('#cinema-input').val('');
                     $('#film-input').val('');
