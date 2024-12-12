@@ -19,15 +19,20 @@ class CommandesController extends AbstractController
         $seance = [];
 
         foreach ($reservations as $reservation) {
-            $seance['reservation'] = $reservation->getSeance()->toArray();
-            $seance['films'] = $reservation->getSeance()->getFilm()->toArray();
+            $seance['seance'] = $reservation->getSeance()->toArray();
+            $seance['seance']['sieges_reserves'] = $reservation->getSiege();
+            $seance['film'] = $reservation->getSeance()->getFilm()->toArray();
+            $imageName = $reservation->getSeance()->getFilm()->getImageName();
+            $seance['film']['image'] = $imageName
+                ? $this->getParameter('films_images_directory') . '/image_film/' . $imageName
+                : null;
+            $genreName = $reservation->getSeance()->getFilm()->getGenre()->getName();
+            $seance['film']['genre'] = $genreName;
         }
-
-        dump($seance);
-        die();
 
         return $this->render('commandes/index.html.twig', [
             'controller_name' => 'CommandesUserController',
+            'seance' => $seance,
         ]);
     }
 }

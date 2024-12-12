@@ -47,6 +47,9 @@ class Seance
     #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'seance')]
     private Collection $reservation;
 
+    #[ORM\ManyToOne(inversedBy: 'seances')]
+    private ?Cinema $cinema = null;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
@@ -140,6 +143,7 @@ class Seance
             'heure_debut_seance' => $this->heure_debut->format('H:i'),
             'heure_fin_seance' => $this->heure_fin->format('H:i'),
             'price' => $this->price,
+            'cinema' => $this->cinema->getName(),
         ];
     }
 
@@ -201,6 +205,18 @@ class Seance
                 $reservation->setSeance(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCinema(): ?Cinema
+    {
+        return $this->cinema;
+    }
+
+    public function setCinema(?Cinema $cinema): static
+    {
+        $this->cinema = $cinema;
 
         return $this;
     }
