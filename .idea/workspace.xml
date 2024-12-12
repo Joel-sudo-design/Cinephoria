@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifs">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/accueil/user.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil/user.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/commandes/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/commandes/index.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Création pages et modifs block twig" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -324,14 +320,6 @@
       <workItem from="1733901738135" duration="8126000" />
       <workItem from="1733917135531" duration="8533000" />
       <workItem from="1733986907253" duration="3370000" />
-    </task>
-    <task id="LOCAL-00076" summary="Ajout colonne is_validate dans table avis">
-      <option name="closed" value="true" />
-      <created>1732527227583</created>
-      <option name="number" value="00076" />
-      <option name="presentableId" value="LOCAL-00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1732527227583</updated>
     </task>
     <task id="LOCAL-00077" summary="Modif diverses page validation">
       <option name="closed" value="true" />
@@ -717,7 +705,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733989633840</updated>
     </task>
-    <option name="localTasksCounter" value="125" />
+    <task id="LOCAL-00125" summary="Création pages et modifs block twig">
+      <option name="closed" value="true" />
+      <created>1733991310783</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1733991310783</updated>
+    </task>
+    <option name="localTasksCounter" value="126" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -736,7 +732,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Finalisation Page d'accueil user et visiteur" />
     <MESSAGE value="Début page accueil administrateur" />
     <MESSAGE value="Début page d'accueil emplyé + navbar" />
     <MESSAGE value="Fin page d'accueil employé + navbar" />
@@ -761,7 +756,8 @@
     <MESSAGE value="Affichage des films sur la page" />
     <MESSAGE value="Création page réservation" />
     <MESSAGE value="Modifs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modifs" />
+    <MESSAGE value="Création pages et modifs block twig" />
+    <option name="LAST_COMMIT_MESSAGE" value="Création pages et modifs block twig" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
