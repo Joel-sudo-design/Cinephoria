@@ -9,44 +9,69 @@
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
 </head>
-<body>
-    <nav id="navbarTop" class="navbar navbar-expand-lg navbar-light fixed-top" style="height: 6rem; z-index: 1100">
-        <div class="container-fluid">
-            <button id="navbar-togglerTop" class="navbar-toggler text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarTop" aria-controls="offcanvasNavbarTop" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbarTop" aria-labelledby="offcanvasNavbarLabelTop">
-                <div class="offcanvas-header">
-                    <img src="{{ asset('build/images/logo.svg')}}" class="img-fluid" style="width: 6rem; height: auto" alt="logo" />
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <body>
+        <nav id="navbarTop" class="navbar navbar-expand-lg navbar-light fixed-top" style="height: 6rem; z-index: 1050">
+            <div class="container-fluid">
+                <button id="navbar-togglerTop" class="navbar-toggler text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarTop" aria-controls="offcanvasNavbarTop" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbarTop" aria-labelledby="offcanvasNavbarLabelTop">
+                    <div class="offcanvas-header">
+                        <img src="{{ asset('build/images/logo.svg')}}" class="img-fluid" style="width: 6rem; height: auto" alt="logo" />
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div id="offcanvas-bodyTop" class="row offcanvas-body align-items-center justify-content-center">
+                        <ul id="navbarLeft" class="col-5 navbar-nav align-items-center justify-content-center p-0">
+                            {% block extra_content_bouton_accueil %}{% endblock %}
+                            {% block extra_content_bouton_films %}{% endblock %}
+                            {% block extra_content_bouton_reservation %}{% endblock %}
+                        </ul>
+                        <img id="logo" src="{{ asset('build/images/logo.svg')}}" class="col-2 img-fluid" style="width: 7.5rem; height: auto" alt="logo" />
+                        <ul id="navbarRight" class="col-5 navbar-nav align-items-center justify-content-center p-0">
+                            {% block extra_content_bouton_admin_employe %}{% endblock %}
+                            {% block extra_content_bouton_contact %}{% endblock %}
+                            <li class="nav-item dropdown mx-3 my-3 text-white">
+                                <a id="btn-mon-espace" class="nav-link dropdown-toggle d-flex align-items-center justify-content-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-person-circle fs-3 ms-2"></i><span class="mx-2">Mon espace</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end p-0">
+                                    {% block extra_content_mon_espace %}{% endblock %}
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div id="offcanvas-bodyTop" class="row offcanvas-body align-items-center justify-content-center">
-                    <ul id="navbarLeft" class="col-5 navbar-nav align-items-center justify-content-center p-0">
-                        {% block extra_content_bouton_accueil %}{% endblock %}
-                        {% block extra_content_bouton_films %}{% endblock %}
-                        {% block extra_content_bouton_reservation %}{% endblock %}
-                    </ul>
-                    <img id="logo" src="{{ asset('build/images/logo.svg')}}" class="col-2 img-fluid" style="width: 7.5rem; height: auto" alt="logo" />
-                    <ul id="navbarRight" class="col-5 navbar-nav align-items-center justify-content-center p-0">
-                        {% block extra_content_bouton_admin_employe %}{% endblock %}
-                        {% block extra_content_bouton_contact %}{% endblock %}
-                        <li class="nav-item dropdown mx-3 my-3 text-white">
-                            <a id="btn-mon-espace" class="nav-link dropdown-toggle d-flex align-items-center justify-content-center active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-person-circle fs-3 ms-2"></i><span class="mx-2">Mon espace</span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end p-0">
-                                {% block extra_content_mon_espace %}{% endblock %}
-                            </ul>
-                        </li>
-                    </ul>
+            </div>
+        </nav>
+        <div class="container-fluid container-films row justify-content-center align-content-center">
+            <div id="commande" class="col-6 d-flex justify-content-center align-item-center mb-4" style="background-color: #6A73AB; width: 70rem">
+                <div class="col-4 p-4 text-white">
+                    <div class="row">
+                        <!--Image-->
+                        <img src="" class="img-fluid" alt="image">
+                    </div>
+                    <div class="row mt-4 fs-5">
+                        <!--Genre-->
+                        <div class="col-12 text-center"></div>
+                        <!--Durée-->
+                        <div class="col-12 text-center mt-3"></div>
+                    </div>
+                </div>
+                <div class="col-8 p-4">
+                    <div class="row justify-content-center align-content-center">
+                        <!-- Nom du film & cinéma -->
+                        <div class="row ps-0">
+                            <div class="col-auto">
+                                <div class="text-white align-content-center fs-3 me-2"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </nav>
-    {% block body %}{% endblock %}
-    {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
-    {% endblock %}
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
     <footer>
         <nav id="navbarBottom" class="navbar navbar-expand-lg navbar-light fixed-bottom" style="height: 8rem">
             <div class="container-fluid">
@@ -108,5 +133,5 @@
             </div>
         </nav>
     </footer>
-</body>
+    </body>
 </html>
