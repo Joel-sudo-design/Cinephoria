@@ -62,36 +62,36 @@ axios.defaults.withCredentials = true;
         configureNavbarBehavior();
 
         //Page de connexion et d'inscription dans mon espace
-        //Masquer le mot de passe de la page de connexion et d'inscription
-        $('#togglePassword').on('click', function () {
-                    const passwordField = $('#password');
+        // Fonction principale pour initialiser les fonctionnalités
+        function initializeFormFeatures() {
+            // Fonction pour basculer l'affichage du mot de passe
+            function togglePasswordVisibility(toggleButtonId, passwordFieldId) {
+                $(toggleButtonId).on('click', function () {
+                    const passwordField = $(passwordFieldId);
                     const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
                     passwordField.attr('type', type);
                     $(this).toggleClass('bi-eye bi-eye-slash');
                 });
-        $('#toggleConfirmPassword').on('click', function () {
-                    const passwordField = $('#confirmPassword');
-                    const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
-                    passwordField.attr('type', type);
-                    $(this).toggleClass('bi-eye bi-eye-slash');
-                });
-        $('#toggleProvisionalPassword').on('click', function () {
-                    const passwordField = $('#provisional-password');
-                    const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
-                    passwordField.attr('type', type);
-                    $(this).toggleClass('bi-eye bi-eye-slash');
-                });
-        //Vérification de la case à cocher des conditions générales d'utilisation
-        $('.btn-register').click(function(event) {
+            }
+
+            // Appliquer la fonction aux différents champs
+            togglePasswordVisibility('#togglePassword', '#password');
+            togglePasswordVisibility('#toggleConfirmPassword', '#confirmPassword');
+            togglePasswordVisibility('#toggleProvisionalPassword', '#provisional-password');
+
+            // Vérification de la case à cocher des conditions générales d'utilisation
+            $('.btn-register').click(function (event) {
                 const checkbox = $("input[name='registration_form[agreeTerms]']");
-                const message = $(".checkbox-error");
-                if (!checkbox.is(":checked")) {
+                const message = $('.checkbox-error');
+
+                if (!checkbox.is(':checked')) {
                     event.preventDefault();
                     message.show();
                 } else {
                     message.hide();
                 }
             });
+        }
 
         //Page accueil
         function resizeCarrousel() {
@@ -3615,6 +3615,8 @@ axios.defaults.withCredentials = true;
             '/films': [film, menuFilms],
             '/reservation': [reservation],
             '/utilisateur/reservation': [reservation],
+            '/mon_espace/connexion': [initializeFormFeatures],
+            '/mon_espace/inscription': [initializeFormFeatures],
         };
         // Récupérer le chemin actuel
         const currentPath = window.location.pathname;
