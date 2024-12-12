@@ -7,6 +7,7 @@
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ReservationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReservationController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -322,15 +323,7 @@
       <workItem from="1733844513466" duration="2249000" />
       <workItem from="1733901738135" duration="8126000" />
       <workItem from="1733917135531" duration="8533000" />
-      <workItem from="1733986907253" duration="961000" />
-    </task>
-    <task id="LOCAL-00074" summary="Création table avis">
-      <option name="closed" value="true" />
-      <created>1732465026300</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1732465026300</updated>
+      <workItem from="1733986907253" duration="2548000" />
     </task>
     <task id="LOCAL-00075" summary="Création table avis">
       <option name="closed" value="true" />
@@ -716,7 +709,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733986952186</updated>
     </task>
-    <option name="localTasksCounter" value="123" />
+    <task id="LOCAL-00123" summary="Modifs">
+      <option name="closed" value="true" />
+      <created>1733988139533</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1733988139533</updated>
+    </task>
+    <option name="localTasksCounter" value="124" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

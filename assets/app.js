@@ -1095,12 +1095,10 @@ axios.defaults.withCredentials = true;
                         seats: selectedSeats,
                     })
                         .then(function (response) {
-                            console.log(response.data);  // Assurez-vous de vérifier les données ici
-
                             if (response.data.redirectToLogin) {
-                                window.location.assign(response.data.redirectToLogin);  // Utilisez assign() pour rediriger
+                                window.location.assign(response.data.redirectToLogin);
                             } else if (response.data.redirectTo) {
-                                window.location.assign(response.data.redirectTo);  // Si la réservation est réussie, redirigez
+                                window.location.assign(response.data.redirectTo);
                             } else if (response.data.error) {
                                 alert(response.data.error);
                             }

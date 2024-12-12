@@ -169,8 +169,6 @@ class ReservationController extends AbstractController
                     ]),
                 ]);
             }
-
-            return $this->json(['error' => 'Données de réservation invalides.']);
         }
 
         // Vérifier les données de réservation en attente
@@ -188,9 +186,6 @@ class ReservationController extends AbstractController
         // Validation et création de la réservation
         if ($seanceId && !empty($seats)) {
             $seance = $entityManager->getRepository(Seance::class)->find($seanceId);
-            if (!$seance) {
-                return $this->json(['error' => 'Séance non trouvée.']);
-            }
 
             $reservation = new Reservation();
             $reservation->setUser($user);
@@ -200,12 +195,14 @@ class ReservationController extends AbstractController
             $entityManager->persist($reservation);
             $entityManager->flush();
 
-            return $this->json([
-                'redirectTo' => $this->generateUrl('app_reservation_paiement'),
-            ]);
+            if($pendingReservation){
+                return $this->redirectToRoute('app_reservation_paiement_user');
+            } else {
+                return $this->json(['redirectTo' => $this->generateUrl('app_reservation_paiement_user')]);
+            }
         }
 
-        return $this->redirectToRoute('app_reservation_paiement_user');
+        return new JsonResponse(['error' => 'Une erreur est survenue lors de la réservation.'], 400);
     }
 
 }
