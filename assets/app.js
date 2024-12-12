@@ -26,32 +26,40 @@ axios.defaults.withCredentials = true;
 
 //Script
     $(document).ready(function() {
-        //Navbar Top & Navbar Footer Bottom
-        //A l'ouverture des navbar pour mobile, on change la couleur de fond, on cache le logo et on modifie la taille des colonnes
-        $('#navbar-togglerTop').click(function() {
-                    $('#offcanvasNavbarTop').css("background", "linear-gradient(90deg, rgba(106, 115, 171, 0.85) 50%, rgba(43, 46, 69, 0.85) 100%)");
-                    $('#logo').hide();
-                    $('#offcanvas-bodyTop').removeClass('row')
-                    $('#navbarLeft').removeClass('col-5').addClass('col-12');
-                    $('#navbarRight').removeClass('col-5').addClass('col-12');
-                });
-        $('#navbar-togglerBottom').click(function() {
-                    $('#offcanvasNavbarBottom').css("background", "linear-gradient(90deg, rgba(106, 115, 171, 0.85) 50%, rgba(43, 46, 69, 0.85) 100%)");
-                    $('#col-2-bottom').remove()
-                });
+        //Navbar & footer
+        function configureNavbarBehavior() {
+            // Navbar Top - Ouverture
+            $('#navbar-togglerTop').click(function() {
+                $('#offcanvasNavbarTop').css("background", "linear-gradient(90deg, rgba(106, 115, 171, 0.85) 50%, rgba(43, 46, 69, 0.85) 100%)");
+                $('#logo').hide();
+                $('#offcanvas-bodyTop').removeClass('row');
+                $('#navbarLeft').removeClass('col-5').addClass('col-12');
+                $('#navbarRight').removeClass('col-5').addClass('col-12');
+            });
 
-        //À la fermeture des navbar pour mobile, on remet la couleur de fond par défaut, on affiche le logo et on remet la taille des colonnes
-        $('#offcanvasNavbarTop').on('hidden.bs.offcanvas', function () {
-                    $('#offcanvasNavbarTop').css("background", "");
-                    $('#logo').show();
-                    $('#offcanvas-bodyTop').addClass('row')
-                    $('#navbarLeft').removeClass('col-12').addClass('col-5');
-                    $('#navbarRight').removeClass('col-12').addClass('col-5');
-                });
-        $('#offcanvasNavbarBottom').on('hidden.bs.offcanvas', function () {
-                    $('#offcanvasNavbarBottom').css("background", "");
-                    $('#col-5-bottom').after('<div id="col-2-bottom" class="col-2" style="width: 7.5rem"></div>');
-                });
+            // Navbar Bottom - Ouverture
+            $('#navbar-togglerBottom').click(function() {
+                $('#offcanvasNavbarBottom').css("background", "linear-gradient(90deg, rgba(106, 115, 171, 0.85) 50%, rgba(43, 46, 69, 0.85) 100%)");
+                $('#col-2-bottom').remove();
+            });
+
+            // Navbar Top - Fermeture
+            $('#offcanvasNavbarTop').on('hidden.bs.offcanvas', function () {
+                $('#offcanvasNavbarTop').css("background", "");
+                $('#logo').show();
+                $('#offcanvas-bodyTop').addClass('row');
+                $('#navbarLeft').removeClass('col-12').addClass('col-5');
+                $('#navbarRight').removeClass('col-12').addClass('col-5');
+            });
+
+            // Navbar Bottom - Fermeture
+            $('#offcanvasNavbarBottom').on('hidden.bs.offcanvas', function () {
+                $('#offcanvasNavbarBottom').css("background", "");
+                $('#col-5-bottom').after('<div id="col-2-bottom" class="col-2" style="width: 7.5rem"></div>');
+            });
+        }
+        //Appel de la fonction pour configurer le comportement des navbars
+        configureNavbarBehavior();
 
         //Page de connexion et d'inscription dans mon espace
         //Masquer le mot de passe de la page de connexion et d'inscription
@@ -73,7 +81,6 @@ axios.defaults.withCredentials = true;
                     passwordField.attr('type', type);
                     $(this).toggleClass('bi-eye bi-eye-slash');
                 });
-
         //Vérification de la case à cocher des conditions générales d'utilisation
         $('.btn-register').click(function(event) {
                 const checkbox = $("input[name='registration_form[agreeTerms]']");
@@ -86,7 +93,7 @@ axios.defaults.withCredentials = true;
                 }
             });
 
-        // Page accueil
+        //Page accueil
         function resizeCarrousel() {
             const carousel = document.getElementById('carouselExample');
             const imageContainers = carousel.querySelectorAll('.carousel-inner .image-carousel');
@@ -117,7 +124,7 @@ axios.defaults.withCredentials = true;
         }
 
         //Page Films
-        // Fonction pour affichage du badge age minimum
+        //Fonction pour affichage du badge age minimum
         function displayAgeBadge(film) {
             const ageFilm = $('#age-' + film.id).closest('.d-flex');
             // Ciblez chaque badge d'âge à partir du conteneur
@@ -148,7 +155,7 @@ axios.defaults.withCredentials = true;
                 ageBadge18.addClass('d-none');
             }
         }
-        // Fonction pour charger les séances selon la date
+        //Fonction pour charger les séances selon la date
         function updateModalAndSessions(filmId, selectedDate, updateDays = true) {
                     // Vider les conteneurs avant de les remplir
                     const seancesContainer = $('#date-seance-' + filmId);
@@ -244,7 +251,7 @@ axios.defaults.withCredentials = true;
                             seancesContainer.html('<div class="col-12 text-center text-danger">Erreur de chargement.</div>');
                         });
         }
-        // Fonction pour charger les séances avec le Datepicker selon la date choisie
+        //Fonction pour charger les séances avec le Datepicker selon la date choisie
         function initializeDatepicker(filmId) {
             const $datepicker = $(`#datepicker-${filmId}`);
             const $calendarIcon = $(`#icon-calendar-${filmId}`);
@@ -296,7 +303,7 @@ axios.defaults.withCredentials = true;
                 $datepicker.focus();
             });
         }
-        // Fonction pour initialiser le modal et le datepicker avec la date du jour
+        //Fonction pour initialiser le modal et le datepicker avec la date du jour
         function initializeModalAndDatepicker(filmId, updateSessionsCallback) {
             // Ajout du gestionnaire d'événements pour ouvrir le modal et initialiser la date
             $(`a[data-bs-toggle="modal"][data-bs-target="#modal-${filmId}"]`).on('click', function () {
@@ -333,7 +340,7 @@ axios.defaults.withCredentials = true;
                 });
             });
         }
-        // Fonction pour générer le template HTML d'une carte de film
+        //Fonction pour générer le template HTML d'une carte de film
         function generateFilmCardHTML(film) {
             return `
                     <div class="col-auto card" style="width: 12rem">
@@ -405,7 +412,7 @@ axios.defaults.withCredentials = true;
                         </div>
                     </div>`;
         }
-        // Fonction pour Gérer le clic sur les jours pour les séances
+        //Fonction pour Gérer le clic sur les jours pour les séances
         function handleDateClick(filmId) {
             // Ajouter un gestionnaire de clic pour chaque jour
             $(`#modal-date-seance-${filmId}`).on('click', '.clickable-day', function () {
@@ -481,7 +488,7 @@ axios.defaults.withCredentials = true;
                                     $('#loading-spinner').addClass('d-none');
                                 });
         }
-        // Menu Films
+        //Menu Films
         function menuFilms() {
             function reloadFilms() {
                 const cinemaId = $('#cinema-input').val(); // Récupère le filtre cinéma
@@ -725,7 +732,7 @@ axios.defaults.withCredentials = true;
         }
 
         //Page Réservation
-        // Fonction pour récupérer les données du film et des séances
+        //Fonction pour récupérer les données du film et des séances
         function reservation() {
             // Récupérer les données du film et des séances et permettre la réservation
             function handleReservation(cinemaId, filmId) {
@@ -1152,6 +1159,15 @@ axios.defaults.withCredentials = true;
                     $('.close-icon-cinema').removeClass('btn-hover');
                 });
             });
+
+            // Clic en dehors pour fermer les menus
+            $(document).on('click', function (e) {
+                if (!$(e.target).closest('.custom-dropdown, .btn-films').length) {
+                    $('.custom-options-cinema').hide();
+                    $('.custom-options-films').addClass('d-none');
+                }
+            });
+
         }
 
         //Page Administration
@@ -3586,19 +3602,28 @@ axios.defaults.withCredentials = true;
                 }
 
         //Lancement des fonctions au chargement des pages
-        if (window.location.pathname === '/accueil') {resizeCarrousel()}
-        if (window.location.pathname === '/administrateur/accueil') {resizeCarrousel()}
-        if (window.location.pathname === '/utilisateur/accueil') {resizeCarrousel()}
-        if (window.location.pathname === '/administrateur/administration') {filmAdmin()}
-        if (window.location.pathname === '/administrateur/administration/account_employe') {employe()}
-        if (window.location.pathname === '/administrateur/administration/reservations') {employe()}
-        if (window.location.pathname === '/administrateur/films') {film(); menuFilms()}
-        if (window.location.pathname === '/employe/administration') {filmEmploye()}
-        if (window.location.pathname === '/employe/administration/avis') {avis()}
-        if (window.location.pathname === '/employe/films') {film()}
-        if (window.location.pathname === '/utilisateur/films') {film()}
-        if (window.location.pathname === '/films') {film(); menuFilms()}
-        if (window.location.pathname === '/reservation') {reservation()}
-        if (window.location.pathname === '/utilisateur/reservation') {reservation()}
+        const pathFunctions = {
+            '/accueil': [resizeCarrousel],
+            '/administrateur/accueil': [resizeCarrousel],
+            '/utilisateur/accueil': [resizeCarrousel],
+            '/administrateur/administration': [filmAdmin],
+            '/administrateur/administration/account_employe': [employe],
+            '/administrateur/administration/reservations': [employe],
+            '/administrateur/films': [film, menuFilms],
+            '/employe/administration': [filmEmploye],
+            '/employe/administration/avis': [avis],
+            '/employe/films': [film],
+            '/utilisateur/films': [film],
+            '/films': [film, menuFilms],
+            '/reservation': [reservation],
+            '/utilisateur/reservation': [reservation],
+        };
+        // Récupérer le chemin actuel
+        const currentPath = window.location.pathname;
+        // Vérifier si une entrée correspond au chemin actuel
+        if (pathFunctions[currentPath]) {
+            // Appeler chaque fonction associée au chemin
+            pathFunctions[currentPath].forEach(func => func());
+        }
     });
 
