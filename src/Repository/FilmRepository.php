@@ -19,6 +19,7 @@ class FilmRepository extends ServiceEntityRepository
         /**
          * @return Film[] Returns an array of Film objects
          */
+
     public function findByDate($value): array
     {
         return $this->createQueryBuilder('f')
@@ -28,8 +29,6 @@ class FilmRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-    // src/Repository/FilmRepository.php
 
     public function findByFilters($cinemaId, $genreId, $date)
     {
@@ -71,8 +70,6 @@ class FilmRepository extends ServiceEntityRepository
 
         return $queryBuilder->getResult();
     }
-
-
 
     //    public function findOneBySomeField($value): ?Film
     //    {

@@ -13,6 +13,17 @@ class AccueilController extends AbstractController
     #[Route('/accueil', name: 'app_accueil')]
     public function index(EntityManagerInterface $entityManager, FilmRepository $filmRepository): Response
     {
+        if ($this->getUser()) {
+            $roles = $this->getUser()->getRoles();
+
+            if (in_array('ROLE_ADMIN', $roles)) {
+                return $this->redirectToRoute('app_accueil_admin');
+            } elseif (in_array('ROLE_EMPLOYE', $roles)) {
+                return $this->redirectToRoute('app_accueil_employe');
+            } elseif (in_array('ROLE_USER', $roles)) {
+                return $this->redirectToRoute('app_accueil_user');
+            }
+        }
         $filmsArray = $this->getFilmsArray($filmRepository);
 
         return $this->render('accueil/index.html.twig', [
