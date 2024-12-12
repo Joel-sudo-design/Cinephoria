@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modifs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/ReservationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReservationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Security/UserAuthenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/UserAuthenticator.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -322,15 +321,8 @@
       <workItem from="1733814360470" duration="4509000" />
       <workItem from="1733833291554" duration="9778000" />
       <workItem from="1733844513466" duration="2249000" />
-      <workItem from="1733901738135" duration="643000" />
-    </task>
-    <task id="LOCAL-00072" summary="Modifs diverses">
-      <option name="closed" value="true" />
-      <created>1732448370546</created>
-      <option name="number" value="00072" />
-      <option name="presentableId" value="LOCAL-00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1732448370546</updated>
+      <workItem from="1733901738135" duration="8126000" />
+      <workItem from="1733917135531" duration="8533000" />
     </task>
     <task id="LOCAL-00073" summary="Modifs diverses">
       <option name="closed" value="true" />
@@ -716,7 +708,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733844415643</updated>
     </task>
-    <option name="localTasksCounter" value="121" />
+    <task id="LOCAL-00121" summary="Modifs">
+      <option name="closed" value="true" />
+      <created>1733902833298</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1733902833298</updated>
+    </task>
+    <option name="localTasksCounter" value="122" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

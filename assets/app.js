@@ -1088,19 +1088,19 @@ axios.defaults.withCredentials = true;
                         seats: selectedSeats,
                     })
                         .then(function (response) {
+                            console.log(response.data);  // Assurez-vous de vérifier les données ici
+
                             if (response.data.redirectToLogin) {
-                                // Si l'utilisateur n'est pas connecté, redirection vers la page de connexion
-                                window.location.href = response.data.redirectToLogin;
-                            } else if (response.data.redirect) {
-                                // Si la réservation est réussie, redirection vers la page de paiement
-                                window.location.href = response.data.redirect;
+                                window.location.assign(response.data.redirectToLogin);  // Utilisez assign() pour rediriger
+                            } else if (response.data.redirectTo) {
+                                window.location.assign(response.data.redirectTo);  // Si la réservation est réussie, redirigez
                             } else if (response.data.error) {
                                 alert(response.data.error);
                             }
                         })
                         .catch(function (error) {
                             console.error(error);
-                            alert('Une erreur est survenue');
+                            alert('Une erreur est survenue. Veuillez réessayer.');
                         });
                 });
 

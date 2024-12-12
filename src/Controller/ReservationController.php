@@ -148,31 +148,64 @@ class ReservationController extends AbstractController
     public function paiement(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
-        $reservationData = json_decode($request->getContent(), true);
-        $seanceId = $reservationData['seanceId'];
-        $seats = $reservationData['seats'];
+        $session = $request->getSession();
 
+        // Vérifier si l'utilisateur est connecté
         if (!$user) {
-            // Si l'utilisateur n'est pas authentifié, renvoyez l'URL de la page de connexion
-            return $this->json([
-                'redirectToLogin' => $this->generateUrl('app_login', ['redirect_to' => $this->generateUrl('app_reservation_paiement_user')])
-            ]);
+            $reservationData = json_decode($request->getContent(), true);
+            $seanceId = $reservationData['seanceId'] ?? null;
+            $seats = $reservationData['seats'] ?? null;
+
+            if ($seanceId && !empty($seats)) {
+                $session->set('pending_reservation', [
+                    'seanceId' => $seanceId,
+                    'seats' => $seats,
+                ]);
+
+                // Retourner une redirection JSON pour une requête AJAX
+                return $this->json([
+                    'redirectToLogin' => $this->generateUrl('app_login', [
+                        'redirect_to' => $this->generateUrl('app_reservation_paiement'),
+                    ]),
+                ]);
+            }
+
+            return $this->json(['error' => 'Données de réservation invalides.']);
         }
 
+        // Vérifier les données de réservation en attente
+        $pendingReservation = $session->get('pending_reservation');
+        if ($pendingReservation) {
+            $seanceId = $pendingReservation['seanceId'];
+            $seats = $pendingReservation['seats'];
+            $session->remove('pending_reservation');
+        } else {
+            $reservationData = json_decode($request->getContent(), true);
+            $seanceId = $reservationData['seanceId'] ?? null;
+            $seats = $reservationData['seats'] ?? null;
+        }
+
+        // Validation et création de la réservation
         if ($seanceId && !empty($seats)) {
+            $seance = $entityManager->getRepository(Seance::class)->find($seanceId);
+            if (!$seance) {
+                return $this->json(['error' => 'Séance non trouvée.']);
+            }
+
             $reservation = new Reservation();
             $reservation->setUser($user);
-            $seance = $entityManager->getRepository(Seance::class)->find($seanceId);
             $reservation->setSeance($seance);
             $reservation->setSiege($seats);
+
             $entityManager->persist($reservation);
             $entityManager->flush();
 
-            // Redirection vers la page de paiement après la réservation
-            return $this->json(['redirect' => $this->generateUrl('app_reservation_paiement_user')]);
+            return $this->json([
+                'redirectTo' => $this->generateUrl('app_reservation_paiement'),
+            ]);
         }
 
-        return $this->json(['error' => 'Invalid reservation data.']);
+        return $this->redirectToRoute('app_reservation_paiement_user');
     }
 
 }
