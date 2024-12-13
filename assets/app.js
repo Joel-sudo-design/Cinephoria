@@ -3602,21 +3602,22 @@ axios.defaults.withCredentials = true;
         //Lancement des fonctions au chargement des pages
         const pathFunctions = {
             '/accueil': [resizeCarrousel],
-            '/administrateur/accueil': [resizeCarrousel],
+            '/films': [film, menuFilms],
+            '/reservation': [reservation],
+            '/mon_espace/connexion': [initializeFormFeatures],
+            '/mon_espace/inscription': [initializeFormFeatures],
             '/utilisateur/accueil': [resizeCarrousel],
+            '/utilisateur/films': [film, menuFilms],
+            '/utilisateur/reservation': [reservation],
+            '/employe/films': [film, menuFilms],
+            '/employe/administration': [filmEmploye],
+            '/employe/administration/avis': [avis],
+            '/administrateur/accueil': [resizeCarrousel],
+            '/administrateur/films': [film, menuFilms],
+            '/administrateur/reservation': [reservation],
             '/administrateur/administration': [filmAdmin],
             '/administrateur/administration/account_employe': [employe],
             '/administrateur/administration/reservations': [employe],
-            '/administrateur/films': [film, menuFilms],
-            '/employe/administration': [filmEmploye],
-            '/employe/administration/avis': [avis],
-            '/employe/films': [film],
-            '/utilisateur/films': [film],
-            '/films': [film, menuFilms],
-            '/reservation': [reservation],
-            '/utilisateur/reservation': [reservation],
-            '/mon_espace/connexion': [initializeFormFeatures],
-            '/mon_espace/inscription': [initializeFormFeatures],
         };
         // Récupérer le chemin actuel
         const currentPath = window.location.pathname;
