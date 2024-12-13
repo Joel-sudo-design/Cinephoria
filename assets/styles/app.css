@@ -103,7 +103,7 @@ footer #navbarBottom .nav-link {
   opacity: 0.8;
 }
 
-#container-accueil {
+#container-accueil, #container-contact, #container-commandes {
   position: relative;
   top: 6rem;
   bottom: 8rem;
@@ -1293,7 +1293,7 @@ footer #navbarBottom .nav-link {
     font-size: 5rem !important;
   }
 
-  #container-accueil{
+  #container-accueil, #container-contact, #container-commandes {
     position: relative;
     top: 10rem;
     bottom: 20rem;
@@ -1362,7 +1362,7 @@ footer #navbarBottom .nav-link {
     font-size: 3rem;
   }
 
-  #container-accueil{
+  #container-accueil, #container-contact, #container-commandes{
     position: relative;
     top: 4rem;
     bottom: 4rem;
@@ -1393,7 +1393,7 @@ footer #navbarBottom .nav-link {
     font-size: 2rem;
   }
 
-  #container-accueil{
+  #container-accueil, #container-contact, #container-commandes{
     position: relative;
     top: 4rem;
     bottom: 4rem;
@@ -1424,7 +1424,7 @@ footer #navbarBottom .nav-link {
     font-size: 2.5rem;
   }
 
-  #container-accueil{
+  #container-accueil, #container-contact, #container-commandes{
     position: relative;
     top: 4rem;
     bottom: 4rem;
@@ -1455,7 +1455,7 @@ footer #navbarBottom .nav-link {
     font-size: 2rem;
   }
 
-  #container-accueil{
+  #container-accueil, #container-contact, #container-commandes{
     position: relative;
     top: 4rem;
     bottom: 4rem;
@@ -1491,7 +1491,7 @@ footer #navbarBottom .nav-link {
     font-size: 2rem !important;
   }
 
-  #container-accueil{
+  #container-accueil, #container-contact, #container-commandes{
     position: relative;
     top: 4rem;
     bottom: 4rem;
