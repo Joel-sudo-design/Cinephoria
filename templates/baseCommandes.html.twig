@@ -43,8 +43,8 @@
                 </div>
             </div>
         </nav>
-        <div id="container-commandes" class="container-fluid row justify-content-center align-content-center">
-            <div class="row justify-content-center align-items-center fs-2 fw-semibold p-0" style="color: #6A73AB">
+        <div id="container-commandes" class="container-fluid row justify-content-center align-content-start">
+            <div class="row justify-content-center align-items-center fs-2 fw-semibold p-0 mt-5" style="color: #6A73AB">
                 <div class="col-5 p-0">Mes commandes</div>
             </div>
             <div class="row justify-content-center align-item-center p-0 mt-4">
@@ -57,13 +57,17 @@
                             </div>
                             <div class="row mt-3 fs-5">
                                 <!--Genre-->
-                                <div class="col-12 text-center">Genre</div>
+                                <div class="col-12 text-center">Genre:</div>
                                 <!--Durée-->
-                                <div class="col-12 text-center mt-3">Durée</div>
+                                <div class="col-12 text-center mt-3">Durée:</div>
                             </div>
                         </div>
-                        <div class="col-8 p-4">
-                            <div class="row justify-content-center align-content-center">
+                        <!-- Bordure verticale -->
+                        <div class="col-auto d-flex justify-content-center p-4">
+                            <div style="border-left: 2px solid white; height: 100%;"></div>
+                        </div>
+                        <div class="col-7 p-4">
+                            <div class="row justify-content-start align-content-center">
                                 <!-- Nom du cinéma -->
                                 <div class="row">
                                     <div class="col-auto">
@@ -71,9 +75,9 @@
                                     </div>
                                 </div>
                                 <!-- Nom du film -->
-                                <div class="row">
+                                <div class="row mt-3">
                                     <div class="col-auto">
-                                        <div class="text-white fs-3 mt-3">Joker</div>
+                                        <div class="text-white fs-3">Joker</div>
                                     </div>
                                 </div>
                                 <div class="row mt-3">
@@ -83,7 +87,16 @@
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-auto">
-                                        <div class="text-white fs-5">Lundi 24 juin<span class="ms-3">4DX - 12h30</span></div>
+                                        <div class="text-white fs-5">2 places réservées,<span class="ms-1">salle 2 sièges 1 & 2</span></div>
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-6">
+                                        <div class="bg-white" style="width: 10rem; height: 10rem"></div>
+                                    </div>
+                                    <div class="col-6 d-flex flex-column justify-content-center">
+                                        <div class="text-white fs-5 text-center">Prix: 20€</div>
+                                        <button class="btn mt-3">test</button>
                                     </div>
                                 </div>
                             </div>
