@@ -28,7 +28,7 @@ class CommandesController extends AbstractController
                 $diff = $heureDebut->diff($heureFin);
                 $duree = sprintf('%dh %dm', $diff->h, $diff->i);
             } else {
-                $duree = null; // En cas de données incorrectes
+                $duree = null;
             }
 
             // Ajouter la durée au tableau de la séance

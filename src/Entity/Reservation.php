@@ -22,6 +22,9 @@ class Reservation
     #[ORM\ManyToOne(inversedBy: 'reservation')]
     private ?User $user = null;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $qrCode = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -64,6 +67,18 @@ class Reservation
     public function setUser(?user $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getQrCode(): ?string
+    {
+        return $this->qrCode;
+    }
+
+    public function setQrCode(?string $qrCode): static
+    {
+        $this->qrCode = $qrCode;
 
         return $this;
     }
