@@ -51,7 +51,7 @@
                     <div class="row justify-content-center align-items-center mb-4">
                         <div class="col-5">
                             <div class="row" style="background-color: #6A73AB">
-                                <div class="col-4 p-5 text-white">
+                                <div class="col-4 p-4 text-white">
                                     <div class="row">
                                         <!-- Image du film -->
                                         <img src="{{ reservation.film.image }}" class="img-fluid" alt="image">
@@ -60,10 +60,10 @@
                                         <!-- Genre du film -->
                                         <div class="col-12 text-center">Genre: {{ reservation.film.genre }}</div>
                                         <!-- Durée -->
-                                        <div class="col-12 text-center mt-4">Durée: {{ reservation.seance.heure_debut_seance }} - {{ reservation.seance.heure_fin_seance }}</div>
+                                        <div class="col-12 text-center mt-4">Durée: {{ reservation.seance.duree }}</div>
                                     </div>
                                 </div>
-                                <div class="col-8 p-5 position-relative">
+                                <div class="col-8 p-4 position-relative">
                                     <div class="custom-border"></div>
                                     <div class="row justify-content-start align-content-center">
                                         <!-- Nom du cinéma -->
@@ -80,12 +80,12 @@
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col-auto">
-                                                <div class="text-white fs-5">{{ reservation.seance.date }}: <span class="ms-2">{{ reservation.seance.qualite }} de {{ reservation.seance.heure_debut_seance }} à {{ reservation.seance.heure_fin_seance }}</span></div>
+                                                <div class="text-white fs-5">{{ reservation.seance.date }}: <span class="ms-2">salle {{ reservation.seance.salle }}, qualité {{ reservation.seance.qualite }} de {{ reservation.seance.heure_debut_seance }} à {{ reservation.seance.heure_fin_seance }}</span></div>
                                             </div>
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col-auto">
-                                                <div class="text-white fs-5">{{ reservation.seance.sieges_reserves|length }} places réservées: <span class="ms-2">{{ reservation.seance.sieges_reserves|join(', ') }}</span></div>
+                                                <div class="text-white fs-5">{{ reservation.seance.sieges_reserves|length }} places réservées: sièges n°<span class="ms-2">{{ reservation.seance.sieges_reserves|join(', ') }}</span></div>
                                             </div>
                                         </div>
                                         <div class="row mt-4">

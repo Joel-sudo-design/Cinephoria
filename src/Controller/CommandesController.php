@@ -2,10 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Film;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -21,6 +18,21 @@ class CommandesController extends AbstractController
         foreach ($reservations as $reservation) {
             $seance = [];
             $seance['seance'] = $reservation->getSeance()->toArray();
+
+            // Récupérer les heures de début et de fin
+            $heureDebut =  $reservation->getSeance()->getHeureDebut();
+            $heureFin = $reservation->getSeance()->getHeureFin();
+
+            // Calculer la durée
+            if ($heureDebut && $heureFin) {
+                $diff = $heureDebut->diff($heureFin);
+                $duree = sprintf('%dh %dm', $diff->h, $diff->i);
+            } else {
+                $duree = null; // En cas de données incorrectes
+            }
+
+            // Ajouter la durée au tableau de la séance
+            $seance['seance']['duree'] = $duree;
             $seance['seance']['sieges_reserves'] = $reservation->getSiege();
             $seance['film'] = $reservation->getSeance()->getFilm()->toArray();
             $imageName = $reservation->getSeance()->getFilm()->getImageName();
