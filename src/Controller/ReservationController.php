@@ -7,6 +7,7 @@ use App\Entity\Seance;
 use App\Repository\CinemaRepository;
 use App\Repository\FilmRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Endroid\QrCode\Builder\BuilderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -145,7 +146,7 @@ class ReservationController extends AbstractController
         return new JsonResponse($filmArray);
     }
     #[Route('/reservation/paiement', name: 'app_reservation_paiement')]
-    public function paiement(Request $request, EntityManagerInterface $entityManager): Response
+    public function paiement(Request $request, EntityManagerInterface $entityManager, BuilderInterface $qrCodeBuilder): Response
     {
         $user = $this->getUser();
         $session = $request->getSession();
@@ -192,6 +193,22 @@ class ReservationController extends AbstractController
             $reservation->setSeance($seance);
             $reservation->setSiege($seats);
 
+            // Créer une donnée unique pour le QR code (par exemple, l'ID de la réservation)
+            $qrData = 'Reservation ID: ' . $reservation->getId() . ' - Seance ID: ' . $seanceId;
+
+            // Générer le QR code avec les données uniques
+            $qrCode = $qrCodeBuilder->build(
+                data: $qrData,
+                size: 200
+            );
+
+            // Convertir le QR code en image Base64
+            $qrCodeDataUrl = $qrCode->getDataUri();
+
+            // Enregistrer le QR code dans la réservation
+            $reservation->setQrCode($qrCodeDataUrl);
+
+            // Persister et sauvegarder la réservation avec le QR code
             $entityManager->persist($reservation);
             $entityManager->flush();
 

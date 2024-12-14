@@ -28,12 +28,13 @@ class CommandesController extends AbstractController
                 $diff = $heureDebut->diff($heureFin);
                 $duree = sprintf('%dh %dm', $diff->h, $diff->i);
             } else {
-                $duree = null;
+                $duree = null; // En cas de données incorrectes
             }
 
             // Ajouter la durée au tableau de la séance
             $seance['seance']['duree'] = $duree;
             $seance['seance']['sieges_reserves'] = $reservation->getSiege();
+            $seance['seance']['qrCode'] = $reservation->getQrCode();
             $seance['film'] = $reservation->getSeance()->getFilm()->toArray();
             $imageName = $reservation->getSeance()->getFilm()->getImageName();
             $seance['film']['image'] = $imageName

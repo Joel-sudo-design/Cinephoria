@@ -4,10 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="modifs diverses">
+    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Création de la fonctionnalité pour générer les QRcodes">
+      <change afterPath="$PROJECT_DIR$/config/packages/endroid_qr_code.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/routes/endroid_qr_code.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/CommandesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CommandesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ReservationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReservationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Reservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Reservation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/baseCommandes.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseCommandes.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/baseReservation.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseReservation.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/reservation/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/reservation/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/reservation/paiement.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/reservation/paiement.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/reservation/user.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/reservation/user.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,6 +150,11 @@
       <path value="$PROJECT_DIR$/vendor/symfony/translation" />
       <path value="$PROJECT_DIR$/vendor/jms/metadata" />
       <path value="$PROJECT_DIR$/vendor/vich/uploader-bundle" />
+      <path value="$PROJECT_DIR$/vendor/bacon/bacon-qr-code" />
+      <path value="$PROJECT_DIR$/vendor/endroid/qr-code" />
+      <path value="$PROJECT_DIR$/vendor/dasprid/enum" />
+      <path value="$PROJECT_DIR$/vendor/endroid/installer" />
+      <path value="$PROJECT_DIR$/vendor/endroid/qr-code-bundle" />
     </include_path>
   </component>
   <component name="ProblemsViewState">
@@ -331,15 +351,7 @@
       <workItem from="1734080158136" duration="18000" />
       <workItem from="1734096536795" duration="3830000" />
       <workItem from="1734107885930" duration="4300000" />
-      <workItem from="1734169591317" duration="4251000" />
-    </task>
-    <task id="LOCAL-00089" summary="Modifs">
-      <option name="closed" value="true" />
-      <created>1733066530273</created>
-      <option name="number" value="00089" />
-      <option name="presentableId" value="LOCAL-00089" />
-      <option name="project" value="LOCAL" />
-      <updated>1733066530273</updated>
+      <workItem from="1734169591317" duration="14918000" />
     </task>
     <task id="LOCAL-00090" summary="Modifs">
       <option name="closed" value="true" />
@@ -725,7 +737,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734173480017</updated>
     </task>
-    <option name="localTasksCounter" value="138" />
+    <task id="LOCAL-00138" summary="Création de la fonctionnalité pour générer les QRcodes">
+      <option name="closed" value="true" />
+      <created>1734176369232</created>
+      <option name="number" value="00138" />
+      <option name="presentableId" value="LOCAL-00138" />
+      <option name="project" value="LOCAL" />
+      <updated>1734176369232</updated>
+    </task>
+    <option name="localTasksCounter" value="139" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -744,7 +764,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Début page d'accueil emplyé + navbar" />
     <MESSAGE value="Fin page d'accueil employé + navbar" />
     <MESSAGE value="Création Classe Entité User + repository, Installation des bundles pour création de formulaire d'enregistrement et vérification email, création du controller et des templates pour le formulaire d'enregistrement de nouveau compte." />
     <MESSAGE value="Début création formulaire d'enregistrement" />
@@ -769,7 +788,8 @@
     <MESSAGE value="Modifs" />
     <MESSAGE value="Création pages et modifs block twig" />
     <MESSAGE value="modifs diverses" />
-    <option name="LAST_COMMIT_MESSAGE" value="modifs diverses" />
+    <MESSAGE value="Création de la fonctionnalité pour générer les QRcodes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Création de la fonctionnalité pour générer les QRcodes" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
