@@ -4,6 +4,22 @@ html, body {
   height: 100%;
 }
 
+/* Scrollbar Thumb et Track */
+*::-webkit-scrollbar-thumb {
+  background-color: #6A73AB;
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Scrollbar pour les navigateurs qui ne supportent pas -webkit- */
+* {
+  scrollbar-color: #6A73AB #f1f1f1;
+  scrollbar-width: auto;
+}
+
 /* Navbar Top */
 .offcanvas-header .btn-close {
   border: none !important;
@@ -103,7 +119,7 @@ footer #navbarBottom .nav-link {
   opacity: 0.8;
 }
 
-#container-accueil, #container-contact, #container-commandes {
+#container-accueil, #container-contact {
   position: relative;
   top: 6rem;
   bottom: 8rem;
@@ -967,21 +983,6 @@ footer #navbarBottom .nav-link {
 }
 
 /* Page Employé */
-#card-container-avis .card-text::-webkit-scrollbar-thumb, .container-films::-webkit-scrollbar-track {
-  background-color: #6A73AB;
-  border-radius: 5px;
-}
-
-#card-container-avis .card-text::-webkit-scrollbar-track, .container-films::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-/* Pour les navigateurs qui ne supportent pas -webkit- */
-#card-container-avis .card-text, .container-films {
-  scrollbar-color: #6A73AB #f1f1f1;
-  scrollbar-width: auto;
-}
-
 .btn-avis {
   background-color: white;
   color: #6A73AB;
@@ -1188,6 +1189,25 @@ footer #navbarBottom .nav-link {
   pointer-events: none;
 }
 
+.custom-border {
+  position: absolute;
+  left: 0;
+  top: 7.5%;
+  bottom: 0;
+  width: 2px;
+  background-color: white;
+  height: 85%;
+}
+
+/*Page commandes*/
+#container-commandes {
+  position: relative;
+  top: 11rem;
+  bottom: 8rem;
+  height: calc(100% - 19rem);
+  overflow: auto;
+}
+
 /* Media queries */
 @media (min-width: 1921px) {
 
@@ -1290,7 +1310,7 @@ footer #navbarBottom .nav-link {
     font-size: 5rem !important;
   }
 
-  #container-accueil, #container-contact, #container-commandes {
+  #container-accueil, #container-contact {
     position: relative;
     top: 10rem;
     bottom: 20rem;
@@ -1359,7 +1379,7 @@ footer #navbarBottom .nav-link {
     font-size: 3rem;
   }
 
-  #container-accueil, #container-contact, #container-commandes{
+  #container-accueil, #container-contact{
     position: relative;
     top: 4rem;
     bottom: 4rem;
@@ -1390,7 +1410,7 @@ footer #navbarBottom .nav-link {
     font-size: 2rem;
   }
 
-  #container-accueil, #container-contact, #container-commandes{
+  #container-accueil, #container-contact{
     position: relative;
     top: 4rem;
     bottom: 4rem;
@@ -1421,7 +1441,7 @@ footer #navbarBottom .nav-link {
     font-size: 2.5rem;
   }
 
-  #container-accueil, #container-contact, #container-commandes{
+  #container-accueil, #container-contact{
     position: relative;
     top: 4rem;
     bottom: 4rem;
@@ -1452,7 +1472,7 @@ footer #navbarBottom .nav-link {
     font-size: 2rem;
   }
 
-  #container-accueil, #container-contact, #container-commandes{
+  #container-accueil, #container-contact{
     position: relative;
     top: 4rem;
     bottom: 4rem;
@@ -1488,7 +1508,7 @@ footer #navbarBottom .nav-link {
     font-size: 2rem !important;
   }
 
-  #container-accueil, #container-contact, #container-commandes{
+  #container-accueil, #container-contact{
     position: relative;
     top: 4rem;
     bottom: 4rem;

@@ -12,13 +12,14 @@ use Symfony\Component\Routing\Attribute\Route;
 class CommandesController extends AbstractController
 {
     #[Route('/utilisateur/commandes', name: 'app_commandes_user')]
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(): Response
     {
         $user = $this->getUser();
         $reservations = $user->getReservations();
-        $seance = [];
+        $reservationArray = [];
 
         foreach ($reservations as $reservation) {
+            $seance = [];
             $seance['seance'] = $reservation->getSeance()->toArray();
             $seance['seance']['sieges_reserves'] = $reservation->getSiege();
             $seance['film'] = $reservation->getSeance()->getFilm()->toArray();
@@ -28,11 +29,12 @@ class CommandesController extends AbstractController
                 : null;
             $genreName = $reservation->getSeance()->getFilm()->getGenre()->getName();
             $seance['film']['genre'] = $genreName;
+            $reservationArray[] = $seance;
         }
 
         return $this->render('commandes/index.html.twig', [
             'controller_name' => 'CommandesUserController',
-            'seance' => $seance,
+            'reservations' => $reservationArray,
         ]);
     }
 }
