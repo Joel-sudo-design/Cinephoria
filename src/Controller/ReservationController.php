@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Film;
 use App\Entity\Reservation;
 use App\Entity\Seance;
 use App\Repository\CinemaRepository;
@@ -17,7 +18,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class ReservationController extends AbstractController
 {
     #[Route('/reservation', name: 'app_reservation')]
-    public function index(CinemaRepository $cinemaRepository, FilmRepository $filmRepository): Response
+    public function index(CinemaRepository $cinemaRepository, FilmRepository $filmRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         // Récupérer tous les cinémas et films
         $cinemas = $cinemaRepository->findAll();
@@ -34,10 +35,20 @@ class ReservationController extends AbstractController
             }
         }
 
+        // Récupérer les paramètres de la requête issus du modal de réservation
+        $filmId = $request->query->get('filmId');
+        $seanceId = $request->query->get('seanceId');
+        $filmModal = $entityManager->getRepository(Film::class)->find($filmId);
+        $seanceModal = $entityManager->getRepository(Seance::class)->find($seanceId);
+        $filmModalArray = $filmModal ? $filmModal->toArray() : [];
+        $seanceModalArray = $seanceModal ? $seanceModal->toArray() : [];
+
         // Passer les données à la vue
         return $this->render('reservation/index.html.twig', [
             'cinemas' => $cinemas,
-            'filmsData' => $filmsData
+            'filmsData' => $filmsData,
+            'filmModal' => $filmModalArray,
+            'seanceModal' => $seanceModalArray
         ]);
     }
     #[Route('utilisateur/reservation', name: 'app_reservation_user')]

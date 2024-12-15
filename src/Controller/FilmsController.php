@@ -116,6 +116,7 @@ class FilmsController extends AbstractController
                     ];
                 }
                 $structuredSeances[$date]['seances'][] = [
+                    'id' => $seanceArray['id'],
                     'heureDebut' => $seanceArray['heure_debut_seance'],
                     'heureFin' => $seanceArray['heure_fin_seance'],
                     'format' => $seanceArray['qualite'],

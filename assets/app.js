@@ -164,12 +164,12 @@ axios.defaults.withCredentials = true;
 
                     // Ajouter un spinner de chargement
                     const spinner = `
-                <div class="text-center my-3">
-                    <div class="spinner-border" style="color: #6A73AB" role="status">
-                        <span class="visually-hidden">Chargement...</span>
-                    </div>
-                </div>
-            `;
+                        <div class="text-center my-3">
+                            <div class="spinner-border" style="color: #6A73AB" role="status">
+                                <span class="visually-hidden">Chargement...</span>
+                            </div>
+                        </div>
+                    `;
                     seancesContainer.html(spinner);
 
                     // Si updateDays est vrai, préparer les 7 prochains jours
@@ -222,30 +222,38 @@ axios.defaults.withCredentials = true;
                             if (seancesForSelectedDate && seancesForSelectedDate.seances.length > 0) {
                                 // Afficher les séances
                                 seancesContainer.html(seancesForSelectedDate.seances.map(seance => `
-                            <div class="col-6">
-                                <div class="uniform-block fs-5">
-                                    <div class="row justify-content-center align-items-center p-3">
-                                        <div class="col-3">VF</div>
-                                        <div class="col-6 d-flex flex-column text-center">
-                                            <span>${seance.heureDebut}</span>
-                                            <span>(fin ${seance.heureFin})</span>
+                                    <div class="col-6">
+                                        <div class="uniform-block fs-5">
+                                            <div id="btn-modal-reservation-${seance.id}" class="btn-modal-reservation" style="cursor: pointer">
+                                                <div class="row justify-content-center align-items-center p-3">
+                                                    <div class="col-3">VF</div>
+                                                    <div class="col-6 d-flex flex-column text-center">
+                                                        <span>${seance.heureDebut}</span>
+                                                        <span>(fin ${seance.heureFin})</span>
+                                                    </div>
+                                                    <div class="col-3">${seance.format}</div>
+                                                </div>
+                                                <div class="row text-center p-3">
+                                                    <div class="col-12">
+                                                        <div class="salle mb-3 fs-5">${seance.salle}</div>
+                                                        <div>Tarif: ${seance.tarif}€</div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-3">${seance.format}</div>
                                     </div>
-                                    <div class="row text-center p-3">
-                                        <div class="col-12">
-                                            <div class="salle mb-3 fs-5">${seance.salle}</div>
-                                            <div>Tarif: ${seance.tarif}€</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        `).join(''));
+                                `).join(''));
                             } else {
                                 // Afficher un message si aucune séance n'est disponible
                                 seancesContainer.html('<div class="col-12 text-center my-3" style="color:#6A73AB">Aucune séance disponible pour cette date.</div>');
                             }
                         })
+                            // Gestion du clic sur le bouton de réservation
+                            $('.btn-modal-reservation').click(function () {
+                                const seanceId = $(this).attr('id').split('-').pop();
+                                // Rediriger vers la page de réservation avec les informations nécessaires
+                                window.location.href = `/reservation?filmId=${filmId}&seanceId=${seanceId}`;
+                            })
                         .catch(error => {
                             console.error('Erreur lors du chargement des séances:', error);
                             seancesContainer.html('<div class="col-12 text-center text-danger">Erreur de chargement.</div>');
@@ -473,7 +481,7 @@ axios.defaults.withCredentials = true;
                                             if (!accordionButton.is(event.target) && accordionButton.has(event.target).length === 0 && !accordionCollapse.is(event.target) && accordionCollapse.has(event.target).length === 0) {
                                                 // Ferme l'accordéon si ouvert
                                                 if (accordionCollapse.hasClass('show')) {
-                                                    accordionCollapse.collapse('hide'); // Utilise la méthode Bootstrap pour cacher
+                                                    accordionCollapse.collapse('hide');
                                                 }
                                             }
                                         });
