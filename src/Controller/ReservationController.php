@@ -35,37 +35,10 @@ class ReservationController extends AbstractController
             }
         }
 
-        // Initialiser les données des modals à vide
-        $filmModalArray = [];
-        $seanceModalArray = [];
-
-        // Récupérer les paramètres de la requête issus du modal de réservation
-        $filmId = $request->query->get('filmId');
-        $seanceId = $request->query->get('seanceId');
-
-        // Si un filmId est présent, récupérer les informations du film
-        if ($filmId) {
-            $filmModal = $entityManager->getRepository(Film::class)->find($filmId);
-            $filmModalArray = $filmModal ? $filmModal->toArray() : [];
-            $filmModalArray['image'] = $filmModal->getImageName()
-                ? $this->getParameter('films_images_directory') . '/image_film/' . $filmModal->getImageName()
-                : null;
-            $filmModalArray['genre'] = $filmModal->getGenre() ? $filmModal->getGenre()->getName() : null;
-        }
-
-        // Si un seanceId est présent, récupérer les informations de la séance
-        if ($seanceId) {
-            $seanceModal = $entityManager->getRepository(Seance::class)->find($seanceId);
-            $seanceModalArray = $seanceModal ? $seanceModal->toArray() : [];
-            $seanceModalArray['duree'] = $seanceModal->getDuree();
-        }
-
         // Passer les données à la vue
         return $this->render('reservation/index.html.twig', [
             'cinemas' => $cinemas,
-            'filmsData' => $filmsData,
-            'filmModal' => $filmModalArray,
-            'seanceModal' => $seanceModalArray
+            'filmsData' => $filmsData
         ]);
     }
     #[Route('utilisateur/reservation', name: 'app_reservation_user')]

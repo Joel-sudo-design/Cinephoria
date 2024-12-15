@@ -1,9 +1,4 @@
 import './styles/app.css';
-
-//Active jQuery
-const $ = require('jquery');
-window.$ = window.jQuery = $;
-
 //Active Bootstrap
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,6 +10,10 @@ import 'bootstrap-datepicker/dist/locales/bootstrap-datepicker.fr.min.js';
 //Active Flatpickr
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+
+//Active jQuery
+const $ = require('jquery');
+window.$ = window.jQuery = $;
 
 //Autoload images
 const imagesContext = require.context('../assets/images', true, /\.(png|jpg|jpeg|gif|ico|svg|webp)$/);
@@ -224,7 +223,7 @@ axios.defaults.withCredentials = true;
                                 seancesContainer.html(seancesForSelectedDate.seances.map(seance => `
                                     <div class="col-6">
                                         <div class="uniform-block fs-5">
-                                            <div id="btn-modal-reservation-${seance.id}" class="btn-modal-reservation" style="cursor: pointer">
+                                            <div id="btn-modal-reservation-${seance.id}-${seance.cinemaId}" class="btn-modal-reservation" style="cursor: pointer">
                                                 <div class="row justify-content-center align-items-center p-3">
                                                     <div class="col-3">VF</div>
                                                     <div class="col-6 d-flex flex-column text-center">
@@ -249,9 +248,16 @@ axios.defaults.withCredentials = true;
                             }
                             // Gestion du clic sur le bouton de réservation
                             $('.btn-modal-reservation').click(function () {
-                                const seanceId = $(this).attr('id').split('-').pop();
+                                // Récupérer l'id complet de l'élément
+                                const fullId = $(this).attr('id');
+
+                                // Extraire les id de la séance et du cinéma
+                                const idParts = fullId.split('-');
+
+                                const seanceId = idParts[3];
+                                const cinemaId = idParts[4];
                                 // Rediriger vers la page de réservation avec les informations nécessaires
-                                window.location.href = `/reservation?filmId=${filmId}&seanceId=${seanceId}`;
+                                window.location.href = `/reservation?filmId=${filmId}&seanceId=${seanceId}&cinemaId=${cinemaId}&date=${selectedDate}`;
                             });
                         })
                         .catch(error => {
@@ -742,8 +748,9 @@ axios.defaults.withCredentials = true;
         //Page Réservation
         //Fonction pour récupérer les données du film et des séances
         function reservation() {
+
             // Récupérer les données du film et des séances et permettre la réservation
-            function handleReservation(cinemaId, filmId) {
+            function handleReservation(cinemaId, filmId, dateInitiale = null) {
                 axios.post('/reservation/film', {'cinemaId': cinemaId, 'filmId': filmId})
                     .then(response => {
                         const data = response.data;
@@ -965,6 +972,15 @@ axios.defaults.withCredentials = true;
                                     initialiserSieges();
                                 });
 
+                            // Si une dateInitiale est passée, l'initialiser dans le datepicker
+                            if (dateInitiale) {
+                                $datepicker.datepicker('setDate', new Date(dateInitiale));
+                                $calendarIcon.addClass('d-none');
+                                $clearIcon.removeClass('d-none');
+                                updateSeances(dateInitiale);
+                                initialiserSieges();
+                            }
+
                             // Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
                             $clearIcon.on('click', function () {
                                 // Réservation
@@ -1021,6 +1037,131 @@ axios.defaults.withCredentials = true;
 
             // Parse les données des films depuis l'attribut data-films
             const filmsData = JSON.parse($('#films-data').attr('data-films'));
+
+            // Récupérer les paramètres depuis l'URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const filmId = urlParams.get('filmId');
+            const cinemaId = urlParams.get('cinemaId');
+
+            if (cinemaId) {
+                // Logique pour sélectionner un cinéma
+                handleCinemaSelection(cinemaId);
+            }
+
+            if (filmId) {
+                // Logique pour sélectionner un film
+                handleFilmSelection(cinemaId, filmId);
+            }
+
+            // Fonction pour gérer la sélection d'un cinéma
+            function handleCinemaSelection(cinemaId) {
+                    $('#cinema-input').val(cinemaId); // Met à jour le champ caché pour le cinéma
+                    const filmContainer = $(`#films-${cinemaId}`);
+
+                    if (filmsData[cinemaId] && filmsData[cinemaId].length > 0) {
+                        filmsData[cinemaId].forEach((film) => {
+                            // Ajoute chaque film dans le sous-menu
+                            const filmOption = `<div class="custom-option-film" data-film-id="${film.id}">${film.title}</div>`;
+                            filmContainer.append(filmOption);
+                        });
+                    }
+            }
+
+            // Fonction pour gérer la sélection d'un film
+            function handleFilmSelection(cinemaId, filmId) {
+                const dateParam = urlParams.get('date');
+
+                const filmElement = $(`.custom-option-film[data-film-id="${filmId}"]`);
+                if (!filmElement.length) return; // Vérifie si l'élément existe
+
+                // Vérifier si la date est présente dans l'URL
+                if (dateParam) {
+                    // Séparer la date en parties
+                    const [year, month, day] = dateParam.split('-');
+
+                    // Reformater la date au format 'dd/mm/yyyy'
+                    const formattedDate = `${day}/${month}/${year}`;
+                    handleReservation(cinemaId, filmId, formattedDate);
+                    $('#seances-buttons').removeClass('disabled');
+                }
+
+                const filmTitle = filmElement.text().trim();
+                let customSelect = $('.custom-select-btn-cinema');
+                const $clearIconCinema = $('.close-icon-cinema');
+
+                $('#film-input').val(filmId); // Met à jour le champ caché pour le film
+                customSelect.text(filmTitle); // Met à jour le texte du bouton principal
+
+                // Affiche l'icône de fermeture et active le datepicker
+                customSelect.addClass('no-arrow');
+                $clearIconCinema.removeClass('d-none');
+                $('#datepicker').removeClass('disabled');
+
+                // Paiement
+                $('#paiement-reservations').on('click', function () {
+                    const selectedSeanceId = $('#seances-buttons .btn-reservation.active').attr('id');
+                    const selectedSeats = $('.seat.selectionne').map(function () {
+                        return $(this).data('id');
+                    }).get();
+                    axios.post('/reservation/paiement', {
+                        seanceId: selectedSeanceId,
+                        seats: selectedSeats,
+                    })
+                        .then(function (response) {
+                            if (response.data.redirectToLogin) {
+                                window.location.assign(response.data.redirectToLogin);
+                            } else if (response.data.redirectTo) {
+                                window.location.assign(response.data.redirectTo);
+                            } else if (response.data.error) {
+                                alert(response.data.error);
+                            }
+                        })
+                        .catch(function (error) {
+                            console.error(error);
+                            alert('Une erreur est survenue. Veuillez réessayer.');
+                        });
+                });
+
+                // Réinitialiser la sélection avec l'icône de fermeture
+                $clearIconCinema.on('click', function () {
+                    $('#cinema-input').val('');
+                    $('#film-input').val('');
+                    $('.custom-select-btn-cinema').text('Cinéma').removeClass('no-arrow', 'btn-hover');
+                    $('.custom-options-films').addClass('d-none').empty();
+                    $(this).addClass('d-none');
+                    $('#film-name').text('');
+                    $('#reservation .img-fluid').attr('src', '/image_film/default-image2.jpg');
+                    $('#film-genre').text('');
+                    $('#film-duree').text('')
+                    $('#datepicker').addClass('disabled').datepicker('update', '').val('');
+                    $('#icon-calendar').removeClass('d-none');
+                    $('#close-icon-date').addClass('d-none');
+                    $('#Textarea-places-reservations').addClass('disabled').val('');
+                    $('#seances-buttons').empty().addClass('disabled');
+                    $('#selection-sieges').addClass('disabled');
+                    $('#seance-selected').text('');
+                    $('#prix-reservations').text(`Prix :`);
+                    // Remettre tous les sièges en état "libre"
+                    $('[id^="seating-area"] .seat').each(function () {
+                        $(this).removeClass('selectionne').removeClass('reserve'); // Retirer les classes de sélection et de réservation
+                        $(this).addClass('libre'); // Ajouter la classe libre pour rendre le siège disponible
+                    });
+                    $('#salle-reservations').text('Salle');
+                    $('#paiement-reservations').addClass('disabled');
+                });
+
+                //Appliquer le style de hover/focus
+                $clearIconCinema.on('mouseenter focus', function () {
+                    $('.custom-select-btn-cinema').addClass('btn-hover');
+                    $('.close-icon-cinema').addClass('btn-hover');
+                });
+
+                //Retirer le style quand on quitte le survol/focus
+                $clearIconCinema.on('mouseleave blur', function () {
+                    $('.custom-select-btn-cinema').removeClass('btn-hover');
+                    $('.close-icon-cinema').removeClass('btn-hover');
+                });
+            }
 
             // Afficher/masquer la liste des cinémas
             $('.btn-films').on('click', function () {

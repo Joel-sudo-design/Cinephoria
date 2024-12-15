@@ -144,6 +144,7 @@ class Seance
             'heure_fin_seance' => $this->heure_fin->format('H:i'),
             'price' => $this->price,
             'cinema' => $this->cinema->getName(),
+            'cinema_id' => $this->cinema->getId()
         ];
     }
 

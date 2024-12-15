@@ -121,7 +121,8 @@ class FilmsController extends AbstractController
                     'heureFin' => $seanceArray['heure_fin_seance'],
                     'format' => $seanceArray['qualite'],
                     'salle' => 'Salle ' . $seanceArray['salle'],
-                    'tarif' => $seanceArray['price']
+                    'tarif' => $seanceArray['price'],
+                    'cinemaId' => $seanceArray['cinema_id']
                 ];
             }
         }
