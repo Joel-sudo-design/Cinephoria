@@ -247,13 +247,13 @@ axios.defaults.withCredentials = true;
                                 // Afficher un message si aucune séance n'est disponible
                                 seancesContainer.html('<div class="col-12 text-center my-3" style="color:#6A73AB">Aucune séance disponible pour cette date.</div>');
                             }
-                        })
                             // Gestion du clic sur le bouton de réservation
                             $('.btn-modal-reservation').click(function () {
                                 const seanceId = $(this).attr('id').split('-').pop();
                                 // Rediriger vers la page de réservation avec les informations nécessaires
                                 window.location.href = `/reservation?filmId=${filmId}&seanceId=${seanceId}`;
-                            })
+                            });
+                        })
                         .catch(error => {
                             console.error('Erreur lors du chargement des séances:', error);
                             seancesContainer.html('<div class="col-12 text-center text-danger">Erreur de chargement.</div>');
@@ -752,7 +752,7 @@ axios.defaults.withCredentials = true;
                             // Mettre à jour les informations du film
                             $('#film-name').text(data.film.name + " - " + data.film.cinema);
                             $('#reservation .img-fluid').attr('src', data.film.image);
-                            $('#film-genre').text('Genre :' + ' ' + data.film.genre);
+                            $('#film-genre').text('Genre:' + ' ' + data.film.genre);
                             $('#film-duree').text(function () {
                                 if (data.seances && data.seances.length > 0 && data.seances[0].informations.length > 0) {
                                     const heureDebut = data.seances[0].informations[0].heureDebut;
@@ -769,7 +769,12 @@ axios.defaults.withCredentials = true;
                                     const heures = Math.floor(dureeMinutes / 60);
                                     const minutes = dureeMinutes % 60;
 
-                                    return `Durée : ${heures}h ${minutes}min`;
+                                    // Si les minutes sont 0, afficher seulement les heures
+                                    if (minutes === 0) {
+                                        return `Durée: ${heures}h`;
+                                    } else {
+                                        return `Durée: ${heures}h ${minutes}min`;
+                                    }
                                 } else {
                                     return 'Durée : Non disponible';
                                 }

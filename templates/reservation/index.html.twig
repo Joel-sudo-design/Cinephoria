@@ -73,14 +73,27 @@
                     <!--Image-->
                     <div class="position-relative">
                         <input type="file" id="fileInput" style="display: none">
-                        <img src="{{ asset('image_film/default-image2.jpg')}}" class="img-fluid" alt="image">
+                        <img {% if filmModal is not empty %}
+                            src="{{ filmModal.image}}"
+                        {%else%}
+                            src="{{ asset('image_film/default-image2.jpg')}}"
+                        {% endif %}
+                                class="img-fluid" alt="image">
                     </div>
                 </div>
                 <div class="row mt-4 fs-5">
                     <!--Genre-->
-                    <div id="film-genre" class="col-12 text-center"></div>
+                    <div id="film-genre" class="col-12 text-center">
+                        {% if filmModal is not empty %}
+                            Genre: {{ filmModal.genre }}
+                        {% endif %}
+                    </div>
                     <!--Durée-->
-                    <div id="film-duree" class="col-12 text-center mt-3"></div>
+                    <div id="film-duree" class="col-12 text-center mt-3">
+                        {% if seanceModal is not empty %}
+                            Durée: {{ seanceModal.duree }}
+                        {% endif %}
+                    </div>
                 </div>
             </div>
             <div class="col-8 p-4">
@@ -88,7 +101,15 @@
                     <!-- Nom du film & cinéma -->
                     <div class="row ps-0">
                         <div class="col-auto">
-                            <div class="text-white align-content-center fs-3 me-2" id="film-name"></div>
+                            <div class="text-white align-content-center fs-3 me-2" id="film-name">
+                                {% if filmModal is not empty %}
+                                    {{ filmModal.name }}
+                                {% endif %}
+                                -
+                                {% if seanceModal is not empty %}
+                                    {{ seanceModal.cinema }}
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                     <!-- Choix de la date et du nombre de places -->

@@ -47,12 +47,17 @@ class ReservationController extends AbstractController
         if ($filmId) {
             $filmModal = $entityManager->getRepository(Film::class)->find($filmId);
             $filmModalArray = $filmModal ? $filmModal->toArray() : [];
+            $filmModalArray['image'] = $filmModal->getImageName()
+                ? $this->getParameter('films_images_directory') . '/image_film/' . $filmModal->getImageName()
+                : null;
+            $filmModalArray['genre'] = $filmModal->getGenre() ? $filmModal->getGenre()->getName() : null;
         }
 
         // Si un seanceId est présent, récupérer les informations de la séance
         if ($seanceId) {
             $seanceModal = $entityManager->getRepository(Seance::class)->find($seanceId);
             $seanceModalArray = $seanceModal ? $seanceModal->toArray() : [];
+            $seanceModalArray['duree'] = $seanceModal->getDuree();
         }
 
         // Passer les données à la vue

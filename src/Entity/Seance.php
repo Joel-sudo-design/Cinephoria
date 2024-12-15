@@ -221,4 +221,29 @@ class Seance
         return $this;
     }
 
+    public function getDuree(): ?string
+    {
+        // Vérifier que les deux heures sont définies
+        if ($this->heure_debut === null || $this->heure_fin === null) {
+            return null; // Retourne null si l'une des heures est manquante
+        }
+
+        // Calculer la différence entre les deux heures
+        $interval = $this->heure_debut->diff($this->heure_fin);
+
+        // Récupérer le nombre total d'heures et de minutes
+        $heures = $interval->h; // Nombre d'heures
+        $minutes = $interval->i; // Nombre de minutes
+
+        // Construire la chaîne formatée
+        $dureeFormatee = '';
+        if ($heures > 0) {
+            $dureeFormatee .= "{$heures}h ";
+        }
+        if ($minutes > 0 || $heures === 0) { // Afficher les minutes même si 0h
+            $dureeFormatee .= "{$minutes}min";
+        }
+
+        return trim($dureeFormatee); // Supprimer les espaces inutiles
+    }
 }
