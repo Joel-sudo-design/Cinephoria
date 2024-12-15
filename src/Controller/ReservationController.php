@@ -38,6 +38,12 @@ class ReservationController extends AbstractController
         // Récupérer les paramètres de la requête issus du modal de réservation
         $filmId = $request->query->get('filmId');
         $seanceId = $request->query->get('seanceId');
+
+        // Vérifiez si les paramètres sont bien définis
+        if (!$filmId || !$seanceId) {
+            throw $this->createNotFoundException('Les paramètres filmId ou seanceId sont manquants.');
+        }
+
         $filmModal = $entityManager->getRepository(Film::class)->find($filmId);
         $seanceModal = $entityManager->getRepository(Seance::class)->find($seanceId);
         $filmModalArray = $filmModal ? $filmModal->toArray() : [];
