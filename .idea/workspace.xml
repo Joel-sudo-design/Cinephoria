@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modif création QR code">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/FilmsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FilmsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ReservationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReservationController.php" afterDir="false" />
-    </list>
+    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modif" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -339,23 +334,7 @@
       <workItem from="1734107885930" duration="4300000" />
       <workItem from="1734169591317" duration="15352000" />
       <workItem from="1734195989754" duration="2109000" />
-      <workItem from="1734253391172" duration="3997000" />
-    </task>
-    <task id="LOCAL-00092" summary="Modifs">
-      <option name="closed" value="true" />
-      <created>1733240041712</created>
-      <option name="number" value="00092" />
-      <option name="presentableId" value="LOCAL-00092" />
-      <option name="project" value="LOCAL" />
-      <updated>1733240041712</updated>
-    </task>
-    <task id="LOCAL-00093" summary="Modifs">
-      <option name="closed" value="true" />
-      <created>1733309213424</created>
-      <option name="number" value="00093" />
-      <option name="presentableId" value="LOCAL-00093" />
-      <option name="project" value="LOCAL" />
-      <updated>1733309213425</updated>
+      <workItem from="1734253391172" duration="4753000" />
     </task>
     <task id="LOCAL-00094" summary="Modifs">
       <option name="closed" value="true" />
@@ -733,7 +712,23 @@
       <option name="project" value="LOCAL" />
       <updated>1734193795923</updated>
     </task>
-    <option name="localTasksCounter" value="141" />
+    <task id="LOCAL-00141" summary="Modif">
+      <option name="closed" value="true" />
+      <created>1734257963897</created>
+      <option name="number" value="00141" />
+      <option name="presentableId" value="LOCAL-00141" />
+      <option name="project" value="LOCAL" />
+      <updated>1734257963898</updated>
+    </task>
+    <task id="LOCAL-00142" summary="Modif">
+      <option name="closed" value="true" />
+      <created>1734261342680</created>
+      <option name="number" value="00142" />
+      <option name="presentableId" value="LOCAL-00142" />
+      <option name="project" value="LOCAL" />
+      <updated>1734261342680</updated>
+    </task>
+    <option name="localTasksCounter" value="143" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -760,7 +755,6 @@
     <MESSAGE value="Modifications diverses" />
     <MESSAGE value="Création table salle" />
     <MESSAGE value="Fin page de reset password" />
-    <MESSAGE value="Modif" />
     <MESSAGE value="Création tables film, salle et seance" />
     <MESSAGE value="Modifs tavle seance" />
     <MESSAGE value="Modifs bdd" />
@@ -777,7 +771,8 @@
     <MESSAGE value="Création pages et modifs block twig" />
     <MESSAGE value="modifs diverses" />
     <MESSAGE value="Création de la fonctionnalité pour générer les QRcodes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Création de la fonctionnalité pour générer les QRcodes" />
+    <MESSAGE value="Modif" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modif" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

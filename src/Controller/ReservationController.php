@@ -35,19 +35,25 @@ class ReservationController extends AbstractController
             }
         }
 
+        // Initialiser les données des modals à vide
+        $filmModalArray = [];
+        $seanceModalArray = [];
+
         // Récupérer les paramètres de la requête issus du modal de réservation
         $filmId = $request->query->get('filmId');
         $seanceId = $request->query->get('seanceId');
 
-        // Vérifiez si les paramètres sont bien définis
-        if (!$filmId || !$seanceId) {
-            throw $this->createNotFoundException('Les paramètres filmId ou seanceId sont manquants.');
+        // Si un filmId est présent, récupérer les informations du film
+        if ($filmId) {
+            $filmModal = $entityManager->getRepository(Film::class)->find($filmId);
+            $filmModalArray = $filmModal ? $filmModal->toArray() : [];
         }
 
-        $filmModal = $entityManager->getRepository(Film::class)->find($filmId);
-        $seanceModal = $entityManager->getRepository(Seance::class)->find($seanceId);
-        $filmModalArray = $filmModal ? $filmModal->toArray() : [];
-        $seanceModalArray = $seanceModal ? $seanceModal->toArray() : [];
+        // Si un seanceId est présent, récupérer les informations de la séance
+        if ($seanceId) {
+            $seanceModal = $entityManager->getRepository(Seance::class)->find($seanceId);
+            $seanceModalArray = $seanceModal ? $seanceModal->toArray() : [];
+        }
 
         // Passer les données à la vue
         return $this->render('reservation/index.html.twig', [
