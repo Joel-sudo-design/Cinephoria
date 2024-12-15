@@ -73,12 +73,13 @@
                     <!--Image-->
                     <div class="position-relative">
                         <input type="file" id="fileInput" style="display: none">
-                        <img {% if filmModal is not empty %}
-                            src="{{ filmModal.image}}"
-                        {%else%}
-                            src="{{ asset('image_film/default-image2.jpg')}}"
-                        {% endif %}
-                                class="img-fluid" alt="image">
+                        <img class="img-fluid" alt="image"
+                                {% if filmModal is not empty %}
+                                    src="{{ filmModal.image}}"
+                                {%else%}
+                                    src="{{ asset('image_film/default-image2.jpg')}}"
+                                {% endif %}
+                        >
                     </div>
                 </div>
                 <div class="row mt-4 fs-5">
@@ -103,9 +104,8 @@
                         <div class="col-auto">
                             <div class="text-white align-content-center fs-3 me-2" id="film-name">
                                 {% if filmModal is not empty %}
-                                    {{ filmModal.name }}
+                                    {{ filmModal.name }} -
                                 {% endif %}
-                                -
                                 {% if seanceModal is not empty %}
                                     {{ seanceModal.cinema }}
                                 {% endif %}
@@ -149,7 +149,7 @@
                 <!--Salle-->
                 <div class="row mt-4">
                     <div class="col-12 text-white align-items-center justify-content-start position-relative">
-                        <div id="salle-reservations" class="fs-5"></div>
+                        <div id="salle-reservations" class="fs-5">Salle </div>
                         <div class="fs-5 position-absolute" style="width: auto; left: 50%; transform: translateX(-50%) translateY(-100%); text-align: center;">Ecran</div>
                     </div>
                 </div>

@@ -908,7 +908,7 @@ axios.defaults.withCredentials = true;
                                                     $(this).removeClass('selectionne').removeClass('reserve');
                                                     $(this).addClass('libre');
                                                 });
-                                                $('#salle-reservations').text('');
+                                                $('#salle-reservations').text('Salle');
                                                 $('#paiement-reservations').addClass('disabled');
                                             }
                                         });
@@ -917,7 +917,7 @@ axios.defaults.withCredentials = true;
                                         $button.on('click', function () {
                                             if (!$(this).hasClass('disabled')) {
                                                 // Ajout de la salle
-                                                $('#salle-reservations').text(`${seance.salle}`);
+                                                $('#salle-reservations').append(`${seance.salle}`);
                                                 // Gestion de la sélection de la séance
                                                 $('#seances-buttons .btn-reservation').removeClass('active');
                                                 $(this).addClass('active');
@@ -984,7 +984,7 @@ axios.defaults.withCredentials = true;
                                     $(this).removeClass('selectionne').removeClass('reserve'); // Retirer les classes de sélection et de réservation
                                     $(this).addClass('libre'); // Ajouter la classe libre pour rendre le siège disponible
                                 });
-                                $('#salle-reservations').text('');
+                                $('#salle-reservations').text('Salle');
                                 $('#paiement-reservations').addClass('disabled');
                             });
 
@@ -1146,7 +1146,7 @@ axios.defaults.withCredentials = true;
                         $(this).removeClass('selectionne').removeClass('reserve'); // Retirer les classes de sélection et de réservation
                         $(this).addClass('libre'); // Ajouter la classe libre pour rendre le siège disponible
                     });
-                    $('#salle-reservations').text('');
+                    $('#salle-reservations').text('Salle');
                     $('#paiement-reservations').addClass('disabled');
                 });
 

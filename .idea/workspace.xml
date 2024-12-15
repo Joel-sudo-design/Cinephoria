@@ -8,7 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/ReservationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReservationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Seance.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Seance.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/reservation/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/reservation/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -340,15 +339,7 @@
       <workItem from="1734107885930" duration="4300000" />
       <workItem from="1734169591317" duration="15352000" />
       <workItem from="1734195989754" duration="2109000" />
-      <workItem from="1734253391172" duration="7801000" />
-    </task>
-    <task id="LOCAL-00095" summary="Modifs">
-      <option name="closed" value="true" />
-      <created>1733327071016</created>
-      <option name="number" value="00095" />
-      <option name="presentableId" value="LOCAL-00095" />
-      <option name="project" value="LOCAL" />
-      <updated>1733327071016</updated>
+      <workItem from="1734253391172" duration="9563000" />
     </task>
     <task id="LOCAL-00096" summary="Modifs">
       <option name="closed" value="true" />
@@ -734,7 +725,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734261642438</updated>
     </task>
-    <option name="localTasksCounter" value="144" />
+    <task id="LOCAL-00144" summary="Modif">
+      <option name="closed" value="true" />
+      <created>1734267232338</created>
+      <option name="number" value="00144" />
+      <option name="presentableId" value="LOCAL-00144" />
+      <option name="project" value="LOCAL" />
+      <updated>1734267232338</updated>
+    </task>
+    <option name="localTasksCounter" value="145" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
