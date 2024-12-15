@@ -750,7 +750,7 @@ axios.defaults.withCredentials = true;
         function reservation() {
 
             // Récupérer les données du film et des séances et permettre la réservation
-            function handleReservation(cinemaId, filmId, dateInitiale = null) {
+            function handleReservation(cinemaId, filmId, dateInitiale = null, seanceId = null) {
                 axios.post('/reservation/film', {'cinemaId': cinemaId, 'filmId': filmId})
                     .then(response => {
                         const data = response.data;
@@ -874,7 +874,7 @@ axios.defaults.withCredentials = true;
                                     // Ajouter les boutons pour chaque séance
                                     availableSeances.forEach(seance => {
                                         const $button = $(`
-                                            <button id="${seance.id}" class="btn btn-reservation col mt-2 disabled d-flex justify-content-center align-items-center flex-column text-center mx-2">
+                                            <button id="btn-seance-${seance.id}" class="btn btn-reservation col mt-2 disabled d-flex justify-content-center align-items-center flex-column text-center mx-2">
                                                 <span>${seance.qualite}</span>
                                                 <span>${seance.heureDebut}</span>
                                                 <span>${seance.heureFin}</span>
@@ -887,6 +887,57 @@ axios.defaults.withCredentials = true;
                                         let totalReservedSeats = seance.sieges_reserves ? seance.sieges_reserves.length : 0;
                                         const remainingSeats = 100 - totalReservedSeats;
 
+                                        // Vérifier si le nombre de places demandées est inférieur ou égal au nombre de places restantes lors de la redirection depuis la page film
+                                        if (seanceId) {
+                                            const requestedSeats = parseInt($('#Textarea-places-reservations').val(), 10) || 0;
+                                            if (requestedSeats <= remainingSeats) {
+                                                $button.removeClass('disabled');
+                                                atLeastOneAvailable = true; // Marque qu'au moins une séance est disponible
+
+                                                // Ajout de la salle
+                                                // Récupère le texte actuel dans #salle-reservations
+                                                let currentText = $('#salle-reservations').text();
+
+                                                // Vérifie si le texte contient déjà seance.salle
+                                                if (!currentText.includes(seance.salle)) {
+                                                    // Si le texte ne contient pas déjà seance.salle, ajoute-le
+                                                    $('#salle-reservations').append(seance.salle);
+                                                }
+
+                                                // Mettre à jour l'affichage de la séance sélectionnée
+                                                $seancesSelected.text(`Qualité choisie : ${seance.qualite}`);
+
+                                                // Mettre à jour le prix
+                                                let nombrePlaces = parseInt($('#Textarea-places-reservations').val(), 10);
+                                                let prixUnitaire = seance.prix;
+
+                                                // Calcul du prix dégressif
+                                                if (nombrePlaces >= 5) {
+                                                    prixUnitaire = prixUnitaire * 0.8; // 20% de réduction
+                                                } else if (nombrePlaces >= 2) {
+                                                    prixUnitaire = prixUnitaire * 0.9; // 10% de réduction
+                                                }
+
+                                                // Mettre à jour l'affichage du prix
+                                                $('#prix-reservations').text(`Prix : ${prixUnitaire.toFixed(2)} €`);
+
+                                                // Afficher les sièges réservés pour cette séance
+                                                $('#selection-sieges').removeClass('disabled');
+                                                afficherSiegesReserves(seance);
+                                            } else {
+                                                $button.addClass('disabled');
+                                            }
+
+                                            // Mise à jour globale des états
+                                            if (atLeastOneAvailable) {
+                                                $('#seances-buttons').removeClass('disabled');
+                                                $(`#btn-seance-${seanceId}`).addClass('active');
+                                            } else {
+                                                $('#seances-buttons').addClass('disabled');
+                                            }
+
+                                        }
+
                                         // Vérification dynamique lors de la saisie
                                         $('#Textarea-places-reservations').on('input', function () {
                                             $('#seances-buttons .btn-reservation').removeClass('active');
@@ -894,7 +945,7 @@ axios.defaults.withCredentials = true;
 
                                             if (requestedSeats <= remainingSeats) {
                                                 $button.removeClass('disabled');
-                                                atLeastOneAvailable = true; // Marque qu'au moins une séance est disponible
+                                                atLeastOneAvailable = true;// Marque qu'au moins une séance est disponible
                                             } else {
                                                 $button.addClass('disabled');
                                             }
@@ -924,7 +975,14 @@ axios.defaults.withCredentials = true;
                                         $button.on('click', function () {
                                             if (!$(this).hasClass('disabled')) {
                                                 // Ajout de la salle
-                                                $('#salle-reservations').append(`${seance.salle}`);
+                                                // Récupère le texte actuel dans #salle-reservations
+                                                let currentText = $('#salle-reservations').text();
+
+                                                // Vérifie si le texte contient déjà seance.salle
+                                                if (!currentText.includes(seance.salle)) {
+                                                    // Si le texte ne contient pas déjà seance.salle, ajoute-le
+                                                    $('#salle-reservations').append(seance.salle);
+                                                }
                                                 // Gestion de la sélection de la séance
                                                 $('#seances-buttons .btn-reservation').removeClass('active');
                                                 $(this).addClass('active');
@@ -1042,6 +1100,7 @@ axios.defaults.withCredentials = true;
             const urlParams = new URLSearchParams(window.location.search);
             const filmId = urlParams.get('filmId');
             const cinemaId = urlParams.get('cinemaId');
+            const seanceId = urlParams.get('seanceId');
 
             if (cinemaId) {
                 // Logique pour sélectionner un cinéma
@@ -1075,14 +1134,14 @@ axios.defaults.withCredentials = true;
                 if (!filmElement.length) return; // Vérifie si l'élément existe
 
                 // Vérifier si la date est présente dans l'URL
-                if (dateParam) {
+                if (dateParam && seanceId) {
                     // Séparer la date en parties
                     const [year, month, day] = dateParam.split('-');
 
                     // Reformater la date au format 'dd/mm/yyyy'
                     const formattedDate = `${day}/${month}/${year}`;
-                    handleReservation(cinemaId, filmId, formattedDate);
-                    $('#seances-buttons').removeClass('disabled');
+                    $('#Textarea-places-reservations').val(1);
+                    handleReservation(cinemaId, filmId, formattedDate, seanceId);
                 }
 
                 const filmTitle = filmElement.text().trim();
