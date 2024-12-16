@@ -1,4 +1,5 @@
 import './styles/app.css';
+
 //Active Bootstrap
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -1379,6 +1380,20 @@ axios.defaults.withCredentials = true;
                 }
             });
 
+        }
+
+        //Page commandes
+        //Fonction pour noter la séance
+        function initializeStarRating() {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.addEventListener('click', function () {
+                    // Marquer l'étoile sélectionnée
+                    this.classList.toggle('selected');
+                    // Vous pouvez récupérer la valeur sélectionnée via 'data-value'
+                    const rating = this.getAttribute('data-value');
+                });
+            });
         }
 
         //Page Administration
@@ -3819,6 +3834,7 @@ axios.defaults.withCredentials = true;
             '/reservation': [reservation],
             '/mon_espace/connexion': [initializeFormFeatures],
             '/mon_espace/inscription': [initializeFormFeatures],
+            '/utilisateur/mon_espace/commandes': [initializeStarRating],
             '/utilisateur/accueil': [resizeCarrousel],
             '/utilisateur/films': [film, menuFilms],
             '/utilisateur/reservation': [reservation],

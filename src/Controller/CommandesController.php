@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class CommandesController extends AbstractController
 {
-    #[Route('/utilisateur/commandes', name: 'app_commandes_user')]
+    #[Route('/utilisateur/mon_espace/commandes', name: 'app_commandes_user')]
     public function index(): Response
     {
         $user = $this->getUser();
