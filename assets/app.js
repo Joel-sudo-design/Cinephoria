@@ -874,7 +874,7 @@ axios.defaults.withCredentials = true;
                                     // Ajouter les boutons pour chaque séance
                                     availableSeances.forEach(seance => {
                                         const $button = $(`
-                                            <button id="btn-seance-${seance.id}" class="btn btn-reservation col mt-2 disabled d-flex justify-content-center align-items-center flex-column text-center mx-2">
+                                            <button id="${seance.id}" class="btn btn-reservation col mt-2 disabled d-flex justify-content-center align-items-center flex-column text-center mx-2">
                                                 <span>${seance.qualite}</span>
                                                 <span>${seance.heureDebut}</span>
                                                 <span>${seance.heureFin}</span>
@@ -931,7 +931,7 @@ axios.defaults.withCredentials = true;
                                             // Mise à jour globale des états
                                             if (atLeastOneAvailable) {
                                                 $('#seances-buttons').removeClass('disabled');
-                                                $(`#btn-seance-${seanceId}`).addClass('active');
+                                                $(`#${seanceId}`).addClass('active');
                                             } else {
                                                 $('#seances-buttons').addClass('disabled');
                                             }
