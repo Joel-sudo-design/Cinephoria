@@ -50,4 +50,9 @@ class CommandesController extends AbstractController
             'reservations' => $reservationArray,
         ]);
     }
+
+    #[Route('/utilisateur/mon_espace/commandes/notation', name: 'app_commandes_user_notation')]
+    public function notation(): Response
+    {
+    }
 }

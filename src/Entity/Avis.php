@@ -27,6 +27,9 @@ class Avis
     #[ORM\Column(nullable: true)]
     private ?bool $isValidate = false;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $notation = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +89,18 @@ class Avis
     public function setValidate(?bool $isValidate): static
     {
         $this->isValidate = $isValidate;
+
+        return $this;
+    }
+
+    public function getNotation(): ?int
+    {
+        return $this->notation;
+    }
+
+    public function setNotation(?int $notation): static
+    {
+        $this->notation = $notation;
 
         return $this;
     }
