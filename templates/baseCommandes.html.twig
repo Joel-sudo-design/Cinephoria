@@ -102,20 +102,20 @@
                                             <div class="col-6 d-flex flex-column justify-content-center">
                                                 <div class="text-white fs-5 text-center">Prix: {{ reservation.seance.price }}€</div>
                                                 <div class="col-auto text-center mt-3">
-                                                    <button type="button" id="notation"
+                                                    <button type="button"
                                                                 class="btn btn-paiement fs-5 px-3 {% if reservation.seance.date > 'now'|date('Y-m-d') %}disabled{% endif %}"
                                                                 data-bs-toggle="modal"
-                                                                data-bs-target="#notationModal">
+                                                                data-bs-target="#notationModal-{{ reservation.reservation_id }}">
                                                             Noter le film <i class="ms-2 bi bi-pencil"></i>
                                                         </button>
                                                 </div>
                                             </div>
                                             <!-- Modal avis -->
-                                            <div class="modal fade" id="notationModal" tabindex="-1" aria-labelledby="notationModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                                            <div class="modal fade" id="notationModal-{{ reservation.reservation_id }}" tabindex="-1" aria-labelledby="notationModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                                                 <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <div class="modal-header border-0 pb-1">
-                                                            <h5 class="modal-title" id="notationModalLabel">Noter le film</h5>
+                                                            <h5 class="modal-title">Noter le film</h5>
                                                             <button type="button" class="btn-close btn-close-seances" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
@@ -127,8 +127,8 @@
                                                                 <span class="star" data-value="5">&#9733;</span>
                                                             </div>
                                                             <div class="mt-3">
-                                                                <textarea class="form-control" rows="5" style="resize: none;" placeholder="Écrivez votre avis ici..." id="floatingTextareaComments"></textarea>
-                                                                <label for="floatingTextareaComments" class="d-none"></label>
+                                                                <textarea class="floatingTextareaComments form-control" rows="5" style="resize: none;" placeholder="Écrivez votre avis ici..." id="floatingTextareaComments-{{ reservation.reservation_id }}"></textarea>
+                                                                <label for="floatingTextareaComments-{{ reservation.reservation_id }}" class="d-none"></label>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer border-0">

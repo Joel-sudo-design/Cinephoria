@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Film;
 use App\Entity\Reservation;
 use App\Entity\Seance;
 use App\Repository\CinemaRepository;

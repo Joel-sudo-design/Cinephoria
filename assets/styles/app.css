@@ -1239,7 +1239,7 @@ footer #navbarBottom .nav-link {
   color: gold;
 }
 
-#floatingTextareaComments::placeholder {
+.floatingTextareaComments::placeholder {
   color: #6A73AB;
 }
 

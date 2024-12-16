@@ -1384,14 +1384,75 @@ axios.defaults.withCredentials = true;
 
         //Page commandes
         //Fonction pour noter la séance
-        function initializeStarRating() {
-            const stars = document.querySelectorAll('.star');
-            stars.forEach(star => {
-                star.addEventListener('click', function () {
-                    // Marquer l'étoile sélectionnée
-                    this.classList.toggle('selected');
-                    // Vous pouvez récupérer la valeur sélectionnée via 'data-value'
-                    const rating = this.getAttribute('data-value');
+        function handleFilmRating() {
+            // Gestion des boutons de déclenchement du modal
+            document.querySelectorAll('.btn-paiement').forEach(button => {
+                button.addEventListener('click', function () {
+                    // Vérifier si le bouton est désactivé
+                    if (this.classList.contains('disabled')) {
+                        alert("Vous ne pouvez pas noter un film pour une séance future.");
+                        return;
+                    }
+
+                    // Récupérer l'ID de la réservation depuis le data-bs-target
+                    const modalId = this.getAttribute('data-bs-target').replace('#notationModal-', '');
+                    const modal = document.getElementById(`notationModal-${modalId}`);
+
+                    if (!modal) {
+                        console.error(`Le modal pour la réservation ID ${modalId} est introuvable.`);
+                        return;
+                    }
+
+                    // Gérer les étoiles dans le modal
+                    const stars = modal.querySelectorAll('.star');
+                    stars.forEach(star => {
+                        star.addEventListener('click', function () {
+                            // Marquer l'étoile sélectionnée
+                            this.classList.toggle('selected');
+
+                            // Sélectionner les étoiles jusqu'à la valeur actuelle
+                            const value = parseInt(this.getAttribute('data-value'));
+                            stars.forEach(s => {
+                                if (parseInt(s.getAttribute('data-value')) <= value) {
+                                    s.classList.add('selected');
+                                }
+                            });
+                        });
+                    });
+
+                    // Gérer le clic sur le bouton d'enregistrement
+                    const saveButton = modal.querySelector('.btn-connexion');
+                    saveButton.addEventListener('click', function () {
+                        // Récupérer le textarea et le commentaire
+                        const textareaId = `floatingTextareaComments-${modalId}`;
+                        const textarea = document.getElementById(textareaId);
+                        const comment = textarea ? textarea.value : '';
+
+                        // Trouver la note (la valeur la plus haute avec la classe "selected")
+                        const selectedStars = modal.querySelectorAll('.star.selected');
+                        const rating = selectedStars.length > 0 ? Math.max(...[...selectedStars].map(star => parseInt(star.getAttribute('data-value')))) : null;
+
+                        if (!rating) {
+                            alert("Veuillez sélectionner une note !");
+                            return;
+                        }
+
+                        // Préparer les données
+                        const data = {
+                            reservation_id: modalId,
+                            comment: comment,
+                            rating: rating
+                        };
+
+                        // Envoyer les données avec Axios
+                        axios.post('/utilisateur/mon_espace/commandes/notation', data)
+                            .then(response => {
+                                console.log('Données envoyées avec succès:', response.data);
+                            })
+                            .catch(error => {
+                                console.error('Erreur lors de l\'envoi:', error);
+                            });
+                    });
                 });
             });
         }
@@ -3834,7 +3895,7 @@ axios.defaults.withCredentials = true;
             '/reservation': [reservation],
             '/mon_espace/connexion': [initializeFormFeatures],
             '/mon_espace/inscription': [initializeFormFeatures],
-            '/utilisateur/mon_espace/commandes': [initializeStarRating],
+            '/utilisateur/mon_espace/commandes': [handleFilmRating],
             '/utilisateur/accueil': [resizeCarrousel],
             '/utilisateur/films': [film, menuFilms],
             '/utilisateur/reservation': [reservation],
