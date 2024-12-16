@@ -77,13 +77,7 @@ class CommandesController extends AbstractController
         ];
 
         return new Response(
-            json_encode([
-                'success' => true,
-                'message' => 'Les données ont été reçues avec succès.',
-                'data' => $result,
-            ]),
-            Response::HTTP_OK,
-            ['Content-Type' => 'application/json']
+            json_encode(['data' => $result]),
         );
     }
 }

@@ -1386,73 +1386,73 @@ axios.defaults.withCredentials = true;
         //Fonction pour noter la séance
         function handleFilmRating() {
             // Gestion des boutons de déclenchement du modal
-            document.querySelectorAll('.btn-paiement').forEach(button => {
-                button.addEventListener('click', function () {
-                    // Vérifier si le bouton est désactivé
-                    if (this.classList.contains('disabled')) {
-                        alert("Vous ne pouvez pas noter un film pour une séance future.");
-                        return;
-                    }
+            $('.btn-paiement').click(function () {
+                // Vérifier si le bouton est désactivé
+                if ($(this).hasClass('disabled')) {
+                    alert("Vous ne pouvez pas noter un film pour une séance future.");
+                    return;
+                }
 
-                    // Récupérer l'ID de la réservation depuis le data-bs-target
-                    const modalId = this.getAttribute('data-bs-target').replace('#notationModal-', '');
-                    const modal = document.getElementById(`notationModal-${modalId}`);
+                // Récupérer l'ID de la réservation depuis le data-bs-target
+                const modalId = $(this).data('bs-target').replace('#notationModal-', '');
+                const $modal = $(`#notationModal-${modalId}`);
 
-                    if (!modal) {
-                        console.error(`Le modal pour la réservation ID ${modalId} est introuvable.`);
-                        return;
-                    }
+                if ($modal.length === 0) {
+                    console.error(`Le modal pour la réservation ID ${modalId} est introuvable.`);
+                    return;
+                }
 
-                    // Gérer les étoiles dans le modal
-                    const stars = modal.querySelectorAll('.star');
-                    stars.forEach(star => {
-                        star.addEventListener('click', function () {
-                            // Marquer l'étoile sélectionnée
-                            this.classList.toggle('selected');
+                // Gérer les étoiles dans le modal
+                $modal.find('.star').click(function () {
+                    const $star = $(this);
+                    $star.toggleClass('selected');
 
-                            // Sélectionner les étoiles jusqu'à la valeur actuelle
-                            const value = parseInt(this.getAttribute('data-value'));
-                            stars.forEach(s => {
-                                if (parseInt(s.getAttribute('data-value')) <= value) {
-                                    s.classList.add('selected');
-                                }
-                            });
-                        });
-                    });
-
-                    // Gérer le clic sur le bouton d'enregistrement
-                    const saveButton = modal.querySelector('.btn-connexion');
-                    saveButton.addEventListener('click', function () {
-                        // Récupérer le textarea et le commentaire
-                        const textareaId = `floatingTextareaComments-${modalId}`;
-                        const textarea = document.getElementById(textareaId);
-                        const comment = textarea ? textarea.value : '';
-
-                        // Trouver la note (la valeur la plus haute avec la classe "selected")
-                        const selectedStars = modal.querySelectorAll('.star.selected');
-                        const rating = selectedStars.length > 0 ? Math.max(...[...selectedStars].map(star => parseInt(star.getAttribute('data-value')))) : null;
-
-                        if (!rating) {
-                            alert("Veuillez sélectionner une note !");
-                            return;
+                    const value = parseInt($star.data('value'));
+                    $modal.find('.star').each(function () {
+                        const $s = $(this);
+                        if (parseInt($s.data('value')) <= value) {
+                            $s.addClass('selected');
                         }
-
-                        // Préparer les données
-                        const data = {
-                            reservation_id: modalId,
-                            comment: comment,
-                            rating: rating
-                        };
-
-                        // Envoyer les données avec Axios
-                        axios.post('/utilisateur/mon_espace/commandes/notation', data)
-                            .then(response => {
-                                console.log('Données envoyées avec succès:', response.data);
-                            })
-                            .catch(error => {
-                                console.error('Erreur lors de l\'envoi:', error);
-                            });
                     });
+                });
+
+                // Gérer le clic sur le bouton d'enregistrement
+                $modal.find('.btn-connexion').click(function () {
+                    const comment = $(`#floatingTextareaComments-${modalId}`).val();
+                    const selectedStars = $modal.find('.star.selected');
+                    const rating = selectedStars.length > 0 ? Math.max(...selectedStars.map((_, star) => parseInt($(star).data('value')))) : null;
+
+                    // Vérifier si la note et le commentaire sont présents
+                    if (!rating) {
+                        alert("Veuillez sélectionner une note !");
+                        return;
+                    }
+                    if (!comment.trim()) {
+                        alert("Veuillez laisser un commentaire !");
+                        return;
+                    }
+
+                    // Préparer les données
+                    const data = {
+                        reservation_id: modalId,
+                        comment: comment,
+                        rating: rating
+                    };
+
+                    // Envoyer les données avec Axios
+                    axios.post('/utilisateur/mon_espace/commandes/notation', data)
+                        .then(response => {
+                            console.log('Données envoyées avec succès:', response.data);
+
+                            // Fermer le modal après l'envoi réussi
+                            $modal.modal('hide');
+
+                            // Supprimer le bouton après la fermeture du modal
+                            $(`#avis-${modalId}`).remove();
+                        })
+                        .catch(error => {
+                            console.error('Erreur lors de l\'envoi:', error);
+                        });
                 });
             });
         }
