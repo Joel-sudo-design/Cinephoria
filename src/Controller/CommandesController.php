@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Avis;
 use App\Entity\Reservation;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,10 +14,11 @@ use Symfony\Component\HttpFoundation\Request;
 class CommandesController extends AbstractController
 {
     #[Route('/utilisateur/mon_espace/commandes', name: 'app_commandes_user')]
-    public function index(): Response
+    public function index(EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
         $reservations = $user->getReservations();
+        $avis = $entityManager->getRepository(Avis::class)->findBy(['user' => $user]);
         $reservationArray = [];
 
         foreach ($reservations as $reservation) {
@@ -26,10 +29,16 @@ class CommandesController extends AbstractController
             $heureDebut =  $reservation->getSeance()->getHeureDebut();
             $heureFin = $reservation->getSeance()->getHeureFin();
 
-            // Calculer la durée
             if ($heureDebut && $heureFin) {
                 $diff = $heureDebut->diff($heureFin);
-                $duree = sprintf('%dh %dm', $diff->h, $diff->i);
+
+                if ($diff->i === 0) {
+                    // Si les minutes sont 0, afficher uniquement les heures
+                    $duree = sprintf('%dh', $diff->h);
+                } else {
+                    // Sinon, afficher heures et minutes
+                    $duree = sprintf('%dh %dm', $diff->h, $diff->i);
+                }
             } else {
                 $duree = null; // En cas de données incorrectes
             }
@@ -50,6 +59,11 @@ class CommandesController extends AbstractController
             $reservationArray[] = $seance;
         }
 
+        // Récupération des avis
+        foreach ($avis as $avi) {
+            $reservationArray[0]['seance']['avis'] = $avi->getDescription();
+        }
+
         return $this->render('commandes/index.html.twig', [
             'controller_name' => 'CommandesUserController',
             'reservations' => $reservationArray,
@@ -57,27 +71,43 @@ class CommandesController extends AbstractController
     }
 
     #[Route('/utilisateur/mon_espace/commandes/notation', name: 'app_commandes_user_notation')]
-    public function notation(Request $request, EntityManagerInterface $entityManager): Response
+    public function notation(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
-        $reservationId = $data['reservation_id'] ?? null;
+        // Validation des données d'entrée
+        if (empty($data['reservation_id']) || !isset($data['rating'])) {
+            return new JsonResponse(['success' => false, 'error' => 'Invalid data'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $reservationId = $data['reservation_id'];
         $comment = $data['comment'] ?? '';
-        $rating = $data['rating'] ?? null;
+        $rating = (int) $data['rating'];
+
+        // Récupération de la réservation
         $reservation = $entityManager->getRepository(Reservation::class)->find($reservationId);
-        $filmId = $reservation->getSeance()->getFilm()->getId();
+        if (!$reservation) {
+            return new JsonResponse(['success' => false, 'error' => 'Reservation not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        // Récupération du film associé
+        $film = $reservation->getSeance()->getFilm();
+        if (!$film) {
+            return new JsonResponse(['success' => false, 'error' => 'Film not found'], Response::HTTP_NOT_FOUND);
+        }
+
         $user = $this->getUser();
-        $userId = $user->getId();
 
-        $result = [
-            'comment' => $comment,
-            'rating' => $rating,
-            'filmId' => $filmId,
-            'userId' => $userId
-        ];
+        // Création de l'avis
+        $avis = new Avis();
+        $avis->setDescription($comment);
+        $avis->setNotation($rating);
+        $avis->setUser($user);
+        $avis->setFilm($film);
 
-        return new Response(
-            json_encode(['data' => $result]),
-        );
+        $entityManager->persist($avis);
+        $entityManager->flush();
+
+        return new JsonResponse(['success' => true], Response::HTTP_OK);
     }
 }

@@ -57,11 +57,11 @@
                                         <!-- Image du film -->
                                         <img src="{{ reservation.film.image }}" class="img-fluid" alt="image">
                                     </div>
-                                    <div class="row mt-4 fs-5">
+                                    <div class="row mt-3 fs-5">
                                         <!-- Genre du film -->
                                         <div class="col-12 text-center">Genre: {{ reservation.film.genre }}</div>
                                         <!-- Durée -->
-                                        <div class="col-12 text-center mt-4">Durée: {{ reservation.seance.duree }}</div>
+                                        <div class="col-12 text-center mt-3">Durée: {{ reservation.seance.duree }}</div>
                                     </div>
                                 </div>
                                 <div class="col-8 p-4 position-relative">
@@ -81,7 +81,7 @@
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col-auto">
-                                                <div class="text-white fs-5">{{ reservation.seance.date }}: salle n° {{ reservation.seance.salle }}, qualité {{ reservation.seance.qualite }} de {{ reservation.seance.heure_debut_seance }} à {{ reservation.seance.heure_fin_seance }}</div>
+                                                <div class="text-white fs-5">{{ reservation.seance.date }} : salle n° {{ reservation.seance.salle }}, qualité {{ reservation.seance.qualite }} de {{ reservation.seance.heure_debut_seance }} à {{ reservation.seance.heure_fin_seance }}</div>
                                             </div>
                                         </div>
                                         <div class="row mt-3">
@@ -102,12 +102,16 @@
                                             <div class="col-6 d-flex flex-column justify-content-center">
                                                 <div class="text-white fs-5 text-center">Prix: {{ reservation.seance.price }}€</div>
                                                 <div id="avis-{{ reservation.reservation_id }}" class="col-auto text-center mt-3">
+                                                    {% if reservation.seance.avis is not empty %}
+                                                        <div class="text-white" style="word-wrap: break-word; max-width: 100%">Avis déposé : {{ reservation.seance.avis }}</div>
+                                                    {% else %}
                                                     <button type="button"
                                                                 class="btn btn-paiement fs-5 px-3 {% if reservation.seance.date > 'now'|date('Y-m-d') %}disabled{% endif %}"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#notationModal-{{ reservation.reservation_id }}">
                                                             Noter le film <i class="ms-2 bi bi-pencil"></i>
                                                         </button>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                             <!-- Modal avis -->
