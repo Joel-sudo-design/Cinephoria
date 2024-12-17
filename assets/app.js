@@ -1395,6 +1395,7 @@ axios.defaults.withCredentials = true;
 
                 // Récupérer l'ID de la réservation depuis le data-bs-target
                 const modalId = $(this).data('bs-target').replace('#notationModal-', '');
+                const reservationId = $('.commande-avis').attr('id').replace('avis-', '');
                 const $modal = $(`#notationModal-${modalId}`);
 
                 if ($modal.length === 0) {
@@ -1443,12 +1444,19 @@ axios.defaults.withCredentials = true;
                     axios.post('/utilisateur/mon_espace/commandes/notation', data)
                         .then(response => {
                             console.log('Données envoyées avec succès:', response.data);
-
+                            const data  = response.data.avis;
                             // Fermer le modal après l'envoi réussi
                             $modal.modal('hide');
 
                             // Supprimer le bouton après la fermeture du modal
-                            $(`#avis-${modalId}`).remove();
+                            $(`#avis-${modalId}`)
+                                .empty()
+                                .append(
+                                    `<button type="button" class="btn btn-commandes-avis fs-5 px-3" data-bs-toggle="modal" data-bs-target="#avisModal-${reservationId}">
+                                     Avis déposé
+                                    <i class="ms-2 bi bi-eye bi-eye-avis"></i>
+                                    </button>`);
+                            $('.avis-depose').append(`<div>${data}</div>`)
                         })
                         .catch(error => {
                             console.error('Erreur lors de l\'envoi:', error);

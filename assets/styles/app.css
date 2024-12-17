@@ -1243,6 +1243,31 @@ footer #navbarBottom .nav-link {
   color: #6A73AB;
 }
 
+.btn-commandes-avis{
+  background-color: white;
+  color: #6A73AB;
+  border: 2px solid #6A73AB;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.btn-commandes-avis:hover {
+  background-color: #6A73AB;
+  color: white;
+  border: 2px solid white;
+}
+
+.btn.btn-avis:hover .bi-eye-avis {
+  color: #6A73AB;
+  transition: all 0.2s ease;
+}
+
+.btn.btn-avis:hover .bi-eye-avis {
+  color: #ffffff;
+}
+
+
 /* Media queries */
 @media (min-width: 1921px) {
 

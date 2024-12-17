@@ -25,6 +25,9 @@ class Reservation
     #[ORM\Column(type: 'string', length: 4000, nullable: true)]
     private ?string $qrCode = null;
 
+    #[ORM\OneToOne(inversedBy: 'reservation', cascade: ['persist', 'remove'])]
+    private ?avis $avis = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -79,6 +82,18 @@ class Reservation
     public function setQrCode(?string $qrCode): static
     {
         $this->qrCode = $qrCode;
+
+        return $this;
+    }
+
+    public function getAvis(): ?avis
+    {
+        return $this->avis;
+    }
+
+    public function setAvis(?avis $avis): static
+    {
+        $this->avis = $avis;
 
         return $this;
     }

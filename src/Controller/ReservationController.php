@@ -151,10 +151,11 @@ class ReservationController extends AbstractController
         $user = $this->getUser();
         $session = $request->getSession();
 
+        $reservationData = json_decode($request->getContent(), true);
+        $seanceId = $reservationData['seanceId'] ?? null;
+
         // Vérifier si l'utilisateur est connecté
         if (!$user) {
-            $reservationData = json_decode($request->getContent(), true);
-            $seanceId = $reservationData['seanceId'] ?? null;
             $seats = $reservationData['seats'] ?? null;
 
             if ($seanceId && !empty($seats)) {
@@ -170,6 +171,16 @@ class ReservationController extends AbstractController
                     ]),
                 ]);
             }
+        }
+
+        // Vérifier si une réservation existe déjà pour cet utilisateur et cette séance
+        $existingReservation = $entityManager->getRepository(Reservation::class)->findOneBy([
+            'user' => $user,
+            'seance' => $seanceId
+        ]);
+
+        if ($existingReservation) {
+            return new JsonResponse(['error' => 'Vous avez déjà réservé pour cette séance.']);
         }
 
         // Vérifier les données de réservation en attente
@@ -189,9 +200,9 @@ class ReservationController extends AbstractController
             $seance = $entityManager->getRepository(Seance::class)->find($seanceId);
 
             $reservation = new Reservation();
-            $reservation->setUser($user);
             $reservation->setSeance($seance);
             $reservation->setSiege($seats);
+            $user->addReservation($reservation);
 
             // Créer une donnée unique pour le QR code (par exemple, l'ID de la réservation)
             $qrData = 'Reservation ID: ' . $reservation->getId() . ' - Seance ID: ' . $seanceId;

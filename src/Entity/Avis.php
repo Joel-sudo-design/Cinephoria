@@ -30,6 +30,9 @@ class Avis
     #[ORM\Column(nullable: true)]
     private ?int $notation = null;
 
+    #[ORM\OneToOne(mappedBy: 'avis', cascade: ['persist', 'remove'])]
+    private ?Reservation $reservation = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -101,6 +104,28 @@ class Avis
     public function setNotation(?int $notation): static
     {
         $this->notation = $notation;
+
+        return $this;
+    }
+
+    public function getReservation(): ?Reservation
+    {
+        return $this->reservation;
+    }
+
+    public function setReservation(?Reservation $reservation): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($reservation === null && $this->reservation !== null) {
+            $this->reservation->setAvis(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($reservation !== null && $reservation->getAvis() !== $this) {
+            $reservation->setAvis($this);
+        }
+
+        $this->reservation = $reservation;
 
         return $this;
     }

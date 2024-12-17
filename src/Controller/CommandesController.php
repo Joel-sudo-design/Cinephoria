@@ -18,7 +18,6 @@ class CommandesController extends AbstractController
     {
         $user = $this->getUser();
         $reservations = $user->getReservations();
-        $avis = $entityManager->getRepository(Avis::class)->findBy(['user' => $user]);
         $reservationArray = [];
 
         foreach ($reservations as $reservation) {
@@ -56,19 +55,18 @@ class CommandesController extends AbstractController
                 : null;
             $genreName = $reservation->getSeance()->getFilm()->getGenre()->getName();
             $seance['film']['genre'] = $genreName;
-            $reservationArray[] = $seance;
-        }
+            $seance['seance']['avis'] = $reservation->getAvis();
 
-        // Récupération des avis
-        foreach ($avis as $avi) {
-            $reservationArray[0]['seance']['avis'] = $avi->getDescription();
+            $reservationArray[] = $seance;
         }
 
         return $this->render('commandes/index.html.twig', [
             'controller_name' => 'CommandesUserController',
             'reservations' => $reservationArray,
         ]);
+
     }
+
 
     #[Route('/utilisateur/mon_espace/commandes/notation', name: 'app_commandes_user_notation')]
     public function notation(Request $request, EntityManagerInterface $entityManager): JsonResponse
@@ -104,10 +102,11 @@ class CommandesController extends AbstractController
         $avis->setNotation($rating);
         $avis->setUser($user);
         $avis->setFilm($film);
+        $avis->setReservation($reservation);
 
         $entityManager->persist($avis);
         $entityManager->flush();
 
-        return new JsonResponse(['success' => true], Response::HTTP_OK);
+        return new JsonResponse(['success' => true, 'avis' => $comment], Response::HTTP_OK);
     }
 }
