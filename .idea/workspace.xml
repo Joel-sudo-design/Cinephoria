@@ -6,13 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modif">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/CommandesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CommandesController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/ReservationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReservationController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Avis.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Avis.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Film.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Film.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Reservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Reservation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/baseCommandes.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseCommandes.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -350,15 +349,7 @@
       <workItem from="1734341034354" duration="143000" />
       <workItem from="1734353716437" duration="3624000" />
       <workItem from="1734357402653" duration="9092000" />
-      <workItem from="1734420619139" duration="22730000" />
-    </task>
-    <task id="LOCAL-00105" summary="Modifs">
-      <option name="closed" value="true" />
-      <created>1733592305267</created>
-      <option name="number" value="00105" />
-      <option name="presentableId" value="LOCAL-00105" />
-      <option name="project" value="LOCAL" />
-      <updated>1733592305267</updated>
+      <workItem from="1734420619139" duration="28174000" />
     </task>
     <task id="LOCAL-00106" summary="Modifs">
       <option name="closed" value="true" />
@@ -744,7 +735,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734429124834</updated>
     </task>
-    <option name="localTasksCounter" value="154" />
+    <task id="LOCAL-00154" summary="Modif">
+      <option name="closed" value="true" />
+      <created>1734450156608</created>
+      <option name="number" value="00154" />
+      <option name="presentableId" value="LOCAL-00154" />
+      <option name="project" value="LOCAL" />
+      <updated>1734450156608</updated>
+    </task>
+    <option name="localTasksCounter" value="155" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

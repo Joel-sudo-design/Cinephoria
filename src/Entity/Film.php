@@ -272,7 +272,7 @@ class Film
         return $this->avis;
     }
 
-    public function addAvi(Avis $avi): static
+    public function addAvis(Avis $avi): static
     {
         if (!$this->avis->contains($avi)) {
             $this->avis->add($avi);

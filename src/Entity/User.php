@@ -239,27 +239,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Avis>
      */
-    public function getFilm(): Collection
+    public function getAvis(): Collection
     {
         return $this->avis;
     }
 
-    public function addFilm(Avis $film): static
+    public function addAvis(Avis $avis): static
     {
-        if (!$this->avis->contains($film)) {
-            $this->avis->add($film);
-            $film->setUser($this);
+        if (!$this->avis->contains($avis)) {
+            $this->avis->add($avis);
+            $avis->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeFilm(Avis $film): static
+    public function removeAvis(Avis $avis): static
     {
-        if ($this->avis->removeElement($film)) {
+        if ($this->avis->removeElement($avis)) {
             // set the owning side to null (unless already changed)
-            if ($film->getUser() === $this) {
-                $film->setUser(null);
+            if ($avis->getUser() === $this) {
+                $avis->setUser(null);
             }
         }
 

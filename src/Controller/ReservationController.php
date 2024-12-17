@@ -200,9 +200,9 @@ class ReservationController extends AbstractController
             $seance = $entityManager->getRepository(Seance::class)->find($seanceId);
 
             $reservation = new Reservation();
+            $reservation->setUser($user);
             $reservation->setSeance($seance);
             $reservation->setSiege($seats);
-            $user->addReservation($reservation);
 
             // Créer une donnée unique pour le QR code (par exemple, l'ID de la réservation)
             $qrData = 'Reservation ID: ' . $reservation->getId() . ' - Seance ID: ' . $seanceId;

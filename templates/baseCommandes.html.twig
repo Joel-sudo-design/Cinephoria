@@ -157,7 +157,7 @@
                                                             <button type="button" class="btn-close btn-close-seances" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body text-center align-content-center" style="color: #6A73AB">
-                                                            <div class="mt-3 avis-depose">{{ reservation.seance.avis }}</div>
+                                                            <div class="mt-3 avis-depose">{% if reservation.seance.avis is not empty %}{{ reservation.seance.avis }}{% endif %}</div>
                                                         </div>
                                                     </div>
                                                 </div>

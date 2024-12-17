@@ -42,9 +42,7 @@ class CommandesController extends AbstractController
                 $duree = null; // En cas de données incorrectes
             }
 
-            // Ajouter la durée au tableau de la séance
             $seance['seance']['duree'] = $duree;
-
             $seance['reservation_id'] = $reservation->getId();
             $seance['seance']['sieges_reserves'] = $reservation->getSiege();
             $seance['seance']['qrCode'] = $reservation->getQrCode();
@@ -55,8 +53,15 @@ class CommandesController extends AbstractController
                 : null;
             $genreName = $reservation->getSeance()->getFilm()->getGenre()->getName();
             $seance['film']['genre'] = $genreName;
-            $seance['seance']['avis'] = $reservation->getAvis();
-
+            $Allavis = $reservation->getSeance()->getFilm()->getAvis()->toArray();
+            $seance['seance']['avis'] = [];
+            foreach ($Allavis as $avis) {
+                if ($avis->getUser()->getId() == $user->getId()) {
+                    $seance['seance']['avis'] = $avis->getDescription();
+                    dump($avis->getDescription());
+                    break;
+                }
+            }
             $reservationArray[] = $seance;
         }
 
@@ -100,9 +105,8 @@ class CommandesController extends AbstractController
         $avis = new Avis();
         $avis->setDescription($comment);
         $avis->setNotation($rating);
-        $avis->setUser($user);
-        $avis->setFilm($film);
-        $avis->setReservation($reservation);
+        $user->addAvis($avis);
+        $film->addAvis($avis);
 
         $entityManager->persist($avis);
         $entityManager->flush();
