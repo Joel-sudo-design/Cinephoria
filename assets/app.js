@@ -366,7 +366,7 @@ axios.defaults.withCredentials = true;
                             </a>
                         </div>
                         <div class="card-body p-0 py-1">
-                            <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-start">
                                 <!-- Titre du film -->
                                 <div id="age-${film.id}" class="card-title m-0 fs-5">${film.name}</div>
                                 <!-- Badges -->

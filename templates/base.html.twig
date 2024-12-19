@@ -62,7 +62,7 @@
                                 {% endif %}
 
                                 <div class="image-carousel col-sm-5 col-md-4 col-lg-3 col-xl-3 col-xxl">
-                                    <img src="{{ asset(film.image) }}" class="d-block" alt="{{ film.image }}">
+                                    <img src="{{ asset(film.image) }}" alt="{{ film.name }}">
                                 </div>
 
                                 {% if loop.index % 7 == 0 or loop.last %}

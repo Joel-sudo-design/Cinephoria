@@ -56,8 +56,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Seance>
      */
-    #[ORM\ManyToMany(targetEntity: Seance::class, mappedBy: 'user')]
-    private Collection $seances;
 
     /**
      * @var Collection<int, Avis>
@@ -73,7 +71,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
-        $this->seances = new ArrayCollection();
         $this->avis = new ArrayCollection();
         $this->reservation = new ArrayCollection();
     }
@@ -205,33 +202,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPasswordMustChange(bool $passwordMustChange): static
     {
         $this->passwordMustChange = $passwordMustChange;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Seance>
-     */
-    public function getSeances(): Collection
-    {
-        return $this->seances;
-    }
-
-    public function addSeance(Seance $seance): static
-    {
-        if (!$this->seances->contains($seance)) {
-            $this->seances->add($seance);
-            $seance->addUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSeance(Seance $seance): static
-    {
-        if ($this->seances->removeElement($seance)) {
-            $seance->removeUser($this);
-        }
 
         return $this;
     }

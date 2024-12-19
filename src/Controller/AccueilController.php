@@ -86,7 +86,8 @@ class AccueilController extends AbstractController
         $filmsArray = [];
         foreach ($films as $film) {
             $filmsArray[] = [
-                'image' => $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName()
+                'image' => $this->getParameter('films_images_directory') . '/image_film/' . $film->getImageName(),
+                'name' => $film->getName(),
             ];
         }
 

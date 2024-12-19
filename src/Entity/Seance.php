@@ -36,10 +36,8 @@ class Seance
     private ?Film $film = null;
 
     /**
-     * @var Collection<int, user>
+     * @var Collection<int, User>
      */
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'seances')]
-    private Collection $user;
 
     /**
      * @var Collection<int, reservation>
@@ -52,7 +50,6 @@ class Seance
 
     public function __construct()
     {
-        $this->user = new ArrayCollection();
         $this->reservation = new ArrayCollection();
     }
 
@@ -154,30 +151,6 @@ class Seance
             'date' => $this->date->format('d/m/Y'),
             'reservation' => $this->reservation->count()
         ];
-    }
-
-    /**
-     * @return Collection<int, user>
-     */
-    public function getUser(): Collection
-    {
-        return $this->user;
-    }
-
-    public function addUser(user $user): static
-    {
-        if (!$this->user->contains($user)) {
-            $this->user->add($user);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(user $user): static
-    {
-        $this->user->removeElement($user);
-
-        return $this;
     }
 
     /**

@@ -72,7 +72,6 @@ class CommandesController extends AbstractController
 
     }
 
-
     #[Route('/utilisateur/mon_espace/commandes/notation', name: 'app_commandes_user_notation')]
     public function notation(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
