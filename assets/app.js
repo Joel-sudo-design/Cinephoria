@@ -160,6 +160,7 @@ axios.defaults.withCredentials = true;
                     // Vider les conteneurs avant de les remplir
                     const seancesContainer = $('#date-seance-' + filmId);
                     const modalContainer = $('#modal-date-seance-' + filmId);
+                    const cinemaId = $('#cinema-input').val();
                     seancesContainer.empty();
 
                     // Ajouter un spinner de chargement
@@ -211,7 +212,7 @@ axios.defaults.withCredentials = true;
                     });
 
                     // Charger les séances correspondantes via AJAX (Axios)
-                    axios.post('/films/seances', {filmId})
+                    axios.post('/films/seances', {filmId,cinemaId})
                         .then(response => {
                             const seances = response.data; // Liste des séances par date
 
@@ -224,7 +225,7 @@ axios.defaults.withCredentials = true;
                                 seancesContainer.html(seancesForSelectedDate.seances.map(seance => `
                                     <div class="col-6">
                                         <div class="uniform-block fs-5">
-                                            <div id="btn-modal-reservation-${seance.id}-${seance.cinemaId}" class="btn-modal-reservation" style="cursor: pointer">
+                                            <div id="btn-modal-reservation-${seance.id}" class="btn-modal-reservation" style="cursor: pointer">
                                                 <div class="row justify-content-center align-items-center p-3">
                                                     <div class="col-3">VF</div>
                                                     <div class="col-6 d-flex flex-column text-center">
@@ -256,7 +257,6 @@ axios.defaults.withCredentials = true;
                                 const idParts = fullId.split('-');
 
                                 const seanceId = idParts[3];
-                                const cinemaId = idParts[4];
                                 // Rediriger vers la page de réservation avec les informations nécessaires
                                 window.location.href = `/reservation?filmId=${filmId}&seanceId=${seanceId}&cinemaId=${cinemaId}&date=${selectedDate}`;
                             });

@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class ReservationController extends AbstractController
 {
     #[Route('/reservation', name: 'app_reservation')]
-    public function index(CinemaRepository $cinemaRepository, FilmRepository $filmRepository, Request $request, EntityManagerInterface $entityManager): Response
+    public function index(CinemaRepository $cinemaRepository, FilmRepository $filmRepository): Response
     {
         // Récupérer tous les cinémas et films
         $cinemas = $cinemaRepository->findAll();
@@ -90,7 +90,7 @@ class ReservationController extends AbstractController
             if ($film) {
                 $seances = $film->getSeance();
                 foreach ($seances as $seance) {
-                    $seanceArray = $seance->toArray();
+                    $seanceArray = $seance->toArray($cinemaId);
                     // Regrouper les séances par date
                     $date = $seanceArray['date'];
                     if (!isset($structuredSeances[$date])) {

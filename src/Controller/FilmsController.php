@@ -98,14 +98,15 @@ class FilmsController extends AbstractController
     public function seancesFilm(FilmRepository $filmRepository, Request $request): Response
     {
         $data = json_decode($request->getContent(), true);
-        $filmId = $data['filmId'];
+        $filmId = $data['filmId'] ?? null;
+        $cinemaId = $data['cinemaId'] ?? null;
         $structuredSeances = [];
 
         if ($filmId !== '') {
             $seances = $filmRepository->findOneBy(['id' => $filmId])->getSeance();
 
             foreach ($seances as $seance) {
-                $seanceArray = $seance->toArray();
+                $seanceArray = $seance->toArray($cinemaId);
 
                 // Regrouper les séances par date
                 $date = $seanceArray['date'];

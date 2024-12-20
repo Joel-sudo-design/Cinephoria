@@ -45,12 +45,16 @@ class Seance
     #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'seance')]
     private Collection $reservation;
 
-    #[ORM\ManyToOne(inversedBy: 'seances')]
-    private ?Cinema $cinema = null;
+    /**
+     * @var Collection<int, cinema>
+     */
+    #[ORM\ManyToMany(targetEntity: cinema::class, inversedBy: 'seances')]
+    private Collection $cinema;
 
     public function __construct()
     {
         $this->reservation = new ArrayCollection();
+        $this->cinema = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -130,20 +134,30 @@ class Seance
         return $this;
     }
 
-    public function toArray(): array
+    public function toArray(int $cinemaId): array
     {
+        $cinemaId = null;
+        foreach ($this->cinema as $cinema) {
+            if ($cinema->getId() === $cinemaId) {
+                $cinemaId = [
+                    'id' => $cinema->getId(),
+                ];
+                break;
+            }
+        }
+
         return [
             'id' => $this->id,
             'date' => $this->date->format('d/m/Y'),
-            'salle' => $this->salle->getId(),
-            'qualite' => $this->salle->getQualite(),
+            'salle' => $this->salle?->getId(),
+            'qualite' => $this->salle?->getQualite(),
             'heure_debut_seance' => $this->heure_debut->format('H:i'),
             'heure_fin_seance' => $this->heure_fin->format('H:i'),
             'price' => $this->price,
-            'cinema' => $this->cinema->getName(),
-            'cinema_id' => $this->cinema->getId()
+            'cinema_id' => $cinemaId,
         ];
     }
+
 
     public function toArrayReservation(): array
     {
@@ -183,18 +197,6 @@ class Seance
         return $this;
     }
 
-    public function getCinema(): ?Cinema
-    {
-        return $this->cinema;
-    }
-
-    public function setCinema(?Cinema $cinema): static
-    {
-        $this->cinema = $cinema;
-
-        return $this;
-    }
-
     public function getDuree(): ?string
     {
         // Vérifier que les deux heures sont définies
@@ -219,5 +221,29 @@ class Seance
         }
 
         return trim($dureeFormatee); // Supprimer les espaces inutiles
+    }
+
+    /**
+     * @return Collection<int, cinema>
+     */
+    public function getCinema(): Collection
+    {
+        return $this->cinema;
+    }
+
+    public function addCinema(cinema $cinema): static
+    {
+        if (!$this->cinema->contains($cinema)) {
+            $this->cinema->add($cinema);
+        }
+
+        return $this;
+    }
+
+    public function removeCinema(cinema $cinema): static
+    {
+        $this->cinema->removeElement($cinema);
+
+        return $this;
     }
 }

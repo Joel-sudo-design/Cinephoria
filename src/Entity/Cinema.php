@@ -25,19 +25,16 @@ class Cinema
     private Collection $films;
 
     /**
-     * @var Collection<int, seance>
-     */
-    #[ORM\OneToMany(targetEntity: Seance::class, mappedBy: 'cinema')]
-    private Collection $seances;
-
-    /**
      * @var Collection<int, Seance>
      */
+    #[ORM\ManyToMany(targetEntity: Seance::class, mappedBy: 'cinema')]
+    private Collection $seances;
 
     public function __construct()
     {
         $this->films = new ArrayCollection();
         $this->seances = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -85,34 +82,30 @@ class Cinema
     }
 
     /**
-     * @return Collection<int, seance>
+     * @return Collection<int, Seance>
      */
     public function getSeances(): Collection
     {
         return $this->seances;
     }
 
-    public function addSeance(seance $seance): static
+    public function addSeance(Seance $seance): static
     {
         if (!$this->seances->contains($seance)) {
             $this->seances->add($seance);
-            $seance->setCinema($this);
+            $seance->addCinema($this);
         }
 
         return $this;
     }
 
-    public function removeSeance(seance $seance): static
+    public function removeSeance(Seance $seance): static
     {
         if ($this->seances->removeElement($seance)) {
-            // set the owning side to null (unless already changed)
-            if ($seance->getCinema() === $this) {
-                $seance->setCinema(null);
-            }
+            $seance->removeCinema($this);
         }
 
         return $this;
     }
-
 
 }
