@@ -360,8 +360,8 @@ axios.defaults.withCredentials = true;
             return `
                     <div class="col-auto card" style="width: 12rem">
                         <div class="position-relative">
-                            <i id="heart-${film.id}" class="bi bi-heart-fill position-absolute fs-3 text-warning d-none" style="top:1%; right: 5%"></i>
-                            <a href="" data-bs-toggle="modal" data-bs-target="#modal-${film.id}">
+                            <i id="heart-${film.id}" class="bi bi-heart-fill position-absolute fs-3 text-warning d-none z-3" style="top:1%; right: 5%"></i> 
+                            <a class="card-image-film" href="" data-bs-toggle="modal" data-bs-target="#modal-${film.id}">
                               <img src="${film.image}" class="card-img-top" alt="image" />
                             </a>
                         </div>
@@ -449,6 +449,33 @@ axios.defaults.withCredentials = true;
                 updateModalAndSessions(filmId, selectedDateWithYear, false); // Ne pas mettre à jour les 7 jours
             });
         }
+        // Disable click image si pas de cinéma sélectionné
+        function validateCinemaSelection (filmId) {
+            const cinemaSelected = $('#cinema-input').val();
+            const $images = $('.card-image-film');
+
+            if (!cinemaSelected) {
+                // Désactiver les images
+                $images.addClass('disabled').each(function () {
+                    // Supprimer les attributs Bootstrap
+                    $(this).removeAttr('data-bs-toggle').removeAttr('data-bs-target');
+                });
+            } else {
+                // Activer les images
+                $images.removeClass('disabled').each(function () {
+                    // Réappliquer les attributs Bootstrap
+                    $(this).attr('data-bs-toggle', 'modal').attr('data-bs-target', `#modal-${filmId}`);
+                });
+            }
+
+            // Gestion stricte du clic
+            $(document).on('click', '.card-image-film', function (e) {
+                if ($(this).hasClass('disabled')) {
+                    e.preventDefault(); // Bloque le clic
+                    e.stopImmediatePropagation(); // Empêche toute propagation
+                }
+            });
+        }
         //Affichage de tous les films
         function film() {
             // Vider le conteneur des films
@@ -464,6 +491,14 @@ axios.defaults.withCredentials = true;
                                         // Ajouter chaque film dans le conteneur
                                         const filmHTML = generateFilmCardHTML(film);
                                         $('#film-container-public').append(filmHTML);
+
+                                        // Désactiver le clic sur les images si aucun cinéma n'est sélectionné
+                                        validateCinemaSelection(film.id);
+
+                                        // Attacher un événement `change` ou `keyup` à l'input de cinéma pour mettre à jour
+                                        $('#cinema-input').on('change keyup', function () {
+                                            validateCinemaSelection(film.id);
+                                        });
 
                                         // Initialiser le modal et le datepicker avec la date du jour pour ce film
                                         initializeModalAndDatepicker(film.id, updateModalAndSessions);
@@ -497,8 +532,8 @@ axios.defaults.withCredentials = true;
                                         displayAgeBadge(film)
                                     });
                                 })
-            .catch(error => {console.error('Erreur lors du chargement des films :', error);})
-            .finally(() => {
+                                .catch(error => {console.error('Erreur lors du chargement des films :', error);})
+                                .finally(() => {
                                     // Cacher le spinner de chargement
                                     $('#loading-spinner').addClass('d-none');
                                 });
@@ -542,6 +577,14 @@ axios.defaults.withCredentials = true;
                         $.each(films, function (index, film) {
                             const filmHTML = generateFilmCardHTML(film);
                             $('#film-container-public').append(filmHTML);
+
+                            // Désactiver le clic sur les images si aucun cinéma n'est sélectionné
+                            validateCinemaSelection(film.id);
+
+                            // Attacher un événement `change` ou `keyup` à l'input de cinéma pour mettre à jour
+                            $('#cinema-input').on('change keyup', function () {
+                                validateCinemaSelection(film.id);
+                            });
 
                             // Initialiser le modal et le datepicker avec la date du jour pour ce film
                             initializeModalAndDatepicker(film.id, updateModalAndSessions);

@@ -48,7 +48,7 @@ class Seance
     /**
      * @var Collection<int, cinema>
      */
-    #[ORM\ManyToMany(targetEntity: cinema::class, inversedBy: 'seances')]
+    #[ORM\ManyToMany(targetEntity: Cinema::class, inversedBy: 'seances')]
     private Collection $cinema;
 
     public function __construct()

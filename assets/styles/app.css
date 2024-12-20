@@ -389,6 +389,26 @@ footer #navbarBottom .nav-link {
 }
 
 /* Page Films */
+.card-image-film.disabled {
+  position: relative;
+  cursor: not-allowed;
+}
+
+.card-image-film.disabled:hover::after {
+  content: "Veuillez sélectionner un cinéma pour afficher les séances";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  z-index: 10;
+}
+
 .custom-dropdown {
   position: relative;
   width: auto;
@@ -576,8 +596,8 @@ footer #navbarBottom .nav-link {
 }
 
 .btn-description:hover {
-  color: #fd7e14 !important;
   text-decoration: underline;
+  color: #6A73AB !important;
 }
 
 .btn-description:focus, .btn-description:not(.collapsed) {
@@ -588,12 +608,19 @@ footer #navbarBottom .nav-link {
 }
 
 .btn-description:not(.collapsed) {
-  color: #fd7e14;
+  color: #6A73AB;
 }
 
 .accordion-collapse, .accordion-collapse.collapsed {
-  width: 220px;
-  color: #6A73AB;
+  position: absolute;
+  z-index: 10;
+  width: 400px;
+  color: white;
+  background-color: #6A73AB;
+  border: 2px solid white;
+  border-radius: 2px;
+  padding: 0.5rem;
+  transition: all 0.2s ease;
 }
 
 /* Page Administration */
