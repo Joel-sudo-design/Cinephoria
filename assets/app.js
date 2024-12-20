@@ -1026,9 +1026,12 @@ axios.defaults.withCredentials = true;
                                                 let currentText = $('#salle-reservations').text();
 
                                                 // Vérifie si le texte contient déjà seance.salle
-                                                if (!currentText.includes(seance.salle)) {
+                                                if (!currentText.includes(seance.salle) && currentText === 'Salle') {
                                                     // Si le texte ne contient pas déjà seance.salle, ajoute-le
                                                     $('#salle-reservations').append(seance.salle);
+                                                } else {
+                                                    // Si le texte contient déjà seance.salle, le remplace
+                                                    $('#salle-reservations').empty().append(`Salle ${seance.salle}`);
                                                 }
                                                 // Gestion de la sélection de la séance
                                                 $('#seances-buttons .btn-reservation').removeClass('active');
@@ -1088,8 +1091,6 @@ axios.defaults.withCredentials = true;
 
                             // Au clic sur l'icône de croix, on réinitialise la date et on affiche l'icône calendrier
                             $clearIcon.on('click', function () {
-                                // Réservation
-                                handleReservation(cinemaId, filmId);
                                 // Effacer la date sélectionnée en réinitialisant la valeur du champ
                                 $datepicker.datepicker('update', '').val('');
                                 // Afficher l'icône du calendrier et masquer l'icône de suppression
