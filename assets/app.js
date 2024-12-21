@@ -401,7 +401,7 @@ axios.defaults.withCredentials = true;
                         <div class="modal-dialog modal-dialog-centered modal-lg">
                             <div class="modal-content seances">
                                 <div class="modal-header position-relative header-seances" style="border: none">
-                                    <div class="modal-title position-absolute text-center fs-3 fw-semibold" style="left:50%; transform: translateX(-50%)">${film.name}</div>
+                                    <div class="modal-title w-75 position-absolute text-center fs-3 fw-semibold" style="left:50%; transform: translateX(-50%)">${film.name}</div>
                                     <button type="button" class="btn-close btn-close-seances" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body modal-admin row justify-content-center m-0 p-3">
