@@ -13,7 +13,10 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ContactController extends AbstractController
 {
-    public function __construct(private EmailContact $emailTicket){}
+    public function __construct(private EmailContact $emailTicket)
+    {
+    }
+
     #[Route('/contact', name: 'app_contact')]
     public function index(Request $request): Response
     {
@@ -27,7 +30,8 @@ class ContactController extends AbstractController
 
             $this->emailTicket->sendEmailContact($username, $object, $description,
                 (new TemplatedEmail())
-                    ->from(new Address('contact@joeldermont.fr'))
+                    ->from(new Address('contact@joeldermont.fr', 'Contact Cinéphoria'))
+                    ->subject('Nouveau message de contact')
                     ->to(new Address(address: 'contact@joeldermont.fr'))
                     ->htmlTemplate('email/contact.html.twig')
             );
