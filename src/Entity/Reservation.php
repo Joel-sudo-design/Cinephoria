@@ -25,6 +25,10 @@ class Reservation
     #[ORM\Column(type: 'string', length: 4000, nullable: true)]
     private ?string $qrCode = null;
 
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Cinema $cinema = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -80,6 +84,18 @@ class Reservation
     public function setQrCode(?string $qrCode): static
     {
         $this->qrCode = $qrCode;
+
+        return $this;
+    }
+
+    public function getCinemaId(): ?cinema
+    {
+        return $this->cinema_id;
+    }
+
+    public function setCinemaId(?cinema $cinema_id): static
+    {
+        $this->cinema_id = $cinema_id;
 
         return $this;
     }

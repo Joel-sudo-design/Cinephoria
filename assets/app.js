@@ -450,32 +450,23 @@ axios.defaults.withCredentials = true;
             });
         }
         // Disable click image si pas de cinéma sélectionné
-        function validateCinemaSelection (filmId) {
+        function validateCinemaSelection(filmId) {
             const cinemaSelected = $('#cinema-input').val();
             const $images = $('.card-image-film');
 
             if (!cinemaSelected) {
                 // Désactiver les images
-                $images.addClass('disabled').each(function () {
-                    // Supprimer les attributs Bootstrap
-                    $(this).removeAttr('data-bs-toggle').removeAttr('data-bs-target');
+                $images.addClass('disabled');
+                // Bloquer l'affichage du modal associé au film
+                $('#modal-' + filmId).on('show.bs.modal', function (e) {
+                    e.preventDefault(); // Empêche l'affichage du modal
                 });
             } else {
                 // Activer les images
-                $images.removeClass('disabled').each(function () {
-                    // Réappliquer les attributs Bootstrap
-                    $(this).attr('data-bs-toggle', 'modal').attr('data-bs-target', `#modal-${filmId}`);
-                });
+                $images.removeClass('disabled');
             }
-
-            // Gestion stricte du clic
-            $(document).on('click', '.card-image-film', function (e) {
-                if ($(this).hasClass('disabled')) {
-                    e.preventDefault(); // Bloque le clic
-                    e.stopImmediatePropagation(); // Empêche toute propagation
-                }
-            });
         }
+
         //Affichage de tous les films
         function film() {
             // Vider le conteneur des films
@@ -500,14 +491,16 @@ axios.defaults.withCredentials = true;
                                             validateCinemaSelection(film.id);
                                         });
 
-                                        // Initialiser le modal et le datepicker avec la date du jour pour ce film
-                                        initializeModalAndDatepicker(film.id, updateModalAndSessions);
+                                        if (!$('.card-image-film').hasClass('disabled')) {
+                                            // Initialiser le modal et le datepicker avec la date du jour pour ce film
+                                            initializeModalAndDatepicker(film.id, updateModalAndSessions);
 
-                                        // Initialiser le datepicker pour ce film
-                                        initializeDatepicker(film.id);
+                                            // Initialiser le datepicker pour ce film
+                                            initializeDatepicker(film.id);
 
-                                        // Gérer le clic sur les jours pour les séances
-                                        handleDateClick(film.id);
+                                            // Gérer le clic sur les jours pour les séances
+                                            handleDateClick(film.id);
+                                        }
 
                                         // Affichage du cœur si le film est un coup de cœur
                                         if (film.label === true) {
@@ -540,10 +533,17 @@ axios.defaults.withCredentials = true;
         }
         //Menu Films
         function menuFilms() {
+            const $datepicker = $('#datepicker');
+            const $calendarIcon = $('#icon-calendar');
+            const $clearIcon = $('.close-icon-date');
+            const $clearIconGenre = $('.close-icon-genre');
+            const $clearIconCinema = $('.close-icon-cinema');
+
+            //filtrer les films par cinéma, genre et date
             function reloadFilms() {
                 const cinemaId = $('#cinema-input').val(); // Récupère le filtre cinéma
                 const genreId = $('#genre-input').val();  // Récupère le filtre genre
-                const selectedDate = $('#datepicker').val(); // Récupère le filtre date
+                const selectedDate = $datepicker.val(); // Récupère le filtre date
 
                 // Formatage de la date si elle est sélectionnée
                 let formattedDate = null;
@@ -626,10 +626,6 @@ axios.defaults.withCredentials = true;
                         $('#loading-spinner').addClass('d-none');
                     });
             }
-
-            //Filtrage des films par cinéma, genre et date
-            const $clearIconGenre = $('.close-icon-genre');
-            const $clearIconCinema = $('.close-icon-cinema');
 
             //Au clic sur le bouton cinéma pour afficher/masquer les options
             $('.custom-select-btn-cinema').on('click', function (e) {
@@ -731,9 +727,6 @@ axios.defaults.withCredentials = true;
                     });
 
             //Datepicker
-            const $datepicker = $('#datepicker');
-            const $calendarIcon = $('#icon-calendar');
-            const $clearIcon = $('.close-icon-date');
             $datepicker.datepicker({
                         format: "dd/mm/yyyy",
                         orientation: "bottom",
@@ -901,6 +894,7 @@ axios.defaults.withCredentials = true;
                                 $seancesButtons.empty(); // Effacer les anciens boutons
                                 let availableSeances = [];
                                 let atLeastOneAvailable = false;
+                                const textAreaReservations = $('#Textarea-places-reservations');
 
                                 // Filtrer les séances correspondant à la date sélectionnée
                                 data.seances.forEach(seance => {
@@ -912,11 +906,11 @@ axios.defaults.withCredentials = true;
                                 if (availableSeances.length === 0) {
                                     $seancesButtons.addClass('disabled'); // Désactive la `row`
                                     $seancesSelected.text('Aucune séance disponible pour cette date');
-                                    $('#Textarea-places-reservations').addClass('disabled');
+                                    textAreaReservations.addClass('disabled');
                                     $('#selection-sieges').addClass('disabled'); // Désactiver la sélection des sièges
                                 } else {
                                     $seancesSelected.text('Séances disponibles'); // Réinitialise le message
-                                    $('#Textarea-places-reservations').removeClass('disabled');
+                                    textAreaReservations.removeClass('disabled');
 
                                     // Ajouter les boutons pour chaque séance
                                     availableSeances.forEach(seance => {
@@ -935,27 +929,28 @@ axios.defaults.withCredentials = true;
                                         const remainingSeats = 100 - totalReservedSeats;
 
                                         // Vérifier si le nombre de places demandées est inférieur ou égal au nombre de places restantes lors de la redirection depuis la page film
+                                        const salleReservations = $('#salle-reservations');
                                         if (seanceId && dateInitiale) {
-                                            const requestedSeats = parseInt($('#Textarea-places-reservations').val(), 10) || 0;
+                                            const requestedSeats = parseInt(textAreaReservations.val(), 10) || 0;
                                             if (requestedSeats <= remainingSeats) {
                                                 $button.removeClass('disabled');
                                                 atLeastOneAvailable = true; // Marque qu'au moins une séance est disponible
 
                                                 // Ajout de la salle
                                                 // Récupère le texte actuel dans #salle-reservations
-                                                let currentText = $('#salle-reservations').text();
+                                                let currentText = salleReservations.text();
 
                                                 // Vérifie si le texte contient déjà seance.salle
                                                 if (!currentText.includes(seance.salle)) {
                                                     // Si le texte ne contient pas déjà seance.salle, ajoute-le
-                                                    $('#salle-reservations').append(seance.salle);
+                                                    salleReservations.append(seance.salle);
                                                 }
 
                                                 // Mettre à jour l'affichage de la séance sélectionnée
                                                 $seancesSelected.text(`Qualité choisie : ${seance.qualite}`);
 
                                                 // Mettre à jour le prix
-                                                let nombrePlaces = parseInt($('#Textarea-places-reservations').val(), 10);
+                                                let nombrePlaces = parseInt(textAreaReservations.val(), 10);
                                                 let prixUnitaire = seance.prix;
 
                                                 // Calcul du prix dégressif
@@ -986,7 +981,7 @@ axios.defaults.withCredentials = true;
                                         }
 
                                         // Vérification dynamique lors de la saisie
-                                        $('#Textarea-places-reservations').on('input', function () {
+                                        textAreaReservations.on('input', function () {
                                             $('#seances-buttons .btn-reservation').removeClass('active');
                                             const requestedSeats = parseInt($(this).val(), 10) || 0;
 
@@ -995,6 +990,7 @@ axios.defaults.withCredentials = true;
                                                 atLeastOneAvailable = true;// Marque qu'au moins une séance est disponible
                                             } else {
                                                 $button.addClass('disabled');
+                                                $('#selection-sieges').addClass('disabled');
                                             }
 
                                             // Mise à jour globale des états
@@ -1023,15 +1019,15 @@ axios.defaults.withCredentials = true;
                                             if (!$(this).hasClass('disabled')) {
                                                 // Ajout de la salle
                                                 // Récupère le texte actuel dans #salle-reservations
-                                                let currentText = $('#salle-reservations').text();
+                                                let currentText = salleReservations.text();
 
                                                 // Vérifie si le texte contient déjà seance.salle
                                                 if (!currentText.includes(seance.salle) && currentText === 'Salle') {
                                                     // Si le texte ne contient pas déjà seance.salle, ajoute-le
-                                                    $('#salle-reservations').append(seance.salle);
+                                                    salleReservations.append(seance.salle);
                                                 } else {
                                                     // Si le texte contient déjà seance.salle, le remplace
-                                                    $('#salle-reservations').empty().append(`Salle ${seance.salle}`);
+                                                    salleReservations.empty().append(`Salle ${seance.salle}`);
                                                 }
                                                 // Gestion de la sélection de la séance
                                                 $('#seances-buttons .btn-reservation').removeClass('active');
@@ -1041,7 +1037,7 @@ axios.defaults.withCredentials = true;
                                                 $seancesSelected.text(`Qualité choisie : ${seance.qualite}`);
 
                                                 // Mettre à jour le prix
-                                                let nombrePlaces = parseInt($('#Textarea-places-reservations').val(), 10);
+                                                let nombrePlaces = parseInt(textAreaReservations.val(), 10);
                                                 let prixUnitaire = seance.prix;
 
                                                 // Calcul du prix dégressif
@@ -1327,7 +1323,7 @@ axios.defaults.withCredentials = true;
                 $clearIconCinema.removeClass('d-none');
                 $('#datepicker').removeClass('disabled');
 
-
+                // Masque ou affiche le menu des cinemas
                 $('.custom-options-cinema').toggle();
 
                 // Paiement
