@@ -22,7 +22,9 @@ class CommandesController extends AbstractController
 
         foreach ($reservations as $reservation) {
             $seance = [];
-            $seance['seance'] = $reservation->getSeance()->toArray();
+            $cinemaId = $reservation->getCinema()->getId();
+            $cinema = $reservation->toArray();
+            $seance['seance'] = $reservation->getSeance()->toArray($cinemaId);
 
             // Récupérer les heures de début et de fin
             $heureDebut =  $reservation->getSeance()->getHeureDebut();
@@ -43,6 +45,7 @@ class CommandesController extends AbstractController
             }
 
             $seance['seance']['duree'] = $duree;
+            $seance['seance']['cinema'] = $cinema['cinema'];
             $seance['reservation_id'] = $reservation->getId();
             $seance['seance']['sieges_reserves'] = $reservation->getSiege();
             $seance['seance']['qrCode'] = $reservation->getQrCode();

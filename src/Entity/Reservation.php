@@ -60,6 +60,7 @@ class Reservation
     {
         return [
             'siege_reserve' => $this->siege_reserve,
+            'cinema' => $this->cinema->getName(),
         ];
     }
 
@@ -88,14 +89,14 @@ class Reservation
         return $this;
     }
 
-    public function getCinemaId(): ?cinema
+    public function getCinema(): ?cinema
     {
-        return $this->cinema_id;
+        return $this->cinema;
     }
 
-    public function setCinemaId(?cinema $cinema_id): static
+    public function setCinema(?cinema $cinema): static
     {
-        $this->cinema_id = $cinema_id;
+        $this->cinema = $cinema;
 
         return $this;
     }

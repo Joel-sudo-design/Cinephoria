@@ -620,7 +620,7 @@ footer #navbarBottom .nav-link {
   border: 2px solid white;
   border-radius: 2px;
   padding: 0.5rem;
-  transition: all 0.2s ease;
+  transition: all 0s ease;
 }
 
 /* Page Administration */

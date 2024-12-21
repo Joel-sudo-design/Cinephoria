@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Cinema;
 use App\Entity\Reservation;
 use App\Entity\Seance;
 use App\Repository\CinemaRepository;
@@ -153,14 +154,15 @@ class ReservationController extends AbstractController
 
         $reservationData = json_decode($request->getContent(), true);
         $seanceId = $reservationData['seanceId'] ?? null;
+        $cinemaId = $reservationData['cinemaId'] ?? null;
+        $seats = $reservationData['seats'] ?? null;
 
         // Vérifier si l'utilisateur est connecté
         if (!$user) {
-            $seats = $reservationData['seats'] ?? null;
-
-            if ($seanceId && !empty($seats)) {
+            if ($seanceId && !empty($seats) && $cinemaId) {
                 $session->set('pending_reservation', [
                     'seanceId' => $seanceId,
+                    'cinemaId' => $cinemaId,
                     'seats' => $seats,
                 ]);
 
@@ -187,21 +189,20 @@ class ReservationController extends AbstractController
         $pendingReservation = $session->get('pending_reservation');
         if ($pendingReservation) {
             $seanceId = $pendingReservation['seanceId'];
+            $cinemaId = $pendingReservation['cinemaId'];
             $seats = $pendingReservation['seats'];
             $session->remove('pending_reservation');
-        } else {
-            $reservationData = json_decode($request->getContent(), true);
-            $seanceId = $reservationData['seanceId'] ?? null;
-            $seats = $reservationData['seats'] ?? null;
         }
 
         // Validation et création de la réservation
-        if ($seanceId && !empty($seats)) {
+        if ($seanceId && !empty($seats) && $cinemaId) {
             $seance = $entityManager->getRepository(Seance::class)->find($seanceId);
+            $cinema = $entityManager->getRepository(Cinema::class)->find($cinemaId);
 
             $reservation = new Reservation();
             $reservation->setUser($user);
             $reservation->setSeance($seance);
+            $reservation->setCinema($cinema);
             $reservation->setSiege($seats);
 
             // Créer une donnée unique pour le QR code (par exemple, l'ID de la réservation)
@@ -230,7 +231,7 @@ class ReservationController extends AbstractController
             }
         }
 
-        return new JsonResponse(['error' => 'Une erreur est survenue lors de la réservation.'], 400);
+        return new JsonResponse(['error' => 'Une erreur est survenue lors de la reservation.'], 400);
     }
 
 }

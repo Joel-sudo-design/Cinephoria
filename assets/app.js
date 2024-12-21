@@ -903,6 +903,7 @@ axios.defaults.withCredentials = true;
                                     }
                                 });
 
+                                // Vérifier si des séances sont disponibles
                                 if (availableSeances.length === 0) {
                                     $seancesButtons.addClass('disabled'); // Désactive la `row`
                                     $seancesSelected.text('Aucune séance disponible pour cette date');
@@ -930,7 +931,7 @@ axios.defaults.withCredentials = true;
 
                                         // Vérifier si le nombre de places demandées est inférieur ou égal au nombre de places restantes lors de la redirection depuis la page film
                                         const salleReservations = $('#salle-reservations');
-                                        if (seanceId && dateInitiale) {
+                                        if (parseInt(seanceId, 10) === seance.id) {
                                             const requestedSeats = parseInt(textAreaReservations.val(), 10) || 0;
                                             if (requestedSeats <= remainingSeats) {
                                                 $button.removeClass('disabled');
@@ -1144,7 +1145,7 @@ axios.defaults.withCredentials = true;
             const seanceId = urlParams.get('seanceId');
             const dateParam = urlParams.get('date');
 
-            // Fonction pour gérer si un filmId est présent dans l'URL
+            // Fonction pour gérer la réservation si les bonnes infos sont présentes dans l'URL
             function handleSelection(cinemaId, filmId, seanceId, dateParam) {
                 $('#Textarea-places-reservations').val(1);
                 $('#cinema-input').val(cinemaId); // Met à jour le champ caché pour le cinéma
@@ -1184,11 +1185,13 @@ axios.defaults.withCredentials = true;
                 // Paiement
                 $('#paiement-reservations').on('click', function () {
                     const selectedSeanceId = $('#seances-buttons .btn-reservation.active').attr('id');
+                    const cinemaId = $('#cinema-input').val();
                     const selectedSeats = $('.seat.selectionne').map(function () {
                         return $(this).data('id');
                     }).get();
                     axios.post('/reservation/paiement', {
                         seanceId: selectedSeanceId,
+                        cinemaId: cinemaId,
                         seats: selectedSeats,
                     })
                         .then(function (response) {
@@ -1329,11 +1332,13 @@ axios.defaults.withCredentials = true;
                 // Paiement
                 $('#paiement-reservations').on('click', function () {
                     const selectedSeanceId = $('#seances-buttons .btn-reservation.active').attr('id');
+                    const cinemaId = $('#cinema-input').val();
                     const selectedSeats = $('.seat.selectionne').map(function () {
                         return $(this).data('id');
                     }).get();
                     axios.post('/reservation/paiement', {
                         seanceId: selectedSeanceId,
+                        cinemaId: cinemaId,
                         seats: selectedSeats,
                     })
                         .then(function (response) {
