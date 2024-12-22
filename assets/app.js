@@ -124,7 +124,7 @@ axios.defaults.withCredentials = true;
             }
         }
         //Fonction pour charger les séances selon la date
-        function updateModalAndSessions(filmId, selectedDate, updateDays = true) {
+        function updateModalAndSeances(filmId, selectedDate, updateDays = true) {
             // Vider les conteneurs avant de les remplir
             const seancesContainer = $('#date-seance-' + filmId);
             const modalContainer = $('#modal-date-seance-' + filmId);
@@ -257,7 +257,7 @@ axios.defaults.withCredentials = true;
                 const formattedDate = `${year}-${month}-${day}`;
 
                 // Charger les séances pour la date sélectionnée
-                updateModalAndSessions(filmId, formattedDate);
+                updateModalAndSeances(filmId, formattedDate);
             });
 
             // Gestion du clic sur l'icône de croix
@@ -349,9 +349,7 @@ axios.defaults.withCredentials = true;
                                 </div>
                             </div>
                             <div class="card-title m-0 fs-6">${film.genre}</div>
-                            <p class="card-text m-0 text-warning my-2">
-                                <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
-                            </p>
+                            <p id="stars-rating-avis-${film.id}" class="card-text m-0 stars-rating-avis"></p>
                             <div class="accordion accordion-flush">
                                 <div class="accordion-item">
                                     <div class="accordion-header">
@@ -414,7 +412,7 @@ axios.defaults.withCredentials = true;
                 $(this).addClass('active').siblings().removeClass('active');
 
                 // Mettre à jour les séances pour ce jour avec la date inversée et l'année ajoutée
-                updateModalAndSessions(filmId, selectedDateWithYear, false); // Ne pas mettre à jour les 7 jours
+                updateModalAndSeances(filmId, selectedDateWithYear, false); // Ne pas mettre à jour les 7 jours
             });
         }
         // Disable click image si pas de cinéma sélectionné
@@ -450,6 +448,22 @@ axios.defaults.withCredentials = true;
                     const filmHTML = generateFilmCardHTML(film);
                     $('#film-container-public').append(filmHTML);
 
+                    // Ajouter les étoiles et l'avis
+                    let stars = '';
+                    for (let i = 1; i <= 5; i++) {
+                        if (i <= Math.floor(film.notation)) {
+                            // Étoile pleine
+                            stars += `<span class="star-avis selected" data-value="${i}">&#9733;</span>`;
+                        } else if (i === Math.ceil(film.notation) && film.notation % 1 !== 0) {
+                            // Demi-étoile
+                            stars += `<span class="star-avis half" data-value="${i}">&#9733;</span>`;
+                        } else {
+                            // Étoile vide
+                            stars += `<span class="star-avis" data-value="${i}">&#9733;</span>`;
+                        }
+                    }
+                    $(`#stars-rating-avis-${film.id}`).empty().append(stars);
+
                     // Désactiver le clic sur les images si aucun cinéma n'est sélectionné
                     validateCinemaSelection(film.id);
 
@@ -460,7 +474,7 @@ axios.defaults.withCredentials = true;
 
                     if (!$('.card-image-film').hasClass('disabled')) {
                         // Initialiser le modal et le datepicker avec la date du jour pour ce film
-                        initializeModalAndDatepicker(film.id, updateModalAndSessions);
+                        initializeModalAndDatepicker(film.id, updateModalAndSeances);
 
                         // Initialiser le datepicker pour ce film
                         initializeDatepicker(film.id);
@@ -554,7 +568,7 @@ axios.defaults.withCredentials = true;
                             });
 
                             // Initialiser le modal et le datepicker avec la date du jour pour ce film
-                            initializeModalAndDatepicker(film.id, updateModalAndSessions);
+                            initializeModalAndDatepicker(film.id, updateModalAndSeances);
 
                             // Initialiser le datepicker pour ce film
                             initializeDatepicker(film.id);

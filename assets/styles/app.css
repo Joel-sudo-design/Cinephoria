@@ -1253,14 +1253,23 @@ footer #navbarBottom .nav-link {
 }
 
 .star {
-  font-size: 30px;
+  font-size: 25px;
   cursor: pointer;
   color: gray;
 }
 
 .star-avis {
-  font-size: 30px;
-  color: #6A73AB;
+  font-size: 25px;
+  color: gray;
+  display: inline-block;
+}
+
+.star-avis.half {
+  background: linear-gradient(90deg, #FFD700 50%, gray 50%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
 }
 
 .star.selected, .star-avis.selected {

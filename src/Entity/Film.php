@@ -189,12 +189,20 @@ class Film
 
     public function toArray(): array
     {
+        $notations = [];
+        foreach ($this->getAvis() as $avis) {
+            if ($avis->isValidate()) {
+                $notations[] = $avis->getNotation();
+            }
+        }
+        $notation = count($notations) > 0 ? array_sum($notations) / count($notations) : 0;
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
             'description' => $this->getDescription(),
             'label' => $this->isLabel(),
             'age_minimum' => $this->getAgeMinimum(),
+            'notation' => $notation,
         ];
     }
 
