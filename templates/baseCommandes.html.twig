@@ -108,16 +108,17 @@
                                                 <div class="text-white fs-5 text-center">Prix: {{ reservation.seance.price }}€</div>
                                                 <div id="avis-{{ reservation.reservation_id }}" class="col-auto text-center mt-3 commande-avis">
                                                     {% if reservation.seance.avis is not empty %}
-                                                        <button type="button" class="btn btn-commandes-avis fs-5 px-3" data-bs-toggle="modal" data-bs-target="#avisModal-{{ reservation.reservation_id }}">
-                                                            Avis déposé
-                                                            <i class="ms-2 bi bi-eye bi-eye-avis"></i>
+                                                        <button type="button"
+                                                                class="btn btn-commandes-avis fs-5 px-3" data-bs-toggle="modal" data-bs-target="#avisModal-{{ reservation.reservation_id }}">
+                                                                Avis déposé
+                                                                <i class="ms-2 bi bi-eye bi-eye-avis"></i>
                                                         </button>
                                                     {% else %}
-                                                    <button type="button"
-                                                                class="btn btn-paiement fs-5 px-3 {% if reservation.seance.date > 'now'|date('Y-m-d') %}disabled{% endif %}"
+                                                        <button type="button"
+                                                                class="btn btn-paiement btn-avis-reservation fs-5 px-3 {% if reservation.seance.date > 'now'|date('Y-m-d') %}disabled{% endif %}"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#notationModal-{{ reservation.reservation_id }}">
-                                                            Noter le film <i class="ms-2 bi bi-pencil"></i>
+                                                                Noter le film <i class="ms-2 bi bi-pencil"></i>
                                                         </button>
                                                     {% endif %}
                                                 </div>
@@ -157,6 +158,13 @@
                                                             <button type="button" class="btn-close btn-close-seances" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body text-center align-content-center" style="color: #6A73AB">
+                                                            <div class="stars-rating-avis">
+                                                                {% if reservation.seance.notation is not empty %}
+                                                                    {% for i in 1..5 %}
+                                                                        <span class="star-avis {% if i <= reservation.seance.notation %}selected{% endif %}" data-value="{{ i }}">&#9733;</span>
+                                                                    {% endfor %}
+                                                                {% endif %}
+                                                            </div>
                                                             <div class="mt-3 avis-depose">{% if reservation.seance.avis is not empty %}{{ reservation.seance.avis }}{% endif %}</div>
                                                         </div>
                                                     </div>

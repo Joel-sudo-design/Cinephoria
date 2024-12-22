@@ -58,10 +58,11 @@ class CommandesController extends AbstractController
             $seance['film']['genre'] = $genreName;
             $Allavis = $reservation->getSeance()->getFilm()->getAvis()->toArray();
             $seance['seance']['avis'] = [];
+            $seance['seance']['notation'] = [];
             foreach ($Allavis as $avis) {
                 if ($avis->getUser()->getId() == $user->getId()) {
                     $seance['seance']['avis'] = $avis->getDescription();
-                    dump($avis->getDescription());
+                    $seance['seance']['notation'] = $avis->getNotation();
                     break;
                 }
             }
@@ -113,6 +114,6 @@ class CommandesController extends AbstractController
         $entityManager->persist($avis);
         $entityManager->flush();
 
-        return new JsonResponse(['success' => true, 'avis' => $comment], Response::HTTP_OK);
+        return new JsonResponse(['success' => true, 'avis' => $comment, 'notation' => $rating], Response::HTTP_OK);
     }
 }

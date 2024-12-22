@@ -1386,7 +1386,7 @@ axios.defaults.withCredentials = true;
         //Fonction pour noter la séance
         function handleFilmRating() {
             // Gestion des boutons de déclenchement du modal
-            $('.btn-paiement').click(function () {
+            $('.btn-avis-reservation').click(function () {
                 // Vérifier si le bouton est désactivé
                 if ($(this).hasClass('disabled')) {
                     alert("Vous ne pouvez pas noter un film pour une séance future.");
@@ -1406,13 +1406,15 @@ axios.defaults.withCredentials = true;
                 // Gérer les étoiles dans le modal
                 $modal.find('.star').click(function () {
                     const $star = $(this);
-                    $star.toggleClass('selected');
-
                     const value = parseInt($star.data('value'));
+
+                    // Gère la sélection des étoiles jusqu'à la valeur cliquée
                     $modal.find('.star').each(function () {
                         const $s = $(this);
                         if (parseInt($s.data('value')) <= value) {
-                            $s.addClass('selected');
+                            $s.addClass('selected'); // Ajoute la classe 'selected' aux étoiles jusqu'à la valeur cliquée
+                        } else {
+                            $s.removeClass('selected'); // Supprime la classe 'selected' des étoiles au-delà
                         }
                     });
                 });
@@ -1444,19 +1446,36 @@ axios.defaults.withCredentials = true;
                     axios.post('/utilisateur/mon_espace/commandes/notation', data)
                         .then(response => {
                             console.log('Données envoyées avec succès:', response.data);
-                            const data  = response.data.avis;
+
+                            const avis = response.data.avis; // Récupérer l'avis
+                            const notation = response.data.notation; // Récupérer la notation
+
                             // Fermer le modal après l'envoi réussi
                             $modal.modal('hide');
 
-                            // Supprimer le bouton après la fermeture du modal
+                            // Supprimer le bouton après la fermeture du modal et insérer le bouton "Avis déposé"
                             $(`#avis-${modalId}`)
                                 .empty()
                                 .append(
                                     `<button type="button" class="btn btn-commandes-avis fs-5 px-3" data-bs-toggle="modal" data-bs-target="#avisModal-${reservationId}">
-                                     Avis déposé
-                                    <i class="ms-2 bi bi-eye bi-eye-avis"></i>
-                                    </button>`);
-                            $('.avis-depose').append(`<div>${data}</div>`)
+                                        Avis déposé
+                                        <i class="ms-2 bi bi-eye bi-eye-avis"></i>
+                                        </button>`
+                                );
+
+                            // Ajouter les étoiles et l'avis
+                            let stars = '';
+                            for (let i = 1; i <= 5; i++) {
+                                stars+= `<span class="star-avis ${i <= notation ? 'selected' : ''}" data-value="${i}">&#9733;</span>`;
+                            }
+
+                            // Mettre à jour la section des avis avec les étoiles et le texte de l'avis
+                            $('.avis-depose')
+                                .empty()
+                                .append(`<div>${avis}</div>`);
+                            $('.stars-rating-avis')
+                                .empty()
+                                .append(`<div class="stars-rating-avis">${stars}</div>`);
                         })
                         .catch(error => {
                             console.error('Erreur lors de l\'envoi:', error);

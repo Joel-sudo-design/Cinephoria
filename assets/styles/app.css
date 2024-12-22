@@ -1258,7 +1258,12 @@ footer #navbarBottom .nav-link {
   color: gray;
 }
 
-.star.selected {
+.star-avis {
+  font-size: 30px;
+  color: #6A73AB;
+}
+
+.star.selected, .star-avis.selected {
   color: gold;
 }
 
