@@ -58,40 +58,8 @@ axios.defaults.withCredentials = true;
                 $('#col-5-bottom').after('<div id="col-2-bottom" class="col-2" style="width: 7.5rem"></div>');
             });
         }
-        //Appel de la fonction pour configurer le comportement des navbars
+        //Appel de la fonction pour configurer le comportement des navbar
         configureNavbarBehavior();
-
-        //Page de connexion et d'inscription dans mon espace
-        // Fonction principale pour initialiser les fonctionnalités
-        function initializeFormFeatures() {
-            // Fonction pour basculer l'affichage du mot de passe
-            function togglePasswordVisibility(toggleButtonId, passwordFieldId) {
-                $(toggleButtonId).on('click', function () {
-                    const passwordField = $(passwordFieldId);
-                    const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
-                    passwordField.attr('type', type);
-                    $(this).toggleClass('bi-eye bi-eye-slash');
-                });
-            }
-
-            // Appliquer la fonction aux différents champs
-            togglePasswordVisibility('#togglePassword', '#password');
-            togglePasswordVisibility('#toggleConfirmPassword', '#confirmPassword');
-            togglePasswordVisibility('#toggleProvisionalPassword', '#provisional-password');
-
-            // Vérification de la case à cocher des conditions générales d'utilisation
-            $('.btn-register').click(function (event) {
-                const checkbox = $("input[name='registration_form[agreeTerms]']");
-                const message = $('.checkbox-error');
-
-                if (!checkbox.is(':checked')) {
-                    event.preventDefault();
-                    message.show();
-                } else {
-                    message.hide();
-                }
-            });
-        }
 
         //Page accueil
         function resizeCarrousel() {
@@ -157,63 +125,63 @@ axios.defaults.withCredentials = true;
         }
         //Fonction pour charger les séances selon la date
         function updateModalAndSessions(filmId, selectedDate, updateDays = true) {
-                    // Vider les conteneurs avant de les remplir
-                    const seancesContainer = $('#date-seance-' + filmId);
-                    const modalContainer = $('#modal-date-seance-' + filmId);
-                    const cinemaId = $('#cinema-input').val();
-                    seancesContainer.empty();
+            // Vider les conteneurs avant de les remplir
+            const seancesContainer = $('#date-seance-' + filmId);
+            const modalContainer = $('#modal-date-seance-' + filmId);
+            const cinemaId = $('#cinema-input').val();
+            seancesContainer.empty();
 
-                    // Ajouter un spinner de chargement
-                    const spinner = `
+            // Ajouter un spinner de chargement
+            const spinner = `
                         <div class="text-center my-3">
                             <div class="spinner-border" style="color: #6A73AB" role="status">
                                 <span class="visually-hidden">Chargement...</span>
                             </div>
                         </div>
                     `;
-                    seancesContainer.html(spinner);
+            seancesContainer.html(spinner);
 
-                    // Si updateDays est vrai, préparer les 7 prochains jours
-                    if (updateDays) {
-                        const selectedDateObj = new Date(selectedDate); // Date dans le format "mois/jour"
-                        const days = [];
-                        for (let i = 0; i < 7; i++) {
-                            const nextDay = new Date(selectedDateObj);
-                            nextDay.setDate(selectedDateObj.getDate() + i);
-                            days.push(nextDay.toLocaleDateString('fr-FR', {day: '2-digit', month: '2-digit'}));
-                        }
+            // Si updateDays est vrai, préparer les 7 prochains jours
+            if (updateDays) {
+                const selectedDateObj = new Date(selectedDate); // Date dans le format "mois/jour"
+                const days = [];
+                for (let i = 0; i < 7; i++) {
+                    const nextDay = new Date(selectedDateObj);
+                    nextDay.setDate(selectedDateObj.getDate() + i);
+                    days.push(nextDay.toLocaleDateString('fr-FR', {day: '2-digit', month: '2-digit'}));
+                }
 
-                        // Mettre à jour le conteneur des dates dans la modale
-                        modalContainer.html(
-                            days.map(day => `<div class="col clickable-day">${day}</div>`).join('')
-                        );
-                    }
+                // Mettre à jour le conteneur des dates dans la modale
+                modalContainer.html(
+                    days.map(day => `<div class="col clickable-day">${day}</div>`).join('')
+                );
+            }
 
-                    // Convertir la date sélectionnée en objet Date pour comparaison
-                    const selectedDateObj = new Date(selectedDate); // La date est déjà dans le format "mois/jour"
-                    const selectedDateFormatted = selectedDateObj.toLocaleDateString('fr-FR', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric',
-                    });
+            // Convertir la date sélectionnée en objet Date pour comparaison
+            const selectedDateObj = new Date(selectedDate); // La date est déjà dans le format "mois/jour"
+            const selectedDateFormatted = selectedDateObj.toLocaleDateString('fr-FR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+            });
 
-                    // Ajouter la classe active pour le jour correspondant
-                    modalContainer.find('.clickable-day').each(function () {
-                        const dayText = $(this).text().trim(); // Récupérer le texte au format "jour/mois"
+            // Ajouter la classe active pour le jour correspondant
+            modalContainer.find('.clickable-day').each(function () {
+                const dayText = $(this).text().trim(); // Récupérer le texte au format "jour/mois"
 
-                        // Ajouter l'année courante à la date inversée
-                        const currentYear = new Date().getFullYear(); // Récupérer l'année actuelle
-                        const selectedDateWithYear = `${dayText}/${currentYear}`; // Créer la date complète "YYYY-MM-DD"
-                        if (selectedDateWithYear === selectedDateFormatted) {
-                            $(this).addClass('active');
-                        } else {
-                            $(this).removeClass('active');
-                        }
-                    });
+                // Ajouter l'année courante à la date inversée
+                const currentYear = new Date().getFullYear(); // Récupérer l'année actuelle
+                const selectedDateWithYear = `${dayText}/${currentYear}`; // Créer la date complète "YYYY-MM-DD"
+                if (selectedDateWithYear === selectedDateFormatted) {
+                    $(this).addClass('active');
+                } else {
+                    $(this).removeClass('active');
+                }
+            });
 
-                    // Charger les séances correspondantes via AJAX (Axios)
-                    axios.post('/films/seances', {filmId,cinemaId})
-                        .then(response => {
+            // Charger les séances correspondantes via AJAX (Axios)
+            axios.post('/films/seances', {filmId,cinemaId})
+                .then(response => {
                             const seances = response.data; // Liste des séances par date
 
                             // Trouver les séances correspondant à la date sélectionnée
@@ -261,10 +229,10 @@ axios.defaults.withCredentials = true;
                                 window.location.href = `/reservation?filmId=${filmId}&seanceId=${seanceId}&cinemaId=${cinemaId}&date=${selectedDate}`;
                             });
                         })
-                        .catch(error => {
+                .catch(error => {
                             console.error('Erreur lors du chargement des séances:', error);
                             seancesContainer.html('<div class="col-12 text-center text-danger">Erreur de chargement.</div>');
-                        });
+                });
         }
         //Fonction pour charger les séances avec le Datepicker selon la date choisie
         function initializeDatepicker(filmId) {
@@ -466,7 +434,6 @@ axios.defaults.withCredentials = true;
                 $images.removeClass('disabled');
             }
         }
-
         //Affichage de tous les films
         function film() {
             // Vider le conteneur des films
@@ -476,40 +443,40 @@ axios.defaults.withCredentials = true;
             // Requête Axios pour récupérer les films par défaut
             axios.get('/films/loading')
             .then(response => {
-                                    // Parcourir les films retournés par la requête
-                                    const films = response.data;
-                                    $.each(films, function (index, film) {
-                                        // Ajouter chaque film dans le conteneur
-                                        const filmHTML = generateFilmCardHTML(film);
-                                        $('#film-container-public').append(filmHTML);
+                // Parcourir les films retournés par la requête
+                const films = response.data;
+                $.each(films, function (index, film) {
+                    // Ajouter chaque film dans le conteneur
+                    const filmHTML = generateFilmCardHTML(film);
+                    $('#film-container-public').append(filmHTML);
 
-                                        // Désactiver le clic sur les images si aucun cinéma n'est sélectionné
-                                        validateCinemaSelection(film.id);
+                    // Désactiver le clic sur les images si aucun cinéma n'est sélectionné
+                    validateCinemaSelection(film.id);
 
-                                        // Attacher un événement `change` ou `keyup` à l'input de cinéma pour mettre à jour
-                                        $('#cinema-input').on('change keyup', function () {
+                    // Attacher un événement `change` ou `keyup` à l'input de cinéma pour mettre à jour
+                    $('#cinema-input').on('change keyup', function () {
                                             validateCinemaSelection(film.id);
                                         });
 
-                                        if (!$('.card-image-film').hasClass('disabled')) {
-                                            // Initialiser le modal et le datepicker avec la date du jour pour ce film
-                                            initializeModalAndDatepicker(film.id, updateModalAndSessions);
+                    if (!$('.card-image-film').hasClass('disabled')) {
+                        // Initialiser le modal et le datepicker avec la date du jour pour ce film
+                        initializeModalAndDatepicker(film.id, updateModalAndSessions);
 
-                                            // Initialiser le datepicker pour ce film
-                                            initializeDatepicker(film.id);
+                        // Initialiser le datepicker pour ce film
+                        initializeDatepicker(film.id);
 
-                                            // Gérer le clic sur les jours pour les séances
-                                            handleDateClick(film.id);
-                                        }
+                        // Gérer le clic sur les jours pour les séances
+                        handleDateClick(film.id);
+                    }
 
-                                        // Affichage du cœur si le film est un coup de cœur
-                                        if (film.label === true) {
+                    // Affichage du cœur si le film est un coup de cœur
+                    if (film.label === true) {
                                             $(`#heart-${film.id}`).removeClass('d-none');
                                         }
 
-                                        // Accordion description films
-                                        // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
-                                        $(document).click(function(event) {
+                    // Accordion description films
+                    // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
+                    $(document).click(function(event) {
                                             const accordionButton = $('#btn-description-'+film.id);
                                             const accordionCollapse = $('#collapseDescription-'+film.id);
                                             // Vérifie si le clic est à l'intérieur de l'accordéon
@@ -521,15 +488,15 @@ axios.defaults.withCredentials = true;
                                             }
                                         });
 
-                                        //Affichage badge age mini
-                                        displayAgeBadge(film)
-                                    });
-                                })
-                                .catch(error => {console.error('Erreur lors du chargement des films :', error);})
-                                .finally(() => {
-                                    // Cacher le spinner de chargement
-                                    $('#loading-spinner').addClass('d-none');
-                                });
+                    //Affichage badge age mini
+                    displayAgeBadge(film)
+                });
+            })
+                .catch(error => {console.error('Erreur lors du chargement des films :', error);})
+                .finally(() => {
+                    // Cacher le spinner de chargement
+                    $('#loading-spinner').addClass('d-none');
+                });
         }
         //Menu Films
         function menuFilms() {
@@ -1501,31 +1468,31 @@ axios.defaults.withCredentials = true;
         //Page Administration
         //Générer des films
         function filmAdmin() {
-                        // Vider le conteneur des films
-                        $('#card-container').empty();
+            // Vider le conteneur des films
+            $('#card-container').empty();
 
-                        const loadingBar = $('#loading-bar');
-                        const progressBar = loadingBar.find('.progress-bar');
+            const loadingBar = $('#loading-bar');
+            const progressBar = loadingBar.find('.progress-bar');
 
-                        // Réinitialiser la barre de chargement à 0% immédiatement
-                        loadingBar.removeClass('d-none');
-                        progressBar.css('width', '0%').attr('aria-valuenow', '0');
+            // Réinitialiser la barre de chargement à 0% immédiatement
+            loadingBar.removeClass('d-none');
+            progressBar.css('width', '0%').attr('aria-valuenow', '0');
 
-                        let progress = 0;
-                        const updateInterval = 100; // Intervalle pour mise à jour (rapide pour effet fluide)
-                        const interval = setInterval(() => {
-                            if (progress < 90) {
-                                progress += 5; // Incrément de 5% pour une progression fluide
-                                progressBar.css('width', progress + '%').attr('aria-valuenow', progress);
-                            }
-                        }, updateInterval);
+            let progress = 0;
+            const updateInterval = 100; // Intervalle pour mise à jour (rapide pour effet fluide)
+            const interval = setInterval(() => {
+                if (progress < 90) {
+                    progress += 5; // Incrément de 5% pour une progression fluide
+                    progressBar.css('width', progress + '%').attr('aria-valuenow', progress);
+                }
+                }, updateInterval);
 
-                        // Récupérer les films
-                        axios.get('/administrateur/administration/film')
-                            .then(response => {
-                                const Film = response.data;
-                                $.each(Film, function(index, film) {
-                                    $('#card-container').append(
+            // Récupérer les films
+            axios.get('/administrateur/administration/film')
+                .then(response => {
+                    const Film = response.data;
+                    $.each(Film, function(index, film) {
+                        $('#card-container').append(
                                         `<div class="col-auto card" style="width: 12rem">
                                                     <div class="position-relative">
                                                          <button class="btn bi bi-pencil-square text-success p-0 fs-5 bg-admin position-absolute" style="border-radius: 0 0 2px 0" data-bs-toggle="modal" data-bs-target="#modal-${film.id}"></button>
@@ -1915,7 +1882,8 @@ axios.defaults.withCredentials = true;
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>`);
+                                                </div>`
+                        );
 
                                     //suppression film
                                         $('#x-square-'+film.id).click(function () {
@@ -2548,7 +2516,7 @@ axios.defaults.withCredentials = true;
                                 // Masquer la barre de chargement après un délai de 500ms
                                 setTimeout(() => loadingBar.addClass('d-none'), 500);
                             });
-                    }
+        }
         //Création d'un film sur clic bouton plus
         $('#btn-plus-admin').click(function () {
                         axios.post('/administrateur/administration/film/create')
@@ -3928,6 +3896,38 @@ axios.defaults.withCredentials = true;
                             console.error('Erreur lors du chargement des Avis :', error);
                         });
                 }
+
+        //Page de connexion et d'inscription dans mon espace
+        // Fonction principale pour initialiser les fonctionnalités
+        function initializeFormFeatures() {
+            // Fonction pour basculer l'affichage du mot de passe
+            function togglePasswordVisibility(toggleButtonId, passwordFieldId) {
+                $(toggleButtonId).on('click', function () {
+                    const passwordField = $(passwordFieldId);
+                    const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+                    passwordField.attr('type', type);
+                    $(this).toggleClass('bi-eye bi-eye-slash');
+                });
+            }
+
+            // Appliquer la fonction aux différents champs
+            togglePasswordVisibility('#togglePassword', '#password');
+            togglePasswordVisibility('#toggleConfirmPassword', '#confirmPassword');
+            togglePasswordVisibility('#toggleProvisionalPassword', '#provisional-password');
+
+            // Vérification de la case à cocher des conditions générales d'utilisation
+            $('.btn-register').click(function (event) {
+                const checkbox = $("input[name='registration_form[agreeTerms]']");
+                const message = $('.checkbox-error');
+
+                if (!checkbox.is(':checked')) {
+                    event.preventDefault();
+                    message.show();
+                } else {
+                    message.hide();
+                }
+            });
+        }
 
         //Lancement des fonctions au chargement des pages
         const pathFunctions = {
