@@ -912,7 +912,7 @@ axios.defaults.withCredentials = true;
 
                                         // Vérifier si le nombre de places demandées est inférieur ou égal au nombre de places restantes lors de la redirection depuis la page film
                                         const salleReservations = $('#salle-reservations');
-                                        if (parseInt(seanceId, 10) === seance.id) {
+                                        if (seanceId) {
                                             const requestedSeats = parseInt(textAreaReservations.val(), 10) || 0;
                                             if (requestedSeats <= remainingSeats) {
                                                 $button.removeClass('disabled');
