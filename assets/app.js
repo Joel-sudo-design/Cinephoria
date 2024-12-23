@@ -907,7 +907,8 @@ axios.defaults.withCredentials = true;
                                     $seancesSelected.text('Aucune séance disponible pour cette date');
                                     textAreaReservations.addClass('disabled');
                                     $('#selection-sieges').addClass('disabled'); // Désactiver la sélection des sièges
-                                } else {
+                                }
+                                else {
                                     $seancesSelected.text('Séances disponibles'); // Réinitialise le message
                                     textAreaReservations.removeClass('disabled');
 
@@ -920,7 +921,6 @@ axios.defaults.withCredentials = true;
                                                 <span>${seance.heureFin}</span>
                                             </button>
                                         `);
-
                                         $seancesButtons.append($button);
 
                                         // Calcul des sièges réservés et gestion de l'état des boutons
@@ -987,7 +987,6 @@ axios.defaults.withCredentials = true;
                                         // Vérification dynamique lors de la saisie
                                         textAreaReservations.on('input', function () {
                                             $('#seances-buttons .btn-reservation').removeClass('active');
-
                                             validateReservationInput({
                                                 textArea: $(this),
                                                 remainingSeats: remainingSeats,
