@@ -114,12 +114,15 @@
                                                                 <i class="ms-2 bi bi-eye bi-eye-avis"></i>
                                                         </button>
                                                     {% else %}
-                                                        <button type="button"
-                                                                class="btn btn-paiement btn-avis-reservation fs-5 px-3 {% if reservation.seance.date > 'now'|date('Y-m-d') %}disabled{% endif %}"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#notationModal-{{ reservation.reservation_id }}">
-                                                                Noter le film <i class="ms-2 bi bi-pencil"></i>
-                                                        </button>
+                                                        <div class="btn-container">
+                                                            <button type="button"
+                                                                    class="btn btn-paiement btn-avis-reservation fs-5 px-3 {% if reservation.seance.date > 'now'|date('Y-m-d') %}disabled{% endif %}"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#notationModal-{{ reservation.reservation_id }}">
+                                                                    Noter le film <i class="ms-2 bi bi-pencil"></i>
+                                                                    <span class="tooltip-message">Vous pouvez noter la séance à partir du lendemain de la projection</span>
+                                                            </button>
+                                                        </div>
                                                     {% endif %}
                                                 </div>
                                             </div>

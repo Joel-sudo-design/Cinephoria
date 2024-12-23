@@ -1308,6 +1308,36 @@ footer #navbarBottom .nav-link {
   color: #ffffff;
 }
 
+.btn-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-message {
+  display: none;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  bottom: -15%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, 100%);
+  margin-bottom: 5px;
+  z-index: 10;
+}
+
+/* Afficher le message lors du hover sur le conteneur */
+.btn-container:hover .tooltip-message {
+  display: inline-block;
+}
+
+/* Empêcher le clic sur le bouton désactivé */
+.btn.disabled {
+  pointer-events: none;
+}
 
 /* Media queries */
 @media (min-width: 1921px) {
