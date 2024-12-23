@@ -214,7 +214,7 @@ axios.defaults.withCredentials = true;
                                 `).join(''));
                             } else {
                                 // Afficher un message si aucune séance n'est disponible
-                                seancesContainer.html('<div class="col-12 text-center my-3" style="color:#6A73AB">Aucune séance disponible pour cette date.</div>');
+                                seancesContainer.html('<div class="col-12 text-center my-3" style="color:#6A73AB">Aucune séance disponible pour cette date</div>');
                             }
                             // Gestion du clic sur le bouton de réservation
                             $('.btn-modal-reservation').click(function () {
@@ -551,7 +551,7 @@ axios.defaults.withCredentials = true;
 
                         // Vérifier si aucun film ne correspond aux critères de recherche
                         if (films.length === 0) {
-                            $('#film-container-public').append('<div class="col-12 text-center my-3" style="color:#6A73AB">Aucun film ne correspond aux critères de recherche.</div>');
+                            $('#film-container-public').append('<div class="col-12 text-center my-3" style="color:#6A73AB">Aucun film ne correspond aux critères de recherche</div>');
                         }
 
                         // Ajouter les films au conteneur
@@ -890,7 +890,6 @@ axios.defaults.withCredentials = true;
                             function updateSeances(selectedDate) {
                                 $seancesButtons.empty(); // Effacer les anciens boutons
                                 let availableSeances = [];
-                                let atLeastOneAvailable = false;
                                 const textAreaReservations = $('#Textarea-places-reservations');
                                 const salleReservations = $('#salle-reservations');
 
@@ -909,6 +908,7 @@ axios.defaults.withCredentials = true;
                                     $('#selection-sieges').addClass('disabled'); // Désactiver la sélection des sièges
                                 }
                                 else {
+                                    $seancesButtons.removeClass('disabled'); // Réactive la `row`
                                     $seancesSelected.text('Séances disponibles'); // Réinitialise le message
                                     textAreaReservations.removeClass('disabled');
 
@@ -926,6 +926,11 @@ axios.defaults.withCredentials = true;
                                         // Calcul des sièges réservés et gestion de l'état des boutons
                                         let totalReservedSeats = seance.sieges_reserves ? seance.sieges_reserves.length : 0;
                                         const remainingSeats = 100 - totalReservedSeats;
+                                        const requestedSeats = parseInt(textAreaReservations.val(), 10) || 0;
+
+                                        if (requestedSeats <= remainingSeats) {
+                                            $button.removeClass('disabled');
+                                        }
 
                                         function validateReservationInput({textArea, remainingSeats, button, seancesButtons, seancesSelected, seatingAreaSelector, salleReservations, paiementReservations}) {
                                             const requestedSeats = parseInt(textArea.val(), 10) || 0;
@@ -939,7 +944,7 @@ axios.defaults.withCredentials = true;
                                                 $('#selection-sieges').addClass('disabled');
                                             }
 
-                                            // Mise à jour globale des états
+                                            // Mise à jour de la row seances si au moins une séance est disponible
                                             if (atLeastOneAvailable) {
                                                 seancesButtons.removeClass('disabled');
                                             } else {
@@ -986,7 +991,7 @@ axios.defaults.withCredentials = true;
 
                                         // Vérification dynamique lors de la saisie
                                         textAreaReservations.on('input', function () {
-                                            $('#seances-buttons .btn-reservation').removeClass('active');
+                                            $('.btn-reservation.active').trigger('click');
                                             validateReservationInput({
                                                 textArea: $(this),
                                                 remainingSeats: remainingSeats,
@@ -1009,7 +1014,7 @@ axios.defaults.withCredentials = true;
                                                 // Vérifie si le texte contient déjà seance.salle
                                                 if (!currentText.includes(seance.salle) && currentText === 'Salle') {
                                                     // Si le texte ne contient pas déjà seance.salle, ajoute-le
-                                                    salleReservations.append(seance.salle);
+                                                    salleReservations.append(' '+seance.salle);
                                                 } else {
                                                     // Si le texte contient déjà seance.salle, le remplace
                                                     salleReservations.empty().append(`Salle ${seance.salle}`);
