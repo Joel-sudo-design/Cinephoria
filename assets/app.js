@@ -223,10 +223,13 @@ axios.defaults.withCredentials = true;
 
                                 // Extraire les id de la séance et du cinéma
                                 const idParts = fullId.split('-');
-
                                 const seanceId = idParts[3];
+
+                                // Récupérer la date sélectionnée et la formater
+                                const formattedDate = selectedDate.split('/').join('-');
+
                                 // Rediriger vers la page de réservation avec les informations nécessaires
-                                window.location.href = `/reservation?filmId=${filmId}&seanceId=${seanceId}&cinemaId=${cinemaId}&date=${selectedDate}`;
+                                window.location.href = `/reservation?filmId=${filmId}&seanceId=${seanceId}&cinemaId=${cinemaId}&date=${formattedDate}`;
                             });
                         })
                 .catch(error => {
@@ -406,7 +409,7 @@ axios.defaults.withCredentials = true;
 
                 // Ajouter l'année courante à la date inversée
                 const currentYear = new Date().getFullYear(); // Récupérer l'année actuelle
-                const selectedDateWithYear = `${currentYear}-${invertedDate}`; // Créer la date complète "YYYY-MM-DD"
+                const selectedDateWithYear = `${currentYear}/${invertedDate}`; // Créer la date complète "YYYY-MM-DD"
 
                 // Activer le jour sélectionné
                 $(this).addClass('active').siblings().removeClass('active');
@@ -464,7 +467,7 @@ axios.defaults.withCredentials = true;
                     }
                     $(`#stars-rating-avis-${film.id}`).empty().append(stars);
 
-                    // Désactiver le clic sur les images si aucun cinéma n'est sélectionné
+                    // Désactiver le clic et le modal sur les images si aucun cinéma n'est sélectionné
                     validateCinemaSelection(film.id);
 
                     // Attacher un événement `change` ou `keyup` à l'input de cinéma pour mettre à jour
