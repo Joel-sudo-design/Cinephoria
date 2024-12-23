@@ -1530,6 +1530,7 @@ axios.defaults.withCredentials = true;
             // Vider le conteneur des films
             $('#card-container').empty();
 
+            // Barre de chargement
             const loadingBar = $('#loading-bar');
             const progressBar = loadingBar.find('.progress-bar');
 
@@ -1537,6 +1538,7 @@ axios.defaults.withCredentials = true;
             loadingBar.removeClass('d-none');
             progressBar.css('width', '0%').attr('aria-valuenow', '0');
 
+            // Barre de progression pour l'effet de chargement
             let progress = 0;
             const updateInterval = 100; // Intervalle pour mise à jour (rapide pour effet fluide)
             const interval = setInterval(() => {
@@ -1552,7 +1554,7 @@ axios.defaults.withCredentials = true;
                     const Film = response.data;
                     $.each(Film, function(index, film) {
                         $('#card-container').append(
-                                        `<div class="col-auto card" style="width: 12rem">
+                            `<div class="col-auto card" style="width: 12rem">
                                                     <div class="position-relative">
                                                          <button class="btn bi bi-pencil-square text-success p-0 fs-5 bg-admin position-absolute" style="border-radius: 0 0 2px 0" data-bs-toggle="modal" data-bs-target="#modal-${film.id}"></button>
                                                          <button id="x-square-${film.id}" class="btn bi bi-x-square text-danger p-0 fs-5 bg-admin position-absolute" style="top:0; right: 0; border-radius: 0 0 0 2px"></button>  
@@ -1560,15 +1562,22 @@ axios.defaults.withCredentials = true;
                                                          <img src="${film.image}" class="card-img-top" alt="image">
                                                     </div>
                                                     <div class="card-body p-0 py-1">
-                                                            <div id="age-${film.id}" class="col-12 card-title m-0 fs-5">${film.name}
-                                                                <span class="age-badge-12 d-none ms-2">12+</span>
-                                                                <span class="age-badge-16 d-none ms-2">16+</span>
-                                                                <span class="age-badge-18 d-none ms-2">18+</span>
-                                                            </div>                        
+                                                            <div class="d-flex justify-content-between align-items-start">
+                                                                <!-- Titre du film -->
+                                                                <div id="age-${film.id}" class="card-title m-0 fs-5">${film.name}</div>
+                                                                <!-- Badges -->
+                                                                <div class="d-flex">
+                                                                    <span class="age-badge-public d-none mx-2">
+                                                                        <div>tout</div>
+                                                                        <div>public</div>
+                                                                    </span>
+                                                                    <span class="age-badge-12 d-none mx-2">12+</span>
+                                                                    <span class="age-badge-16 d-none mx-2">16+</span>
+                                                                    <span class="age-badge-18 d-none mx-2">18+</span>
+                                                                </div>
+                                                            </div>                     
                                                             <div class="card-title m-0 fs-6">${film.genre}</div>
-                                                            <p class="card-text m-0 text-warning" style="margin: 0.3rem 0 0.3rem 0">
-                                                                <i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
-                                                            </p>
+                                                            <p id="stars-rating-avis-${film.id}" class="card-text m-0 stars-rating-avis"></p>
                                                             <div class="accordion accordion-flush">
                                                                 <div class="accordion-item">
                                                                     <div class="accordion-header">
@@ -1944,60 +1953,50 @@ axios.defaults.withCredentials = true;
                                                 </div>`
                         );
 
-                                    //suppression film
-                                        $('#x-square-'+film.id).click(function () {
-                                        axios.post('/administrateur/administration/film/delete', JSON.stringify({id: film.id}))
-                                            .then(response => {filmAdmin();console.log(response.data);})
-                                            .catch(error => {console.error(error);})
-                                    });
+                        // Ajouter les étoiles et l'avis
+                        let stars = '';
+                        for (let i = 1; i <= 5; i++) {
+                            if (i <= Math.floor(film.notation)) {
+                                // Étoile pleine
+                                stars += `<span class="star-avis selected" data-value="${i}">&#9733;</span>`;
+                            } else if (i === Math.ceil(film.notation) && film.notation % 1 !== 0) {
+                                // Demi-étoile
+                                stars += `<span class="star-avis half" data-value="${i}">&#9733;</span>`;
+                            } else {
+                                // Étoile vide
+                                stars += `<span class="star-avis" data-value="${i}">&#9733;</span>`;
+                            }
+                        }
+                        $(`#stars-rating-avis-${film.id}`).empty().append(stars);
 
-                                    //Affichage badge age mini
-                                        function displayAgeBadge() {
-                                                const  ageFilm = $('#age-' + film.id);
-                                                // Ciblez chaque badge d'âge à partir du conteneur
-                                                const ageBadge12 = ageFilm.find('.age-badge-12');
-                                                const ageBadge16 = ageFilm.find('.age-badge-16');
-                                                const ageBadge18 = ageFilm.find('.age-badge-18');
-                                                // Logique de gestion des classes pour afficher/masquer les badges d'âge
-                                                if (film.age_minimum === '12') {
-                                                    ageBadge12.removeClass('d-none');
-                                                    ageBadge16.addClass('d-none');
-                                                    ageBadge18.addClass('d-none');
-                                                } else if (film.age_minimum === '16') {
-                                                    ageBadge16.removeClass('d-none');
-                                                    ageBadge12.addClass('d-none');
-                                                    ageBadge18.addClass('d-none');
-                                                } else if (film.age_minimum === '18') {
-                                                    ageBadge18.removeClass('d-none');
-                                                    ageBadge12.addClass('d-none');
-                                                    ageBadge16.addClass('d-none');
-                                                } else {
-                                                    ageBadge12.addClass('d-none');
-                                                    ageBadge16.addClass('d-none');
-                                                    ageBadge18.addClass('d-none');
-                                                }
-                                        }
-                                        displayAgeBadge()
+                        //suppression film
+                        $('#x-square-'+film.id).click(function () {
+                            axios.post('/administrateur/administration/film/delete', JSON.stringify({id: film.id}))
+                                .then(response => {filmAdmin();console.log(response.data);})
+                                .catch(error => {console.error(error);})
+                        });
 
-                                    // Accordion description films
-                                        const accordionButton = $('#btn-description-'+film.id);
-                                        const accordionCollapse = $('#collapseDescription-'+film.id);
+                        // Accordion description films
+                        // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
+                        $(document).click(function(event) {
+                            const accordionButton = $('#btn-description-'+film.id);
+                            const accordionCollapse = $('#collapseDescription-'+film.id);
+                            // Vérifie si le clic est à l'intérieur de l'accordéon
+                            if (!accordionButton.is(event.target) && accordionButton.has(event.target).length === 0 && !accordionCollapse.is(event.target) && accordionCollapse.has(event.target).length === 0) {
+                                // Ferme l'accordéon si ouvert
+                                if (accordionCollapse.hasClass('show')) {
+                                    accordionCollapse.collapse('hide');
+                                }
+                            }
+                        });
 
-                                        // Événement pour fermer l'accordéon lorsque vous cliquez en dehors
-                                            $(document).click(function(event) {
-                                                // Vérifie si le clic est à l'intérieur de l'accordéon
-                                                if (!accordionButton.is(event.target) && accordionButton.has(event.target).length === 0 && !accordionCollapse.is(event.target) && accordionCollapse.has(event.target).length === 0) {
-                                                    // Ferme l'accordéon si ouvert
-                                                    if (accordionCollapse.hasClass('show')) {
-                                                        accordionCollapse.collapse('hide'); // Utilise la méthode Bootstrap pour cacher
-                                                    }
-                                                }
-                                            });
+                        //Affichage badge age mini
+                        displayAgeBadge(film)
 
-                                    //modal
-                                        // Upload image
-                                            let imageData = null;
-                                            $('#uploadButton-'+film.id).on('click', function () {
+                        //modal
+                        // Upload image
+                        let imageData = null;
+                        $('#uploadButton-'+film.id).on('click', function () {
                                                 const fileInput = $('#fileInput-'+film.id)[0];
                                                 fileInput.click();
                                                 $(fileInput).off('change').on('change', function () { // Supprime les écouteurs existants avant d'en ajouter un nouveau
@@ -2012,99 +2011,99 @@ axios.defaults.withCredentials = true;
                                                 });
                                             });
 
-                                        //Menu déroulant genre
-                                            const dropdownMenuGenre = $('#dropdownMenuGenre-'+film.id);
-                                            const dropGenre = dropdownMenuGenre.siblings('.dropdown-menu').find('.drop-genre');
-                                            let selectedGenre= '';
-                                            dropGenre.click(function(e) {
+                        //Menu déroulant genre
+                        const dropdownMenuGenre = $('#dropdownMenuGenre-'+film.id);
+                        const dropGenre = dropdownMenuGenre.siblings('.dropdown-menu').find('.drop-genre');
+                        let selectedGenre= '';
+                        dropGenre.click(function(e) {
                                                 e.preventDefault();
                                                 selectedGenre = $(this).text();
                                                 dropdownMenuGenre.text(selectedGenre);
                                         });
 
-                                        //Menu déroulant age
-                                            const dropdownMenuAge = $('#dropdownMenuAge-'+film.id);
-                                            const dropAge = dropdownMenuAge.siblings('.dropdown-menu').find('.drop-age');
-                                            let selectedAge= '';
-                                            dropAge.click(function(e) {
+                        //Menu déroulant age
+                        const dropdownMenuAge = $('#dropdownMenuAge-'+film.id);
+                        const dropAge = dropdownMenuAge.siblings('.dropdown-menu').find('.drop-age');
+                        let selectedAge= '';
+                        dropAge.click(function(e) {
                                                 e.preventDefault();
                                                 selectedAge= $(this).text();
                                                 dropdownMenuAge.text(selectedAge);
                                             });
 
-                                        //Menu déroulant Cinéma
-                                            const dropdownMenuCinema = $('#dropdownMenuCinema-'+film.id);
-                                            const dropCinema = dropdownMenuCinema.siblings('.dropdown-menu').find('.drop-cinema');
-                                            let selectedCinema = '';
+                        //Menu déroulant Cinéma
+                        const dropdownMenuCinema = $('#dropdownMenuCinema-'+film.id);
+                        const dropCinema = dropdownMenuCinema.siblings('.dropdown-menu').find('.drop-cinema');
+                        let selectedCinema = '';
 
-                                            // Gérer le clic sur le menu
-                                                dropCinema.click(function (e) {
+                        // Gérer le clic sur le menu
+                        dropCinema.click(function (e) {
                                                 e.preventDefault();
                                                 selectedCinema = $(this).text();
                                                 dropdownMenuCinema.text(selectedCinema);
                                             });
 
-                                        //Menu déroulant Coup de cœur
-                                            const dropdownMenuLabel = $('#dropdownMenuLabel-' + film.id);
-                                            const label = dropdownMenuLabel.siblings('.dropdown-menu').find('.drop-label');
-                                            let selectedCoupCoeur= '';
-                                            label.click(function(e) {
+                        //Menu déroulant Coup de cœur
+                        const dropdownMenuLabel = $('#dropdownMenuLabel-' + film.id);
+                        const label = dropdownMenuLabel.siblings('.dropdown-menu').find('.drop-label');
+                        let selectedCoupCoeur= '';
+                        label.click(function(e) {
                                                 e.preventDefault();
                                                 selectedCoupCoeur= $(this).text();
                                                 dropdownMenuLabel.text(selectedCoupCoeur);
                                             });
-                                            dropdownMenuLabel.text(film.label ? 'Oui' : 'Non');
+                        dropdownMenuLabel.text(film.label ? 'Oui' : 'Non');
 
-                                        // Menu déroulant Salle
-                                            const dropdownMenuSalle = $('#dropdownMenuSalle-'+film.id);
-                                            const dropSalle = dropdownMenuSalle.siblings('.dropdown-menu').find('.drop-salle');
-                                            let selectedSalle= '';
-                                            dropSalle.click(function(e) {
-                                                e.preventDefault();
-                                                selectedSalle= $(this).text();
-                                                dropdownMenuSalle.text(selectedSalle);
-                                            });
+                        // Menu déroulant Salle
+                        const dropdownMenuSalle = $('#dropdownMenuSalle-'+film.id);
+                        const dropSalle = dropdownMenuSalle.siblings('.dropdown-menu').find('.drop-salle');
+                        let selectedSalle= '';
+                        dropSalle.click(function(e) {
+                            e.preventDefault();
+                            selectedSalle= $(this).text();
+                            dropdownMenuSalle.text(selectedSalle);
+                        });
 
-                                        // Écoute l'événement de clic sur les éléments du menu déroulant
-                                            dropSalle.on('click', function(e) {
-                                            e.preventDefault();
-                                            const value = $(this).text();
-                                            const row3DX = $('#row-3DX-'+film.id);
-                                            const row4DX = $('#row-4DX-'+film.id);
-                                            const rowIMAX = $('#row-IMAX-'+film.id);
-                                            const rowDolby = $('#row-Dolby-'+film.id);
-                                            if (value === '1') {
-                                                row3DX.removeClass('d-none');
-                                                row4DX.addClass('d-none');
-                                                rowIMAX.addClass('d-none');
-                                                rowDolby.addClass('d-none');
-                                            } else if (value === '2') {
-                                                row4DX.removeClass('d-none');
-                                                row3DX.addClass('d-none');
-                                                rowIMAX.addClass('d-none');
-                                                rowDolby.addClass('d-none');
-                                            } else if (value === '3') {
-                                                rowIMAX.removeClass('d-none');
-                                                row3DX.addClass('d-none');
-                                                row4DX.addClass('d-none');
-                                                rowDolby.addClass('d-none');
-                                            } else if (value === '4') {
-                                                rowDolby.removeClass('d-none');
-                                                row3DX.addClass('d-none');
-                                                row4DX.addClass('d-none');
-                                                rowIMAX.addClass('d-none');
-                                            }
-                                        });
+                        // Écoute l'événement de clic sur les éléments du menu déroulant
+                        dropSalle.on('click', function(e) {
+                            e.preventDefault();
+                            const value = $(this).text();
+                            const row3DX = $('#row-3DX-'+film.id);
+                            const row4DX = $('#row-4DX-'+film.id);
+                            const rowIMAX = $('#row-IMAX-'+film.id);
+                            const rowDolby = $('#row-Dolby-'+film.id);
+                            if (value === '1') {
+                                row3DX.removeClass('d-none');
+                                row4DX.addClass('d-none');
+                                rowIMAX.addClass('d-none');
+                                rowDolby.addClass('d-none');
+                            } else if (value === '2') {
+                                row4DX.removeClass('d-none');
+                                row3DX.addClass('d-none');
+                                rowIMAX.addClass('d-none');
+                                rowDolby.addClass('d-none');
+                            } else if (value === '3') {
+                                rowIMAX.removeClass('d-none');
+                                row3DX.addClass('d-none');
+                                row4DX.addClass('d-none');
+                                rowDolby.addClass('d-none');
+                            } else if (value === '4') {
+                                rowDolby.removeClass('d-none');
+                                row3DX.addClass('d-none');
+                                row4DX.addClass('d-none');
+                                rowIMAX.addClass('d-none');
+                            }
+                        });
 
-                                        // Menu déroulant places
-                                            const dropdownMenuPlaces = $('#dropdownMenuPlaces-'+film.id);
-                                            const dropPlaces = dropdownMenuPlaces.siblings('.dropdown-menu').find('.drop-places');
-                                            let selectedPlaces= '';
-                                            dropPlaces.click(function(e) {
-                                                e.preventDefault();
-                                                selectedPlaces= $(this).text();
-                                                dropdownMenuPlaces.text(selectedPlaces);
-                                            });
+                        // Menu déroulant places
+                        const dropdownMenuPlaces = $('#dropdownMenuPlaces-'+film.id);
+                        const dropPlaces = dropdownMenuPlaces.siblings('.dropdown-menu').find('.drop-places');
+                        let selectedPlaces= '';
+                        dropPlaces.click(function(e) {
+                            e.preventDefault();
+                            selectedPlaces= $(this).text();
+                            dropdownMenuPlaces.text(selectedPlaces);
+                        });
 
                                         // Réinitialiser le modal lorsque celui-ci est fermé
                                             $('#modal-' + film.id).on('hidden.bs.modal', function () {
