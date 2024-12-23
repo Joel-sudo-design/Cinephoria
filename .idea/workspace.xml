@@ -5,8 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modif">
+      <change afterPath="$PROJECT_DIR$/templates/reservation/admin.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/reservation/employe.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ReservationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReservationController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -366,15 +369,7 @@
       <workItem from="1734859195077" duration="18027000" />
       <workItem from="1734884472147" duration="390000" />
       <workItem from="1734944728478" duration="9162000" />
-      <workItem from="1734960666430" duration="4408000" />
-    </task>
-    <task id="LOCAL-00127" summary="modifs diverses">
-      <option name="closed" value="true" />
-      <created>1733993829489</created>
-      <option name="number" value="00127" />
-      <option name="presentableId" value="LOCAL-00127" />
-      <option name="project" value="LOCAL" />
-      <updated>1733993829490</updated>
+      <workItem from="1734960666430" duration="5528000" />
     </task>
     <task id="LOCAL-00128" summary="modifs diverses">
       <option name="closed" value="true" />
@@ -760,7 +755,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734963210466</updated>
     </task>
-    <option name="localTasksCounter" value="176" />
+    <task id="LOCAL-00176" summary="Modif">
+      <option name="closed" value="true" />
+      <created>1734966916681</created>
+      <option name="number" value="00176" />
+      <option name="presentableId" value="LOCAL-00176" />
+      <option name="project" value="LOCAL" />
+      <updated>1734966916681</updated>
+    </task>
+    <option name="localTasksCounter" value="177" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -18,8 +18,36 @@ use Symfony\Component\Routing\Attribute\Route;
 class ReservationController extends AbstractController
 {
     #[Route('/reservation', name: 'app_reservation')]
-    public function index(CinemaRepository $cinemaRepository, FilmRepository $filmRepository): Response
+    public function index(Request $request, CinemaRepository $cinemaRepository, FilmRepository $filmRepository): Response
     {
+        // Vérifier si l'utilisateur est connecté
+        if ($this->getUser()) {
+            $roles = $this->getUser()->getRoles();
+
+            // Récupérer les paramètres de l'URL (s'ils existent)
+            $filmId = $request->query->get('filmId');
+            $seanceId = $request->query->get('seanceId');
+            $cinemaId = $request->query->get('cinemaId');
+            $date = $request->query->get('date');
+
+            // Construire les paramètres de redirection
+            $urlParams = [
+                'filmId' => $filmId,
+                'seanceId' => $seanceId,
+                'cinemaId' => $cinemaId,
+                'date' => $date,
+            ];
+
+            // Redirection en fonction des rôles de l'utilisateur
+            if (in_array('ROLE_ADMIN', $roles)) {
+                return $this->redirectToRoute('app_reservation_admin', $urlParams);
+            } elseif (in_array('ROLE_EMPLOYE', $roles)) {
+                return $this->redirectToRoute('app_reservation_employe', $urlParams);
+            } elseif (in_array('ROLE_USER', $roles)) {
+                return $this->redirectToRoute('app_reservation_user', $urlParams);
+            }
+        }
+
         // Récupérer tous les cinémas et films
         $cinemas = $cinemaRepository->findAll();
         $films = $filmRepository->findAll();
@@ -61,6 +89,54 @@ class ReservationController extends AbstractController
 
         // Passer les données à la vue
         return $this->render('reservation/user.html.twig', [
+            'cinemas' => $cinemas,
+            'filmsData' => $filmsData
+        ]);
+    }
+    #[Route('employe/reservation', name: 'app_reservation_employe')]
+    public function indexEmploye(CinemaRepository $cinemaRepository, FilmRepository $filmRepository): Response
+    {
+        // Récupérer tous les cinémas et films
+        $cinemas = $cinemaRepository->findAll();
+        $films = $filmRepository->findAll();
+
+        // Organiser les films par cinéma dans un tableau associatif
+        $filmsData = [];
+        foreach ($films as $film) {
+            foreach ($film->getCinema() as $cinema) {
+                $filmsData[$cinema->getId()][] = [
+                    'id' => $film->getId(),
+                    'title' => $film->getName()
+                ];
+            }
+        }
+
+        // Passer les données à la vue
+        return $this->render('reservation/employe.html.twig', [
+            'cinemas' => $cinemas,
+            'filmsData' => $filmsData
+        ]);
+    }
+    #[Route('administrateur/reservation', name: 'app_reservation_admin')]
+    public function indexAdmin(CinemaRepository $cinemaRepository, FilmRepository $filmRepository): Response
+    {
+        // Récupérer tous les cinémas et films
+        $cinemas = $cinemaRepository->findAll();
+        $films = $filmRepository->findAll();
+
+        // Organiser les films par cinéma dans un tableau associatif
+        $filmsData = [];
+        foreach ($films as $film) {
+            foreach ($film->getCinema() as $cinema) {
+                $filmsData[$cinema->getId()][] = [
+                    'id' => $film->getId(),
+                    'title' => $film->getName()
+                ];
+            }
+        }
+
+        // Passer les données à la vue
+        return $this->render('reservation/admin.html.twig', [
             'cinemas' => $cinemas,
             'filmsData' => $filmsData
         ]);

@@ -4002,6 +4002,7 @@ axios.defaults.withCredentials = true;
             '/employe/films': [film, menuFilms],
             '/employe/administration': [filmEmploye],
             '/employe/administration/avis': [avis],
+            '/employe/reservation': [reservation],
             '/administrateur/accueil': [resizeCarrousel],
             '/administrateur/films': [film, menuFilms],
             '/administrateur/reservation': [reservation],
