@@ -890,7 +890,7 @@ axios.defaults.withCredentials = true;
                             }
 
                             // Mettre à jour les séances disponibles
-                            function updateSeances(selectedDate) {
+                            function updateSeances(selectedDate, datepicker = false) {
                                 $seancesButtons.empty(); // Effacer les anciens boutons
                                 let availableSeances = [];
                                 const textAreaReservations = $('#Textarea-places-reservations');
@@ -931,7 +931,7 @@ axios.defaults.withCredentials = true;
                                         const remainingSeats = 100 - totalReservedSeats;
                                         const requestedSeats = parseInt(textAreaReservations.val(), 10) || 0;
 
-                                        if (requestedSeats <= remainingSeats) {
+                                        if (requestedSeats <= remainingSeats && datepicker === false) {
                                             $button.removeClass('disabled');
                                         }
 
@@ -971,7 +971,7 @@ axios.defaults.withCredentials = true;
                                         }
 
                                         // Vérifier si le nombre de places demandées est inférieur ou égal au nombre de places restantes lors de la redirection depuis la page film
-                                        if (seanceId && seance.id === parseInt(seanceId, 10)) {
+                                        if (seanceId && seance.id === parseInt(seanceId, 10) && datepicker === false) {
                                             const atLeastOneAvailable = validateReservationInput({
                                                 textArea: textAreaReservations,
                                                 remainingSeats: remainingSeats,
@@ -1065,7 +1065,7 @@ axios.defaults.withCredentials = true;
                                     const selectedDate = $datepicker.val();
                                     $calendarIcon.addClass('d-none');
                                     $clearIcon.removeClass('d-none');
-                                    updateSeances(selectedDate);
+                                    updateSeances(selectedDate, true);
                                     initialiserSieges();
                                 });
 
