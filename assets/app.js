@@ -879,6 +879,10 @@ axios.defaults.withCredentials = true;
                                         $('#paiement-reservations').addClass('disabled');
                                     }
 
+                                    $(".btn-reservation").not(".active").on("click", function () {
+                                        $('#paiement-reservations').addClass('disabled');
+                                    });
+
                                     if ($seat.hasClass('selectionne')) {
                                         // Si le siège est déjà sélectionné, on le désélectionne
                                         $seat.removeClass('selectionne');
@@ -1172,7 +1176,9 @@ axios.defaults.withCredentials = true;
                 // Affiche l'icône de fermeture et active le datepicker
                 customSelect.addClass('no-arrow');
                 $clearIconCinema.removeClass('d-none');
-                $('#datepicker').removeClass('disabled');
+                $(function () {
+                    $('#datepicker').removeClass('disabled');
+                });
 
                 // Paiement
                 $('#paiement-reservations').on('click', function () {
@@ -1316,7 +1322,10 @@ axios.defaults.withCredentials = true;
                 // Affiche l'icône de fermeture
                 customSelect.addClass('no-arrow');
                 $clearIconCinema.removeClass('d-none');
-                $('#datepicker').removeClass('disabled');
+                $(function () {
+                    $('#datepicker').removeClass('disabled');
+                });
+
 
                 // Masque ou affiche le menu des cinemas
                 $('.custom-options-cinema').toggle();

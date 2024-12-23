@@ -366,15 +366,7 @@
       <workItem from="1734859195077" duration="18027000" />
       <workItem from="1734884472147" duration="390000" />
       <workItem from="1734944728478" duration="9162000" />
-      <workItem from="1734960666430" duration="1041000" />
-    </task>
-    <task id="LOCAL-00125" summary="Création pages et modifs block twig">
-      <option name="closed" value="true" />
-      <created>1733991310783</created>
-      <option name="number" value="00125" />
-      <option name="presentableId" value="LOCAL-00125" />
-      <option name="project" value="LOCAL" />
-      <updated>1733991310783</updated>
+      <workItem from="1734960666430" duration="2159000" />
     </task>
     <task id="LOCAL-00126" summary="modifs diverses">
       <option name="closed" value="true" />
@@ -760,7 +752,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734960724646</updated>
     </task>
-    <option name="localTasksCounter" value="174" />
+    <task id="LOCAL-00174" summary="Modif">
+      <option name="closed" value="true" />
+      <created>1734961907255</created>
+      <option name="number" value="00174" />
+      <option name="presentableId" value="LOCAL-00174" />
+      <option name="project" value="LOCAL" />
+      <updated>1734961907255</updated>
+    </task>
+    <option name="localTasksCounter" value="175" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
