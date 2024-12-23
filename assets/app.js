@@ -1658,13 +1658,13 @@ axios.defaults.withCredentials = true;
                                                                         <!--Nom du film et cinéma et boutons-->
                                                                         <div class="row">
                                                                             <!--Nom du film-->
-                                                                            <div class="col-6 d-flex align-items-center justify-content-start">
+                                                                            <div class="col-8 d-flex align-items-center justify-content-start">
                                                                                 <div class="text-white align-content-center fs-5 me-2">Nom:</div> 
                                                                                 <textarea class="form-control p-2 align-content-center textarea-uniforme" placeholder="" id="TextareaNom-${film.id}">${film.name}</textarea>
                                                                                 <label class="d-none" for="TextareaNom-${film.id}"></label>
                                                                             </div>                                                          
                                                                             <!--Boutons valider + sortie + reset-->
-                                                                            <div class="col-6 d-flex align-items-center justify-content-end">
+                                                                            <div class="col-4 d-flex align-items-center justify-content-end">
                                                                                 <button id="btn-reset-${film.id}" class="btn bi bi-arrow-counterclockwise p-2 fs-4 d-flex justify-content-center align-items-center" data-bs-dismiss="modal"></button>
                                                                                 <button id="btn-validate-film-${film.id}" class="btn bi bi-check-lg p-2 fs-4 d-flex justify-content-center align-items-center" data-bs-dismiss="modal"></button>
                                                                                 <button class="btn bi bi-x-lg p-2 fs-4 d-flex justify-content-center align-items-center" data-bs-dismiss="modal"></button>
@@ -1726,7 +1726,7 @@ axios.defaults.withCredentials = true;
                                                                                 </div>
                                                                                 <div class="d-flex justify-content-center align-items-center">
                                                                                     <div class="text-white align-content-center fs-5 me-2">Places:</div> 
-                                                                                    <textarea class="form-control p-2 align-content-center textarea-uniforme" style="width: 5rem" placeholder="" id="Textarea-${film.id}" disabled></textarea>
+                                                                                    <textarea readonly class="form-control p-2 align-content-center textarea-uniforme-2" style="width: 5rem" placeholder="" id="Textarea-${film.id}">100</textarea>
                                                                                 </div> 
                                                                             </div>
                                                                         </div>
@@ -1751,7 +1751,7 @@ axios.defaults.withCredentials = true;
                                                                                         </div>
                                                                                         <div class="d-flex justify-content-center align-items-center">
                                                                                             <div class="text-white align-content-center fs-5 me-2">Prix:</div>
-                                                                                            <textarea class="form-control p-2 align-content-center textarea-uniforme" style="width: 5rem" placeholder="" id="Textarea-3DX-${i + 1}-prix-${film.id}">${seance.price}</textarea>
+                                                                                            <textarea class="form-control p-2 align-content-center textarea-uniforme-2" style="width: 5rem" placeholder="" id="Textarea-3DX-${i + 1}-prix-${film.id}">${seance.price}</textarea>
                                                                                             <div class="mx-1 fs-5 text-white">€</div>
                                                                                         </div>
                                                                                     </div> 
@@ -1773,7 +1773,7 @@ axios.defaults.withCredentials = true;
                                                                                                 </div>
                                                                                                 <div class="d-flex justify-content-center align-items-center">
                                                                                                     <div class="text-white align-content-center fs-5 me-2">Prix:</div>
-                                                                                                    <textarea class="form-control p-2 align-content-center textarea-uniforme" style="width: 5rem" placeholder="" id="Textarea-3DX-${i + 1 + total3DX}-prix-${film.id}"></textarea>
+                                                                                                    <textarea class="form-control p-2 align-content-center textarea-uniforme-2" style="width: 5rem" placeholder="" id="Textarea-3DX-${i + 1 + total3DX}-prix-${film.id}"></textarea>
                                                                                                     <div class="mx-1 fs-5 text-white">€</div>
                                                                                                 </div>   
                                                                                             </div>                                                                                                                                 
@@ -1802,7 +1802,7 @@ axios.defaults.withCredentials = true;
                                                                                             </div>
                                                                                             <div class="d-flex justify-content-center align-items-center">
                                                                                                 <div class="text-white align-content-center fs-5 me-2">Prix:</div>
-                                                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme" style="width: 5rem" placeholder="" id="Textarea-4DX-${i + 1}-prix-${film.id}">${seance.price}</textarea>
+                                                                                                <textarea class="form-control p-2 align-content-center textarea-uniforme-2" style="width: 5rem" placeholder="" id="Textarea-4DX-${i + 1}-prix-${film.id}">${seance.price}</textarea>
                                                                                                 <div class="mx-1 fs-5 text-white">€</div>
                                                                                             </div>
                                                                                         </div> 
@@ -1994,6 +1994,30 @@ axios.defaults.withCredentials = true;
                         displayAgeBadge(film)
 
                         //modal
+                        const textarea = $('#TextareaNom-' + film.id);
+                        // Fonction pour ajuster dynamiquement la largeur du textarea en fonction du contenu
+                        function autoResizeWidth(textarea) {
+                            // Vérifier si textarea est un objet jQuery et obtenir l'élément DOM natif
+                            var domElement = textarea instanceof jQuery ? textarea.get(0) : textarea;
+
+                            // Réinitialiser la largeur pour recalculer la taille du contenu
+                            domElement.style.width = 'auto';
+
+                            // Ajuster la largeur en fonction du contenu du texte
+                            domElement.style.width = (domElement.scrollWidth) + 'px';
+                        }
+
+                        // Vérifier si le textarea existe et appliquer la fonction d'auto redimensionnement
+                        if (textarea.length) {
+                            // Appliquer l'ajustement de la largeur au chargement de la page
+                            autoResizeWidth(textarea);
+
+                            // Ajouter un écouteur d'événement pour ajuster la largeur à chaque saisie
+                            textarea.on('input', function() {
+                                autoResizeWidth(textarea);
+                            });
+                        }
+
                         // Upload image
                         let imageData = null;
                         $('#uploadButton-'+film.id).on('click', function () {
@@ -2606,16 +2630,6 @@ axios.defaults.withCredentials = true;
                     const films = response.data;
                     const datesWithReservations = {};
 
-                    films.forEach(film => {
-                        if (film.reservations) {
-                            Object.keys(film.reservations).forEach(date => {
-                                if (!datesWithReservations[date]) {
-                                    datesWithReservations[date] = 0;
-                                }
-                                datesWithReservations[date] += film.reservations[date];
-                            });
-                        }
-                    });
                     // Initialisation du datepicker
                     $datepickerReservations.datepicker({
                         orientation: "bottom",
@@ -2633,6 +2647,16 @@ axios.defaults.withCredentials = true;
                             } else {
                                 return {tooltip: 'Aucune réservation'};
                             }
+                        }
+                    });
+                    films.forEach(film => {
+                        if (film.reservations) {
+                            Object.keys(film.reservations).forEach(date => {
+                                if (!datesWithReservations[date]) {
+                                    datesWithReservations[date] = 0;
+                                }
+                                datesWithReservations[date] += film.reservations[date];
+                            });
                         }
                     });
 

@@ -839,13 +839,27 @@ footer #navbarBottom .nav-link {
   transition: all 0.2s ease;
   color: #6A73AB !important;
   text-align: center;
+  white-space: nowrap;
+  min-width: 10rem;
 }
 
-.textarea-uniforme:hover {
+.textarea-uniforme-2 {
+  height: 43.2px;
+  resize: none;
+  overflow: hidden;
+  font-size: 1.1rem !important;
+  background-color: white !important;
+  border: 2px solid #6A73AB !important;
+  transition: all 0.2s ease;
+  color: #6A73AB !important;
+  text-align: center;
+}
+
+.textarea-uniforme:hover, .textarea-uniforme-2:hover {
   background-color: #e0e0e0 !important;
 }
 
-.textarea-uniforme:focus {
+.textarea-uniforme:focus, .textarea-uniforme-2:focus {
   border: 2px solid white !important;
   background-color: #6A73AB !important;
   color: white !important;
