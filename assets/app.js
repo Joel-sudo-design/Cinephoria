@@ -446,6 +446,12 @@ axios.defaults.withCredentials = true;
             .then(response => {
                 // Parcourir les films retournés par la requête
                 const films = response.data;
+
+                // Vérifier si aucun film
+                if (films.length === 0) {
+                    $('#film-container-public').append('<div class="col-12 text-center my-3" style="color:#6A73AB">Aucun film pour le moment</div>');
+                }
+
                 $.each(films, function (index, film) {
                     // Ajouter chaque film dans le conteneur
                     const filmHTML = generateFilmCardHTML(film);
