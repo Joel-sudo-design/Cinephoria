@@ -50,7 +50,6 @@ class AdministrationController extends AbstractController
             'genres' => $genres,
         ]);
     }
-
     #[Route('/film', name: 'app_administration_film')]
     public function Film(EntityManagerInterface $entityManager, FilmRepository $filmRepository): Response
     {
@@ -138,7 +137,6 @@ class AdministrationController extends AbstractController
 
         return new JsonResponse($AllFilmsArray);
     }
-
     #[Route('/film/create', name: 'app_administration_creation_film')]
     public function CreateFilm(EntityManagerInterface $entityManager): Response
     {
@@ -147,7 +145,6 @@ class AdministrationController extends AbstractController
         $entityManager->flush();
         return new JsonResponse(['status' => 'film created']);
     }
-
     #[Route('/film/delete', name: 'app_administration_delete_film')]
     public function FilmDelete(Request $request,EntityManagerInterface $entityManager): Response
     {
@@ -168,7 +165,6 @@ class AdministrationController extends AbstractController
         $entityManager->flush();
         return new JsonResponse(['status' => 'film deleted']);
     }
-
     #[Route('/film/validate', name: 'app_administration_validate_film')]
     public function ValidateFilm(Request $request,EntityManagerInterface $entityManager): Response
     {
@@ -273,7 +269,6 @@ class AdministrationController extends AbstractController
             }
         }
     }
-
     #[Route('/film/reset', name: 'app_administration_reset_film')]
     public function ResetFilm(Request $request,EntityManagerInterface $entityManager): Response
     {
@@ -294,16 +289,10 @@ class AdministrationController extends AbstractController
         }
         $film->setDateDebut(null);
         $film->setDateFin(null);
-        $film->setName('Titre du film');
-        $film->setGenre(null);
-        $film->setAgeMinimum('Aucun');
-        $film->setLabel(false);
-        $film->setDescription('Description du film');
         $entityManager->persist($film);
         $entityManager->flush();
         return new JsonResponse(['status' => 'champs reset']);
     }
-
     #[Route('/account_employe', name: 'app_administration_account_employe')]
     public function accountEmploye(Request $request,EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher, UserRepository $userRepository, MailerInterface $mailer): Response
     {
@@ -334,14 +323,12 @@ class AdministrationController extends AbstractController
             'employes' => $employes,
         ]);
     }
-
     #[Route('/passwordReset', name: 'app_reset')]
     public function resetConfirmed(): Response
     {
         return $this->render('reset_password/confirmation_password_reset.twig', [
             'controller_name' => 'ResetPasswordController',]);
     }
-
     #[Route('/reset/{token}', name: 'app_reset_password')]
     public function reset(Request $request, UserPasswordHasherInterface $passwordHasher, ?string $token = null): Response
     {
@@ -408,7 +395,6 @@ class AdministrationController extends AbstractController
             'resetForm' => $form,
         ]);
     }
-
     private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer): RedirectResponse
     {
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $emailFormData,]);
@@ -458,7 +444,6 @@ class AdministrationController extends AbstractController
 
         return $this->redirectToRoute('app_administration_account_employe');
     }
-
     #[Route('/reservations', name: 'app_administration_reservations')]
     public function reservations(): Response
     {

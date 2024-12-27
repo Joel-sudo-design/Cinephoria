@@ -717,7 +717,7 @@ footer #navbarBottom .nav-link {
 .btn-date-admin:hover, .btn-date-admin.btn-hover,
 .btn-date-admin:focus, .btn-time-admin:focus,
 .btn-date-admin.btn-hover, .btn-time-admin.btn-hover,
-.btn-time-admin:hover, .btn-time-admin.btn-hover {
+.btn-time-admin:not(:disabled):hover {
   background-color: #6A73AB;
   color: white !important;
   border: 2px solid white;
@@ -748,15 +748,13 @@ footer #navbarBottom .nav-link {
 }
 
 .btn-time-admin:disabled::placeholder,
-.btn-date-admin:disabled::placeholder,
-.textarea-uniforme:disabled::placeholder {
+.btn-date-admin:disabled::placeholder{
   color: white !important;
   opacity: 1;
 }
 
 .btn-time-admin:disabled,
 .btn-date-admin:disabled,
-.textarea-uniforme:disabled,
 .btn-date-admin:disabled{
   background-color: gray !important;
   color: white !important;
@@ -821,12 +819,29 @@ footer #navbarBottom .nav-link {
   background-color: white;
   color: orange;
   transition: all 0.2s ease;
+  position: relative;
 }
 
 .bi-arrow-counterclockwise:hover {
   background-color: orange;
   color: white;
   border: 2px solid white !important;
+}
+
+.bi-arrow-counterclockwise:hover::after {
+  content: "Réinitialiser les cinemas, la date de début, la date de fin et les séances";
+  position: absolute;
+  top: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: orange;
+  color: white;
+  padding: 5px;
+  border: 2px solid white;
+  border-radius: 5px;
+  white-space: nowrap;
+  font-size: 14px;
+  z-index: 10;
 }
 
 .textarea-uniforme {
@@ -840,7 +855,8 @@ footer #navbarBottom .nav-link {
   color: #6A73AB !important;
   text-align: center;
   white-space: nowrap;
-  min-width: 10rem;
+  min-width: 100px;
+  max-width: 100%;
 }
 
 .textarea-uniforme-2 {
@@ -863,6 +879,25 @@ footer #navbarBottom .nav-link {
   border: 2px solid white !important;
   background-color: #6A73AB !important;
   color: white !important;
+}
+
+.disabled-textarea {
+  background-color: rgb(128, 128, 128)!important;
+  cursor: not-allowed;
+  border: none !important;
+}
+
+.disabled-places, .disabled-places:hover, .disabled-places:focus {
+  cursor: not-allowed;
+  background-color: white !important;
+  border: none !important;
+  color: #6A73AB !important;
+}
+
+.disabled-textarea:hover, .disabled-textarea:focus {
+  background-color: rgb(128, 128, 128)!important;
+  border: none !important;
+  border-radius: 6px;
 }
 
 .modal-admin {
