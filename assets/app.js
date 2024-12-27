@@ -1613,7 +1613,7 @@ axios.defaults.withCredentials = true;
                                                                             <div class="col-12 d-flex justify-content-start">
                                                                                 <div class="text-white align-content-center fs-5 me-2">Genre:</div> 
                                                                                 <div class="dropdown dropdown-modal-admin">
-                                                                                    <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuGenre-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                                    <button class="btn btn-secondary nav-link dropdown-toggle border-white p-2 pe-1" type="button" id="dropdownMenuGenre-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
                                                                                         ${film.genre}
                                                                                     </button>
                                                                                     <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuGenre">
@@ -1634,7 +1634,7 @@ axios.defaults.withCredentials = true;
                                                                             <div class="col-12 d-flex justify-content-start">
                                                                                 <div class="text-white align-content-center fs-5 me-2">Age minimum:</div> 
                                                                                 <div class="dropdown dropdown-modal-admin">
-                                                                                    <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuAge-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                                    <button class="btn btn-secondary nav-link dropdown-toggle border-white p-2 pe-1" type="button" id="dropdownMenuAge-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
                                                                                         ${film.age_minimum}
                                                                                     </button>
                                                                                     <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuAge">
@@ -1651,7 +1651,7 @@ axios.defaults.withCredentials = true;
                                                                             <div class="col-12 d-flex justify-content-start">
                                                                                 <div class="text-white align-content-center fs-5 me-2">Coup de cœur:</div> 
                                                                                 <div class="dropdown dropdown-modal-admin">
-                                                                                    <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuLabel-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">           
+                                                                                    <button class="btn btn-secondary nav-link dropdown-toggle border-white p-2 pe-1" type="button" id="dropdownMenuLabel-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">           
                                                                                     </button>
                                                                                     <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuLabel">
                                                                                         <li><a class="dropdown-item drop-label" href="#">Oui</a></li>
@@ -1682,7 +1682,7 @@ axios.defaults.withCredentials = true;
                                                                             <div class="col-12 d-flex align-content-center justify-content-start">
                                                                                 <div class="text-white align-content-center fs-5 me-2">Cinéma:</div> 
                                                                                 <div class="dropdown dropdown-modal-admin">                                                             
-                                                                                     <button class="btn btn-secondary nav-link dropdown-toggle p-2 pe-1" type="button" id="dropdownMenuCinema-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                                     <button class="btn btn-secondary nav-link dropdown-toggle border-white p-2 pe-1" type="button" id="dropdownMenuCinema-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
                                                                                          ${formattedCinemas}
                                                                                      </button>
                                                                                      <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuCinema">
