@@ -2150,6 +2150,7 @@ axios.defaults.withCredentials = true;
                         const formats = ["3DX", "4DX", "IMAX", "Dolby"];
                         const nombreSeances = 4;
                         $('#btn-validate-film-'+film.id).click(function () {
+                            // Récupérer les valeurs des champs
                             const datepickerDebut = $('#datepicker-admin-debut-'+film.id);
                             const datepickerFin = $('#datepicker-admin-fin-'+film.id);
                             const dropdownPlaces = $(`#dropdownMenuPlaces-${film.id}`);
@@ -2187,32 +2188,51 @@ axios.defaults.withCredentials = true;
                             for (const key in data) {
                                 formData.append(key, data[key]);
                             }
-                            // Vérification des timepickers (heure de début et heure de fin)
+
+                            // Vérification des champs
                             let timeError = false;
                             formats.forEach(format => {
                                 for (let i = 1; i <= nombreSeances; i++) {
                                     let heureDebut = $(`#timepicker-admin-debut-${format}-${i}-${film.id}`).val().trim();
                                     let heureFin = $(`#timepicker-admin-fin-${format}-${i}-${film.id}`).val().trim();
                                     let prix = $(`#Textarea-${format}-${i}-prix-${film.id}`).val().trim();
-                                    // Si une heure de début est renseignée, mais pas l'heure de fin
-                                    if (heureDebut !== '' && heureFin === '') {
-                                        timeError = true;
+
+                                    // Si une date de début est renseignée, mais pas la date de fin
+                                    if (datepickerDebut.val().trim() !== '' && datepickerFin.val().trim() === '') {
+                                        timeError = 1;
                                     }
 
                                     // Si une heure de début et une heure de fin sont renseignées, mais pas de date
-                                    if ((datepickerDebut.val().trim() === '' || datepickerFin.val().trim() === '')) {
-                                        timeError = true;
+                                    if ((heureDebut !== '' && heureFin !== '') && (datepickerDebut.val().trim() === '' && datepickerFin.val().trim() === '')) {
+                                        timeError = 2;
                                     }
+
+                                    // Si une heure de début est renseignée, mais pas l'heure de fin
+                                    if (heureDebut !== '' && heureFin === '') {
+                                        timeError = 3;
+                                    }
+
                                     // Si une heure de début et une heure de fin sont renseignées, mais pas de prix
                                     if ((heureDebut !== '' && heureFin !== '') && prix === '') {
-                                        timeError = true;
+                                        timeError = 4;
                                     }
                                 }
                             });
-                            if (timeError) {
-                                alert('Veuillez renseigner une heure de fin, une date de début, une date de fin et le prix lorsque vous spécifiez une heure de début.');
+                            if (timeError === 1) {
+                                alert('Veuillez renseigner une date de fin');
+                                return;
+                            } else if (timeError === 2) {
+                                alert('Veuillez renseigner une date de début et une date de fin');
+                                return;
+                            } else if (timeError === 3) {
+                                alert('Veuillez renseigner une heure de fin');
+                                return;
+                            } else if (timeError === 4) {
+                                alert('Veuillez renseigner un prix');
                                 return;
                             }
+
+                            // Envoi des données
                             axios.post('/administrateur/administration/film/validate', formData , {
                                 headers: {
                                     'Content-Type': 'multipart/form-data',
