@@ -1673,7 +1673,7 @@ axios.defaults.withCredentials = true;
                                                                             <!--Boutons valider + sortie + reset-->
                                                                             <div class="col-4 d-flex align-items-center justify-content-end">
                                                                                 <button id="btn-reset-${film.id}" class="btn bi bi-arrow-counterclockwise p-2 fs-4 d-flex justify-content-center align-items-center" data-bs-dismiss="modal"></button>
-                                                                                <button id="btn-validate-film-${film.id}" class="btn bi bi-check-lg p-2 fs-4 d-flex justify-content-center align-items-center" data-bs-dismiss="modal"></button>
+                                                                                <button id="btn-validate-film-${film.id}" class="btn bi bi-check-lg p-2 fs-4 d-flex justify-content-center align-items-center"></button>
                                                                                 <button class="btn bi bi-x-lg p-2 fs-4 d-flex justify-content-center align-items-center" data-bs-dismiss="modal"></button>
                                                                             </div>
                                                                         </div>
@@ -1721,7 +1721,7 @@ axios.defaults.withCredentials = true;
                                                                             <div class="col-12 d-flex justify-content-start align-items-center">
                                                                                 <div class="text-white align-content-center fs-5 me-2">Salle:</div>                                                               
                                                                                 <div class="dropdown dropdown-modal-admin align-content-center me-3">
-                                                                                    <button class="btn btn-secondary nav-link dropdown-toggle color-salle p-2 pe-1" type="button" id="dropdownMenuSalle-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                                    <button class="btn btn-secondary nav-link dropdown-toggle border-white color-salle p-2 pe-1" type="button" id="dropdownMenuSalle-${film.id}" data-bs-toggle="dropdown" aria-expanded="false">
                                                                                         N°
                                                                                     </button>
                                                                                     <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuSalle">
@@ -2200,7 +2200,7 @@ axios.defaults.withCredentials = true;
                                     }
 
                                     // Si une heure de début et une heure de fin sont renseignées, mais pas de date
-                                    if ((heureDebut !== '' && heureFin !== '') && (datepickerDebut.val().trim() === '' || datepickerFin.val().trim() === '')) {
+                                    if ((datepickerDebut.val().trim() === '' || datepickerFin.val().trim() === '')) {
                                         timeError = true;
                                     }
                                     // Si une heure de début et une heure de fin sont renseignées, mais pas de prix
@@ -2218,7 +2218,10 @@ axios.defaults.withCredentials = true;
                                     'Content-Type': 'multipart/form-data',
                                 }
                             })
-                                .then(response => {console.log(response.data);})
+                                .then(response => {console.log(response.data);
+                                    // Fermer le modal après la soumission si nécessaire
+                                    $('#modal-'+film.id).modal('hide');
+                                })
                                 .catch(error => {console.error(error);})
                         });
 
@@ -2363,6 +2366,53 @@ axios.defaults.withCredentials = true;
 
                             return constants;
                         }
+                        // Fonction à appeler après chaque modification d'un timepicker
+                        function handleTimepickerChange() {
+                            let filledPairsCount = 0;
+
+                            // Compter les paires (début et fin remplies)
+                            const timepicker_admin_debut = $('input[id^="timepicker-admin-debut"]')
+                            timepicker_admin_debut.each(function(index) {
+                                const $debutField = $(this);
+                                const $finField = $(`input[id^="timepicker-admin-fin"]:eq(${index})`);
+
+                                if ($debutField.val().trim() && $finField.val().trim()) {
+                                    filledPairsCount++;
+                                }
+                            });
+
+                            // Si 4 paires sont remplies, désactiver les autres
+                            if (filledPairsCount >= 4) {
+                                timepicker_admin_debut.each(function(index) {
+                                    const $debutField = $(this);
+                                    const $finField = $(`input[id^="timepicker-admin-fin"]:eq(${index})`);
+                                    const $clockIcon = $(`#clock-icon-debut-${index}`);
+                                    const $clearIcon = $(`#clear-icon-debut-${index}`);
+
+                                    if (!$finField.val().trim()) {
+                                        // Supprimer la valeur de début si aucune fin n'est renseignée
+                                        $debutField.val('').attr('disabled', true);
+                                        $clockIcon.removeClass('d-none');
+                                        $clearIcon.addClass('d-none');
+                                    } else if (!$debutField.val().trim()) {
+                                        $debutField.attr('disabled', true);
+                                    }
+                                });
+
+                                $('input[id^="timepicker-admin-fin"]').each(function(index) {
+                                    const $finField = $(this);
+
+                                    if (!$finField.val().trim()) {
+                                        $finField.attr('disabled', true);
+                                    }
+                                });
+                            } else {
+                                // Réactiver les champs début et fin si moins de 4 paires sont remplies
+                                timepicker_admin_debut.each(function() {
+                                    $(this).removeAttr('disabled');
+                                });
+                            }
+                        }
                         function initTimepickerWithValidation(timepickerIdDebut, clockIconIdDebut, clearIconIdDebut, timepickerIdFin, clockIconIdFin, clearIconIdFin, price, modalTimeFieldIdFin) {
                             const $timepickerDebut = $(timepickerIdDebut);
                             const $clockIconDebut = $(clockIconIdDebut);
@@ -2415,6 +2465,7 @@ axios.defaults.withCredentials = true;
                                         $price.attr('disabled', true); // Désactiver le champ "Prix"
                                         $price.val(''); // Réinitialiser le prix
                                     }
+                                    handleTimepickerChange();
                                 }
                             });
 
@@ -2459,9 +2510,11 @@ axios.defaults.withCredentials = true;
                                             $modalTimeFieldFin.val(dateStr); // Mettre à jour l'heure de fin dans le modal
                                         }
                                     }
+                                    handleTimepickerChange();
                                 }
                             });
 
+                            // Désactiver le textarea "Prix" si "Fin" est vide
                             if ($timepickerFin.val().trim()) {
                                 $price.removeClass('disabled-textarea').attr('readonly', false);
                             } else {
