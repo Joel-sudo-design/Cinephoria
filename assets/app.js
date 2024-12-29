@@ -1552,6 +1552,8 @@ axios.defaults.withCredentials = true;
             axios.get('/administrateur/administration/film')
                 .then(response => {
                     const Film = response.data;
+                    const salles = response.data.salles;
+                    delete Film.salles;
                     $.each(Film, function(index, film) {
                         // Formatter le nom des cinémas
                         let formattedCinemas = '';
@@ -1562,12 +1564,14 @@ axios.defaults.withCredentials = true;
                         }
                         $('#card-container').append(
                             `<div class="col-auto card" style="width: 12rem">
+                                                    <!-- Image et boutons du film -->
                                                     <div class="position-relative">
                                                          <button class="btn bi bi-pencil-square text-success p-0 fs-5 bg-admin position-absolute" style="border-radius: 0 0 2px 0" data-bs-toggle="modal" data-bs-target="#modal-${film.id}"></button>
                                                          <button id="x-square-${film.id}" class="btn bi bi-x-square text-danger p-0 fs-5 bg-admin position-absolute" style="top:0; right: 0; border-radius: 0 0 0 2px"></button>  
                                                          <i class="bi bi-heart-fill position-absolute fs-3 text-warning d-none" style="top:1%; right: 5%"></i>
                                                          <img src="${film.image}" class="card-img-top" alt="image">
                                                     </div>
+                                                    <!-- En dessous du film -->
                                                     <div class="card-body p-0 py-1">
                                                             <div class="d-flex justify-content-between align-items-start">
                                                                 <!-- Titre du film -->
@@ -1582,9 +1586,12 @@ axios.defaults.withCredentials = true;
                                                                     <span class="age-badge-16 d-none mx-2">16+</span>
                                                                     <span class="age-badge-18 d-none mx-2">18+</span>
                                                                 </div>
-                                                            </div>                     
+                                                            </div>                    
+                                                            <!-- Genre du film --> 
                                                             <div class="card-title m-0 fs-6">${film.genre}</div>
+                                                            <!-- Note du film -->
                                                             <p id="stars-rating-avis-${film.id}" class="card-text m-0 stars-rating-avis"></p>
+                                                            <!-- Description du film -->
                                                             <div class="accordion accordion-flush">
                                                                 <div class="accordion-item">
                                                                     <div class="accordion-header">
@@ -1716,8 +1723,7 @@ axios.defaults.withCredentials = true;
                                                                              </div>                                                                                                                     
                                                                         </div>
                                                                         <!--Salle & Places-->
-                                                                        <div class="row my-3">                                                                                                                     
-                                                                            <!--Salle et places -->                                                                                                                
+                                                                        <div class="row my-3">                                                                                                                                                                                                                                    
                                                                             <div class="col-12 d-flex justify-content-start align-items-center">
                                                                                 <div class="text-white align-content-center fs-5 me-2">Salle:</div>                                                               
                                                                                 <div class="dropdown dropdown-modal-admin align-content-center me-3">
@@ -1733,7 +1739,7 @@ axios.defaults.withCredentials = true;
                                                                                 </div>
                                                                                 <div class="d-flex justify-content-center align-items-center">
                                                                                     <div class="text-white align-content-center fs-5 me-2">Places:</div> 
-                                                                                    <textarea readonly class="form-control p-2 align-content-center textarea-uniforme-2 disabled-places" style="width: 5rem" placeholder="" id="Textarea-${film.id}">100</textarea>
+                                                                                    <textarea readonly class="form-control p-2 align-content-center textarea-uniforme-2 disabled-places" style="width: 5rem" placeholder="" id="Textarea-${film.id}"></textarea>
                                                                                 </div> 
                                                                             </div>
                                                                         </div>
@@ -2071,7 +2077,6 @@ axios.defaults.withCredentials = true;
                         const dropdownMenuCinema = $('#dropdownMenuCinema-'+film.id);
                         const dropCinema = dropdownMenuCinema.siblings('.dropdown-menu').find('.drop-cinema');
                         let selectedCinema = '';
-
                         // Gérer le clic sur le menu cinéma
                         dropCinema.click(function (e) {
                             e.preventDefault();
@@ -2093,11 +2098,19 @@ axios.defaults.withCredentials = true;
                         // Menu déroulant Salle
                         const dropdownMenuSalle = $('#dropdownMenuSalle-'+film.id);
                         const dropSalle = dropdownMenuSalle.siblings('.dropdown-menu').find('.drop-salle');
+                        function setPlaces(selectedSalle) {
+                            for (let i = 0; i < salles.length; i++) {
+                                if (salles[i].id === parseInt(selectedSalle, 10)) {
+                                    $('#Textarea-'+film.id).val(salles[i].places);
+                                }
+                            }
+                        }
                         let selectedSalle= '';
                         dropSalle.click(function(e) {
                             e.preventDefault();
                             selectedSalle= $(this).text();
                             dropdownMenuSalle.text(selectedSalle);
+                            setPlaces(selectedSalle);
                         });
 
                         // Écoute l'événement de clic sur les éléments du menu déroulant salle

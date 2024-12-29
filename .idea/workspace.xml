@@ -7,6 +7,21 @@
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modif">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/image_film/ant-man-6740b534e7fe6194985473.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/image_film/avatar-6740bab6b4402030396447.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/image_film/black-6740b5541eb7a040725354.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/image_film/chat-6741b81087ac2107773325.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/image_film/dead-6740b24cd87f9229191124.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/image_film/god-6741b82c63306752418279.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/image_film/guetteurs-6740b52761945970295253.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/image_film/joker-6741b7ba44e41117736183.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/image_film/killer-6740b4a955283951816928.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/image_film/m3gan-6741b7c5b1df7172498536.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/image_film/mariage-6740b584a0c7c330970235.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/image_film/panda-6740b5b1c8e96032131257.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AdministrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdministrationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Salle.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Salle.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Seance.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Seance.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -369,15 +384,8 @@
       <workItem from="1734960666430" duration="11357000" />
       <workItem from="1734974335244" duration="52000" />
       <workItem from="1735293863826" duration="17617000" />
-      <workItem from="1735399331697" duration="3536000" />
-    </task>
-    <task id="LOCAL-00135" summary="modifs diverses">
-      <option name="closed" value="true" />
-      <created>1734100303285</created>
-      <option name="number" value="00135" />
-      <option name="presentableId" value="LOCAL-00135" />
-      <option name="project" value="LOCAL" />
-      <updated>1734100303285</updated>
+      <workItem from="1735399331697" duration="3818000" />
+      <workItem from="1735468006142" duration="7003000" />
     </task>
     <task id="LOCAL-00136" summary="modifs diverses">
       <option name="closed" value="true" />
@@ -763,7 +771,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735401469424</updated>
     </task>
-    <option name="localTasksCounter" value="184" />
+    <task id="LOCAL-00184" summary="Modif">
+      <option name="closed" value="true" />
+      <created>1735403175764</created>
+      <option name="number" value="00184" />
+      <option name="presentableId" value="LOCAL-00184" />
+      <option name="project" value="LOCAL" />
+      <updated>1735403175764</updated>
+    </task>
+    <option name="localTasksCounter" value="185" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

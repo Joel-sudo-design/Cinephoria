@@ -89,4 +89,13 @@ class Salle
         return $this;
     }
 
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'qualite' => $this->qualite,
+            'places' => $this->places,
+        ];
+    }
+
 }

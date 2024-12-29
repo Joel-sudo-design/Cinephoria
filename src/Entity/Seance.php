@@ -158,6 +158,18 @@ class Seance
         ];
     }
 
+    public function toArraySeance(): array
+    {
+        return [
+            'id' => $this->id,
+            'date' => $this->date->format('d/m/Y'),
+            'salle' => $this->salle?->getId(),
+            'qualite' => $this->salle?->getQualite(),
+            'heure_debut_seance' => $this->heure_debut->format('H:i'),
+            'heure_fin_seance' => $this->heure_fin->format('H:i'),
+            'price' => $this->price,
+        ];
+    }
 
     public function toArrayReservation(): array
     {

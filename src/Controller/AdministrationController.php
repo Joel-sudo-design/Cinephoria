@@ -56,7 +56,9 @@ class AdministrationController extends AbstractController
         // Récupérer tous les films
         $AllFilms = $filmRepository->findAll();
         $AllFilmsArray = [];
+        $salles = $entityManager->getRepository(Salle::class)->findAll();
 
+        // Parcourir les films
         foreach ($AllFilms as $film) {
             // Convertir le film en tableau
             $filmArray = $film->toArray();
@@ -104,7 +106,7 @@ class AdministrationController extends AbstractController
             // Ajouter les séances pour 1 jour
             $seancesArray = [];
             foreach ($seances as $Seance) {
-                $seancesArray[] = $Seance->toArray();
+                $seancesArray[] = $Seance->toArraySeance();
             }
             $filmArray['seances'] = $seancesArray ?: [];
 
@@ -133,6 +135,12 @@ class AdministrationController extends AbstractController
 
             // Ajouter le film au tableau final
             $AllFilmsArray[] = $filmArray;
+        }
+
+        // Ajouter les salles
+        foreach ($salles as $salle) {
+            $salleArray = $salle->toArray();
+            $AllFilmsArray['salles'][] = $salleArray;
         }
 
         return new JsonResponse($AllFilmsArray);
