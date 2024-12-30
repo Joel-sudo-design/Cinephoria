@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modif">
-      <change afterPath="$PROJECT_DIR$/public/image_film/ghosted-67726d415a6ca343948393.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/administration/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/administration/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -373,15 +371,7 @@
       <workItem from="1735293863826" duration="17617000" />
       <workItem from="1735399331697" duration="3818000" />
       <workItem from="1735468006142" duration="13028000" />
-      <workItem from="1735550414218" duration="12812000" />
-    </task>
-    <task id="LOCAL-00139" summary="Création de la fonctionnalité pour générer les QRcodes">
-      <option name="closed" value="true" />
-      <created>1734193692418</created>
-      <option name="number" value="00139" />
-      <option name="presentableId" value="LOCAL-00139" />
-      <option name="project" value="LOCAL" />
-      <updated>1734193692419</updated>
+      <workItem from="1735550414218" duration="13569000" />
     </task>
     <task id="LOCAL-00140" summary="Création de la fonctionnalité pour générer les QRcodes">
       <option name="closed" value="true" />
@@ -767,7 +757,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735552238705</updated>
     </task>
-    <option name="localTasksCounter" value="188" />
+    <task id="LOCAL-00188" summary="Modif">
+      <option name="closed" value="true" />
+      <created>1735571608997</created>
+      <option name="number" value="00188" />
+      <option name="presentableId" value="LOCAL-00188" />
+      <option name="project" value="LOCAL" />
+      <updated>1735571608997</updated>
+    </task>
+    <option name="localTasksCounter" value="189" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

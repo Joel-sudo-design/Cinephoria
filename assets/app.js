@@ -1602,7 +1602,7 @@ axios.defaults.withCredentials = true;
                                                                         <div class="position-relative">
                                                                             <input type="file" id="fileInput-${film.id}" style="display: none">
                                                                             <button id="uploadButton-${film.id}" class="btn bi bi-pencil-square text-success p-0 fs-5 bg-admin-modal position-absolute" style="top: 0; right: 20px; border-radius: 0 0 0 2px"></button>
-                                                                            <img src="${film.image2}" class="img-fluid" alt="image">
+                                                                            <img id="previewImage-${film.id}" src="${film.image2}" class="img-fluid" alt="image">
                                                                         </div>    
                                                                         <!--Genre-->                                                                                                                                          
                                                                         <div class="row my-3">
@@ -2027,20 +2027,27 @@ axios.defaults.withCredentials = true;
 
                         // Upload image
                         let imageData = null;
-                        $('#uploadButton-'+film.id).on('click', function () {
-                                                const fileInput = $('#fileInput-'+film.id)[0];
-                                                fileInput.click();
-                                                $(fileInput).off('change').on('change', function () { // Supprime les écouteurs existants avant d'en ajouter un nouveau
-                                                    const selectedFile = fileInput.files[0];
-                                                    if (selectedFile) {
-                                                        imageData = new FormData(); // Crée un nouvel objet FormData
-                                                        imageData.append('image', selectedFile); // Ajoute le fichier sélectionné
-                                                        console.log('Image sélectionnée :', selectedFile.name);
-                                                    } else {
-                                                        console.error('Aucun fichier sélectionné');
-                                                    }
-                                                });
-                                            });
+                        $('#uploadButton-' + film.id).on('click', function () {
+                            const fileInput = $('#fileInput-' + film.id)[0];
+                            fileInput.click();
+
+                            $(fileInput).off('change').on('change', function () { // Supprime les écouteurs existants avant d'en ajouter un nouveau
+                                const selectedFile = fileInput.files[0];
+                                if (selectedFile) {
+                                    // Crée un objet FormData pour le futur upload
+                                    imageData = new FormData();
+                                    imageData.append('image', selectedFile);
+
+                                    // Utilise FileReader pour lire l'image et mettre à jour la prévisualisation
+                                    const reader = new FileReader();
+                                    reader.onload = function (e) {
+                                        // Remplace l'image actuelle par la nouvelle prévisualisation
+                                        $('#previewImage-' + film.id).attr('src', e.target.result);
+                                    };
+                                    reader.readAsDataURL(selectedFile);
+                                }
+                            });
+                        });
 
                         // Menu déroulant genre
                         const dropdownMenuGenre = $('#dropdownMenuGenre-'+film.id);
