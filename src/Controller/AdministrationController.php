@@ -220,6 +220,12 @@ class AdministrationController extends AbstractController
         if ($stringCinema !== '') {
             $cinema = $entityManager->getRepository(Cinema::class)->findOneBy(['name' => $stringCinema]);
             $film->addCinema($cinema);
+            if (!$film->getSeance()->isEmpty()) {
+                $seances = $film->getSeance();
+                foreach ($seances as $seance) {
+                    $seance->addCinema($cinema);
+                }
+            }
         }
         for ($i = 1; $i <= 4; $i++) {
             foreach ($formats as $format) {

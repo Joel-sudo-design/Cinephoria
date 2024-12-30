@@ -893,6 +893,7 @@ footer #navbarBottom .nav-link {
   background-color: rgb(128, 128, 128)!important;
   cursor: not-allowed;
   border: none !important;
+  color: white !important;
 }
 
 .disabled-places, .disabled-places:hover, .disabled-places:focus {

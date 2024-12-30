@@ -2203,46 +2203,71 @@ axios.defaults.withCredentials = true;
                             }
 
                             // Vérification des champs
-                            let timeError = false;
+                            let timeError = 0; // Variable pour gérer les erreurs
+                            let auMoinsUneHeureDebut = false; // Indicateur pour au moins une heure de début renseignée
+
                             formats.forEach(format => {
                                 for (let i = 1; i <= nombreSeances; i++) {
                                     let heureDebut = $(`#timepicker-admin-debut-${format}-${i}-${film.id}`).val().trim();
                                     let heureFin = $(`#timepicker-admin-fin-${format}-${i}-${film.id}`).val().trim();
                                     let prix = $(`#Textarea-${format}-${i}-prix-${film.id}`).val().trim();
 
-                                    // Si une date de début est renseignée, mais pas la date de fin
-                                    if (datepickerDebut.val().trim() !== '' && datepickerFin.val().trim() === '') {
-                                        timeError = 1;
+                                    // Vérifiez si au moins une heure de début est renseignée
+                                    if (heureDebut !== '') {
+                                        auMoinsUneHeureDebut = true;
                                     }
 
-                                    // Si une heure de début et une heure de fin sont renseignées, mais pas de date
-                                    if ((heureDebut !== '' && heureFin !== '') && (datepickerDebut.val().trim() === '' && datepickerFin.val().trim() === '')) {
+                                    // Si un cinéma est sélectionné, mais pas de date de début
+                                    if (selectedCinema !== '' && datepickerDebut.val().trim() === '') {
+                                        timeError = 1;
+                                        break;
+                                    }
+
+                                    // Si une date de début est renseignée, mais pas la date de fin
+                                    if (datepickerDebut.val().trim() !== '' && datepickerFin.val().trim() === '') {
                                         timeError = 2;
+                                        break;
                                     }
 
                                     // Si une heure de début est renseignée, mais pas l'heure de fin
                                     if (heureDebut !== '' && heureFin === '') {
                                         timeError = 3;
+                                        break;
                                     }
 
                                     // Si une heure de début et une heure de fin sont renseignées, mais pas de prix
                                     if ((heureDebut !== '' && heureFin !== '') && prix === '') {
                                         timeError = 4;
+                                        break;
                                     }
+
                                 }
                             });
-                            if (timeError === 1) {
-                                alert('Veuillez renseigner une date de fin');
-                                return;
-                            } else if (timeError === 2) {
-                                alert('Veuillez renseigner une date de début et une date de fin');
-                                return;
-                            } else if (timeError === 3) {
-                                alert('Veuillez renseigner une heure de fin');
-                                return;
-                            } else if (timeError === 4) {
-                                alert('Veuillez renseigner un prix');
-                                return;
+
+                            // Si aucune heure de début n'a été renseignée alors qu'un cinéma est sélectionné
+                            if (!auMoinsUneHeureDebut && selectedCinema !== '' && timeError === 0) {
+                                timeError = 5;
+                            }
+
+                            // Gestion des erreurs
+                            if (timeError > 0) {
+                                switch (timeError) {
+                                    case 1:
+                                        alert("Veuillez ajouter une date de début");
+                                        return;
+                                    case 2:
+                                        alert("Veuillez ajouter une date de fin");
+                                        return;
+                                    case 3:
+                                        alert("Veuillez ajouter une heure de fin pour chaque séance");
+                                        return;
+                                    case 4:
+                                        alert("Veuillez ajouter un prix pour chaque séance");
+                                        return;
+                                    case 5:
+                                        alert("Veuillez ajouter au moins une séance");
+                                        return;
+                                }
                             }
 
                             // Envoi des données
