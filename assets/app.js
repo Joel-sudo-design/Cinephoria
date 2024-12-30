@@ -1997,7 +1997,6 @@ axios.defaults.withCredentials = true;
 
                         // Modal
                         const textarea = $('#TextareaNom-' + film.id);
-
                         // Fonction pour ajuster dynamiquement la largeur du textarea titre en fonction du contenu
                         function autoResizeWidth(textarea) {
                             // Vérifier si textarea est un objet jQuery et obtenir l'élément DOM natif

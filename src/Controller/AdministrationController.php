@@ -217,15 +217,10 @@ class AdministrationController extends AbstractController
         if ($dateFin != '') {
             $film->setDateFin($dateFin);
         }
+
         if ($stringCinema !== '') {
             $cinema = $entityManager->getRepository(Cinema::class)->findOneBy(['name' => $stringCinema]);
             $film->addCinema($cinema);
-            if (!$film->getSeance()->isEmpty()) {
-                $seances = $film->getSeance();
-                foreach ($seances as $seance) {
-                    $seance->addCinema($cinema);
-                }
-            }
         }
         for ($i = 1; $i <= 4; $i++) {
             foreach ($formats as $format) {
@@ -245,9 +240,10 @@ class AdministrationController extends AbstractController
                     $heureFin = \DateTime::createFromFormat('H:i', $stringHeureFin);
 
                     // Vérification des conditions avant de passer à la méthode getSeance
-                    if ($heureDebut && $heureFin && $dateDebut && $dateFin && is_numeric($price) && is_numeric($stringSalle)) {
-                        // Appeler la méthode getSeance avec les données appropriées
-                        $this->getSeance($heureDebut, $heureFin, $price, $dateDebut, $dateFin, ${"salle{$format}"}, $film, $entityManager);
+                    if ($heureDebut && $heureFin && $dateDebut && $dateFin && is_numeric($price) && is_numeric($stringSalle) && $stringCinema !== '') {
+                            $cinema = $entityManager->getRepository(Cinema::class)->findOneBy(['name' => $stringCinema]);
+                            // Appeler la méthode getSeance avec les données appropriées
+                            $this->getSeance($heureDebut, $heureFin, $price, $dateDebut, $dateFin, ${"salle{$format}"}, $film, $entityManager, $cinema);
                     }
                 }
             }
@@ -264,7 +260,7 @@ class AdministrationController extends AbstractController
         $entityManager->flush();
         return new JsonResponse(['status' => 'film modified']);
     }
-    public function getSeance(\DateTime|false $heureDebut, \DateTime|false $heureFin, String $price, \DateTime|false $dateDebut, \DateTime|false $dateFin, ?Salle $salle, ?Film $film, EntityManagerInterface $entityManager): Void
+    public function getSeance(\DateTime|false $heureDebut, \DateTime|false $heureFin, String $price, \DateTime|false $dateDebut, \DateTime|false $dateFin, ?Salle $salle, ?Film $film, EntityManagerInterface $entityManager, ?Cinema $cinema): Void
     {
         if (!$heureDebut == null && !$heureFin == null && !$price == null) {
             $dateSeance = clone $dateDebut;
@@ -276,6 +272,7 @@ class AdministrationController extends AbstractController
                 $seance->setDate($dateSeance);
                 $seance->setPrice($price);
                 $seance->setSalle($salle);
+                $seance->addCinema($cinema);
                 $seance->setFilm($film);
                 $entityManager->persist($seance);
                 $entityManager->flush();
