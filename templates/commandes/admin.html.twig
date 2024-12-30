@@ -1,6 +1,6 @@
-{% extends 'baseFilms.html.twig' %}
+{% extends 'baseCommandes.html.twig' %}
 
-{% block title %}Films Administrateur Cinéphoria{% endblock %}
+{% block title %}Commandes Cinéphoria{% endblock %}
 
 {% block extra_content_bouton_accueil %}
     <li class="nav-item mx-4 my-4 text-white">
@@ -12,7 +12,7 @@
 
 {% block extra_content_bouton_films %}
     <li class="nav-item mx-4 my-4 text-white">
-        <a id="btn-films" class="nav-link d-flex align-items-center justify-content-center active" href="{{ path('app_films_admin') }}">
+        <a id="btn-films" class="nav-link d-flex align-items-center justify-content-center" href="{{ path('app_films_admin') }}">
             <i class="bi bi-camera-video fs-3 ms-2"></i><span class="mx-2">Films</span>
         </a>
     </li>
@@ -43,7 +43,7 @@
 {% endblock %}
 
 {% block extra_content_mon_espace %}
-    <li><a class="dropdown-item d-flex align-items-center justify-content-start" href="">
+    <li><a class="dropdown-item d-flex align-items-center justify-content-start" href="{{ path('app_commandes_admin') }}">
             <i class="bi bi-bag-check fs-4 ms-2 mb-1"></i><span class="mx-2">Commandes</span>
         </a>
     </li>
