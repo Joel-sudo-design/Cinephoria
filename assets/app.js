@@ -439,8 +439,10 @@ axios.defaults.withCredentials = true;
         function film() {
             // Vider le conteneur des films
             $('#film-container-public').empty();
+
             // Afficher le spinner de chargement
             $('#loading-spinner').removeClass('d-none');
+
             // Requête Axios pour récupérer les films par défaut
             axios.get('/films/loading')
             .then(response => {
@@ -515,7 +517,9 @@ axios.defaults.withCredentials = true;
                     displayAgeBadge(film)
                 });
             })
-                .catch(error => {console.error('Erreur lors du chargement des films :', error);})
+                .catch(error => {
+                    console.error('Erreur lors du chargement des films :', error);
+                })
                 .finally(() => {
                     // Cacher le spinner de chargement
                     $('#loading-spinner').addClass('d-none');
@@ -1530,23 +1534,8 @@ axios.defaults.withCredentials = true;
             // Vider le conteneur des films
             $('#card-container').empty();
 
-            // Barre de chargement
-            const loadingBar = $('#loading-bar');
-            const progressBar = loadingBar.find('.progress-bar');
-
-            // Réinitialiser la barre de chargement à 0% immédiatement
-            loadingBar.removeClass('d-none');
-            progressBar.css('width', '0%').attr('aria-valuenow', '0');
-
-            // Barre de progression pour l'effet de chargement
-            let progress = 0;
-            const updateInterval = 75; // Intervalle pour mise à jour (rapide pour effet fluide)
-            const interval = setInterval(() => {
-                if (progress < 90) {
-                    progress += 10; // Incrément de 5% pour une progression fluide
-                    progressBar.css('width', progress + '%').attr('aria-valuenow', progress);
-                }
-                }, updateInterval);
+            // Afficher le spinner de chargement
+            $('#loading-spinner').removeClass('d-none');
 
             // Récupérer les films
             axios.get('/administrateur/administration/film')
@@ -2205,7 +2194,6 @@ axios.defaults.withCredentials = true;
                             // Vérification des champs
                             let timeError = 0; // Variable pour gérer les erreurs
                             let auMoinsUneHeureDebut = false; // Indicateur pour au moins une heure de début renseignée
-
                             formats.forEach(format => {
                                 for (let i = 1; i <= nombreSeances; i++) {
                                     let heureDebut = $(`#timepicker-admin-debut-${format}-${i}-${film.id}`).val().trim();
@@ -2243,12 +2231,10 @@ axios.defaults.withCredentials = true;
 
                                 }
                             });
-
                             // Si aucune heure de début n'a été renseignée alors qu'un cinéma est sélectionné
                             if (!auMoinsUneHeureDebut && selectedCinema !== '' && timeError === 0) {
                                 timeError = 5;
                             }
-
                             // Gestion des erreurs
                             if (timeError > 0) {
                                 switch (timeError) {
@@ -2298,7 +2284,6 @@ axios.defaults.withCredentials = true;
                             $calendarIcon.removeClass('d-none');
                             $clearIcon.addClass('d-none');
                         }
-
                         // Fonction pour configurer un datepicker avec synchronisation
                         function configureDatepicker($datepicker, $calendarIcon, $clearIcon, onChangeCallback, linkedDatepicker = null) {
                             $datepicker.datepicker({
@@ -2360,7 +2345,6 @@ axios.defaults.withCredentials = true;
                                 $datepickerFin.prop('disabled', true);
                             }
                         }
-
                         // Exemple d'utilisation
                         const $datepickerDebut = $('#datepicker-admin-debut-' + film.id);
                         const $calendarIconDebut = $('#icon-calendar-debut-admin-' + film.id);
@@ -2369,7 +2353,6 @@ axios.defaults.withCredentials = true;
                         const $datepickerFin = $('#datepicker-admin-fin-' + film.id);
                         const $calendarIconFin = $('#icon-calendar-fin-admin-' + film.id);
                         const $clearIconFin = $('#close-icon-date-fin-admin-' + film.id);
-
                         // Configuration du datepicker début avec synchronisation vers fin
                         $datepickerDebut.val(film.date_debut);
                         configureDatepicker($datepickerDebut, $calendarIconDebut, $clearIconDebut, function () {
@@ -2384,7 +2367,6 @@ axios.defaults.withCredentials = true;
                             $linkedCalendarIcon: $calendarIconFin,
                             $linkedClearIcon: $clearIconFin
                         });
-
                         // Configuration du datepicker fin
                         $datepickerFin.val(film.date_fin);
                         configureDatepicker($datepickerFin, $calendarIconFin, $clearIconFin, function () {
@@ -2424,39 +2406,41 @@ axios.defaults.withCredentials = true;
 
                             return constants;
                         }
-                        // Fonction à appeler après chaque modification d'un timepicker
+                        // Fonction à appeler après chaque modification d'un timepicker pour limiter à 4 séances
                         function handleTimepickerChange() {
                             let filledPairsCount = 0;
 
-                            // Compter les paires (début et fin remplies)
-                            const timepicker_admin_debut = $('input[id^="timepicker-admin-debut"]')
+                            // Sélectionner les champs "début" et "fin" selon leur id
+                            const timepicker_admin_debut = $('input[id^="timepicker-admin-debut"]');
                             timepicker_admin_debut.each(function(index) {
                                 const $debutField = $(this);
-                                const $finField = $(`input[id^="timepicker-admin-fin"]:eq(${index})`);
+                                const $finField = $(`input[id^="timepicker-admin-fin-"]:eq(${index})`);
 
-                                if ($debutField.val().trim() && $finField.val().trim()) {
+                                // Vérifier si la paire début-fin est remplie
+                                if ($debutField.val().trim() && $finField.val().trim() || ($debutField.attr('placeholder').trim() !== 'Début' && $finField.attr('placeholder').trim() !== 'Fin')) {
                                     filledPairsCount++;
                                 }
                             });
 
-                            // Si 4 paires sont remplies, désactiver les autres
+                            // Si 4 paires sont remplies, désactiver les autres champs
                             if (filledPairsCount >= 4) {
+
+                                // Désactiver tous les champs "Début" qui ne sont pas remplis
                                 timepicker_admin_debut.each(function(index) {
                                     const $debutField = $(this);
-                                    const $finField = $(`input[id^="timepicker-admin-fin"]:eq(${index})`);
-                                    const $clockIcon = $(`#clock-icon-debut-${index}`);
-                                    const $clearIcon = $(`#clear-icon-debut-${index}`);
+                                    const $finField = $(`input[id^="timepicker-admin-fin-"]:eq(${index})`);
 
-                                    if (!$finField.val().trim()) {
-                                        // Supprimer la valeur de début si aucune fin n'est renseignée
-                                        $debutField.val('').attr('disabled', true);
-                                        $clockIcon.removeClass('d-none');
-                                        $clearIcon.addClass('d-none');
-                                    } else if (!$debutField.val().trim()) {
+                                    if (!$debutField.val().trim()) {
+                                        $debutField.attr('disabled', true);
+                                    } else if ($debutField.val().trim() && !$finField.val().trim()) {
+                                        $(`#close-icon-time-debut-admin-${$debutField.attr('id').split('-')[3]}-${$debutField.attr('id').split('-')[4]}-${film.id}`).addClass('d-none');
+                                        $(`#icon-clock-debut-admin-${$debutField.attr('id').split('-')[3]}-${$debutField.attr('id').split('-')[4]}-${film.id}`).removeClass('d-none');
+                                        $debutField.val('');
                                         $debutField.attr('disabled', true);
                                     }
                                 });
 
+                                // Désactiver tous les champs "fin" qui ne sont pas remplis
                                 $('input[id^="timepicker-admin-fin"]').each(function(index) {
                                     const $finField = $(this);
 
@@ -2465,12 +2449,18 @@ axios.defaults.withCredentials = true;
                                     }
                                 });
                             } else {
-                                // Réactiver les champs début et fin si moins de 4 paires sont remplies
+
+                                // Réactiver uniquement les champs "Début" si moins de 4 paires sont remplies
                                 timepicker_admin_debut.each(function() {
-                                    $(this).removeAttr('disabled');
+                                    const placeholder = $(this).attr('placeholder').trim();
+                                    // Réactiver le champ si le placeholder est "Début"
+                                    if (placeholder === 'Début') {
+                                        $(this).removeAttr('disabled');
+                                    }
                                 });
                             }
                         }
+
                         function initTimepickerWithValidation(timepickerIdDebut, clockIconIdDebut, clearIconIdDebut, timepickerIdFin, clockIconIdFin, clearIconIdFin, price, modalTimeFieldIdFin) {
                             const $timepickerDebut = $(timepickerIdDebut);
                             const $clockIconDebut = $(clockIconIdDebut);
@@ -2661,30 +2651,18 @@ axios.defaults.withCredentials = true;
                                     constant.modalTimeFieldIdFin // Ajouter l'ID du champ du modal pour "Fin"
                                 );
                             });
+                            handleTimepickerChange();
                         }
-
                         const filmId = film.id;
                         initAllTimepickers(filmId);
                     });
-
-                    // Finaliser la progression à 100 % lorsque les données sont chargées
-                    clearInterval(interval); // Stopper l'intervalle de mise à jour
-                    progress = 100;
-                    progressBar.css('width', '100%').attr('aria-valuenow', progress);
-
-                    // Masquer la barre de chargement après un délai de 500ms
-                    setTimeout(() => loadingBar.addClass('d-none'), 500);
                 })
                 .catch(error => {
                     console.error('Erreur lors du chargement des films :', error);
-
-                    // Finaliser à 100 % en cas d'erreur
-                    clearInterval(interval);
-                    progress = 100;
-                    progressBar.css('width', '100%').attr('aria-valuenow', progress);
-
-                    // Masquer la barre de chargement après un délai de 500ms
-                    setTimeout(() => loadingBar.addClass('d-none'), 500);
+                })
+                .finally(() => {
+                    // Cacher le spinner de chargement
+                    $('#loading-spinner').addClass('d-none');
                 });
         }
         // Création d'un film sur clic bouton plus
