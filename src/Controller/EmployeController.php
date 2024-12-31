@@ -26,12 +26,14 @@ class EmployeController extends AbstractController
         ]);
     }
     #[Route('/film', name: 'app_employe_film')]
-    public function Film(EntityManagerInterface $entityManager): Response
+    public function Film(EntityManagerInterface $entityManager, FilmRepository $filmRepository): Response
     {
         // Récupérer tous les films
-        $AllFilms = $entityManager->getRepository(Film::class)->findAll();
+        $AllFilms = $filmRepository->findAll();
         $AllFilmsArray = [];
+        $salles = $entityManager->getRepository(Salle::class)->findAll();
 
+        // Parcourir les films
         foreach ($AllFilms as $film) {
             // Convertir le film en tableau
             $filmArray = $film->toArray();
@@ -79,7 +81,7 @@ class EmployeController extends AbstractController
             // Ajouter les séances pour 1 jour
             $seancesArray = [];
             foreach ($seances as $Seance) {
-                $seancesArray[] = $Seance->toArray();
+                $seancesArray[] = $Seance->toArraySeance();
             }
             $filmArray['seances'] = $seancesArray ?: [];
 
@@ -103,24 +105,25 @@ class EmployeController extends AbstractController
 
                 // Ajouter le nombre de réservations
                 $reservationsByDate[$date] += $reservation['reservation'];
-                $filmArray['reservations'] = $reservationsByDate;
             }
-
-            // Ajouter les avis
-            $avis = $film->getAvis();
-            if (!empty($avis)) {
-                $avisArray = [];
-                foreach ($avis as $avi) {
-                    $avisArray[] = $avi->toArray();
-                }
-                $filmArray['avis'] = $avisArray;
-            }
+            $filmArray['reservations'] = $reservationsByDate;
 
             // Ajouter le film au tableau final
             $AllFilmsArray[] = $filmArray;
         }
 
-        return new JsonResponse($AllFilmsArray);
+        // Récupérer les salles
+        $salles = $entityManager->getRepository(Salle::class)->findAll();
+        $sallesArray = [];
+        foreach ($salles as $salle) {
+            $sallesArray[] = $salle->toArray();
+        }
+
+        // Retourner deux JSON distincts
+        return new JsonResponse([
+            'films' => $AllFilmsArray,
+            'salles' => $sallesArray
+        ]);
     }
     #[Route('/film/create', name: 'app_employe_creation_film')]
     public function CreateFilm(EntityManagerInterface $entityManager): Response
@@ -194,6 +197,7 @@ class EmployeController extends AbstractController
         if ($dateFin != '') {
             $film->setDateFin($dateFin);
         }
+
         if ($stringCinema !== '') {
             $cinema = $entityManager->getRepository(Cinema::class)->findOneBy(['name' => $stringCinema]);
             $film->addCinema($cinema);
@@ -216,9 +220,10 @@ class EmployeController extends AbstractController
                     $heureFin = \DateTime::createFromFormat('H:i', $stringHeureFin);
 
                     // Vérification des conditions avant de passer à la méthode getSeance
-                    if ($heureDebut && $heureFin && $dateDebut && $dateFin && is_numeric($price) && is_numeric($stringSalle)) {
+                    if ($heureDebut && $heureFin && $dateDebut && $dateFin && is_numeric($price) && is_numeric($stringSalle) && $stringCinema !== '') {
+                        $cinema = $entityManager->getRepository(Cinema::class)->findOneBy(['name' => $stringCinema]);
                         // Appeler la méthode getSeance avec les données appropriées
-                        $this->getSeance($heureDebut, $heureFin, $price, $dateDebut, $dateFin, ${"salle{$format}"}, $film, $entityManager);
+                        $this->getSeance($heureDebut, $heureFin, $price, $dateDebut, $dateFin, ${"salle{$format}"}, $film, $entityManager, $cinema);
                     }
                 }
             }
@@ -235,7 +240,7 @@ class EmployeController extends AbstractController
         $entityManager->flush();
         return new JsonResponse(['status' => 'film modified']);
     }
-    public function getSeance(\DateTime|false $heureDebut, \DateTime|false $heureFin, String $price, \DateTime|false $dateDebut, \DateTime|false $dateFin, ?Salle $salle, ?Film $film, EntityManagerInterface $entityManager): Void
+    public function getSeance(\DateTime|false $heureDebut, \DateTime|false $heureFin, String $price, \DateTime|false $dateDebut, \DateTime|false $dateFin, ?Salle $salle, ?Film $film, EntityManagerInterface $entityManager, ?Cinema $cinema): Void
     {
         if (!$heureDebut == null && !$heureFin == null && !$price == null) {
             $dateSeance = clone $dateDebut;
@@ -247,6 +252,7 @@ class EmployeController extends AbstractController
                 $seance->setDate($dateSeance);
                 $seance->setPrice($price);
                 $seance->setSalle($salle);
+                $seance->addCinema($cinema);
                 $seance->setFilm($film);
                 $entityManager->persist($seance);
                 $entityManager->flush();
@@ -274,11 +280,6 @@ class EmployeController extends AbstractController
         }
         $film->setDateDebut(null);
         $film->setDateFin(null);
-        $film->setName('Titre du film');
-        $film->setGenre(null);
-        $film->setAgeMinimum('Aucun');
-        $film->setLabel(false);
-        $film->setDescription('Description du film');
         $entityManager->persist($film);
         $entityManager->flush();
         return new JsonResponse(['status' => 'champs reset']);

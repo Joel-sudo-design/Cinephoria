@@ -54,7 +54,7 @@ class CommandesController extends AbstractController
             $seance['film']['image'] = $imageName
                 ? $this->getParameter('films_images_directory') . '/image_film/' . $imageName
                 : null;
-            $genreName = $reservation->getSeance()->getFilm()->getGenre()->getName();
+            $genreName = $reservation->getSeance()?->getFilm()?->getGenre()?->getName() ?? 'Aucun';
             $seance['film']['genre'] = $genreName;
             $Allavis = $reservation->getSeance()->getFilm()->getAvis()->toArray();
             $seance['seance']['avis'] = [];
