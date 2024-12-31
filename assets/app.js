@@ -11,6 +11,7 @@ import 'bootstrap-datepicker/dist/locales/bootstrap-datepicker.fr.min.js';
 // Active Flatpickr
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import {validate} from "@babel/core/lib/config/validation/options";
 
 // Active jQuery
 const $ = require('jquery');
@@ -459,7 +460,7 @@ axios.defaults.withCredentials = true;
                     const filmHTML = generateFilmCardHTML(film);
                     $('#film-container-public').append(filmHTML);
 
-                    // Ajouter les étoiles et l'avis
+                    // Ajouter les étoiles
                     let stars = '';
                     for (let i = 1; i <= 5; i++) {
                         if (i <= Math.floor(film.notation)) {
@@ -3674,13 +3675,14 @@ axios.defaults.withCredentials = true;
                         .catch(error => {console.error(error);});
                 });
         // Page Validation des avis
-        function avis() {
-                // Vider le conteneur des avis
-                    $('.card-container-avis').empty();
-                // Récupérer les avis
+        function validateAvis() {
+            // Vider le conteneur des avis
+            $('.card-container-avis').empty();
+
+            // Récupérer les avis
                     axios.get('/employe/administration/film')
                         .then(response => {
-                            const film = response.data;
+                            const film = response.data.films;
                             $.each(film, function(index, film) {
                                 $.each(film.avis, function(index, avis) {
                                     $('#card-container-avis-' + film.id).append(
@@ -3690,7 +3692,8 @@ axios.defaults.withCredentials = true;
                                                     avis de ${avis.user}
                                                 </button>
                                                 <div id="collapseAvis-${avis.id}" class="collapse">
-                                                    <div class="p-2" style="font-size: 0.8rem; color: #6A73AB">${avis.description}</div>
+                                                    <div class="p-2 text-center" style="font-size: 0.8rem; color: #6A73AB">${avis.description}</div>
+                                                    <p id="stars-rating-avis-${film.id}" class="card-text m-0 stars-rating-avis text-center"></p>
                                                 </div>
                                             </div>
                                             <div class="col-3 d-flex justify-content-center align-items-center">
@@ -3714,10 +3717,26 @@ axios.defaults.withCredentials = true;
                                         }
                                     });
 
+                                    // Ajouter les étoiles
+                                    let stars = '';
+                                    for (let i = 1; i <= 5; i++) {
+                                        if (i <= Math.floor(film.notation)) {
+                                            // Étoile pleine
+                                            stars += `<span class="star-avis selected" data-value="${i}">&#9733;</span>`;
+                                        } else if (i === Math.ceil(film.notation) && film.notation % 1 !== 0) {
+                                            // Demi-étoile
+                                            stars += `<span class="star-avis half" data-value="${i}">&#9733;</span>`;
+                                        } else {
+                                            // Étoile vide
+                                            stars += `<span class="star-avis" data-value="${i}">&#9733;</span>`;
+                                        }
+                                    }
+                                    $(`#stars-rating-avis-${film.id}`).empty().append(stars);
+
                                     //Validation avis
                                         $('#btn-validate-avis-' + avis.id).click(function () {
                                         axios.post('/employe/administration/avis/validate', JSON.stringify({id: avis.id}))
-                                            .then(response => {avis();console.log(response.data);})
+                                            .then(response => {validateAvis();console.log(response.data);})
                                             .catch(error => {console.error(error);})
                                     });
                                         if (avis.isValidate === true) {
@@ -3727,7 +3746,7 @@ axios.defaults.withCredentials = true;
                                     //Suppression avis
                                         $('#btn-delete-avis-' + avis.id).click(function () {
                                         axios.post('/employe/administration/avis/delete', JSON.stringify({id: avis.id}))
-                                            .then(response => {avis();console.log(response.data);})
+                                            .then(response => {validateAvis();console.log(response.data);})
                                             .catch(error => {console.error(error);})
                                         });
                                 });
@@ -3777,15 +3796,15 @@ axios.defaults.withCredentials = true;
             '/reservation': [reservation],
             '/mon_espace/connexion': [initializeFormFeatures],
             '/mon_espace/inscription': [initializeFormFeatures],
-            '/utilisateur/mon_espace/commandes': [handleFilmRating],
             '/utilisateur/accueil': [resizeCarrousel],
             '/utilisateur/films': [film, menuFilms],
             '/utilisateur/reservation': [reservation],
-            '/employe/films': [film, menuFilms],
-            '/employe/administration': [filmEmploye],
-            '/employe/administration/avis': [avis],
-            '/employe/reservation': [reservation],
+            '/utilisateur/mon_espace/commandes': [handleFilmRating],
             '/employe/accueil': [resizeCarrousel],
+            '/employe/films': [film, menuFilms],
+            '/employe/reservation': [reservation],
+            '/employe/administration': [filmEmploye],
+            '/employe/administration/avis': [validateAvis],
             '/employe/mon_espace/commandes': [handleFilmRating],
             '/administrateur/accueil': [resizeCarrousel],
             '/administrateur/films': [film, menuFilms],

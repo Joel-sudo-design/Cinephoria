@@ -31,12 +31,11 @@ class EmployeController extends AbstractController
         // Récupérer tous les films
         $AllFilms = $filmRepository->findAll();
         $AllFilmsArray = [];
-        $salles = $entityManager->getRepository(Salle::class)->findAll();
 
         // Parcourir les films
         foreach ($AllFilms as $film) {
             // Convertir le film en tableau
-            $filmArray = $film->toArray();
+            $filmArray = $film->toArrayEmploye();
 
             // Ajouter l'image si disponible
             if ($film->getImageName() !== null) {
@@ -107,6 +106,16 @@ class EmployeController extends AbstractController
                 $reservationsByDate[$date] += $reservation['reservation'];
             }
             $filmArray['reservations'] = $reservationsByDate;
+
+            // Ajouter les avis
+            $avis = $film->getAvis();
+            if (!empty($avis)) {
+                $avisArray = [];
+                foreach ($avis as $avi) {
+                    $avisArray[] = $avi->toArray();
+                }
+                $filmArray['avis'] = $avisArray;
+            }
 
             // Ajouter le film au tableau final
             $AllFilmsArray[] = $filmArray;
