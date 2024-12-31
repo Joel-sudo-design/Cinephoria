@@ -131,8 +131,8 @@ class CommandesController extends AbstractController
             $reservationArray[] = $seance;
         }
 
-        return $this->render('commandes/admin.html.twig', [
-            'controller_name' => 'CommandesAdminController',
+        return $this->render('commandes/employe.html.twig', [
+            'controller_name' => 'CommandesEmployeController',
             'reservations' => $reservationArray,
         ]);
 
@@ -193,8 +193,8 @@ class CommandesController extends AbstractController
             $reservationArray[] = $seance;
         }
 
-        return $this->render('commandes/employe.html.twig', [
-            'controller_name' => 'CommandesEmployeController',
+        return $this->render('commandes/admin.html.twig', [
+            'controller_name' => 'CommandesAdminController',
             'reservations' => $reservationArray,
         ]);
 
