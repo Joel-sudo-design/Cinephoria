@@ -1,10 +1,10 @@
-{% extends 'baseContact.html.twig' %}
+{% extends 'baseCommandes.html.twig' %}
 
-{% block title %}Contact admin{% endblock %}
+{% block title %}Commandes employe{% endblock %}
 
 {% block extra_content_bouton_accueil %}
     <li class="nav-item mx-4 my-4 text-white">
-        <a class="nav-link d-flex align-items-center justify-content-center" aria-current="page" href="{{ path('app_accueil_admin') }}">
+        <a class="nav-link d-flex align-items-center justify-content-center" aria-current="page" href="{{ path('app_accueil_employe') }}">
             <i class="bi bi-house fs-3 ms-2"></i><span class="mx-2">Accueil</span>
         </a>
     </li>
@@ -12,7 +12,7 @@
 
 {% block extra_content_bouton_films %}
     <li class="nav-item mx-4 my-4 text-white">
-        <a id="btn-films" class="nav-link d-flex align-items-center justify-content-center" href="{{ path('app_films_admin') }}">
+        <a id="btn-films" class="nav-link d-flex align-items-center justify-content-center" href="{{ path('app_films_employe') }}">
             <i class="bi bi-camera-video fs-3 ms-2"></i><span class="mx-2">Films</span>
         </a>
     </li>
@@ -20,7 +20,7 @@
 
 {% block extra_content_bouton_reservation %}
     <li class="nav-item mx-4 my-4 text-white">
-        <a class="nav-link d-flex align-items-center justify-content-center" href="{{ path('app_reservation') }}">
+        <a class="nav-link d-flex align-items-center justify-content-center" href="{{ path('app_reservation_employe') }}">
             <i class="bi bi-ticket-perforated fs-3 ms-2"></i><span class="mx-2">Réservation</span>
         </a>
     </li>
@@ -28,15 +28,15 @@
 
 {% block extra_content_bouton_admin_employe %}
     <li class="nav-item mx-4 my-4 text-white">
-        <a class="nav-link d-flex align-items-center justify-content-center" href="{{ path('app_administration') }}">
-            <i class="bi bi-person-lines-fill fs-3 ms-2"></i><span class="mx-2">Administration</span>
+        <a class="nav-link d-flex align-items-center justify-content-center" href="{{ path('app_employe') }}">
+            <i class="bi bi-person-lines-fill fs-3 ms-2"></i><span class="mx-2">Intranet</span>
         </a>
     </li>
 {% endblock %}
 
 {% block extra_content_bouton_contact %}
     <li class="nav-item mx-4 my-4 text-white">
-        <a class="nav-link d-flex align-items-center justify-content-center active" href="{{ path('app_contact_admin') }}">
+        <a class="nav-link d-flex align-items-center justify-content-center" href="{{ path('app_contact_employe') }}">
             <i class="bi bi-envelope fs-3 ms-2"></i><span class="mx-2">Contact</span>
         </a>
     </li>

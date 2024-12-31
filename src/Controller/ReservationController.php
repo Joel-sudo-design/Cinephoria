@@ -142,6 +142,11 @@ class ReservationController extends AbstractController
         ]);
     }
     #[Route('/utilisateur/reservation/paiement', name: 'app_reservation_paiement_user')]
+    #[Route('/administrateur/reservation/paiement', name: 'app_reservation_paiement_admin')]
+    public function paidEmploye(): Response
+    {
+        return $this->render('reservation/paiementEmploye.html.twig');
+    }
     public function paid(): Response
     {
         return $this->render('reservation/paiement.html.twig');
@@ -308,6 +313,9 @@ class ReservationController extends AbstractController
             if ($pendingReservation && $this->isGranted('ROLE_ADMIN')) {
                 // Si l'utilisateur a le rôle ADMIN, on le redirige vers app_reservation_paiement_admin
                 return $this->redirectToRoute('app_reservation_paiement_admin');
+            } elseif ($pendingReservation && $this->isGranted('ROLE_EMPLOYE')) {
+                // Si l'utilisateur a le rôle EMPLOYE, on le redirige vers app_reservation_paiement_employe
+                return $this->redirectToRoute('app_reservation_paiement_employe');
             } elseif ($pendingReservation && $this->isGranted('ROLE_USER')) {
                 // Si une réservation est en attente, on redirige vers app_reservation_paiement_user
                 return $this->redirectToRoute('app_reservation_paiement_user');
