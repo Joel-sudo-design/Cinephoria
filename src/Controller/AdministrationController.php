@@ -137,13 +137,18 @@ class AdministrationController extends AbstractController
             $AllFilmsArray[] = $filmArray;
         }
 
-        // Ajouter les salles
+        // Récupérer les salles
+        $salles = $entityManager->getRepository(Salle::class)->findAll();
+        $sallesArray = [];
         foreach ($salles as $salle) {
-            $salleArray = $salle->toArray();
-            $AllFilmsArray['salles'][] = $salleArray;
+            $sallesArray[] = $salle->toArray();
         }
 
-        return new JsonResponse($AllFilmsArray);
+        // Retourner deux JSON distincts
+        return new JsonResponse([
+            'films' => $AllFilmsArray,
+            'salles' => $sallesArray
+        ]);
     }
     #[Route('/film/create', name: 'app_administration_creation_film')]
     public function CreateFilm(EntityManagerInterface $entityManager): Response

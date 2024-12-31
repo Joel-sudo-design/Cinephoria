@@ -1540,9 +1540,8 @@ axios.defaults.withCredentials = true;
             // Récupérer les films
             axios.get('/administrateur/administration/film')
                 .then(response => {
-                    const Film = response.data;
+                    const Film = response.data.films;
                     const salles = response.data.salles;
-                    delete Film.salles;
                     $.each(Film, function(index, film) {
                         // Formatter le nom des cinémas
                         let formattedCinemas = '';
@@ -2699,7 +2698,7 @@ axios.defaults.withCredentials = true;
             $reservationsContainer.empty();
             axios.get('/administrateur/administration/film')
                 .then(response => {
-                    const films = response.data;
+                    const films = response.data.films;
                     const datesWithReservations = {};
 
                     // Initialisation du datepicker
@@ -4104,6 +4103,7 @@ axios.defaults.withCredentials = true;
             '/administrateur/administration': [filmAdmin],
             '/administrateur/administration/account_employe': [employe],
             '/administrateur/administration/reservations': [employe],
+            '/administrateur/mon_espace/commandes': [handleFilmRating],
         };
         // Récupérer le chemin actuel
         const currentPath = window.location.pathname;

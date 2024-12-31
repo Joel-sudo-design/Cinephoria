@@ -146,6 +146,11 @@ class ReservationController extends AbstractController
     {
         return $this->render('reservation/paiement.html.twig');
     }
+    #[Route('/administrateur/reservation/paiement', name: 'app_reservation_paiement_admin')]
+    public function paidAdmin(): Response
+    {
+        return $this->render('reservation/paiementAdmin.html.twig');
+    }
     #[Route('/reservation/film', name: 'app_reservation_film')]
     public function loadFilm(FilmRepository $filmRepository, Request $request, CinemaRepository $cinemaRepository): Response
     {
@@ -300,10 +305,18 @@ class ReservationController extends AbstractController
             $entityManager->persist($reservation);
             $entityManager->flush();
 
-            if($pendingReservation){
+            if ($pendingReservation && $this->isGranted('ROLE_ADMIN')) {
+                // Si l'utilisateur a le rôle ADMIN, on le redirige vers app_reservation_paiement_admin
+                return $this->redirectToRoute('app_reservation_paiement_admin');
+            } elseif ($pendingReservation && $this->isGranted('ROLE_USER')) {
+                // Si une réservation est en attente, on redirige vers app_reservation_paiement_user
                 return $this->redirectToRoute('app_reservation_paiement_user');
-            } else {
+            } elseif ($this->isGranted('ROLE_USER')) {
+                // Sinon, on renvoie une réponse JSON avec l'URL de redirection vers app_reservation_paiement_user
                 return $this->json(['redirectTo' => $this->generateUrl('app_reservation_paiement_user')]);
+            } elseif ($this->isGranted('ROLE_ADMIN')) {
+                // Sinon, on renvoie une réponse JSON avec l'URL de redirection vers app_reservation_paiement_admin
+                return $this->json(['redirectTo' => $this->generateUrl('app_reservation_paiement_admin')]);
             }
         }
 
