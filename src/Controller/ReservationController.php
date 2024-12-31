@@ -142,14 +142,14 @@ class ReservationController extends AbstractController
         ]);
     }
     #[Route('/utilisateur/reservation/paiement', name: 'app_reservation_paiement_user')]
-    #[Route('/administrateur/reservation/paiement', name: 'app_reservation_paiement_admin')]
-    public function paidEmploye(): Response
-    {
-        return $this->render('reservation/paiementEmploye.html.twig');
-    }
     public function paid(): Response
     {
         return $this->render('reservation/paiement.html.twig');
+    }
+    #[Route('/employe/reservation/paiement', name: 'app_reservation_paiement_employe')]
+    public function paidEmploye(): Response
+    {
+        return $this->render('reservation/paiementEmploye.html.twig');
     }
     #[Route('/administrateur/reservation/paiement', name: 'app_reservation_paiement_admin')]
     public function paidAdmin(): Response
@@ -322,6 +322,9 @@ class ReservationController extends AbstractController
             } elseif ($this->isGranted('ROLE_USER')) {
                 // Sinon, on renvoie une réponse JSON avec l'URL de redirection vers app_reservation_paiement_user
                 return $this->json(['redirectTo' => $this->generateUrl('app_reservation_paiement_user')]);
+            } elseif ($this->isGranted('ROLE_EMPLOYE')) {
+                // Sinon, on renvoie une réponse JSON avec l'URL de redirection vers app_reservation_paiement_employe
+                return $this->json(['redirectTo' => $this->generateUrl('app_reservation_paiement_employe')]);
             } elseif ($this->isGranted('ROLE_ADMIN')) {
                 // Sinon, on renvoie une réponse JSON avec l'URL de redirection vers app_reservation_paiement_admin
                 return $this->json(['redirectTo' => $this->generateUrl('app_reservation_paiement_admin')]);

@@ -2155,7 +2155,7 @@ axios.defaults.withCredentials = true;
                             filmAdmin();
                         });
 
-                        //Valider les informations du film
+                        // Valider les informations du film
                         const formats = ["3DX", "4DX", "IMAX", "Dolby"];
                         const nombreSeances = 4;
                         $('#btn-validate-film-'+film.id).click(function () {
@@ -2958,7 +2958,7 @@ axios.defaults.withCredentials = true;
                         // Suppression film
                         $('#x-square-'+film.id).click(function () {
                             axios.post('/employe/administration/film/delete', JSON.stringify({id: film.id}))
-                                .then(response => {filmAdmin();console.log(response.data);})
+                                .then(response => {filmEmploye();console.log(response.data);})
                                 .catch(error => {console.error(error);})
                         });
 
@@ -3135,10 +3135,10 @@ axios.defaults.withCredentials = true;
 
                         // Annuler modif si le modal lorsque celui-ci est fermé
                         modal.on('hidden.bs.modal', function () {
-                            filmAdmin();
+                            filmEmploye();
                         });
 
-                        //Valider les informations du film
+                        // Valider les informations du film
                         const formats = ["3DX", "4DX", "IMAX", "Dolby"];
                         const nombreSeances = 4;
                         $('#btn-validate-film-'+film.id).click(function () {
@@ -3786,6 +3786,7 @@ axios.defaults.withCredentials = true;
             '/employe/administration/avis': [avis],
             '/employe/reservation': [reservation],
             '/employe/accueil': [resizeCarrousel],
+            '/employe/mon_espace/commandes': [handleFilmRating],
             '/administrateur/accueil': [resizeCarrousel],
             '/administrateur/films': [film, menuFilms],
             '/administrateur/reservation': [reservation],
