@@ -122,7 +122,7 @@
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#notationModal-{{ reservation.reservation_id }}">
                                                                     Noter le film <i class="ms-2 bi bi-pencil"></i>
-                                                                    <span class="tooltip-message">Vous pouvez noter la séance à partir du lendemain de la projection</span>
+                                                                    {% if seanceDate < currentDate %}<span class="tooltip-message">Vous pouvez noter la séance à partir du lendemain de la projection</span>{% endif %}
                                                             </button>
                                                         </div>
                                                     {% endif %}
