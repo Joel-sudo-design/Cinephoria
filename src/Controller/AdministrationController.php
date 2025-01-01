@@ -331,8 +331,7 @@ class AdministrationController extends AbstractController
         if ($employeId) {
             $employe = $userRepository->find($employeId);
             $email = $employe->getEmail();
-            $this->addFlash('successReset', 'Un email a été envoyé à l\'employé');
-            return $this->processSendingPasswordResetEmail($email, $mailer );
+            return $this->processSendingPasswordResetEmail($email, $mailer);
         }
         return $this->render('administration/accountEmploye.html.twig', [
             'employeForm' => $form,
@@ -413,7 +412,7 @@ class AdministrationController extends AbstractController
     }
     private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer): RedirectResponse
     {
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $emailFormData,]);
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $emailFormData]);
 
         // Do not reveal whether a user account was found or not.
         if (!$user) {
@@ -432,15 +431,10 @@ class AdministrationController extends AbstractController
         try {
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
         } catch (ResetPasswordExceptionInterface $e) {
-            // If you want to tell the user why a reset email was not sent, uncomment
-            // the lines below and change the redirect to 'app_forgot_password_request'.
-            // Caution: This may reveal if a user is registered or not.
-            //
-            // $this->addFlash('reset_password_error', sprintf(
-            //     '%s - %s',
-            //     ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE,
-            //     $e->getReason()
-            // ));
+            $this->addFlash('reset_password_error', sprintf(
+                'Une erreur est survenue lors de la génération du token de réinitialisation - %s',
+                $e->getReason()
+            ));
 
             return $this->redirectToRoute('app_administration_account_employe');
         }
@@ -457,6 +451,8 @@ class AdministrationController extends AbstractController
 
         // Store the token object in session for retrieval in check-email route.
         $this->setTokenObjectInSession($resetToken);
+
+        $this->addFlash('successReset', 'Un email a été envoyé à l\'employé');
 
         return $this->redirectToRoute('app_administration_account_employe');
     }

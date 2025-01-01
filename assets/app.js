@@ -3796,6 +3796,7 @@ axios.defaults.withCredentials = true;
             '/reservation': [reservation],
             '/mon_espace/connexion': [initializeFormFeatures],
             '/mon_espace/inscription': [initializeFormFeatures],
+            '/mon_espace/reset-password/reset': [initializeFormFeatures],
             '/utilisateur/accueil': [resizeCarrousel],
             '/utilisateur/films': [film, menuFilms],
             '/utilisateur/reservation': [reservation],
