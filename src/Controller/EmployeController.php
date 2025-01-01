@@ -75,7 +75,7 @@ class EmployeController extends AbstractController
             // Récupérer les séances sur 1 jour
             $date_debut = $film->getDateDebut();
             $film_id = $film->getId();
-            $seances = $entityManager->getRepository(Seance::class)->findByFilmId($film_id, $date_debut);
+            $seances = $entityManager->getRepository(Seance::class)->findByFilmIdByDate($film_id, $date_debut);
 
             // Ajouter les séances pour 1 jour
             $seancesArray = [];

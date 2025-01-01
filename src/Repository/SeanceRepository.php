@@ -19,11 +19,13 @@ class SeanceRepository extends ServiceEntityRepository
         /**
          * @return Seance[] Returns an array of Seance objects
          */
-        public function findByFilmId($value, $date_debut): array
+        public function findByFilmIdByDate($film_id, $date_debut): array
         {
             return $this->createQueryBuilder('s')
                 ->andWhere('s.date = :val')
                 ->setParameter('val', $date_debut)
+                ->andWhere('s.film = :film')
+                ->setParameter('film', $film_id)
                 ->orderBy('s.salle', 'ASC')
                 ->getQuery()
                 ->getResult()

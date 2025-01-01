@@ -101,7 +101,7 @@ class AdministrationController extends AbstractController
             // Récupérer les séances sur 1 jour
             $date_debut = $film->getDateDebut();
             $film_id = $film->getId();
-            $seances = $entityManager->getRepository(Seance::class)->findByFilmId($film_id, $date_debut);
+            $seances = $entityManager->getRepository(Seance::class)->findByFilmIdByDate($film_id, $date_debut);
 
             // Ajouter les séances pour 1 jour
             $seancesArray = [];
@@ -109,6 +109,14 @@ class AdministrationController extends AbstractController
                 $seancesArray[] = $Seance->toArraySeance();
             }
             $filmArray['seances'] = $seancesArray ?: [];
+
+            // Supprimer la date des séances
+            foreach ($filmArray['seances'] as &$seance) {
+                if (isset($seance['date'])) {
+                    unset($seance['date']);
+                }
+            }
+
 
             // Récupérer les séances totales
             $seancesTotal = $film->getSeance();
