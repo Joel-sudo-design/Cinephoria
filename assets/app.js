@@ -3679,6 +3679,9 @@ axios.defaults.withCredentials = true;
             // Vider le conteneur des avis
             $('.card-container-avis').empty();
 
+            // Afficher le spinner de chargement
+            $('#loading-spinner').removeClass('d-none');
+
             // Récupérer les avis
                     axios.get('/employe/administration/film')
                         .then(response => {
@@ -3754,6 +3757,9 @@ axios.defaults.withCredentials = true;
                         })
                         .catch(error => {
                             console.error('Erreur lors du chargement des Avis :', error);
+                        })
+                        .finally(() => {// Cacher le spinner de chargement
+                            $('#loading-spinner').addClass('d-none')
                         });
                 }
 
