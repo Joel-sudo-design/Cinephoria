@@ -52,34 +52,41 @@
             </div>
             <div class="row py-5">
                 <div class="col">
+                    {% if films is empty %}
+                    <div class="text-center fs-5" style="color: #6A73AB">
+                        Aucun film sorti ce dernier mercredi
+                    </div>
+                    {% else %}
                     <div id="carouselExample" class="carousel slide mx-auto" style="width: 75%">
-                        <div class="text-start fs-4 mb-3" style="color: #6A73AB; font-family: Courgette, sans-serif">Les sorties du mercredi</div>
-                        <div class="carousel-inner">
-                            {% for film in films %}
-                                {% if loop.index % 7 == 1 %}
-                                    <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                    <div class="row justify-content-center">
-                                {% endif %}
-
-                                <div class="image-carousel col-sm-5 col-md-4 col-lg-3 col-xl-3 col-xxl">
-                                    <img src="{{ asset(film.image) }}" alt="{{ film.name }}">
-                                </div>
-
-                                {% if loop.index % 7 == 0 or loop.last %}
-                                    </div>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
+                        <div class="text-start fs-4 mb-3" style="color: #6A73AB; font-family: Courgette, sans-serif">
+                            Les sorties du mercredi
                         </div>
+                            <div class="carousel-inner">
+                                {% for film in films %}
+                                    {% if loop.index % 7 == 1 %}
+                                        <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                        <div class="row justify-content-center">
+                                    {% endif %}
 
-                        <button class="carousel-control-prev custom-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                            <span class="custom-icon-prev" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next custom-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                            <span class="custom-icon-next" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
+                                    <div class="image-carousel col-sm-5 col-md-4 col-lg-3 col-xl-3 col-xxl">
+                                        <img src="{{ asset(film.image) }}" alt="{{ film.name }}">
+                                    </div>
+
+                                    {% if loop.index % 7 == 0 or loop.last %}
+                                        </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <button class="carousel-control-prev custom-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                                <span class="custom-icon-prev" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next custom-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                                <span class="custom-icon-next" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        {% endif %}
                     </div>
                 </div>
             </div>
