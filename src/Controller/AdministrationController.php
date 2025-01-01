@@ -110,14 +110,6 @@ class AdministrationController extends AbstractController
             }
             $filmArray['seances'] = $seancesArray ?: [];
 
-            // Supprimer la date des séances
-            foreach ($filmArray['seances'] as &$seance) {
-                if (isset($seance['date'])) {
-                    unset($seance['date']);
-                }
-            }
-
-
             // Récupérer les séances totales
             $seancesTotal = $film->getSeance();
             $reservations = [];
