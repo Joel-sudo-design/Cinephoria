@@ -164,7 +164,7 @@
     &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/Cinephoria/templates/reservation&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/Cinephoria&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -377,6 +377,9 @@
       <workItem from="1735727947236" duration="5104000" />
       <workItem from="1735739685635" duration="2082000" />
       <workItem from="1735752665011" duration="1970000" />
+      <workItem from="1735831750949" duration="31000" />
+      <workItem from="1735841314411" duration="1000" />
+      <workItem from="1735920586443" duration="612000" />
     </task>
     <task id="LOCAL-00156" summary="Modif">
       <option name="closed" value="true" />
