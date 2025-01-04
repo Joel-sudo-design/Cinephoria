@@ -18,7 +18,7 @@ security:
             pattern: ^/films
             security: false
 
-        # Le firewall principal pour les autres routes
+        # Firewall pour l'authentification par formulaire pour les routes standards
         main:
             lazy: true
             provider: app_user_provider
@@ -34,11 +34,16 @@ security:
                 target: app_accueil
             entry_point: form_login
 
+        api:
+            pattern: ^/api
+            stateless: true
+            jwt: ~
 
     access_control:
         - { path: ^/administrateur, roles: ROLE_ADMIN }
         - { path: ^/employe, roles: ROLE_EMPLOYE }
-        - { path: ^/utilisateur, roles: [ROLE_USER, ROLE_ADMIN, ROLE_EMPLOYE]  }
+        - { path: ^/utilisateur, roles: [ROLE_USER, ROLE_ADMIN, ROLE_EMPLOYE] }
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
     security:

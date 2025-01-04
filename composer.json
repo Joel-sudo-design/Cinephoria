@@ -15,6 +15,7 @@
         "doctrine/orm": "^3.3",
         "endroid/qr-code": "^6.0",
         "endroid/qr-code-bundle": "^6.0",
+        "lexik/jwt-authentication-bundle": "^3.1",
         "symfony/console": "7.1.*",
         "symfony/dotenv": "7.1.*",
         "symfony/flex": "^2",
