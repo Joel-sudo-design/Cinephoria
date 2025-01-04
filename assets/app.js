@@ -1056,7 +1056,7 @@ axios.defaults.withCredentials = true;
                                                 }
 
                                                 // Mettre à jour l'affichage du prix
-                                                $('#prix-reservations').text(`Prix : ${prixUnitaire.toFixed(2)} €`);
+                                                $('#prix-reservations').text(`Prix : ${prixUnitaire.toFixed(2) * nombrePlaces} €`);
                                             }
                                             // Afficher les sièges réservés pour cette séance
                                             $('#selection-sieges').removeClass('disabled');
@@ -3680,7 +3680,7 @@ axios.defaults.withCredentials = true;
             $('.card-container-avis').empty();
 
             // Afficher le spinner de chargement
-            $('#loading-spinner').removeClass('d-none');
+            $('[id^="loading-spinner"]').removeClass('d-none');
 
             // Récupérer les avis
                     axios.get('/employe/administration/film')
@@ -3759,7 +3759,7 @@ axios.defaults.withCredentials = true;
                             console.error('Erreur lors du chargement des Avis :', error);
                         })
                         .finally(() => {// Cacher le spinner de chargement
-                            $('#loading-spinner').addClass('d-none')
+                            $('[id^="loading-spinner"]').addClass('d-none')
                         });
                 }
 
