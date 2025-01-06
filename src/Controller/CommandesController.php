@@ -6,10 +6,12 @@ use App\Entity\Avis;
 use App\Entity\Reservation;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class CommandesController extends AbstractController
 {
@@ -238,5 +240,41 @@ class CommandesController extends AbstractController
         $entityManager->flush();
 
         return new JsonResponse(['success' => true, 'avis' => $comment, 'notation' => $rating], Response::HTTP_OK);
+    }
+    #[Route(path: '/commandes', name: 'api_commandes')]
+    public function apiCommandes(TokenStorageInterface $tokenStorage): JsonResponse
+    {
+        // Récupérer l'utilisateur authentifié via Symfony Security
+        $user = $tokenStorage->getToken()->getUser();
+
+        if (!$user) {
+            throw new AccessDeniedException('Utilisateur non authentifié.');
+        }
+
+        // Récupérer les réservations de l'utilisateur
+        $reservations = $user->getReservations();
+        $reservationArray = [];
+
+        foreach ($reservations as $reservation) {
+            $cinemaId = $reservation->getCinema()->getId();
+            $cinema = $reservation->toArray();
+            $seanceArray = $reservation->getSeance()->toArray($cinemaId);
+            $filmArray = $reservation->getSeance()->getFilm()->toArray();
+            $seance['film'] = $filmArray['name'];
+            $imageName = $reservation->getSeance()->getFilm()->getImageName();
+            $seance['image'] = $imageName
+                ? $this->getParameter('films_images_directory') . '/image_film/' . $imageName
+                : null;
+            $seance['date'] = $seanceArray['date'];
+            $seance['heure_debut'] = $seanceArray['heure_debut_seance'];
+            $seance['heure_fin'] = $seanceArray['heure_fin_seance'];
+            $seance['cinema'] = $cinema['cinema'];
+            $seance['salle'] = $seanceArray['salle'];
+            $seance['sieges_reserves'] = $reservation->getSiege();
+            $seance['qrCode'] = $reservation->getQrCode();
+            $reservationArray[] = $seance;
+        }
+
+        return new JsonResponse($reservationArray);
     }
 }
