@@ -81,6 +81,7 @@ http://localhost
 ## Auteur
 
 Joël DERMONT  
-Développeur principal - Profil GitHub
+Développeur principal - [Profil GitHub de Joël DERMONT](https://github.com/Joel-sudo-design)
+
 
 
