@@ -1,6 +1,6 @@
 # Cinéphoria
 
-Une application Symfony pour présenter les films du cinéma "Le Cinéporia", permettre une gestion de ces films, des séances et pourvoir réserver en ligne. Ce projet utilise Symfony pour le backend, MySQL pour la base de données et XAMPP pour le déploiement en local.
+Voici une application Symfony pour présenter les films du cinéma "Le Cinéporia". En tant qu'administrateur on peut ajouter des nouveaux films, créer des séances, créer des comptes pour les employés et afficher le nombre de réservations par films sur 1 semaine. En tant qu'employé il est possible d'ajouter des nouveaux films, créer des séances et valider les avis. Pour les visiteurs il est possible de créer un compte pour réserver en ligne avec accès aux commandes.  Ce projet utilise Symfony pour le backend, MySQL pour la base de données et XAMPP pour le déploiement en local.
 
 ---
 
