@@ -36,7 +36,7 @@ Avant de commencer, assurez-vous d'avoir installé les éléments suivants sur v
 
 Exécutez les commandes suivantes pour installer et configurer le projet :
 
-```bash
+```
 
 # Paramétrage serveur web
 Placer les fichiers index.php et .htacess dans C:\xampp\htdocs
