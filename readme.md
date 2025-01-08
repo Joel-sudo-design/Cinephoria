@@ -38,7 +38,8 @@ Exécutez les commandes suivantes pour installer et configurer le projet :
 
 ```bash
 
-# Placer les fichiers index.php et .htacess dans C:\xampp\htdocs
+# Paramétrage serveur web
+Placer les fichiers index.php et .htacess dans C:\xampp\htdocs
 
 # Clonez le dépôt Git dans C:\xampp\htdocs\Cinephoria
 git clone https://github.com/Joel-sudo-design/Cinephoria.git
@@ -64,6 +65,8 @@ php bin/console doctrine:migrations:migrate
 
 # Compilez les ressources front-end (CSS, JavaScript, images)
 yarn build
+
+```markdown
 
 ---
 
