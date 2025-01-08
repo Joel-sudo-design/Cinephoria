@@ -70,6 +70,5 @@ Dans votre navigateur, ouvrez l'URL suivante pour accéder à l'application :
 http://localhost
 
 ## Auteur
-
 Joël DERMONT
 
