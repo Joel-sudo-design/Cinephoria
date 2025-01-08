@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modif">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Seance.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Seance.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -425,6 +426,13 @@
       <workItem from="1736161089572" duration="1108000" />
       <workItem from="1736162248964" duration="114000" />
       <workItem from="1736170055690" duration="215000" />
+      <workItem from="1736170475462" duration="812000" />
+      <workItem from="1736255298766" duration="53000" />
+      <workItem from="1736255895332" duration="44000" />
+      <workItem from="1736263539521" duration="28000" />
+      <workItem from="1736263596175" duration="1280000" />
+      <workItem from="1736321744949" duration="1832000" />
+      <workItem from="1736335749195" duration="1427000" />
     </task>
     <task id="LOCAL-00161" summary="Modif">
       <option name="closed" value="true" />

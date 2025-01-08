@@ -29,10 +29,11 @@ class Seance
     #[ORM\JoinColumn(nullable: false)]
     private ?Salle $salle = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
     #[ORM\ManyToOne(inversedBy: 'seance')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Film $film = null;
 
     /**
