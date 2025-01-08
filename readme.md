@@ -19,7 +19,7 @@ Une application Symfony pour présenter les films du cinéma "Le Cinéporia", pe
 
 ## Aperçu
 
-![Aperçu de l'application](apercu.png)
+![Aperçu de l'application](aperçu.png)
   
 ---
 
