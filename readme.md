@@ -9,8 +9,8 @@ Voici une application Symfony pour présenter les films du cinéma "Le Cinépori
 1. [Aperçu](#aperçu)
 2. [Prérequis](#prérequis)
 3. [Installation et Configuration](#installation-et-configuration)
-4. [Utilisation](#Utilisation)
-5. [Auteur](#Auteur)
+4. [Utilisation](#utilisation)
+5. [Auteur](#auteur)
 
 ---
 
@@ -64,10 +64,14 @@ php bin/console doctrine:migrations:migrate
 # Compilez les ressources front-end (CSS, JavaScript, images)
 yarn build
 
+---
+
 ## Utilisation
 Ouvrez le panneau de contrôle XAMPP et lancez les services Apache et MySQL.
 Dans votre navigateur, ouvrez l'URL suivante pour accéder à l'application :
 http://localhost
+
+---
 
 ## Auteur
 Joël DERMONT
