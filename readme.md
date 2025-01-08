@@ -68,13 +68,13 @@ yarn build
 
 ## Utilisation
 
-Ouvrez le panneau de contrôle XAMPP et lancez les services Apache et MySQL.
-Dans votre navigateur, ouvrez l'URL suivante pour accéder à l'application :
+Ouvrez le panneau de contrôle XAMPP et lancez les services Apache et MySQL.  
+Dans votre navigateur, ouvrez l'URL suivante pour accéder à l'application :  
 http://localhost
-
----
 
 ## Auteur
 
-Joël DERMONT
+Joël DERMONT  
+Développeur principal - Profil GitHub
+
 
