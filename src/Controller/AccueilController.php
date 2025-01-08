@@ -79,10 +79,6 @@ class AccueilController extends AbstractController
         $lastWednesday = $this->getLastWednesday();
         $films = $filmRepository->findFilmsWithLastWednesdayBetweenDates($lastWednesday);
 
-        if (empty($films)) {
-            $films = $filmRepository->findAll();
-        }
-
         $filmsArray = [];
         foreach ($films as $film) {
             $filmsArray[] = [
