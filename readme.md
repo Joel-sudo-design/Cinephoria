@@ -9,8 +9,8 @@ Voici une application Symfony pour présenter les films du cinéma "Le Cinépori
 1. [Aperçu](#aperçu)
 2. [Prérequis](#prérequis)
 3. [Installation et Configuration](#installation-et-configuration)
-4. [Utilisation](#utilisation)
-5. [Auteur](#auteur)
+4. [Utilisation](#Utilisation)
+5. [Auteur](#Auteur)
 
 ---
 
