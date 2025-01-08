@@ -66,7 +66,7 @@ php bin/console doctrine:migrations:migrate
 # Compilez les ressources front-end (CSS, JavaScript, images)
 yarn build
 
-```markdown
+```
 
 ---
 
