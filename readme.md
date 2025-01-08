@@ -36,9 +36,10 @@ Avant de commencer, assurez-vous d'avoir installé les éléments suivants sur v
 
 Exécutez les commandes suivantes pour installer et configurer le projet :
 
+```bash
+
 # Placer les fichiers index.php et .htacess dans C:\xampp\htdocs
 
-```bash
 # Clonez le dépôt Git dans C:\xampp\htdocs\Cinephoria
 git clone https://github.com/Joel-sudo-design/Cinephoria.git
 
@@ -71,6 +72,8 @@ yarn build
 Ouvrez le panneau de contrôle XAMPP et lancez les services Apache et MySQL.  
 Dans votre navigateur, ouvrez l'URL suivante pour accéder à l'application :  
 http://localhost
+
+---
 
 ## Auteur
 
