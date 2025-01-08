@@ -38,8 +38,8 @@ Exécutez les commandes suivantes pour installer et configurer le projet :
 
 ```
 
-# Paramétrage serveur web
-Placer les fichiers index.php et .htacess dans C:\xampp\htdocs
+## Placer les fichiers dans le dossier XAMPP
+Placez les fichiers `index.php` et `.htaccess` dans le répertoire `C:\xampp\htdocs`.
 
 # Clonez le dépôt Git dans C:\xampp\htdocs\Cinephoria
 git clone https://github.com/Joel-sudo-design/Cinephoria.git
