@@ -50,8 +50,11 @@ cd C:\xampp\htdocs\Cinephoria
 # Installez les dépendances nécessaires
 composer install
 
-# Installez Yarn et les dépendances front-end
+# Installez Yarn
 yarn install
+
+# Compilez les ressources front-end (CSS, JavaScript, images)
+yarn build
 
 # Configurez le fichier .env avec vos informations MySQL
 DATABASE_URL="mysql://root:@127.0.0.1:3306/cinephoria?serverVersion=10.4.32-MariaDB"
@@ -62,9 +65,6 @@ MAILER_DSN=smtp://xxx@xxx.fr:mdp:port
 php bin/console doctrine:database:create
 php bin/console make:migration
 php bin/console doctrine:migrations:migrate
-
-# Compilez les ressources front-end (CSS, JavaScript, images)
-yarn build
 
 ```
 
