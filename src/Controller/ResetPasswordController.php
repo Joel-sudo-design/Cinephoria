@@ -177,7 +177,7 @@ class ResetPasswordController extends AbstractController
         }
 
         $email = (new TemplatedEmail())
-            ->from(new Address('contact@joeldermont.fr', 'Mot de passe temporaire Cinéphoria'))
+            ->from(new Address('MAILER_FROM_ADDRESS', 'MAILER_FROM_MDP'))
             ->to((string) $user->getEmail())
             ->subject('Votre demande de réinitialisation de mot de passe')
             ->htmlTemplate('reset_password/email.html.twig')
