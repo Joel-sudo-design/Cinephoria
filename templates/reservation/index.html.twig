@@ -46,7 +46,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="d-flex container-fluid justify-content-center align-items-center position-fixed bg-white" style="top: 96px; z-index: 1000; height: 5rem">
+    <div class="d-flex container-fluid justify-content-center align-items-center position-fixed bg-white" style="top: 6rem; z-index: 1000; height: 5rem">
         <div id="films-data" data-films="{{ filmsData|json_encode|e('html_attr') }}"></div>
         <div class="custom-dropdown mx-3">
             <!-- Bouton principal pour les cinémas -->
@@ -66,7 +66,8 @@
             <span class="bi bi-x-circle d-none close-icon-cinema"></span>
         </div>
     </div>
-    <div class="container-fluid container-films row justify-content-center align-content-center">
+    <div class="container-fluid container-films align-content-center">
+        <div class="row justify-content-center">
         <div id="reservation" class="col-6 d-flex justify-content-center align-item-center mb-4" style="background-color: #6A73AB; width: 70rem">
             <div class="col-4 p-4 text-white position-relative">
                 <div class="row">
@@ -233,6 +234,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 {% endblock %}

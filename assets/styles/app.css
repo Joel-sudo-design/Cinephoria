@@ -498,9 +498,9 @@ footer #navbarBottom .nav-link {
 
 .container-films {
   position: relative;
-  top: 10.5rem;
+  top: 11rem;
   bottom: 8rem;
-  height: calc(100% - 18.5rem);
+  height: calc(100% - 19rem);
   overflow: auto;
 }
 
@@ -1398,127 +1398,6 @@ footer #navbarBottom .nav-link {
 }
 
 /* Media queries */
-@media (min-width: 1921px) {
-
-  .bi.bi-eye, .bi.bi-eye-slash {
-    font-size: 1.2rem;
-  }
-
-  .form-control {
-    padding-top: 22px;
-    font-size: 1.1rem;
-  }
-
-  .custom-label {
-    font-size: 1.2rem !important;
-  }
-
-  .form-control:focus + .custom-label,
-  .form-control:not(:placeholder-shown) + .custom-label {
-    bottom: 34px;
-    font-size: 0.9rem !important;
-  }
-
-  .custom-checkbox .checkbox-label:before {
-    top: calc(50% - 10px);
-    width: 20px;
-    height: 20px;
-  }
-
-  .custom-checkbox input[type="checkbox"]:checked + .checkbox-label:after {
-    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20' fill='white'%3E%3Cpath d='M18 6L6 18M6 6l12 12' stroke='white' stroke-width='2'/%3E%3C/svg%3E");
-    top: calc(50% - 10px);
-  }
-
-  .conditions {
-    margin-left: 0.4rem;
-  }
-
-  .title-nouveau-compte {
-    font-size: 2.5rem !important;
-    margin-bottom: 1.5rem !important;
-  }
-
-  .btn-register {
-    font-size: 1.5rem !important;
-  }
-
-  .checkbox-label {
-    font-size: 1rem !important;
-  }
-
-  .custom-checkbox .btn {
-    font-size: 1rem !important;
-  }
-
-  #togglePassword, #toggleConfirmPassword, #toggleProvisionalPassword{
-    top:14px;
-    left: 93%;
-  }
-
-  .custom-next, .custom-prev {
-    width: 60px !important;
-    height: 60px !important;
-  }
-
-  .custom-icon-prev, .custom-icon-next {
-        width: 40px !important;
-        height: 40px !important;
-  }
-
-  #horaires {
-    font-size: 2.1rem !important;
-  }
-
-  .nav-item {
-    margin-right: 2rem !important;
-    margin-left: 2rem !important;
-    padding-top: 0.5rem !important;
-    padding-bottom: 0.5rem !important;
-  }
-
-  .nav-link {
-    font-size: 2rem !important;
-    padding-top: 0.6rem !important;
-    padding-bottom: 0.6rem !important;
-  }
-
-  .navbar .bi {
-    font-size: 3rem !important;
-  }
-
-  #logo {
-    width: 10rem !important;
-  }
-
-  .dropdown-item {
-    font-size: 2rem;
-  }
-
-  #welcome {
-    font-size: 5rem !important;
-  }
-
-  #container-accueil, #container-contact {
-    position: relative;
-    top: 10rem;
-    bottom: 20rem;
-    height: calc(100% - 30rem);
-    overflow: auto;
-  }
-
-  #navbarTop {
-    height: 10rem !important;
-  }
-
-  #navbarBottom {
-    height: 20rem !important;
-  }
-
-  #carouselExample {
-    width: 90% !important;
-  }
-}
 
 @media (max-width: 1400px) {
 
