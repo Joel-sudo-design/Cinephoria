@@ -241,7 +241,7 @@ class CommandesController extends AbstractController
 
         return new JsonResponse(['success' => true, 'avis' => $comment, 'notation' => $rating], Response::HTTP_OK);
     }
-    #[Route(path: '/commandes', name: 'api_commandes')]
+    #[Route(path: 'api/commande', name: 'api_commande')]
     public function apiCommandes(TokenStorageInterface $tokenStorage): JsonResponse
     {
         // Récupérer l'utilisateur authentifié via Symfony Security

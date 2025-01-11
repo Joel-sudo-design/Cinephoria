@@ -13,16 +13,16 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        # Définir un firewall spécifique pour /films/loading sans authentification
         films_loading:
             pattern: ^/films
             security: false
 
-        # Firewall pour l'authentification par formulaire pour les routes standards
         main:
             lazy: true
             provider: app_user_provider
-            custom_authenticator: App\Security\UserAuthenticator
+            custom_authenticator:
+                - App\Security\UserAuthenticator
+                - App\Security\ApiTokenAuthenticator
             form_login:
                 login_path: app_login
                 check_path: app_login
@@ -35,17 +35,17 @@ security:
             entry_point: form_login
 
         api:
-            pattern: ^/api/commandes
+            pattern: ^/api/commande
             stateless: true
             provider: app_user_provider
-            jwt: ~
+            custom_authenticators:
+                - App\Security\ApiTokenAuthenticator
 
     access_control:
-        - { path: ^/api/commandes, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/commande, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/administrateur, roles: ROLE_ADMIN }
         - { path: ^/employe, roles: ROLE_EMPLOYE }
         - { path: ^/utilisateur, roles: [ROLE_USER, ROLE_ADMIN, ROLE_EMPLOYE] }
-
 
 when@test:
     security:

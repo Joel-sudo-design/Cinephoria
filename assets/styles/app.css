@@ -496,7 +496,7 @@ footer #navbarBottom .nav-link {
   background-image: none;
 }
 
-.container-films {
+.container-films, #container-films-mobile {
   position: relative;
   top: 11rem;
   bottom: 8rem;
@@ -1470,6 +1470,27 @@ footer #navbarBottom .nav-link {
 
 @media (max-width: 992px) and (orientation: landscape) {
 
+  #reservation-filter {
+    top:4rem !important;
+  }
+
+  #container-films-mobile {
+    position: relative;
+    top: 9rem ;
+    bottom: 8rem;
+    height: calc(100% - 13rem);
+    overflow: auto;
+  }
+
+  .container-films {
+    top: 9rem;
+    height: calc(100% - 13rem);
+  }
+
+  #navFilterFilm {
+    top:4rem !important;
+  }
+
   .border-register-img {
     display: none;
   }
@@ -1563,8 +1584,62 @@ footer #navbarBottom .nav-link {
 
 @media (max-width: 576px) {
 
-  .custom-checkbox .checkbox-label {
+  #reservation-mobile {
+    padding: 0.5rem !important;
+  }
+
+  #container-films-mobile {
+    position: relative;
+    top: 9rem ;
+    bottom: 8rem;
+    height: calc(100% - 13rem);
+    overflow: auto;
+  }
+
+  #legende-siege {
+    flex-wrap: wrap;
+  }
+
+  #reservation {
+    flex-direction: column;
+  }
+
+  #reservation-filter {
+    top:4rem !important;
+  }
+
+  #image-reservation {
+    width: 50%;
+    text-align: center;
+    padding: 2rem 0 0 0 !important;
+  }
+
+  .btn-date-mobile {
+    padding: 0.5rem;
+  }
+
+  .container-films {
+    height: calc(100% - (240px));
+  }
+
+  #navFilterFilm {
+    top:4.5rem !important;
+  }
+
+  .custom-label {
+    font-size: 1rem;
+  }
+
+  #navFilterFilm {
+    flex-wrap: wrap;
+  }
+
+  .carousel-inner .row {
     display: flex;
+    flex-direction: column;
+  }
+
+  .custom-checkbox .checkbox-label {
     flex-direction: column;
   }
 

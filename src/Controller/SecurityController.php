@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,18 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SecurityController extends AbstractController
 {
-    private LoggerInterface $logger;
-
-    private UserPasswordHasherInterface $passwordHasher;
-    private JWTTokenManagerInterface $jwtManager;
-
-    public function __construct(UserPasswordHasherInterface $passwordHasher, JWTTokenManagerInterface $jwtManager, LoggerInterface $logger)
-    {
-        $this->passwordHasher = $passwordHasher;
-        $this->jwtManager = $jwtManager;
-        $this->logger = $logger;
-    }
-
     #[Route(path: '/mon_espace/connexion', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -45,42 +32,50 @@ class SecurityController extends AbstractController
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
-    #[Route(path: '/api/login', name: 'api_login')]
-    public function apiLogin(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    #[Route('/api/login', name: 'api_login', methods: ['POST'])]
+    public function apilogin(Request $request, EntityManagerInterface $entityManager, LoggerInterface $logger): JsonResponse
     {
         try {
-            // Récupérer les données de la requête
+            // Récupération des données de la requête
             $data = json_decode($request->getContent(), true);
             $email = $data['email'] ?? '';
             $password = $data['password'] ?? '';
 
-            // Rechercher l'utilisateur par email
+            // Vérification des champs
+            if (empty($email) || empty($password)) {
+                return new JsonResponse(['error' => 'Email et mot de passe sont requis.'], JsonResponse::HTTP_BAD_REQUEST);
+            }
+
+            // Recherche de l'utilisateur par email
             $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
 
             if (!$user) {
-                return new JsonResponse(['error' => 'Email incorrect'], Response::HTTP_UNAUTHORIZED);
+                return new JsonResponse(['error' => 'Email invalide.'], JsonResponse::HTTP_NOT_FOUND);
             }
 
-            // Vérifier le mot de passe
-            if (!$this->passwordHasher->isPasswordValid($user, $password)) {
-                return new JsonResponse(['error' => 'Mot de passe incorrect'], Response::HTTP_UNAUTHORIZED);
+            // Vérification du mot de passe
+            if (!password_verify($password, $user->getPassword())) {
+                return new JsonResponse(['error' => 'Mot de passe invalide.'], JsonResponse::HTTP_UNAUTHORIZED);
             }
 
-            // Créer le token JWT
-            $token = $this->jwtManager->create($user);
+            // Génération d'un nouveau token unique
+            do {
+                $apiToken = bin2hex(random_bytes(32));
+                $existingUser = $entityManager->getRepository(User::class)->findOneBy(['apiToken' => $apiToken]);
+            } while ($existingUser !== null);
 
-            // Vérifier si le token a bien été créé
-            if (!$token) {
-                return new JsonResponse(['error' => 'Erreur lors de la création du token'], Response::HTTP_INTERNAL_SERVER_ERROR);
-            }
+            // Attribution du token à l'utilisateur
+            $user->setApiToken($apiToken);
+            $entityManager->flush();
 
-            // Afficher le token dans le log pour vérifier qu'il est bien généré
-            $this->logger->info('Token JWT généré : ' . $token);
-
-            // Retourner le token au client
-            return new JsonResponse(['token' => $token], Response::HTTP_OK);
+            // Retourner le token dans la réponse
+            return new JsonResponse(['token' => $apiToken], JsonResponse::HTTP_OK);
         } catch (\Exception $e) {
-            return new JsonResponse(['error' => 'Une erreur est survenue'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            // Log de l'erreur pour le débogage
+            $logger->error('Erreur lors de la connexion API : ' . $e->getMessage());
+
+            // Retourner une réponse d'erreur générique
+            return new JsonResponse(['error' => 'Erreur serveur. Veuillez réessayer plus tard.'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }
