@@ -1056,7 +1056,9 @@ axios.defaults.withCredentials = true;
                                                 }
 
                                                 // Mettre à jour l'affichage du prix
-                                                $('#prix-reservations').text(`Prix : ${prixUnitaire.toFixed(2) * nombrePlaces} €`);
+                                                $('#prix-reservations').text(
+                                                    `Prix : ${(prixUnitaire * nombrePlaces).toFixed(1)} €`
+                                                );
                                             }
                                             // Afficher les sièges réservés pour cette séance
                                             $('#selection-sieges').removeClass('disabled');
