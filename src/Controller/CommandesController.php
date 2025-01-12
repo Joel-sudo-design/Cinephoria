@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Avis;
 use App\Entity\Reservation;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
@@ -244,14 +245,12 @@ class CommandesController extends AbstractController
     #[Route(path: 'api/commande', name: 'api_commande')]
     public function apiCommandes(TokenStorageInterface $tokenStorage): JsonResponse
     {
-        // Récupérer l'utilisateur authentifié via Symfony Security
         $user = $tokenStorage->getToken()->getUser();
 
         if (!$user) {
             throw new AccessDeniedException('Utilisateur non authentifié.');
         }
 
-        // Récupérer les réservations de l'utilisateur
         $reservations = $user->getReservations();
         $reservationArray = [];
 
