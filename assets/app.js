@@ -2691,7 +2691,7 @@ axios.defaults.withCredentials = true;
                         .then(response => {console.log(response.data);window.location.href = '/accueil';})
                         .catch(error => {console.error(error);});
                 });
-        // Fonction pour générer les réservations
+        // Fonction pour générer les données réservations par films et par date
         function loadReservations() {
             const $datepickerReservations = $('#datepicker_reservations');
             const $calendarIconReservations = $('#icon-calendar-reservations');
