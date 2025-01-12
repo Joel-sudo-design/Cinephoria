@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Document\ReservationMongo;
 use App\Entity\Cinema;
 use App\Entity\Reservation;
 use App\Entity\Seance;
@@ -290,6 +291,13 @@ class ReservationController extends AbstractController
             $reservation->setSeance($seance);
             $reservation->setCinema($cinema);
             $reservation->setSiege($seats);
+
+            $filmMongo = $seance->getFilm()->getName();
+            $dateMongo = $seance->getDate()->format('d/m/Y');
+            $reservationMongo = new ReservationMongo();
+            $reservationMongo->setFilm($filmMongo);
+            $reservationMongo->setDate($dateMongo);
+
 
             // Créer une donnée unique pour le QR code (par exemple, l'ID de la réservation)
             $qrData = 'Reservation ID: ' . $reservation->getId() . ' - Seance ID: ' . $seanceId;
