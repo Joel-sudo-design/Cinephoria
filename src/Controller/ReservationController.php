@@ -8,6 +8,7 @@ use App\Entity\Reservation;
 use App\Entity\Seance;
 use App\Repository\CinemaRepository;
 use App\Repository\FilmRepository;
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Endroid\QrCode\Builder\BuilderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -234,7 +235,7 @@ class ReservationController extends AbstractController
         return new JsonResponse($filmArray);
     }
     #[Route('/reservation/paiement', name: 'app_reservation_paiement')]
-    public function paiement(Request $request, EntityManagerInterface $entityManager, BuilderInterface $qrCodeBuilder): Response
+    public function paiement(Request $request, EntityManagerInterface $entityManager, BuilderInterface $qrCodeBuilder, DocumentManager $documentManager): Response
     {
         $user = $this->getUser();
         $session = $request->getSession();
@@ -293,11 +294,14 @@ class ReservationController extends AbstractController
             $reservation->setSiege($seats);
 
             $filmMongo = $seance->getFilm()->getName();
-            $dateMongo = $seance->getDate()->format('d/m/Y');
+            $dateMongo = $seance->getDate();
             $reservationMongo = new ReservationMongo();
             $reservationMongo->setFilm($filmMongo);
             $reservationMongo->setDate($dateMongo);
 
+            // Persister la réservation MongoDB
+            $documentManager->persist($reservationMongo);
+            $documentManager->flush();
 
             // Créer une donnée unique pour le QR code (par exemple, l'ID de la réservation)
             $qrData = 'Reservation ID: ' . $reservation->getId() . ' - Seance ID: ' . $seanceId;

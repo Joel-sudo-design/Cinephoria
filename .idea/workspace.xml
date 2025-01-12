@@ -5,9 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modif">
-      <change afterPath="$PROJECT_DIR$/config/packages/doctrine_mongodb.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Document/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Document/ReservationMongo.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/ReservationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReservationController.php" afterDir="false" />
     </list>
@@ -451,15 +448,7 @@
       <workItem from="1736589238735" duration="3495000" />
       <workItem from="1736593109468" duration="18019000" />
       <workItem from="1736674434767" duration="7934000" />
-      <workItem from="1736689575667" duration="7970000" />
-    </task>
-    <task id="LOCAL-00174" summary="Modif">
-      <option name="closed" value="true" />
-      <created>1734961907255</created>
-      <option name="number" value="00174" />
-      <option name="presentableId" value="LOCAL-00174" />
-      <option name="project" value="LOCAL" />
-      <updated>1734961907255</updated>
+      <workItem from="1736689575667" duration="9092000" />
     </task>
     <task id="LOCAL-00175" summary="Modif">
       <option name="closed" value="true" />
@@ -845,7 +834,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736695245623</updated>
     </task>
-    <option name="localTasksCounter" value="223" />
+    <task id="LOCAL-00223" summary="Modif">
+      <option name="closed" value="true" />
+      <created>1736698306535</created>
+      <option name="number" value="00223" />
+      <option name="presentableId" value="LOCAL-00223" />
+      <option name="project" value="LOCAL" />
+      <updated>1736698306535</updated>
+    </task>
+    <option name="localTasksCounter" value="224" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
