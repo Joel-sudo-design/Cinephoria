@@ -466,13 +466,47 @@ class AdministrationController extends AbstractController
     #[Route('/reservationsMongo', name: 'app_administration_reservationsMongo')]
     public function reservationsMongo(DocumentManager $documentManager): Response
     {
-        $reservations = $documentManager->getRepository(ReservationMongo::class)->findAll();
-        $reservationsArray = [];
-        foreach ($reservations as $reservation) {
-            $reservationsArray[] = $reservation->toArray();
+        $aggregationBuilder = $documentManager->createAggregationBuilder(ReservationMongo::class);
+
+        $aggregationBuilder
+            ->group()
+            ->field('_id')->expression([
+                'film' => '$film',
+                'date' => '$date'
+            ])
+            ->field('count')->sum(1)
+            ->sort(['_id.film' => 1, '_id.date' => 1]);
+
+        $aggregationCursor = $aggregationBuilder->getAggregation();
+
+        $groupedReservations = [];
+
+        foreach ($aggregationCursor as $result) {
+
+            if (!isset($result['_id']['film']) || !isset($result['_id']['date'])) {
+                continue;
+            }
+
+            $film = $result['_id']['film'];
+            $dateObject = $result['_id']['date'];
+
+            $date = $dateObject->toDateTime()->format('d/m/Y');
+
+            if (!isset($groupedReservations[$film])) {
+                $groupedReservations[$film] = ['name' => $film];
+            }
+
+            if (!isset($groupedReservations[$film][$date])) {
+                $groupedReservations[$film][$date] = 0;
+            }
+
+            $groupedReservations[$film][$date] += $result['count'];
         }
+
+        $resultArray = array_values($groupedReservations);
+
         return new JsonResponse([
-            'reservations' => $reservationsArray,
+            'reservations' => $resultArray,
         ]);
     }
 }
