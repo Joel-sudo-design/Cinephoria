@@ -45,4 +45,13 @@ class ReservationMongo
         $this->date = $date;
         return $this;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'film' => $this->film,
+            'date' => $this->date->format('d/m/Y'),
+        ];
+    }
 }

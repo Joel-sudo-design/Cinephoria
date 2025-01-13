@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Document\ReservationMongo;
 use App\Entity\Cinema;
 use App\Entity\Film;
 use App\Entity\Genre;
@@ -14,6 +15,7 @@ use App\Repository\CinemaRepository;
 use App\Repository\FilmRepository;
 use App\Repository\GenreRepository;
 use App\Repository\UserRepository;
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -460,6 +462,18 @@ class AdministrationController extends AbstractController
     public function reservations(): Response
     {
         return $this->render('administration/reservations.html.twig');
+    }
+    #[Route('/reservationsMongo', name: 'app_administration_reservationsMongo')]
+    public function reservationsMongo(DocumentManager $documentManager): Response
+    {
+        $reservations = $documentManager->getRepository(ReservationMongo::class)->findAll();
+        $reservationsArray = [];
+        foreach ($reservations as $reservation) {
+            $reservationsArray[] = $reservation->toArray();
+        }
+        return new JsonResponse([
+            'reservations' => $reservationsArray,
+        ]);
     }
 }
 
