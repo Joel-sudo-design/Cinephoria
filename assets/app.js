@@ -2704,8 +2704,39 @@ axios.defaults.withCredentials = true;
             axios.get('/administrateur/administration/reservationsMongo')
                 .then(response => {
                     const reservations = response.data.reservations;
-                    console.log(reservations);
                     const datesWithReservations = {};
+
+                    // Initialisation du datepicker
+                    $datepickerReservations.datepicker({
+                        orientation: "bottom",
+                        language: "fr",
+                        autoclose: true,
+                        format: 'dd/mm/yyyy',
+                        beforeShowDay: function (date) {
+                            const dateString = formatDate(date);
+                            const reservations = datesWithReservations[dateString] || 0;
+                            if (reservations > 0) {
+                                return {
+                                    classes: 'has-reservation',
+                                    tooltip: `Réservations: ${reservations}`
+                                };
+                            } else {
+                                return {tooltip: 'Aucune réservation'};
+                            }
+                        }
+                    });
+
+                    reservations.forEach(film => {
+                        Object.keys(film).forEach(key => {
+                            if (key !== 'name') {
+                                // Valider la date avant de l'ajouter
+                                if (!datesWithReservations[key]) {
+                                    datesWithReservations[key] = 0;
+                                }
+                                datesWithReservations[key] += film[key];
+                            }
+                        });
+                    });
 
                     // Fonction pour formater les dates au format "dd/mm/yyyy"
                     function formatDate(date) {
@@ -2767,26 +2798,6 @@ axios.defaults.withCredentials = true;
                         headerRow.append(col2).append(col6);
                         $reservationsContainer.append(headerRow);
                     }
-
-                    // Initialisation du datepicker
-                    $datepickerReservations.datepicker({
-                        orientation: "bottom",
-                        language: "fr",
-                        autoclose: true,
-                        format: 'dd/mm/yyyy',
-                        beforeShowDay: function (date) {
-                            const dateString = formatDate(date);
-                            const reservations = datesWithReservations[dateString] || 0;
-                            if (reservations > 0) {
-                                return {
-                                    classes: 'has-reservation',
-                                    tooltip: `Réservations: ${reservations}`
-                                };
-                            } else {
-                                return {tooltip: 'Aucune réservation'};
-                            }
-                        }
-                    });
 
                     // Datepicker
                     $datepickerReservations.on('changeDate', function (e) {
