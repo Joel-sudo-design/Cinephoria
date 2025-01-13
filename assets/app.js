@@ -2695,16 +2695,29 @@ axios.defaults.withCredentials = true;
                 });
         // Fonction pour générer les données réservations par films et par date
         function loadReservations() {
-            const $datepickerReservations = $('#datepicker_reservations');
-            const $calendarIconReservations = $('#icon-calendar-reservations');
-            const $clearIconReservations = $('.close-icon-reservations');
             const $reservationsContainer = $('#reservations-container');
-
             $reservationsContainer.empty();
+
             axios.get('/administrateur/administration/reservationsMongo')
                 .then(response => {
+                    const $datepickerReservations = $('#datepicker_reservations');
+                    const $calendarIconReservations = $('#icon-calendar-reservations');
+                    const $clearIconReservations = $('.close-icon-reservations');
+
                     const reservations = response.data.reservations;
                     const datesWithReservations = {};
+
+                    reservations.forEach(film => {
+                        Object.keys(film).forEach(key => {
+                            if (key !== 'name') {
+                                // Valider la date avant de l'ajouter
+                                if (!datesWithReservations[key]) {
+                                    datesWithReservations[key] = 0;
+                                }
+                                datesWithReservations[key] += film[key];
+                            }
+                        });
+                    });
 
                     // Initialisation du datepicker
                     $datepickerReservations.datepicker({
@@ -2724,18 +2737,6 @@ axios.defaults.withCredentials = true;
                                 return {tooltip: 'Aucune réservation'};
                             }
                         }
-                    });
-
-                    reservations.forEach(film => {
-                        Object.keys(film).forEach(key => {
-                            if (key !== 'name') {
-                                // Valider la date avant de l'ajouter
-                                if (!datesWithReservations[key]) {
-                                    datesWithReservations[key] = 0;
-                                }
-                                datesWithReservations[key] += film[key];
-                            }
-                        });
                     });
 
                     // Fonction pour formater les dates au format "dd/mm/yyyy"
