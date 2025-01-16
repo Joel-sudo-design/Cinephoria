@@ -271,7 +271,7 @@ footer #navbarBottom .nav-link {
 }
 
 .checkbox-label .btn:hover {
-  color: #fd7e14 !important;
+  color: #ffa500!important;
   text-decoration: underline;
 }
 
@@ -325,7 +325,7 @@ footer #navbarBottom .nav-link {
 }
 
 .btn-account-created:hover {
-  color: #fd7e14 !important;
+  color: #ffa500 !important;
   text-decoration: underline;
 }
 
@@ -351,7 +351,7 @@ footer #navbarBottom .nav-link {
 
 .link-register:hover {
   text-decoration: underline;
-  color: #fd7e14;
+  color: #ffa500;
 }
 
 .link-reset-password {
@@ -361,7 +361,7 @@ footer #navbarBottom .nav-link {
 
 .link-reset-password:hover {
   text-decoration: underline;
-  color: #fd7e14;
+  color: #ffa500;
 }
 
 /* Page réinitialisation du mot de passe */
@@ -798,14 +798,14 @@ footer #navbarBottom .nav-link {
 }
 
 .bi-check-lg {
-  border: 2px solid green !important;
+  border: 2px solid#008000 !important;
   background-color: white;
-  color: green;
+  color: #008000;
   transition: all 0.2s ease;
 }
 
 .bi-check-lg:hover {
-  background-color: green;
+  background-color: #008000;
   color: white;
   border: 2px solid white !important;
 }
@@ -824,15 +824,15 @@ footer #navbarBottom .nav-link {
 }
 
 .bi-arrow-counterclockwise {
-  border: 2px solid orange !important;
+  border: 2px solid #ffa500 !important;
   background-color: white;
-  color: orange;
+  color: #ffa500;
   transition: all 0.2s ease;
   position: relative;
 }
 
 .bi-arrow-counterclockwise:hover {
-  background-color: orange;
+  background-color: #ffa500;
   color: white;
   border: 2px solid white !important;
 }
@@ -843,7 +843,7 @@ footer #navbarBottom .nav-link {
   top: 110%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: orange;
+  background-color: #ffa500;
   color: white;
   padding: 5px;
   border: 2px solid white;
@@ -1076,7 +1076,7 @@ footer #navbarBottom .nav-link {
 }
 
 .btn-avis.validate {
-  background-color: green;
+  background-color: #008000;
   color: white;
 }
 
@@ -1196,15 +1196,15 @@ footer #navbarBottom .nav-link {
 
 .btn-paiement {
   background-color: white !important;
-  color: green !important;
-  border: 2px solid green !important;
+  color: #008000 !important;
+  border: 2px solid #008000 !important;
   border-radius: 6px;
   padding: 0.4rem;
   transition: all 0.2s ease;
 }
 
 .btn-paiement:hover {
-  background-color: green !important;
+  background-color: #008000 !important;
   color: white !important;
   border: 2px solid white !important;
 }
