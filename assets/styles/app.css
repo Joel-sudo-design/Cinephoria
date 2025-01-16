@@ -811,14 +811,14 @@ footer #navbarBottom .nav-link {
 }
 
 .bi-x-lg {
-  border: 2px solid red !important;
+  border: 2px solid #FF0000 !important;
   background-color: white;
-  color: red;
+  color: #FF0000;
   transition: all 0.2s ease;
 }
 
 .bi-x-lg:hover {
-  background-color: red;
+  background-color: #FF0000;
   color: white;
   border: 2px solid white !important;
 }
@@ -929,7 +929,7 @@ footer #navbarBottom .nav-link {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #AED581; /* Vert pour Tout Public */
+  background-color: #008000;
   color: white;
   width: 35px;
   height: 35px;
@@ -960,17 +960,17 @@ footer #navbarBottom .nav-link {
 }
 
 .age-badge-12 {
-  background-color: #FF5722; /* Orange */
+  background-color: #FF5722;
   color: white;
 }
 
 .age-badge-16 {
-  background-color: #E64A19; /* Rouge clair */
+  background-color: #E64A19;
   color: white;
 }
 
 .age-badge-18 {
-  background-color: #D32F2F; /* Rouge foncé */
+  background-color: #FF0000;
   color: white;
 }
 
@@ -1332,11 +1332,11 @@ footer #navbarBottom .nav-link {
 }
 
 .star.selected, .star-avis.selected {
-  color: gold;
+  color: #FFD700;
 }
 
 .star:hover {
-  color: gold;
+  color: #FFD700;
 }
 
 .floatingTextareaComments::placeholder {
