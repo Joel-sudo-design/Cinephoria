@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modif">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,11 +217,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\Cinephoria" />
       <recent name="C:\xampp\htdocs\Cinephoria\templates\reservation" />
       <recent name="C:\xampp\htdocs\Cinephoria\templates\commandes" />
       <recent name="C:\xampp\htdocs\Cinephoria\templates" />
       <recent name="C:\xampp\htdocs\Cinephoria\templates\employe" />
-      <recent name="C:\xampp\htdocs\Cinephoria\templates\administration" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\Cinephoria\config" />
@@ -461,31 +461,7 @@
       <workItem from="1736947001146" duration="614000" />
       <workItem from="1736957426093" duration="659000" />
       <workItem from="1737032584481" duration="1844000" />
-      <workItem from="1737132614119" duration="531000" />
-    </task>
-    <task id="LOCAL-00186" summary="Modif">
-      <option name="closed" value="true" />
-      <created>1735551197786</created>
-      <option name="number" value="00186" />
-      <option name="presentableId" value="LOCAL-00186" />
-      <option name="project" value="LOCAL" />
-      <updated>1735551197786</updated>
-    </task>
-    <task id="LOCAL-00187" summary="Modif">
-      <option name="closed" value="true" />
-      <created>1735552238705</created>
-      <option name="number" value="00187" />
-      <option name="presentableId" value="LOCAL-00187" />
-      <option name="project" value="LOCAL" />
-      <updated>1735552238705</updated>
-    </task>
-    <task id="LOCAL-00188" summary="Modif">
-      <option name="closed" value="true" />
-      <created>1735571608997</created>
-      <option name="number" value="00188" />
-      <option name="presentableId" value="LOCAL-00188" />
-      <option name="project" value="LOCAL" />
-      <updated>1735571608997</updated>
+      <workItem from="1737132614119" duration="1158000" />
     </task>
     <task id="LOCAL-00189" summary="Modif">
       <option name="closed" value="true" />
@@ -855,7 +831,31 @@
       <option name="project" value="LOCAL" />
       <updated>1737133055143</updated>
     </task>
-    <option name="localTasksCounter" value="235" />
+    <task id="LOCAL-00235" summary="Modif">
+      <option name="closed" value="true" />
+      <created>1737133178729</created>
+      <option name="number" value="00235" />
+      <option name="presentableId" value="LOCAL-00235" />
+      <option name="project" value="LOCAL" />
+      <updated>1737133178729</updated>
+    </task>
+    <task id="LOCAL-00236" summary="Modif">
+      <option name="closed" value="true" />
+      <created>1737133369154</created>
+      <option name="number" value="00236" />
+      <option name="presentableId" value="LOCAL-00236" />
+      <option name="project" value="LOCAL" />
+      <updated>1737133369154</updated>
+    </task>
+    <task id="LOCAL-00237" summary="Modif">
+      <option name="closed" value="true" />
+      <created>1737133433935</created>
+      <option name="number" value="00237" />
+      <option name="presentableId" value="LOCAL-00237" />
+      <option name="project" value="LOCAL" />
+      <updated>1737133433935</updated>
+    </task>
+    <option name="localTasksCounter" value="238" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
