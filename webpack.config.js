@@ -73,6 +73,7 @@ Encore
         from: './assets/images',
         to: 'images/[path][name].[ext]',
     })
+
 ;
 
 module.exports = Encore.getWebpackConfig();
