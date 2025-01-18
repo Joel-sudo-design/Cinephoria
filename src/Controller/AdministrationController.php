@@ -488,19 +488,21 @@ class AdministrationController extends AbstractController
             }
 
             $film = $result['_id']['film'];
-            $dateObject = $result['_id']['date'];
 
-            $date = $dateObject->toDateTime()->format('d/m/Y');
+            $dateObject = $result['_id']['date'];
+            $date = $dateObject->toDateTime();
+            $date->setTimezone(new \DateTimeZone('Europe/Paris'));
+            $formattedDate = $date->format('d/m/Y');
 
             if (!isset($groupedReservations[$film])) {
                 $groupedReservations[$film] = ['name' => $film];
             }
 
-            if (!isset($groupedReservations[$film][$date])) {
-                $groupedReservations[$film][$date] = 0;
+            if (!isset($groupedReservations[$film][$formattedDate])) {
+                $groupedReservations[$film][$formattedDate] = 0;
             }
 
-            $groupedReservations[$film][$date] += $result['count'];
+            $groupedReservations[$film][$formattedDate] += $result['count'];
         }
 
         $resultArray = array_values($groupedReservations);
