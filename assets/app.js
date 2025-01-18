@@ -863,44 +863,38 @@ axios.defaults.withCredentials = true;
 
                             // Initialiser les sièges
                             function initialiserSieges() {
-                                // Retirer les anciens événements de clic pour éviter qu'ils ne se déclenchent plusieurs fois
+                                // Sélectionner toutes les zones de sièges (supposons qu'elles ont des IDs commençant par "seating-area")
                                 const seatingAreas = $('[id^="seating-area"]');
+
+                                // Retirer les anciens événements de clic pour éviter les doublons
                                 seatingAreas.off('click', '.seat');
+
+                                // Ajouter un nouvel événement de clic pour les sièges
                                 seatingAreas.on('click', '.seat', function () {
                                     const $seat = $(this);
 
-                                    // Vérifier l'état actuel du siège
                                     if ($seat.hasClass('reserve')) {
-                                        // Si le siège est déjà réservé, afficher un message ou empêcher l'action
                                         alert("Ce siège est déjà réservé !");
                                         return;
+                                    } else {
+                                        $seat.toggleClass('selectionne')
                                     }
 
-                                    // Empeche plus de selection que le nombre de place indiqué
-                                    const maxSeats = parseInt($('#Textarea-places-reservations').val(), 10) || 0;
+                                    let maxSeats = parseInt($('#Textarea-places-reservations').val(), 10) || 0;
                                     const totalSeatsSelected = $('.seat.selectionne').length;
-                                    if (totalSeatsSelected > maxSeats && !$seat.hasClass('selectionne')) {
-                                        alert("Le nombre de sièges réservés dépasse le nombre de places!");
+
+                                    if (totalSeatsSelected > maxSeats + 1) {
+                                        alert(`Le nombre de sièges réservés dépasse le nombre de places autorisées (${maxSeats}) !`);
+                                        $seat.toggleClass('selectionne');
                                         return;
                                     }
 
-                                    if (totalSeatsSelected === maxSeats) {
+                                    if (totalSeatsSelected === maxSeats + 1) {
                                         $('#paiement-reservations').removeClass('disabled');
                                     } else {
                                         $('#paiement-reservations').addClass('disabled');
                                     }
 
-                                    $(".btn-reservation").not(".active").on("click", function () {
-                                        $('#paiement-reservations').addClass('disabled');
-                                    });
-
-                                    if ($seat.hasClass('selectionne')) {
-                                        // Si le siège est déjà sélectionné, on le désélectionne
-                                        $seat.removeClass('selectionne');
-                                    } else {
-                                        // Sinon, on le sélectionne
-                                        $seat.addClass('selectionne');
-                                    }
                                 });
                             }
 
@@ -1025,45 +1019,55 @@ axios.defaults.withCredentials = true;
                                         // Gestion du clic sur le bouton de choix de séance
                                         $button.on('click', function () {
                                             if (!$(this).hasClass('disabled')) {
-                                                // Ajout de la salle
-                                                // Récupère le texte actuel dans #salle-reservations
+                                                // 1) Ajout de la salle
                                                 let currentText = salleReservations.text();
 
-                                                // Vérifie si le texte contient déjà seance.salle
                                                 if (!currentText.includes(seance.salle) && currentText === 'Salle') {
-                                                    // Si le texte ne contient pas déjà seance.salle, ajoute-le
-                                                    salleReservations.append(' '+seance.salle);
+                                                    // Si le texte ne contient pas déjà seance.salle et vaut "Salle"
+                                                    salleReservations.append(' ' + seance.salle);
                                                 } else {
-                                                    // Si le texte contient déjà seance.salle, le remplace
+                                                    // Sinon, remplacer par "Salle X"
                                                     salleReservations.empty().append(`Salle ${seance.salle}`);
                                                 }
-                                                // Gestion de la sélection de la séance
+
+                                                // 2) Gestion de la sélection de la séance
                                                 $('#seances-buttons .btn-reservation').removeClass('active');
                                                 $(this).addClass('active');
 
                                                 // Mettre à jour l'affichage de la séance sélectionnée
                                                 $seancesSelected.text(`Qualité choisie : ${seance.qualite}`);
 
-                                                // Mettre à jour le prix
+                                                // 3) Calculer le prix (avec réductions)
                                                 let nombrePlaces = parseInt(textAreaReservations.val(), 10);
                                                 let prixUnitaire = seance.prix;
 
-                                                // Calcul du prix dégressif
+                                                // Application des réductions
                                                 if (nombrePlaces >= 5) {
-                                                    prixUnitaire = prixUnitaire * 0.8; // 20% de réduction
+                                                    prixUnitaire *= 0.8; // 20% de réduction
                                                 } else if (nombrePlaces >= 2) {
-                                                    prixUnitaire = prixUnitaire * 0.9; // 10% de réduction
+                                                    prixUnitaire *= 0.9; // 10% de réduction
                                                 }
 
-                                                // Mettre à jour l'affichage du prix
-                                                $('#prix-reservations').text(
-                                                    `Prix : ${(prixUnitaire * nombrePlaces).toFixed(1)} €`
-                                                );
+                                                const finalPrice = prixUnitaire * nombrePlaces;
+
+                                                // 4) Afficher le prix sans ".0" si entier
+                                                let displayPrice;
+                                                if (Number.isInteger(finalPrice)) {
+                                                    // Si le résultat est un entier, on affiche sans décimale
+                                                    displayPrice = finalPrice;
+                                                } else {
+                                                    // Sinon, on affiche 1 décimale (vous pouvez mettre 2 si besoin)
+                                                    displayPrice = finalPrice.toFixed(1);
+                                                }
+
+                                                $('#prix-reservations').text(`Prix : ${displayPrice} €`);
                                             }
+
                                             // Afficher les sièges réservés pour cette séance
                                             $('#selection-sieges').removeClass('disabled');
                                             afficherSiegesReserves(seance);
                                         });
+
                                     });
                                 }
                             }
@@ -1338,7 +1342,6 @@ axios.defaults.withCredentials = true;
                 $(function () {
                     $('#datepicker').removeClass('disabled');
                 });
-
 
                 // Masque ou affiche le menu des cinemas
                 $('.custom-options-cinema').toggle();
