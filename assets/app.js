@@ -2074,15 +2074,26 @@ axios.defaults.withCredentials = true;
                                             });
 
                         // Menu déroulant Cinéma
-                        const dropdownMenuCinema = $('#dropdownMenuCinema-'+film.id);
+                        const dropdownMenuCinema = $('#dropdownMenuCinema-' + film.id);
                         const dropCinema = dropdownMenuCinema.siblings('.dropdown-menu').find('.drop-cinema');
-                        let selectedCinema = '';
-                        // Gérer le clic sur le menu cinéma
+                        let selectedCinemas = [];
+                        console.log(selectedCinemas);
+                        // Gérer le clic sur un cinéma dans le menu déroulant
                         dropCinema.click(function (e) {
                             e.preventDefault();
-                            selectedCinema = $(this).text();
-                            dropdownMenuCinema.text(selectedCinema);
-                            $('#datepicker-admin-debut-'+film.id).removeAttr('disabled');
+                            const cinema = $(this).text().trim();
+                            const index = selectedCinemas.indexOf(cinema);
+
+                            if (index === -1) {
+                                selectedCinemas.push(cinema);
+                            } else {
+                                selectedCinemas.splice(index, 1);
+                            }
+
+                            if (selectedCinemas.length > 0) {
+                                dropdownMenuCinema.text(selectedCinemas.join(', '));
+                                $('#datepicker-admin-debut-' + film.id).removeAttr('disabled');
+                            }
                         });
 
                         // Menu déroulant Coup de cœur
@@ -2180,7 +2191,7 @@ axios.defaults.withCredentials = true;
                                                 age: selectedAge,
                                                 label: label,
                                                 nom: $(`#TextareaNom-${film.id}`).val(),
-                                                cinema: $(`#dropdownMenuCinema-${film.id}`).text(),
+                                                cinema: selectedCinemas,
                                                 date_debut: formattedDateDebut,
                                                 date_fin: formattedDateFin,
                                                 salle: $(`#dropdownMenuSalle-${film.id}`).text(),
@@ -2208,7 +2219,7 @@ axios.defaults.withCredentials = true;
                             let auMoinsUneHeureDebut = false; // Indicateur pour au moins une heure de début renseignée
 
                             // Vérifier si au moins un cinéma est sélectionné avant de parcourir les formats et séances
-                            if (selectedCinema === '') {
+                            if (!selectedCinemas.length > 0) {
                                 alert("Veuillez sélectionner un cinéma");
                                 return;
                             }
@@ -2256,7 +2267,7 @@ axios.defaults.withCredentials = true;
                             });
 
                             // Si aucune heure de début n'a été renseignée alors qu'un cinéma est sélectionné
-                            if (!auMoinsUneHeureDebut && selectedCinema !== '' && timeError === 0) {
+                            if (!auMoinsUneHeureDebut && timeError === 0) {
                                 timeError = 5;
                             }
 

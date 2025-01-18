@@ -191,7 +191,7 @@ class AdministrationController extends AbstractController
         $age = $data['age'];
         $label = $data['label'];
         $name = $data['nom'];
-        $stringCinema = $data['cinema'];
+        $arrayCinema = $data['cinema'];
         $stringDateDebut = $data['date_debut'];
         $stringDateFin = $data['date_fin'];
         $dateDebut = \DateTime::createFromFormat('Y-m-d', $stringDateDebut);
@@ -225,10 +225,13 @@ class AdministrationController extends AbstractController
             $film->setDateFin($dateFin);
         }
 
-        if ($stringCinema !== '') {
-            $cinema = $entityManager->getRepository(Cinema::class)->findOneBy(['name' => $stringCinema]);
-            $film->addCinema($cinema);
+        if (!empty($arrayCinema)) {
+            foreach ($arrayCinema as $cinema) {
+                $cinema = $entityManager->getRepository(Cinema::class)->findOneBy(['name' => $cinema]);
+                $film->addCinema($cinema);
+            }
         }
+
         for ($i = 1; $i <= 4; $i++) {
             foreach ($formats as $format) {
                 // Récupérer les informations associées à chaque format
@@ -247,8 +250,8 @@ class AdministrationController extends AbstractController
                     $heureFin = \DateTime::createFromFormat('H:i', $stringHeureFin);
 
                     // Vérification des conditions avant de passer à la méthode getSeance
-                    if ($heureDebut && $heureFin && $dateDebut && $dateFin && is_numeric($price) && is_numeric($stringSalle) && $stringCinema !== '') {
-                            $cinema = $entityManager->getRepository(Cinema::class)->findOneBy(['name' => $stringCinema]);
+                    if ($heureDebut && $heureFin && $dateDebut && $dateFin && is_numeric($price) && is_numeric($stringSalle) && $arrayCinema !== '') {
+                            $cinema = $entityManager->getRepository(Cinema::class)->findOneBy(['name' => $arrayCinema]);
                             // Appeler la méthode getSeance avec les données appropriées
                             $this->getSeance($heureDebut, $heureFin, $price, $dateDebut, $dateFin, ${"salle{$format}"}, $film, $entityManager, $cinema);
                     }
