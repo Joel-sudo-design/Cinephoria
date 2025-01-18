@@ -2766,6 +2766,23 @@ axios.defaults.withCredentials = true;
 
                         $reservationsContainer.empty();
 
+                        // --- Vérifier la somme des réservations ---
+                        let totalReservations = 0;
+                        reservations.forEach(film => {
+                            formattedDays.forEach(day => {
+                                // film[day] peut être undefined => on le transforme en 0
+                                totalReservations += film[day] || 0;
+                            });
+                        });
+
+                        // Si aucune réservation, on affiche un message et on stoppe la fonction
+                        if (totalReservations === 0) {
+                            $reservationsContainer.append($('<div class="row justify-content-center text-white mb-4">' +
+                                '<div class="col-auto text-center" style="background-color: #6A73AB">Aucune réservation sur les 7 jours</div>' +
+                                '</div>'));
+                            return;
+                        }
+
                         // Créer la première colonne : Noms des films
                         const col2 = $('<div class="col-2" style="background-color: #6A73AB"></div>');
                         col2.append('<div class="row"><div class="col grid-cell fw-bold">Nombre de réservations</div></div>');
