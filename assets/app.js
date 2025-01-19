@@ -2001,34 +2001,6 @@ axios.defaults.withCredentials = true;
                         displayAgeBadge(film)
 
                         // Modal
-                        const textarea = $('#TextareaNom-' + film.id);
-                        // Fonction pour ajuster dynamiquement la largeur du textarea titre en fonction du contenu
-                        function autoResizeWidth(textarea) {
-                            // Vérifier si textarea est un objet jQuery et obtenir l'élément DOM natif
-                            const domElement = textarea instanceof jQuery ? textarea.get(0) : textarea;
-
-                            // Réinitialiser la largeur pour recalculer la taille du contenu
-                            domElement.style.width = 'auto';
-
-                            // Ajuster la largeur en fonction du contenu du texte
-                            const extraSpace = 20; // Espace en pixels ajouté à droite
-                            domElement.style.width = (domElement.scrollWidth + extraSpace) + 'px';
-                        }
-
-                        // Vérifier si le textarea existe et appliquer la fonction d'auto redimensionnement
-                        const modal = $('#modal-'+film.id)
-                        modal.on('shown.bs.modal', function () {
-                            if (textarea.length) {
-                                // Appliquer l'ajustement de la largeur au chargement de la page
-                                autoResizeWidth(textarea);
-
-                                // Ajouter un écouteur d'événement pour ajuster la largeur à chaque saisie
-                                textarea.on('input', function() {
-                                    autoResizeWidth(textarea);
-                                });
-                            }
-                        });
-
                         // Upload image
                         let imageData = null;
                         $('#uploadButton-' + film.id).on('click', function () {
@@ -2075,10 +2047,12 @@ axios.defaults.withCredentials = true;
 
                         // Menu déroulant Cinéma
                         const dropdownMenuCinema = $('#dropdownMenuCinema-' + film.id);
-                        const dropCinema = dropdownMenuCinema.siblings('.dropdown-menu').find('.drop-cinema');
+                        const dropCinemaElements = dropdownMenuCinema.siblings('.dropdown-menu').find('.drop-cinema');
                         let selectedCinemas = [];
+                        const dropCinemaList = ['Toulouse', 'Nantes', 'Bordeaux', 'Lille', 'Charleroi', 'Liège', 'Paris'];
+
                         // Gérer le clic sur un cinéma dans le menu déroulant
-                        dropCinema.click(function (e) {
+                        dropCinemaElements.click(function (e) {
                             e.preventDefault();
                             const cinema = $(this).text().trim();
                             const index = selectedCinemas.indexOf(cinema);
@@ -2093,6 +2067,49 @@ axios.defaults.withCredentials = true;
                                 dropdownMenuCinema.text(selectedCinemas.join(', '));
                                 $('#datepicker-admin-debut-' + film.id).removeAttr('disabled');
                             }
+                        });
+                        // Fonction pour mettre à jour l'état du menu déroulant en fonction des cinémas sélectionnés
+                        function updateDropdownState() {
+                            const hasMatchingCinema = selectedCinemas.some(cinema => dropCinemaList.includes(cinema));
+                            dropdownMenuCinema.attr('disabled', hasMatchingCinema);
+
+                            if (hasMatchingCinema) {
+                                dropdownMenuCinema.addClass('disabled');
+                            } else {
+                                dropdownMenuCinema.removeClass('disabled');
+                            }
+                        }
+                        // Fonction pour ajuster dynamiquement la largeur du textarea titre en fonction du contenu
+                        const textarea = $('#TextareaNom-' + film.id);
+                        function autoResizeWidth(textarea) {
+                            // Vérifier si textarea est un objet jQuery et obtenir l'élément DOM natif
+                            const domElement = textarea instanceof jQuery ? textarea.get(0) : textarea;
+
+                            // Réinitialiser la largeur pour recalculer la taille du contenu
+                            domElement.style.width = 'auto';
+
+                            // Ajuster la largeur en fonction du contenu du texte
+                            const extraSpace = 20; // Espace en pixels ajouté à droite
+                            domElement.style.width = (domElement.scrollWidth + extraSpace) + 'px';
+                        }
+                        // Vérifier si le textarea existe et appliquer la fonction d'auto redimensionnement + désactiver dropdown cinéma
+                        const modal = $('#modal-' + film.id);
+                        modal.on('shown.bs.modal', function () {
+                            if (textarea.length) {
+                                // Appliquer l'ajustement de la largeur au chargement de la page
+                                autoResizeWidth(textarea);
+
+                                // Ajouter un écouteur d'événement pour ajuster la largeur à chaque saisie
+                                textarea.on('input', function() {
+                                    autoResizeWidth(textarea);
+                                });
+                            }
+                            // Initialiser selectedCinemas en fonction du texte actuel du menu déroulant
+                            const dropdownText = dropdownMenuCinema.text().trim();
+                            selectedCinemas = (dropdownText && dropdownText !== 'Aucun')
+                                ? dropdownText.split(',').map(cinema => cinema.trim())
+                                : [];
+                            updateDropdownState();
                         });
 
                         // Menu déroulant Coup de cœur

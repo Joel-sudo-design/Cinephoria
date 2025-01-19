@@ -625,6 +625,12 @@ footer #navbarBottom .nav-link {
 }
 
 /* Page Administration */
+.btn-secondary.disabled {
+  background-color: gray !important;
+  color: white !important;
+  cursor: not-allowed;
+}
+
 #btn-plus-admin, #btn-plus-employe {
   background-color: white;
   color: #6A73AB;
