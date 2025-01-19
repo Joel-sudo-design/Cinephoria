@@ -2050,7 +2050,6 @@ axios.defaults.withCredentials = true;
                         const dropCinemaElements = dropdownMenuCinema.siblings('.dropdown-menu').find('.drop-cinema');
                         let selectedCinemas = [];
                         const dropCinemaList = ['Toulouse', 'Nantes', 'Bordeaux', 'Lille', 'Charleroi', 'Liège', 'Paris'];
-
                         // Gérer le clic sur un cinéma dans le menu déroulant
                         dropCinemaElements.click(function (e) {
                             e.preventDefault();
@@ -2074,9 +2073,9 @@ axios.defaults.withCredentials = true;
                             dropdownMenuCinema.attr('disabled', hasMatchingCinema);
 
                             if (hasMatchingCinema) {
-                                dropdownMenuCinema.addClass('disabled');
+                                dropdownMenuCinema.attr('disabled', true);
                             } else {
-                                dropdownMenuCinema.removeClass('disabled');
+                                dropdownMenuCinema.removeAttr('disabled');
                             }
                         }
                         // Fonction pour ajuster dynamiquement la largeur du textarea titre en fonction du contenu

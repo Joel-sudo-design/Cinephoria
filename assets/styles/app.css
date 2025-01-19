@@ -625,12 +625,6 @@ footer #navbarBottom .nav-link {
 }
 
 /* Page Administration */
-.btn-secondary.disabled {
-  background-color: gray !important;
-  color: white !important;
-  cursor: not-allowed;
-}
-
 #btn-plus-admin, #btn-plus-employe {
   background-color: white;
   color: #6A73AB;
@@ -770,10 +764,10 @@ footer #navbarBottom .nav-link {
 
 .btn-time-admin:disabled,
 .btn-date-admin:disabled,
-.btn-date-admin:disabled{
+.btn-secondary:disabled {
   background-color: gray !important;
   color: white !important;
-  cursor: not-allowed;
+  opacity: unset !important;
 }
 
 .btn-time-admin:disabled ~ .bi-clock,
