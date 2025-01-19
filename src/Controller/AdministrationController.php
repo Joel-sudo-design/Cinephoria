@@ -181,113 +181,214 @@ class AdministrationController extends AbstractController
         return new JsonResponse(['status' => 'film deleted']);
     }
     #[Route('/film/validate', name: 'app_administration_validate_film')]
-    public function ValidateFilm(Request $request,EntityManagerInterface $entityManager): Response
+    public function ValidateFilm(Request $request, EntityManagerInterface $entityManager): Response
     {
+        // Récupérer les données du formulaire
         $data = $request->request->all();
-        $id = $data['id'];
+
+        // Initialiser un tableau pour collecter les erreurs des séances
+        $seanceErrors = [];
+
+        // Vérifier si l'ID du film est fourni
+        $id = $data['id'] ?? null;
+        if (!$id) {
+            return $this->json(['error' => 'L\'ID du film est requis.'], 400);
+        }
+
+        // Récupérer le film
         $film = $entityManager->getRepository(Film::class)->find($id);
+        if (!$film) {
+            return $this->json(['error' => 'Film non trouvé.'], 404);
+        }
+
+        // Gérer l'upload de l'image si elle est fournie
         $image = $request->files->get('image');
-        $stringGenre = $data['genre'];
-        $age = $data['age'];
-        $label = $data['label'];
-        $name = $data['nom'];
-        $arrayCinema = $data['cinema'];
-        $stringDateDebut = $data['date_debut'];
-        $stringDateFin = $data['date_fin'];
-        $dateDebut = \DateTime::createFromFormat('Y-m-d', $stringDateDebut);
-        $dateFin = \DateTime::createFromFormat('Y-m-d', $stringDateFin);
-        $stringSalle = $data['salle'];
-        $places = $data['places'];
-        $salle3DX = $entityManager->getRepository(Salle::class)->findOneBy(['qualite' => '3DX']);
-        $salle4DX = $entityManager->getRepository(Salle::class)->findOneBy(['qualite' => '4DX']);
-        $salleIMAX = $entityManager->getRepository(Salle::class)->findOneBy(['qualite' => 'IMAX']);
-        $salleDolby = $entityManager->getRepository(Salle::class)->findOneBy(['qualite' => 'Dolby']);
-        $formats = ['3DX', '4DX', 'IMAX', 'Dolby'];
-        $description = $data['description'];
         if ($image) {
             $film->setImageFile($image);
         }
-        if ($name != 'Titre du film') {
+
+        // Mettre à jour le nom du film
+        $name = trim($data['nom'] ?? '');
+        if ($name && $name !== 'Titre du film') {
             $film->setName($name);
         }
-        if ($stringGenre != '') {
+
+        // Mettre à jour le genre
+        $stringGenre = trim($data['genre'] ?? '');
+        if ($stringGenre !== '') {
             $genre = $entityManager->getRepository(Genre::class)->findOneBy(['name' => $stringGenre]);
+            if (!$genre) {
+                return $this->json(['error' => "Genre '{$stringGenre}' non trouvé."], 404);
+            }
             $film->setGenre($genre);
         }
-        if ($age != '') {
-            $film->setAgeMinimum($age);
+
+        // Mettre à jour l'âge minimum
+        $age = $data['age'] ?? null;
+        if (is_numeric($age)) {
+            $film->setAgeMinimum((int)$age);
         }
-        $film->setLabel($label);
-        if ($dateDebut != '') {
+
+        // Mettre à jour le label
+        $label = trim($data['label'] ?? '');
+        if ($label !== '') {
+            $film->setLabel($label);
+        }
+
+        // Mettre à jour la description
+        $description = trim($data['description'] ?? '');
+        if ($description && $description !== 'Description du film') {
+            $film->setDescription($description);
+        }
+
+        // Mettre à jour les dates de début et de fin
+        $stringDateDebut = trim($data['date_debut'] ?? '');
+        $stringDateFin = trim($data['date_fin'] ?? '');
+        $dateDebut = $stringDateDebut ? \DateTime::createFromFormat('Y-m-d', $stringDateDebut) : null;
+        $dateFin = $stringDateFin ? \DateTime::createFromFormat('Y-m-d', $stringDateFin) : null;
+
+        if ($dateDebut) {
             $film->setDateDebut($dateDebut);
         }
-        if ($dateFin != '') {
+        if ($dateFin) {
             $film->setDateFin($dateFin);
         }
 
-        if (!empty($arrayCinema)) {
-            foreach ($arrayCinema as $cinema) {
-                $cinema = $entityManager->getRepository(Cinema::class)->findOneBy(['name' => $cinema]);
-                $film->addCinema($cinema);
+        // Mettre à jour les cinémas
+        $arrayCinema = $data['cinema'] ?? [];
+        if (!is_array($arrayCinema)) {
+            return $this->json(['error' => 'Les cinémas doivent être une liste.'], 400);
+        }
+
+        // Vérifier que des cinémas sont sélectionnés
+        if (empty($arrayCinema)) {
+            return $this->json(['error' => 'Aucun cinéma sélectionné.'], 400);
+        }
+
+        // Précharger les cinémas pour éviter les requêtes répétées
+        $cinemas = $entityManager->getRepository(Cinema::class)->findBy(['name' => $arrayCinema]);
+        $cinemaMap = [];
+        foreach ($cinemas as $cinema) {
+            $cinemaMap[$cinema->getName()] = $cinema;
+        }
+
+        foreach ($arrayCinema as $cinemaName) {
+            if (isset($cinemaMap[$cinemaName])) {
+                $film->addCinema($cinemaMap[$cinemaName]);
+            } else {
+                // Ajouter une erreur pour les cinémas non trouvés
+                $seanceErrors[] = "Cinéma '{$cinemaName}' non trouvé.";
             }
         }
 
-        for ($i = 1; $i <= 4; $i++) {
+        // Mettre à jour les séances
+        $formats = ['3DX', '4DX', 'IMAX', 'Dolby'];
+        $nombreSalles = 4;
+
+        // Précharger toutes les salles nécessaires
+        $salles = $entityManager->getRepository(Salle::class)->findBy(['qualite' => $formats]);
+        $salleMap = [];
+        foreach ($salles as $salle) {
+            $salleMap[$salle->getQualite()] = $salle;
+        }
+
+        // Commencer une transaction pour assurer l'intégrité des données
+        $entityManager->beginTransaction();
+
+        try {
             foreach ($formats as $format) {
-                // Récupérer les informations associées à chaque format
-                $heureDebutKey = "heure_debut_{$format}_{$i}";
-                $heureFinKey = "heure_fin_{$format}_{$i}";
-                $priceKey = "price_{$format}_{$i}";
+                for ($i = 1; $i <= $nombreSalles; $i++) {
+                    // Construire les clés dynamiques
+                    $heureDebutKey = "heure_debut_{$format}_{$i}";
+                    $heureFinKey = "heure_fin_{$format}_{$i}";
+                    $priceKey = "price_{$format}_{$i}";
 
-                // Vérifier si les données existent avant d'y accéder
-                if (isset($data[$heureDebutKey], $data[$heureFinKey], $data[$priceKey])) {
-                    $stringHeureDebut = $data[$heureDebutKey];
-                    $stringHeureFin = $data[$heureFinKey];
-                    $price = $data[$priceKey];
+                    // Vérifier si toutes les données nécessaires sont présentes
+                    if (isset($data[$heureDebutKey], $data[$heureFinKey], $data[$priceKey])) {
+                        $HeureDebut = trim($data[$heureDebutKey]);
+                        $HeureFin = trim($data[$heureFinKey]);
+                        $price = trim($data[$priceKey]);
 
-                    // Convertir les heures en objets DateTime
-                    $heureDebut = \DateTime::createFromFormat('H:i', $stringHeureDebut);
-                    $heureFin = \DateTime::createFromFormat('H:i', $stringHeureFin);
+                        // Vérifier que les heures et le prix ne sont pas vides
+                        if ($HeureDebut === '' || $HeureFin === '' || $price === '') {
+                            // Ignorer cette séance et passer à la suivante
+                            continue;
+                        }
 
-                    // Vérification des conditions avant de passer à la méthode getSeance
-                    if ($heureDebut && $heureFin && $dateDebut && $dateFin && is_numeric($price) && is_numeric($stringSalle) && $arrayCinema !== '') {
-                            $cinema = $entityManager->getRepository(Cinema::class)->findOneBy(['name' => $arrayCinema]);
-                            // Appeler la méthode getSeance avec les données appropriées
-                            $this->getSeance($heureDebut, $heureFin, $price, $dateDebut, $dateFin, ${"salle{$format}"}, $film, $entityManager, $cinema);
+                        // Vérifier si la salle existe
+                        if (!isset($salleMap[$format])) {
+                            $seanceErrors[] = "Salle non trouvée pour la qualité : {$format}.";
+                            continue;
+                        }
+
+                        $salle = $salleMap[$format];
+
+                        // Convertir les heures en objets DateTime
+                        $heureDebutObj = \DateTime::createFromFormat('H:i', $HeureDebut);
+                        $heureFinObj = \DateTime::createFromFormat('H:i', $HeureFin);
+
+                        if (!$heureDebutObj || !$heureFinObj) {
+                            $seanceErrors[] = "Format d'heure invalide pour le format {$format}, salle {$i}. Veuillez utiliser le format HH:MM.";
+                            continue;
+                        }
+
+                        // Validation supplémentaire : Heure de fin doit être après l'heure de début
+                        if ($heureFinObj <= $heureDebutObj) {
+                            $seanceErrors[] = "L'heure de fin doit être après l'heure de début pour le format {$format}, salle {$i}.";
+                            continue;
+                        }
+
+                        // Création des séances pour chaque cinéma associé
+                        foreach ($cinemas as $cinema) {
+                            // Créer la séance
+                            try {
+                                $this->CreateSeance($heureDebutObj, $heureFinObj, $price, $dateDebut, $dateFin, $salle, $film, $entityManager, $cinema);
+                            } catch (\Exception $e) {
+                                $seanceErrors[] = "Erreur lors de la création de la séance pour le cinéma {$cinema->getName()}, format {$format}, salle {$i} : " . $e->getMessage();
+                            }
+                        }
                     }
                 }
             }
-        }
-        if ($description != 'Description du film') {
-            $film->setDescription($description);
-        }
-        if (is_numeric($stringSalle)) {
-            $salle = $entityManager->getRepository(Salle::class)->findOneBy(['id' => $stringSalle]);
-            $entityManager->persist($salle);
-            $entityManager->flush();
-        }
-        $entityManager->persist($film);
-        $entityManager->flush();
-        return new JsonResponse(['status' => 'film modified']);
-    }
-    public function getSeance(\DateTime|false $heureDebut, \DateTime|false $heureFin, String $price, \DateTime|false $dateDebut, \DateTime|false $dateFin, ?Salle $salle, ?Film $film, EntityManagerInterface $entityManager, ?Cinema $cinema): Void
-    {
-        if (!$heureDebut == null && !$heureFin == null && !$price == null) {
-            $dateSeance = clone $dateDebut;
-            while ($dateSeance <= $dateFin) {
-                $seance = new Seance();
-                $seance->setHeureDebut($heureDebut);
-                $seance->setHeureFin($heureFin);
-                $seance->setHeureFin($heureFin);
-                $seance->setDate($dateSeance);
-                $seance->setPrice($price);
-                $seance->setSalle($salle);
-                $seance->addCinema($cinema);
-                $seance->setFilm($film);
-                $entityManager->persist($seance);
-                $entityManager->flush();
-                $dateSeance->modify('+1 day');
+
+            // Si des erreurs sont collectées, les renvoyer et annuler la transaction
+            if (!empty($seanceErrors)) {
+                throw new \Exception(implode(' ', $seanceErrors));
             }
+
+            // Enregistrer toutes les modifications en une seule fois
+            $entityManager->flush();
+            $entityManager->commit();
+
+        } catch (\Exception $e) {
+            $entityManager->rollback();
+            return $this->json(['error' => $e->getMessage()], 400);
+        }
+
+        // Enregistrer les modifications du film et des cinémas
+        try {
+            $entityManager->persist($film);
+            $entityManager->flush();
+        } catch (\Exception $e) {
+            return $this->json(['error' => 'Erreur lors de la mise à jour du film.'], 500);
+        }
+
+        return new JsonResponse(['status' => 'Film et séances mis à jour avec succès.'], 200);
+    }
+    public function CreateSeance(\DateTime $heureDebut, \DateTime $heureFin, string $price, \DateTime $dateDebut, \DateTime $dateFin, ?Salle $salle, ?Film $film, EntityManagerInterface $entityManager, ?Cinema $cinema): void
+    {
+        $dateSeance = clone $dateDebut;
+        while ($dateSeance <= $dateFin) {
+            $seance = new Seance();
+            $seance->setDate(clone $dateSeance);
+            $seance->setHeureDebut(clone $heureDebut);
+            $seance->setHeureFin(clone $heureFin);
+            $seance->setPrice($price);
+            $seance->setSalle($salle);
+            $seance->addCinema($cinema);
+            $seance->setFilm($film);
+            $entityManager->persist($seance);
+            $dateSeance->modify('+1 day');
         }
     }
     #[Route('/film/reset', name: 'app_administration_reset_film')]
