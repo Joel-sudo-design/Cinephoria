@@ -2070,12 +2070,10 @@ axios.defaults.withCredentials = true;
                         // Fonction pour mettre à jour l'état du menu déroulant en fonction des cinémas sélectionnés
                         function updateDropdownState() {
                             const hasMatchingCinema = selectedCinemas.some(cinema => dropCinemaList.includes(cinema));
-                            dropdownMenuCinema.attr('disabled', hasMatchingCinema);
-
                             if (hasMatchingCinema) {
-                                dropdownMenuCinema.attr('disabled', true);
+                                dropdownMenuCinema.addClass('disabled');
                             } else {
-                                dropdownMenuCinema.removeAttr('disabled');
+                                dropdownMenuCinema.removeClass('disabled');
                             }
                         }
                         // Fonction pour ajuster dynamiquement la largeur du textarea titre en fonction du contenu

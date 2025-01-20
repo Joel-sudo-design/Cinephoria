@@ -764,10 +764,24 @@ footer #navbarBottom .nav-link {
 
 .btn-time-admin:disabled,
 .btn-date-admin:disabled,
-.btn-secondary:disabled {
+.btn-secondary.disabled {
   background-color: gray !important;
   color: white !important;
+  cursor: not-allowed !important;
   opacity: unset !important;
+}
+
+.dropdown-modal-admin {
+  position: relative;
+}
+
+.dropdown-modal-admin:has(.btn-secondary.disabled):hover::after {
+  content: "❌";
+  position: absolute;
+  top: calc(50% - 16px);
+  left: calc(50% - 16px);
+  font-size: 22px;
+  pointer-events: none;
 }
 
 .btn-time-admin:disabled ~ .bi-clock,
