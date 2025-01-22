@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modif">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -473,6 +475,10 @@
       <workItem from="1737361450672" duration="2767000" />
       <workItem from="1737365805632" duration="1278000" />
       <workItem from="1737367107107" duration="22000" />
+      <workItem from="1737538396552" duration="136000" />
+      <workItem from="1737538797035" duration="6000" />
+      <workItem from="1737538811687" duration="5000" />
+      <workItem from="1737543303777" duration="401000" />
     </task>
     <task id="LOCAL-00203" summary="Modif">
       <option name="closed" value="true" />
