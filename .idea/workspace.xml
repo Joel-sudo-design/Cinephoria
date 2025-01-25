@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modif">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/image_film/panda.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AdministrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdministrationController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -478,15 +479,17 @@
       <workItem from="1737538396552" duration="136000" />
       <workItem from="1737538797035" duration="6000" />
       <workItem from="1737538811687" duration="5000" />
-      <workItem from="1737543303777" duration="401000" />
-    </task>
-    <task id="LOCAL-00203" summary="Modif">
-      <option name="closed" value="true" />
-      <created>1735752856309</created>
-      <option name="number" value="00203" />
-      <option name="presentableId" value="LOCAL-00203" />
-      <option name="project" value="LOCAL" />
-      <updated>1735752856310</updated>
+      <workItem from="1737543303777" duration="1235000" />
+      <workItem from="1737550565495" duration="2549000" />
+      <workItem from="1737651719710" duration="654000" />
+      <workItem from="1737653676285" duration="34000" />
+      <workItem from="1737707055265" duration="49000" />
+      <workItem from="1737715925515" duration="4000" />
+      <workItem from="1737716932608" duration="32000" />
+      <workItem from="1737743638617" duration="102000" />
+      <workItem from="1737802754914" duration="42000" />
+      <workItem from="1737803029760" duration="4750000" />
+      <workItem from="1737824437691" duration="1752000" />
     </task>
     <task id="LOCAL-00204" summary="Modif">
       <option name="closed" value="true" />
@@ -872,7 +875,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737367094838</updated>
     </task>
-    <option name="localTasksCounter" value="252" />
+    <task id="LOCAL-00252" summary="Modif">
+      <option name="closed" value="true" />
+      <created>1737543716379</created>
+      <option name="number" value="00252" />
+      <option name="presentableId" value="LOCAL-00252" />
+      <option name="project" value="LOCAL" />
+      <updated>1737543716379</updated>
+    </task>
+    <option name="localTasksCounter" value="253" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

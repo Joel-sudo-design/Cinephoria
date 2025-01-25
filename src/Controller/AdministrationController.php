@@ -338,14 +338,11 @@ class AdministrationController extends AbstractController
                             continue;
                         }
 
-                        // Création des séances pour chaque cinéma associé
-                        foreach ($cinemas as $cinema) {
-                            // Créer la séance
-                            try {
-                                $this->CreateSeance($heureDebutObj, $heureFinObj, $price, $dateDebut, $dateFin, $salle, $film, $entityManager, $cinema);
-                            } catch (\Exception $e) {
-                                $seanceErrors[] = "Erreur lors de la création de la séance pour le cinéma {$cinema->getName()}, format {$format}, salle {$i} : " . $e->getMessage();
-                            }
+                        // Créer la séance
+                        try {
+                            $this->CreateSeance($heureDebutObj, $heureFinObj, $price, $dateDebut, $dateFin, $salle, $film, $entityManager, $cinemas);
+                        } catch (\Exception $e) {
+                            $seanceErrors[] = "Erreur lors de la création de la séance pour le cinéma {$cinema->getName()}, format {$format}, salle {$i} : " . $e->getMessage();
                         }
                     }
                 }
@@ -375,7 +372,7 @@ class AdministrationController extends AbstractController
 
         return new JsonResponse(['status' => 'Film et séances mis à jour avec succès.'], 200);
     }
-    public function CreateSeance(\DateTime $heureDebut, \DateTime $heureFin, string $price, \DateTime $dateDebut, \DateTime $dateFin, ?Salle $salle, ?Film $film, EntityManagerInterface $entityManager, ?Cinema $cinema): void
+    public function CreateSeance(\DateTime $heureDebut, \DateTime $heureFin, string $price, \DateTime $dateDebut, \DateTime $dateFin, ?Salle $salle, ?Film $film, EntityManagerInterface $entityManager, Array $arrayCinema ): void
     {
         $dateSeance = clone $dateDebut;
         while ($dateSeance <= $dateFin) {
@@ -385,8 +382,10 @@ class AdministrationController extends AbstractController
             $seance->setHeureFin(clone $heureFin);
             $seance->setPrice($price);
             $seance->setSalle($salle);
-            $seance->addCinema($cinema);
             $seance->setFilm($film);
+            foreach ($arrayCinema as $cinemas) {
+                $seance->addCinema($cinemas);
+            }
             $entityManager->persist($seance);
             $dateSeance->modify('+1 day');
         }
