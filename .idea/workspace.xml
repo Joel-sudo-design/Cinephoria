@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modif">
-      <change beforePath="$PROJECT_DIR$/templates/BaseAdministration.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseAdministration.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/BaseEmploye.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseEmploye.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Modif" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -489,6 +486,7 @@
       <workItem from="1737803029760" duration="4750000" />
       <workItem from="1737824437691" duration="1752000" />
       <workItem from="1737828518234" duration="193000" />
+      <workItem from="1737991614291" duration="20000" />
     </task>
     <task id="LOCAL-00204" summary="Modif">
       <option name="closed" value="true" />
