@@ -63,6 +63,8 @@ php bin/console doctrine:database:create
 php bin/console make:migration
 php bin/console doctrine:migrations:migrate
 
+# Importer la transaction_sql.sql avec phpMyAdmin si besoin
+
 ```
 
 ---
