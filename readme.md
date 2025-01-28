@@ -53,6 +53,8 @@ composer install
 # Installez Yarn
 yarn install
 
+# Modifier le fichier .env avec vos informations (serveur mail, mot de passe MySQL, etc...)
+
 # Compilez les ressources front-end (CSS, JavaScript, images)
 yarn build
 
