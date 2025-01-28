@@ -56,11 +56,6 @@ yarn install
 # Compilez les ressources front-end (CSS, JavaScript, images)
 yarn build
 
-# Configurez le fichier .env avec vos informations MySQL
-DATABASE_URL="mysql://root:@127.0.0.1:3306/cinephoria?serverVersion=10.4.32-MariaDB"
-# Configurez le fichier .env avec vos informations du serveur mail
-MAILER_DSN=smtp://xxx@xxx.fr:mdp:port
-
 # Créez la base de données et exécutez les migrations
 php bin/console doctrine:database:create
 php bin/console make:migration
