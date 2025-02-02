@@ -150,6 +150,7 @@ class Seance
         return [
             'id' => $this->id,
             'date' => $this->date->format('d/m/Y'),
+            'dateCommande' => $this->date->format('Y-m-d'),
             'salle' => $this->salle?->getId(),
             'qualite' => $this->salle?->getQualite(),
             'heure_debut_seance' => $this->heure_debut->format('H:i'),

@@ -115,15 +115,18 @@
                                                         </button>
                                                     {% else %}
                                                         <div class="btn-container">
+                                                            {% set seanceDate = reservation.seance.dateCommande|date('Y-m-d') %}
                                                             {% set currentDate = "now"|date('Y-m-d') %}
-                                                            {% set seanceDate = reservation.seance.date %}
-                                                            <button type="button"
-                                                                    class="btn btn-paiement btn-avis-reservation fs-5 px-3 {% if seanceDate < currentDate %}disabled{% endif %}"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#notationModal-{{ reservation.reservation_id }}">
-                                                                    Noter le film <i class="ms-2 bi bi-pencil"></i>
-                                                                    {% if seanceDate < currentDate %}<span class="tooltip-message">Vous pouvez noter la séance à partir du lendemain de la projection</span>{% endif %}
-                                                            </button>
+                                                            {% if currentDate > seanceDate %}
+                                                                <button type="button" class="btn btn-paiement btn-avis-reservation fs-5 px-3"
+                                                                        data-bs-toggle="modal" data-bs-target="#notationModal-{{ reservation.reservation_id }}">Noter le film <i class="ms-2 bi bi-pencil"></i>
+                                                                </button>
+                                                            {% else %}
+                                                                <button type="button" class="btn btn-paiement btn-avis-reservation fs-5 px-3 disabled"
+                                                                        data-bs-toggle="modal" data-bs-target="#notationModal-{{ reservation.reservation_id }}">Noter le film <i class="ms-2 bi bi-pencil"></i>
+                                                                        <span class="tooltip-message">Vous pouvez noter la séance à partir du lendemain de la projection</span>
+                                                                </button>
+                                                            {% endif %}
                                                         </div>
                                                     {% endif %}
                                                 </div>

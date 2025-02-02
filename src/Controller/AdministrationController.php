@@ -372,7 +372,7 @@ class AdministrationController extends AbstractController
 
         return new JsonResponse(['status' => 'Film et séances mis à jour avec succès.'], 200);
     }
-    public function CreateSeance(\DateTime $heureDebut, \DateTime $heureFin, string $price, \DateTime $dateDebut, \DateTime $dateFin, ?Salle $salle, ?Film $film, EntityManagerInterface $entityManager, Array $arrayCinema ): void
+    public function CreateSeance(\DateTime $heureDebut, \DateTime $heureFin, string $price, \DateTime $dateDebut, \DateTime $dateFin, ?Salle $salle, ?Film $film, EntityManagerInterface $entityManager, Array $arrayCinema): void
     {
         $dateSeance = clone $dateDebut;
         while ($dateSeance <= $dateFin) {

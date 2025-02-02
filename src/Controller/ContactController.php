@@ -30,7 +30,7 @@ class ContactController extends AbstractController
 
             $this->emailTicket->sendEmailContact($username, $object, $description,
                 (new TemplatedEmail())
-                    ->from(new Address('contact@joeldermont.fr', 'Contact Cinéphoria'))
+                    ->from(new Address('gestioncinephoria@gmail.com', 'Contact Cinéphoria'))
                     ->subject('Nouveau message de contact')
                     ->to(new Address(address: 'contact@joeldermont.fr'))
                     ->htmlTemplate('email/contact.html.twig')

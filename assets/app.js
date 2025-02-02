@@ -2067,7 +2067,7 @@ axios.defaults.withCredentials = true;
                                 $('#datepicker-admin-debut-' + film.id).removeAttr('disabled');
                             }
                         });
-                        // Fonction pour mettre à jour l'état du menu déroulant en fonction des cinémas sélectionnés
+                        // Fonction pour mettre à jour l'état du menu déroulant en fonction des sélections
                         function updateDropdownState() {
                             const hasMatchingCinema = selectedCinemas.some(cinema => dropCinemaList.includes(cinema));
                             if (hasMatchingCinema) {
@@ -2341,7 +2341,6 @@ axios.defaults.withCredentials = true;
                             const time = $(`div[id^="row"][id$="${filmId}"]`);
                             modal.find('input[id^="timepicker-admin"]').attr('disabled', true);
                             modal.find('input[id^="timepicker-admin"]').val('');
-                            modal.find('textarea[id^="Textarea"]').val('').addClass('disabled-textarea');
                             time.find('span[id^="icon-clock"]').removeClass('d-none');
                             time.find('span[id^="close-icon"]').addClass('d-none');
                         }
@@ -2594,9 +2593,27 @@ axios.defaults.withCredentials = true;
                                 time_24hr: true,
                                 minuteIncrement: 15,
                                 onOpen: function() {
-                                    // Afficher une valeur par défaut
+                                    // Vérifier si l'heure de fin est vide et que l'heure de début est définie
                                     if (!$timepickerFin.val().trim() && $timepickerDebut.val().trim()) {
-                                        timepickerFinInstance.setDate('12:15', true);
+                                        let heureDebut = $timepickerDebut.val().trim();
+
+                                        // Convertir l'heure en objet Date
+                                        let dateDebut = new Date();
+                                        let [hours, minutes] = heureDebut.split(':').map(Number);
+
+                                        dateDebut.setHours(hours);
+                                        dateDebut.setMinutes(minutes + 15);
+
+                                        // Formater l'heure de fin pour qu'elle soit correcte (HH:MM)
+                                        let heuresFin = dateDebut.getHours().toString().padStart(2, '0');
+                                        let minutesFin = dateDebut.getMinutes().toString().padStart(2, '0');
+                                        let heureFin = `${heuresFin}:${minutesFin}`;
+
+                                        // Définir la nouvelle heure de fin
+                                        timepickerFinInstance.setDate(heureFin);
+                                        $clockIconFin.addClass('d-none');
+                                        $clearIconFin.removeClass('d-none');
+                                        $price.removeClass('disabled-textarea').attr('readonly', false);
                                     }
                                 },
                                 onChange: function(selectedDates, dateStr) {
@@ -2624,10 +2641,10 @@ axios.defaults.withCredentials = true;
                                             $clockIconFin.addClass('d-none');
                                             $clearIconFin.removeClass('d-none');
                                             $price.removeClass('disabled-textarea').attr('readonly', false);
-                                            $modalTimeFieldFin.val(dateStr); // Mettre à jour l'heure de fin dans le modal
+                                            $modalTimeFieldFin.val(dateStr);
                                         }
                                     }
-                                    handleTimepickerChange(filmId); // Correction de la faute de frappe ici
+                                    handleTimepickerChange(filmId);
                                 }
                             });
 
@@ -3062,34 +3079,6 @@ axios.defaults.withCredentials = true;
                         displayAgeBadge(film)
 
                         // Modal
-                        const textarea = $('#TextareaNom-' + film.id);
-                        // Fonction pour ajuster dynamiquement la largeur du textarea titre en fonction du contenu
-                        function autoResizeWidth(textarea) {
-                            // Vérifier si textarea est un objet jQuery et obtenir l'élément DOM natif
-                            const domElement = textarea instanceof jQuery ? textarea.get(0) : textarea;
-
-                            // Réinitialiser la largeur pour recalculer la taille du contenu
-                            domElement.style.width = 'auto';
-
-                            // Ajuster la largeur en fonction du contenu du texte
-                            const extraSpace = 20; // Espace en pixels ajouté à droite
-                            domElement.style.width = (domElement.scrollWidth + extraSpace) + 'px';
-                        }
-
-                        // Vérifier si le textarea existe et appliquer la fonction d'auto redimensionnement
-                        const modal = $('#modal-'+film.id)
-                        modal.on('shown.bs.modal', function () {
-                            if (textarea.length) {
-                                // Appliquer l'ajustement de la largeur au chargement de la page
-                                autoResizeWidth(textarea);
-
-                                // Ajouter un écouteur d'événement pour ajuster la largeur à chaque saisie
-                                textarea.on('input', function() {
-                                    autoResizeWidth(textarea);
-                                });
-                            }
-                        });
-
                         // Upload image
                         let imageData = null;
                         $('#uploadButton-' + film.id).on('click', function () {
@@ -3135,14 +3124,67 @@ axios.defaults.withCredentials = true;
                         });
 
                         // Menu déroulant Cinéma
-                        const dropdownMenuCinema = $('#dropdownMenuCinema-'+film.id);
-                        const dropCinema = dropdownMenuCinema.siblings('.dropdown-menu').find('.drop-cinema');
-                        let selectedCinema = '';
-                        // Gérer le clic sur le menu cinéma
-                        dropCinema.click(function (e) {
+                        const dropdownMenuCinema = $('#dropdownMenuCinema-' + film.id);
+                        const dropCinemaElements = dropdownMenuCinema.siblings('.dropdown-menu').find('.drop-cinema');
+                        let selectedCinemas = [];
+                        const dropCinemaList = ['Toulouse', 'Nantes', 'Bordeaux', 'Lille', 'Charleroi', 'Liège', 'Paris'];
+                        // Gérer le clic sur un cinéma dans le menu déroulant
+                        dropCinemaElements.click(function (e) {
                             e.preventDefault();
-                            selectedCinema = $(this).text();
-                            dropdownMenuCinema.text(selectedCinema);
+                            const cinema = $(this).text().trim();
+                            const index = selectedCinemas.indexOf(cinema);
+
+                            if (index === -1) {
+                                selectedCinemas.push(cinema);
+                            } else {
+                                selectedCinemas.splice(index, 1);
+                            }
+
+                            if (selectedCinemas.length > 0) {
+                                dropdownMenuCinema.text(selectedCinemas.join(', '));
+                                $('#datepicker-admin-debut-' + film.id).removeAttr('disabled');
+                            }
+                        });
+                        // Fonction pour mettre à jour l'état du menu déroulant en fonction des cinémas sélectionnés
+                        function updateDropdownState() {
+                            const hasMatchingCinema = selectedCinemas.some(cinema => dropCinemaList.includes(cinema));
+                            if (hasMatchingCinema) {
+                                dropdownMenuCinema.addClass('disabled');
+                            } else {
+                                dropdownMenuCinema.removeClass('disabled');
+                            }
+                        }
+                        // Fonction pour ajuster dynamiquement la largeur du textarea titre en fonction du contenu
+                        const textarea = $('#TextareaNom-' + film.id);
+                        function autoResizeWidth(textarea) {
+                            // Vérifier si textarea est un objet jQuery et obtenir l'élément DOM natif
+                            const domElement = textarea instanceof jQuery ? textarea.get(0) : textarea;
+
+                            // Réinitialiser la largeur pour recalculer la taille du contenu
+                            domElement.style.width = 'auto';
+
+                            // Ajuster la largeur en fonction du contenu du texte
+                            const extraSpace = 20; // Espace en pixels ajouté à droite
+                            domElement.style.width = (domElement.scrollWidth + extraSpace) + 'px';
+                        }
+                        // Vérifier si le textarea existe et appliquer la fonction d'auto redimensionnement + désactiver dropdown cinéma
+                        const modal = $('#modal-' + film.id);
+                        modal.on('shown.bs.modal', function () {
+                            if (textarea.length) {
+                                // Appliquer l'ajustement de la largeur au chargement de la page
+                                autoResizeWidth(textarea);
+
+                                // Ajouter un écouteur d'événement pour ajuster la largeur à chaque saisie
+                                textarea.on('input', function() {
+                                    autoResizeWidth(textarea);
+                                });
+                            }
+                            // Initialiser selectedCinemas en fonction du texte actuel du menu déroulant
+                            const dropdownText = dropdownMenuCinema.text().trim();
+                            selectedCinemas = (dropdownText && dropdownText !== 'Aucun')
+                                ? dropdownText.split(',').map(cinema => cinema.trim())
+                                : [];
+                            updateDropdownState();
                         });
 
                         // Menu déroulant Coup de cœur
@@ -3221,13 +3263,10 @@ axios.defaults.withCredentials = true;
                         });
 
                         // Valider les informations du film
-                        const formats = ["3DX", "4DX", "IMAX", "Dolby"];
-                        const nombreSeances = 4;
                         $('#btn-validate-film-'+film.id).click(function () {
                             // Récupérer les valeurs des champs
                             const datepickerDebut = $('#datepicker-admin-debut-'+film.id);
                             const datepickerFin = $('#datepicker-admin-fin-'+film.id);
-                            const dropdownPlaces = $(`#dropdownMenuPlaces-${film.id}`);
                             let datePartsDebut = datepickerDebut.val().split('/');
                             let datePartsFin = datepickerFin.val().split('/');
                             let formattedDateDebut = datePartsDebut[2] + '-' + datePartsDebut[1] + '-' + datePartsDebut[0];
@@ -3240,16 +3279,15 @@ axios.defaults.withCredentials = true;
                                 age: selectedAge,
                                 label: label,
                                 nom: $(`#TextareaNom-${film.id}`).val(),
-                                cinema: selectedCinema,
+                                cinema: selectedCinemas,
                                 date_debut: formattedDateDebut,
                                 date_fin: formattedDateFin,
-                                salle: $(`#dropdownMenuSalle-${film.id}`).text(),
-                                places: dropdownPlaces.text(),
                                 description: $(`#Textarea-description-${film.id}`).val(),
-                                film_reset: ''
                             };
+                            const formats = ["3DX", "4DX", "IMAX", "Dolby"];
+                            const salles = 4;
                             formats.forEach(format => {
-                                for (let i = 1; i <= nombreSeances; i++) {
+                                for (let i = 1; i <= salles; i++) {
                                     data[`heure_debut_${format}_${i}`] = $(`#timepicker-admin-debut-${format}-${i}-${film.id}`).val();
                                     data[`heure_fin_${format}_${i}`] = $(`#timepicker-admin-fin-${format}-${i}-${film.id}`).val();
                                     data[`price_${format}_${i}`] = $(`#Textarea-${format}-${i}-prix-${film.id}`).val();
@@ -3260,14 +3298,26 @@ axios.defaults.withCredentials = true;
                                 formData.append('image', imageData.get('image'));
                             }
                             for (const key in data) {
-                                formData.append(key, data[key]);
+                                if (Array.isArray(data[key])) {
+                                    data[key].forEach(item => formData.append(`${key}[]`, item));
+                                } else {
+                                    formData.append(key, data[key]);
+                                }
                             }
 
                             // Vérification des champs
-                            let timeError = 0; // Variable pour gérer les erreurs
-                            let auMoinsUneHeureDebut = false; // Indicateur pour au moins une heure de début renseignée
+                            let timeError = 0;
+                            let auMoinsUneHeureDebut = false;
+
+                            // Vérifier si au moins un cinéma est sélectionné avant de parcourir les formats et séances
+                            if (!selectedCinemas.length > 0) {
+                                alert("Veuillez sélectionner un cinéma");
+                                return;
+                            }
+
+                            // Parcourir les formats et séances pour vérifier les champs
                             formats.forEach(format => {
-                                for (let i = 1; i <= nombreSeances; i++) {
+                                for (let i = 1; i <= salles; i++) {
                                     let heureDebut = $(`#timepicker-admin-debut-${format}-${i}-${film.id}`).val().trim();
                                     let heureFin = $(`#timepicker-admin-fin-${format}-${i}-${film.id}`).val().trim();
                                     let prix = $(`#Textarea-${format}-${i}-prix-${film.id}`).val().trim();
@@ -3278,13 +3328,13 @@ axios.defaults.withCredentials = true;
                                     }
 
                                     // Si un cinéma est sélectionné, mais pas de date de début
-                                    if (selectedCinema !== '' && datepickerDebut.val().trim() === '') {
+                                    if (datepickerDebut.val().trim() === '') {
                                         timeError = 1;
                                         break;
                                     }
 
                                     // Si une date de début est renseignée, mais pas la date de fin
-                                    if (datepickerDebut.val().trim() !== '' && datepickerFin.val().trim() === '') {
+                                    if (datepickerFin.val().trim() === '') {
                                         timeError = 2;
                                         break;
                                     }
@@ -3296,36 +3346,47 @@ axios.defaults.withCredentials = true;
                                     }
 
                                     // Si une heure de début et une heure de fin sont renseignées, mais pas de prix
-                                    if ((heureDebut !== '' && heureFin !== '') && prix === '') {
+                                    if (heureDebut !== '' && heureFin !== '' && prix === '') {
                                         timeError = 4;
                                         break;
                                     }
+                                }
 
+                                // Si une erreur est détectée, sortir de la boucle des formats
+                                if (timeError > 0) {
+                                    return false;
                                 }
                             });
+
                             // Si aucune heure de début n'a été renseignée alors qu'un cinéma est sélectionné
-                            if (!auMoinsUneHeureDebut && selectedCinema !== '' && timeError === 0) {
+                            if (!auMoinsUneHeureDebut && timeError === 0) {
                                 timeError = 5;
                             }
+
                             // Gestion des erreurs
                             if (timeError > 0) {
+                                let messageErreur = "";
                                 switch (timeError) {
                                     case 1:
-                                        alert("Veuillez ajouter une date de début");
-                                        return;
+                                        messageErreur = "Veuillez ajouter une date de début.";
+                                        break;
                                     case 2:
-                                        alert("Veuillez ajouter une date de fin");
-                                        return;
+                                        messageErreur = "Veuillez ajouter une date de fin.";
+                                        break;
                                     case 3:
-                                        alert("Veuillez ajouter une heure de fin pour chaque séance");
-                                        return;
+                                        messageErreur = "Veuillez ajouter une heure de fin pour chaque séance.";
+                                        break;
                                     case 4:
-                                        alert("Veuillez ajouter un prix pour chaque séance");
-                                        return;
+                                        messageErreur = "Veuillez ajouter un prix pour chaque séance.";
+                                        break;
                                     case 5:
-                                        alert("Veuillez ajouter au moins une séance");
-                                        return;
+                                        messageErreur = "Veuillez ajouter au moins une séance.";
+                                        break;
+                                    default:
+                                        messageErreur = "Une erreur inconnue est survenue.";
                                 }
+                                alert(messageErreur);
+                                return;
                             }
 
                             // Envoi des données
@@ -3335,7 +3396,6 @@ axios.defaults.withCredentials = true;
                                 }
                             })
                                 .then(response => {console.log(response.data);
-                                    // Fermer le modal après la soumission si nécessaire
                                     $('#modal-'+film.id).modal('hide');
                                 })
                                 .catch(error => {console.error(error);})
@@ -3355,6 +3415,12 @@ axios.defaults.withCredentials = true;
                             $datepicker.datepicker('clearDates');
                             $calendarIcon.removeClass('d-none');
                             $clearIcon.addClass('d-none');
+                            const modal = $('#modal-' + filmId);
+                            const time = $(`div[id^="row"][id$="${filmId}"]`);
+                            modal.find('input[id^="timepicker-admin"]').val('');
+                            modal.find('textarea[id^="Textarea"]').val('').addClass('disabled-textarea');
+                            time.find('span[id^="icon-clock"]').removeClass('d-none');
+                            time.find('span[id^="close-icon"]').addClass('d-none');
                         }
                         // Fonction pour configurer un datepicker avec synchronisation
                         function configureDatepicker($datepicker, $calendarIcon, $clearIcon, onChangeCallback, linkedDatepicker = null) {
@@ -3385,7 +3451,7 @@ axios.defaults.withCredentials = true;
                                 if (linkedDatepicker) {
                                     const { $linkedDatepicker, $linkedCalendarIcon, $linkedClearIcon } = linkedDatepicker;
                                     resetDate($linkedDatepicker, $linkedCalendarIcon, $linkedClearIcon);
-                                    $linkedDatepicker.prop('disabled', true); // Désactiver si nécessaire
+                                    $linkedDatepicker.prop('disabled', true);
                                 }
                             });
 
@@ -3417,11 +3483,9 @@ axios.defaults.withCredentials = true;
                                 $datepickerFin.prop('disabled', true);
                             }
                         }
-                        // Exemple d'utilisation
                         const $datepickerDebut = $('#datepicker-admin-debut-' + film.id);
                         const $calendarIconDebut = $('#icon-calendar-debut-admin-' + film.id);
                         const $clearIconDebut = $('#close-icon-date-debut-admin-' + film.id);
-
                         const $datepickerFin = $('#datepicker-admin-fin-' + film.id);
                         const $calendarIconFin = $('#icon-calendar-fin-admin-' + film.id);
                         const $clearIconFin = $('#close-icon-date-fin-admin-' + film.id);
@@ -3430,9 +3494,9 @@ axios.defaults.withCredentials = true;
                         configureDatepicker($datepickerDebut, $calendarIconDebut, $clearIconDebut, function () {
                             if ($datepickerDebut.val().trim() === '') {
                                 resetDate($datepickerFin, $calendarIconFin, $clearIconFin); // Réinitialiser fin
-                                $datepickerFin.prop('disabled', true);
+                                $datepickerFin.prop('disabled', true); // Désactiver le datepicker fin
                             } else {
-                                $datepickerFin.prop('disabled', false);
+                                $datepickerFin.prop('disabled', false); // Activer le datepicker fin
                             }
                         }, {
                             $linkedDatepicker: $datepickerFin,
@@ -3448,11 +3512,14 @@ axios.defaults.withCredentials = true;
                                 if (dateFin < dateDebut) {
                                     resetDate($datepickerFin, $calendarIconFin, $clearIconFin);
                                     alert('La date de fin doit être supérieure ou égale à la date de début.');
+                                } else {
+                                    $('#modal-' + filmId).find('input[id^="timepicker-admin-debut"]').removeAttr('disabled');
                                 }
                             }
                         });
 
                         //Timepicker
+                        const filmId = film.id;
                         // Fonction pour générer les constantes pour chaque combinaison
                         function generateTimepickerConstants(filmId) {
                             const types = ['3DX', '4DX', 'IMAX', 'Dolby'];  // Les types 3DX et 4DX
@@ -3471,7 +3538,8 @@ axios.defaults.withCredentials = true;
                                         timepickerIdFin: `#timepicker-admin-fin-${type}-${session}-${filmId}`,
                                         clockIconIdFin: `#icon-clock-fin-admin-${type}-${session}-${filmId}`,
                                         clearIconIdFin: `#close-icon-time-fin-admin-${type}-${session}-${filmId}`,
-                                        price: `#Textarea-${type}-${session}-prix-${filmId}`
+                                        price: `#Textarea-${type}-${session}-prix-${filmId}`,
+                                        modalTimeFieldIdFin: `#modal-time-field-fin-${type}-${session}-${filmId}` // Ajouté
                                     });
                                 });
                             });
@@ -3479,17 +3547,20 @@ axios.defaults.withCredentials = true;
                             return constants;
                         }
                         // Fonction à appeler après chaque modification d'un timepicker pour limiter à 4 séances
-                        function handleTimepickerChange() {
+                        function handleTimepickerChange(filmId) {
                             let filledPairsCount = 0;
 
                             // Sélectionner les champs "début" et "fin" selon leur id
-                            const timepicker_admin_debut = $('input[id^="timepicker-admin-debut"]');
+                            const modal = $('#modal-' + filmId);
+                            const timepicker_admin_debut = modal.find('input[id^="timepicker-admin-debut"]');
+                            const timepicker_admin_fin = modal.find('input[id^="timepicker-admin-fin-"]');
+
                             timepicker_admin_debut.each(function(index) {
                                 const $debutField = $(this);
-                                const $finField = $(`input[id^="timepicker-admin-fin-"]:eq(${index})`);
+                                const $finField = timepicker_admin_fin.eq(index); // Utiliser .eq(index) pour la correspondance correcte
 
                                 // Vérifier si la paire début-fin est remplie
-                                if ($debutField.val().trim() && $finField.val().trim() || ($debutField.attr('placeholder').trim() !== 'Début' && $finField.attr('placeholder').trim() !== 'Fin')) {
+                                if ( ($debutField.val().trim() && $finField.val().trim())) {
                                     filledPairsCount++;
                                 }
                             });
@@ -3500,20 +3571,24 @@ axios.defaults.withCredentials = true;
                                 // Désactiver tous les champs "Début" qui ne sont pas remplis
                                 timepicker_admin_debut.each(function(index) {
                                     const $debutField = $(this);
-                                    const $finField = $(`input[id^="timepicker-admin-fin-"]:eq(${index})`);
+                                    const $finField = timepicker_admin_fin.eq(index); // Utiliser .eq(index)
 
                                     if (!$debutField.val().trim()) {
                                         $debutField.attr('disabled', true);
                                     } else if ($debutField.val().trim() && !$finField.val().trim()) {
-                                        $(`#close-icon-time-debut-admin-${$debutField.attr('id').split('-')[3]}-${$debutField.attr('id').split('-')[4]}-${film.id}`).addClass('d-none');
-                                        $(`#icon-clock-debut-admin-${$debutField.attr('id').split('-')[3]}-${$debutField.attr('id').split('-')[4]}-${film.id}`).removeClass('d-none');
+                                        const idParts = $debutField.attr('id').split('-'); // ['timepicker', 'admin', 'debut', 'type', 'session', 'filmId']
+                                        const type = idParts[3];
+                                        const session = idParts[4];
+                                        // Utiliser filmId correctement
+                                        $(`#close-icon-time-debut-admin-${type}-${session}-${filmId}`).addClass('d-none');
+                                        $(`#icon-clock-debut-admin-${type}-${session}-${filmId}`).removeClass('d-none');
                                         $debutField.val('');
                                         $debutField.attr('disabled', true);
                                     }
                                 });
 
                                 // Désactiver tous les champs "fin" qui ne sont pas remplis
-                                $('input[id^="timepicker-admin-fin"]').each(function(index) {
+                                timepicker_admin_fin.each(function() {
                                     const $finField = $(this);
 
                                     if (!$finField.val().trim()) {
@@ -3532,8 +3607,7 @@ axios.defaults.withCredentials = true;
                                 });
                             }
                         }
-
-                        function initTimepickerWithValidation(timepickerIdDebut, clockIconIdDebut, clearIconIdDebut, timepickerIdFin, clockIconIdFin, clearIconIdFin, price, modalTimeFieldIdFin) {
+                        function initTimepickerWithValidation(filmId, timepickerIdDebut, clockIconIdDebut, clearIconIdDebut, timepickerIdFin, clockIconIdFin, clearIconIdFin, price, modalTimeFieldIdFin) {
                             const $timepickerDebut = $(timepickerIdDebut);
                             const $clockIconDebut = $(clockIconIdDebut);
                             const $clearIconDebut = $(clearIconIdDebut);
@@ -3585,7 +3659,7 @@ axios.defaults.withCredentials = true;
                                         $price.attr('disabled', true); // Désactiver le champ "Prix"
                                         $price.val(''); // Réinitialiser le prix
                                     }
-                                    handleTimepickerChange();
+                                    handleTimepickerChange(filmId); // Correction de la faute de frappe ici
                                 }
                             });
 
@@ -3630,7 +3704,7 @@ axios.defaults.withCredentials = true;
                                             $modalTimeFieldFin.val(dateStr); // Mettre à jour l'heure de fin dans le modal
                                         }
                                     }
-                                    handleTimepickerChange();
+                                    handleTimepickerChange(filmId); // Correction de la faute de frappe ici
                                 }
                             });
 
@@ -3673,7 +3747,7 @@ axios.defaults.withCredentials = true;
                                 $(`#${inputId}`).removeClass("btn-hover");
                             });
 
-                            // Desactiver le timepicker "Fin" et prix si "Début" est vide
+                            // Désactiver le timepicker "Fin" et prix si "Début" est vide
                             if ($timepickerDebut.attr('placeholder').trim() !== 'Début' && $timepickerFin.attr('placeholder').trim() !== 'Fin') {
                                 $timepickerDebut.attr('disabled', true);
                                 $timepickerFin.attr('disabled', true);
@@ -3691,7 +3765,7 @@ axios.defaults.withCredentials = true;
                                 $clockIconDebut.removeClass('d-none');
                                 $clearIconDebut.addClass('d-none');
                                 $timepickerFin.val('').attr('disabled', true);
-                                $modalTimeFieldFin.val(''); // Réinitialiser l'heure de fin dans le modal
+                                $modalTimeFieldFin.val('');
                                 $clockIconFin.removeClass('d-none');
                                 $clearIconFin.addClass('d-none');
                                 $price.addClass('disabled-textarea');
@@ -3703,7 +3777,7 @@ axios.defaults.withCredentials = true;
                                 $clockIconFin.removeClass('d-none');
                                 $clearIconFin.addClass('d-none');
                                 $price.addClass('disabled-textarea').attr('readonly', true);
-                                $modalTimeFieldFin.val('');// Réinitialiser l'heure de fin dans le modal
+                                $modalTimeFieldFin.val('');
                             });
                         }
                         function initAllTimepickers(filmId) {
@@ -3713,6 +3787,7 @@ axios.defaults.withCredentials = true;
                             // Initialiser chaque timepicker avec validation entre "Début" et "Fin"
                             timepickerConstants.forEach(function(constant) {
                                 initTimepickerWithValidation(
+                                    filmId,
                                     constant.timepickerIdDebut,
                                     constant.clockIconIdDebut,
                                     constant.clearIconIdDebut,
@@ -3720,13 +3795,12 @@ axios.defaults.withCredentials = true;
                                     constant.clockIconIdFin,
                                     constant.clearIconIdFin,
                                     constant.price,
-                                    constant.modalTimeFieldIdFin // Ajouter l'ID du champ du modal pour "Fin"
+                                    constant.modalTimeFieldIdFin // Ajouté
                                 );
                             });
-                            handleTimepickerChange();
                         }
-                        const filmId = film.id;
                         initAllTimepickers(filmId);
+
                     });
                 })
                 .catch(error => {
