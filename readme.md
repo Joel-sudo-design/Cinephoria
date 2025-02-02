@@ -1,6 +1,15 @@
 # Cinéphoria
 
-Voici une application Symfony pour présenter les films du cinéma "Le Cinéporia". En tant qu'administrateur on peut ajouter des nouveaux films, créer des séances, créer des comptes pour les employés et afficher le nombre de réservations par films sur 1 semaine. En tant qu'employé il est possible d'ajouter des nouveaux films, créer des séances et valider les avis. Pour les visiteurs il est possible de créer un compte pour réserver en ligne avec accès aux commandes.  Ce projet utilise Symfony pour le backend, MySQL pour la base de données et XAMPP pour le déploiement en local.
+Voici une application Symfony pour présenter les films du cinéma "Le Cinéporia". 
+
+- En tant qu'administrateur on peut ajouter et supprimer des nouveaux films, des séances, créer des comptes pour les employés, modifier les mots de passe des comptes employés et afficher le nombre de réservations par film sur 1 semaine. 
+- En tant qu'employé il est possible de gérer des nouveaux films comme les administrateurs et valider les avis. 
+- Pour les visiteurs il est possible de créer un compte pour réserver en ligne avec accès aux commandes une fois authentifié (utilisateur).  
+
+Ce projet utilise Symfony pour le backend.
+HTML5, CSS, Bootstrap, JS avec JQuerry, AJAX avec AXIOS pour le frontend.
+MySQL pour la base de données relationnelle et MongoDB pour la base de donnée NoSQL.
+XAMPP pour le déploiement en local.
 
 Lien vers le site: https://cinephoria.joeldermont.fr
 
@@ -27,8 +36,10 @@ Lien vers le site: https://cinephoria.joeldermont.fr
 Avant de commencer, assurez-vous d'avoir installé les éléments suivants sur votre machine :
 
 - [XAMPP](https://www.apachefriends.org/) avec Apache et MySQL
+- [MongoDN] (https://www.mongodb.com/try/download/community)
 - [Composer](https://getcomposer.org/) pour gérer les dépendances
-- PHP 8.1 ou supérieur
+- PHP 8.1 ou supérieur (https://windows.php.net/download)
+- [Node.js] (https://nodejs.org/fr/download) nécessaire pour installer Yarn
 - [Yarn](https://classic.yarnpkg.com/en/docs/install) pour gérer les ressources front-end
 - Une version récente de [Git](https://git-scm.com/)
 
@@ -52,10 +63,7 @@ cd C:\xampp\htdocs\Cinephoria
 # Installez les dépendances nécessaires
 composer install
 
-# Installez Yarn
-yarn install
-
-# Modifier le fichier .env avec vos informations (serveur mail, mot de passe MySQL, etc...)
+# Modifier le fichier .env avec vos informations (serveur mail et mot de passe MySQL)
 
 # Compilez les ressources front-end (CSS, JavaScript, images)
 yarn build
@@ -65,7 +73,7 @@ php bin/console doctrine:database:create
 php bin/console make:migration
 php bin/console doctrine:migrations:migrate
 
-# Importer la transaction_sql.sql avec phpMyAdmin si besoin
+# Importer la transaction_sql.sql avec phpMyAdmin
 
 ```
 
