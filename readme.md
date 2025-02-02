@@ -33,15 +33,15 @@ Lien vers le site: https://cinephoria.joeldermont.fr
 
 ## Prérequis
 
-Avant de commencer, assurez-vous d'avoir installé les éléments suivants sur votre machine :
+Avant de commencer, assurez-vous d'avoir installé les éléments suivants :
 
-- [XAMPP](https://www.apachefriends.org/) avec Apache et MySQL
-- [mongodb] (https://www.mongodb.com/try/download/community)
-- [Composer](https://getcomposer.org/) pour gérer les dépendances
-- PHP 8.1 ou supérieur (https://windows.php.net/download)
-- [Node.js] (https://nodejs.org/fr/download) nécessaire pour installer Yarn
-- [Yarn](https://classic.yarnpkg.com/en/docs/install) pour gérer les ressources front-end
-- Une version récente de [Git](https://git-scm.com/)
+- [XAMPP](https://www.apachefriends.org/) - Serveur local incluant Apache et MySQL.
+- [MongoDB](https://www.mongodb.com/try/download/community) - Base de données NoSQL utilisée dans ce projet.
+- [Composer](https://getcomposer.org/) - Gestionnaire de dépendances pour PHP.
+- [PHP 8.1 ou supérieur](https://windows.php.net/download) - Version recommandée pour Symfony.
+- [Node.js](https://nodejs.org/) - Plateforme JavaScript requise pour gérer les dépendances.
+- [Yarn](https://classic.yarnpkg.com/en/docs/install) - Gestionnaire de paquets pour les ressources front-end.
+- Une version récente de [Git](https://git-scm.com/) - Outil de gestion de version.
 
 ---
 
