@@ -41,7 +41,7 @@ Avant de commencer, assurez-vous d'avoir installé les éléments suivants :
 - [PHP 8.1 ou supérieur](https://windows.php.net/download) - Version recommandée pour Symfony.
 - [Node.js](https://nodejs.org/) - Plateforme JavaScript requise pour gérer les dépendances.
 - [Yarn](https://classic.yarnpkg.com/en/docs/install) - Gestionnaire de paquets pour les ressources front-end.
-- Une version récente de [Git](https://git-scm.com/) - Outil de gestion de version.
+- [Git](https://git-scm.com/) - Outil de gestion de version.
 
 ---
 
