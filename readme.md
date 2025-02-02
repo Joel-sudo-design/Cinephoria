@@ -36,7 +36,7 @@ Lien vers le site: https://cinephoria.joeldermont.fr
 Avant de commencer, assurez-vous d'avoir installé les éléments suivants sur votre machine :
 
 - [XAMPP](https://www.apachefriends.org/) avec Apache et MySQL
-- [MongoDN] (https://www.mongodb.com/try/download/community)
+- [mongodb] (https://www.mongodb.com/try/download/community)
 - [Composer](https://getcomposer.org/) pour gérer les dépendances
 - PHP 8.1 ou supérieur (https://windows.php.net/download)
 - [Node.js] (https://nodejs.org/fr/download) nécessaire pour installer Yarn
