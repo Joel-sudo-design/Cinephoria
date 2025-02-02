@@ -11,7 +11,7 @@ HTML5, CSS, Bootstrap, JS avec JQuerry, AJAX avec AXIOS pour le frontend.
 MySQL pour la base de données relationnelle et MongoDB pour la base de donnée NoSQL.
 XAMPP pour le déploiement en local.
 
-Lien vers le site: https://cinephoria.joeldermont.fr
+Lien vers le site : https://cinephoria.joeldermont.fr
 
 ---
 
