@@ -64,6 +64,7 @@ cd C:\xampp\htdocs\Cinephoria
 composer install
 
 # Modifier le fichier .env avec vos informations (serveur mail et mot de passe MySQL)
+Pour l'envoi des mails il faudra également modifier l'address dans les controleurs 'RegistrationController', 'ContactController' et la fonction processSendingPasswordResetEmail dans 'AdministrationController'.
 
 # Compilez les ressources front-end (CSS, JavaScript, images)
 yarn build
