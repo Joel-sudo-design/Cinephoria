@@ -545,7 +545,7 @@ class AdministrationController extends AbstractController
         }
 
         $email = (new TemplatedEmail())
-            ->from(new Address('contact@joeldermont.fr', 'Mot de passe temporaire Cinéphoria'))
+            ->from(new Address('gestioncinephoria@gmail.com', 'Mot de passe temporaire Cinéphoria'))
             ->to((string) $user->getEmail())
             ->subject('Votre demande de réinitialisation de mot de passe')
             ->htmlTemplate('reset_password/email.html.twig')

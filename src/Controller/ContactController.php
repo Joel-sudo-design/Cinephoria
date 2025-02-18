@@ -32,7 +32,7 @@ class ContactController extends AbstractController
                 (new TemplatedEmail())
                     ->from(new Address('gestioncinephoria@gmail.com', 'Contact Cinéphoria'))
                     ->subject('Nouveau message de contact')
-                    ->to(new Address(address: 'contact@joeldermont.fr'))
+                    ->to(new Address(address: 'gestioncinephoria@gmail.com'))
                     ->htmlTemplate('email/contact.html.twig')
             );
 
@@ -58,8 +58,8 @@ class ContactController extends AbstractController
 
             $this->emailTicket->sendEmailContact($username, $object, $description,
                 (new TemplatedEmail())
-                    ->from(new Address('contact@joeldermont.fr'))
-                    ->to(new Address(address: 'contact@joeldermont.fr'))
+                    ->from(new Address('gestioncinephoria@gmail.com'))
+                    ->to(new Address(address: 'gestioncinephoria@gmail.com'))
                     ->htmlTemplate('email/contact.html.twig')
             );
 
@@ -85,8 +85,8 @@ class ContactController extends AbstractController
 
             $this->emailTicket->sendEmailContact($username, $object, $description,
                 (new TemplatedEmail())
-                    ->from(new Address('contact@joeldermont.fr'))
-                    ->to(new Address(address: 'contact@joeldermont.fr'))
+                    ->from(new Address('gestioncinephoria@gmail.com'))
+                    ->to(new Address(address: 'gestioncinephoria@gmail.com'))
                     ->htmlTemplate('email/contact.html.twig')
             );
 
@@ -112,8 +112,8 @@ class ContactController extends AbstractController
 
             $this->emailTicket->sendEmailContact($username, $object, $description,
                 (new TemplatedEmail())
-                    ->from(new Address('contact@joeldermont.fr'))
-                    ->to(new Address(address: 'contact@joeldermont.fr'))
+                    ->from(new Address('gestioncinephoria@gmail.com'))
+                    ->to(new Address(address: 'gestioncinephoria@gmail.com'))
                     ->htmlTemplate('email/contact.html.twig')
             );
 
