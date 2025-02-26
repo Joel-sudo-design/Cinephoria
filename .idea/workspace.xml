@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Upgrade cross-spawn et nanoid">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
-    </list>
+    <list default="true" id="7841c5b1-40bd-4ed4-8eef-f362bac692a0" name="Changes" comment="Upgrade cross-spawn et nanoid" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -207,7 +204,7 @@
     "com.jetbrains.php.phpunit.codeGeneration.PhpNewTestDialog.defaultLibrary": "PHPUnit",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/xampp/htdocs/Cinephoria",
+    "last_opened_file_path": "C:/xampp/htdocs/Appli_web",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -520,15 +517,7 @@
       <workItem from="1740404809388" duration="20000" />
       <workItem from="1740404857786" duration="9000" />
       <workItem from="1740504791297" duration="52000" />
-      <workItem from="1740564313506" duration="179000" />
-    </task>
-    <task id="LOCAL-00205" summary="Modif">
-      <option name="closed" value="true" />
-      <created>1736013561003</created>
-      <option name="number" value="00205" />
-      <option name="presentableId" value="LOCAL-00205" />
-      <option name="project" value="LOCAL" />
-      <updated>1736013561003</updated>
+      <workItem from="1740564313506" duration="273000" />
     </task>
     <task id="LOCAL-00206" summary="Modif">
       <option name="closed" value="true" />
@@ -914,7 +903,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739871863985</updated>
     </task>
-    <option name="localTasksCounter" value="254" />
+    <task id="LOCAL-00254" summary="Upgrade cross-spawn et nanoid">
+      <option name="closed" value="true" />
+      <created>1740564573912</created>
+      <option name="number" value="00254" />
+      <option name="presentableId" value="LOCAL-00254" />
+      <option name="project" value="LOCAL" />
+      <updated>1740564573913</updated>
+    </task>
+    <option name="localTasksCounter" value="255" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
