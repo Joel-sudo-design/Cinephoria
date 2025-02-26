@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Avis;
 use App\Entity\Reservation;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
@@ -12,7 +11,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class CommandesController extends AbstractController
 {
@@ -248,9 +246,9 @@ class CommandesController extends AbstractController
         return new JsonResponse(['success' => true, 'avis' => $comment, 'notation' => $rating], Response::HTTP_OK);
     }
     #[Route(path: 'api/commande', name: 'api_commande')]
-    public function apiCommandes(TokenStorageInterface $tokenStorage): JsonResponse
+    public function apiCommandes(): JsonResponse
     {
-        $user = $tokenStorage->getToken()->getUser();
+        $user = $this->getUser();
 
         if (!$user) {
             throw new AccessDeniedException('Utilisateur non authentifié.');
